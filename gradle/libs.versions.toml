@@ -1,0 +1,42 @@
+[versions]
+kotlin = "1.6.10"
+coroutines = "1.6.0"
+detekt = "1.19.0"
+junit = "5.8.2"
+dokka = "1.6.10"
+mockk = "1.12.3"
+koin2 = "2.2.3"
+koin3 = "3.1.5"
+ktor = "1.6.8"
+versions = "0.42.0"
+gradleTestLogger = "3.2.0"
+kotlinBcv = "0.8.0"
+
+[libraries]
+# Dependencies
+
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+
+# Test dependencies
+
+kotlin-test-common = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+
+junit-jupiterApi = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
+junit-jupiterEngine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
+
+# Detekt plugins
+
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+
+[plugins]
+
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+versions = { id = "com.github.ben-manes.versions", version.ref = "versions" }
+gradleTestLogger = { id = "com.adarshr.test-logger", version.ref = "gradleTestLogger" }
+kotlinBcv = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinBcv" }
