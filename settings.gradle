@@ -1,0 +1,2 @@
+include 'tegral-core'
+include 'tegral-di:tegral-di-core', 'tegral-di:tegral-di-test'
