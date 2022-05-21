@@ -1,0 +1,12 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+    id 'application'
+}
+
+application {
+    mainClass = 'org.example.stage1.AppKt'
+}
+
+dependencies {
+    implementation tegral.bundles.web
+}
