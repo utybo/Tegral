@@ -1,7 +1,7 @@
 package guru.zoroark.tegral.di.extensions
 
+import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
-import guru.zoroark.tegral.di.dsl.Buildable
 import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
 import guru.zoroark.tegral.di.dsl.EnvironmentContextBuilderDsl
 import guru.zoroark.tegral.di.environment.Declaration

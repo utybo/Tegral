@@ -1,5 +1,6 @@
 package guru.zoroark.tegral.di.dsl
 
+import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.environment.InjectableModule
