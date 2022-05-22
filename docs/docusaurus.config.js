@@ -65,17 +65,17 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'design/index',
-            position: 'left',
-            label: 'Design',
-          },
-          {
-            type: 'doc',
             docId: 'core/index',
             position: 'left',
             label: 'Core',
           },
-          // {to: '/blog', label: 'Blog', position: 'left'}, TODO
+          {
+            type: 'doc',
+            docId: 'web/index',
+            position: 'left',
+            label: 'Web'
+          },
+          // {to: '/blog', label: 'Blog', position: 'left'}, // TODO
           {
             href: 'https://github.com/utybo/tegral',
             label: 'GitHub',

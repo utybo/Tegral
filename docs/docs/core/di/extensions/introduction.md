@@ -14,7 +14,11 @@ There are two (main) kinds of extensions:
 
 - **Installable extensions.** These extensions provide additional functionality aside from the regular put-and-inject workflow and require their own mechanisms to be stored within the environment. They are only compatible with extensible injection environments.
 
-?> If an environment is extensible, it should mention it somewhere in its documentation. The default injection environment (which is used when you use `tegralDi {` instead of `tegralDi(Something) {`) supports extensions.
+:::tip
+
+If an environment is extensible, it should mention it somewhere in its documentation. The default injection environment (which is used when you use `tegralDi {` instead of `tegralDi(Something) {`) supports extensions.
+
+:::
 
 ## Extensions behind the scenes
 
