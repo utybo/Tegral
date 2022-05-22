@@ -13,5 +13,11 @@ application {
 }
 
 dependencies {
-    implementation tegral.bundles.web
+    implementation tegralLibs.bundles.web
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
 }

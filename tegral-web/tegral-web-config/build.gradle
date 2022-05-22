@@ -1,0 +1,7 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-common-conventions'
+}
+
+dependencies {
+    api project(":tegral-config:tegral-config-core")
+}

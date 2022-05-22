@@ -1,0 +1,12 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-common-conventions'
+}
+
+dependencies {
+    api project(":tegral-di:tegral-di-core")
+    api project(":tegral-web:tegral-web-controllers")
+    api project(":tegral-web:tegral-web-config")
+    api project(":tegral-logging")
+    implementation libs.jackson.time
+    implementation libs.ktor.server.netty
+}

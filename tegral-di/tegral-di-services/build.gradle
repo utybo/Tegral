@@ -1,0 +1,10 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-common-conventions'
+}
+
+dependencies {
+    implementation project(":tegral-di:tegral-di-core")
+    implementation libs.kotlin.reflect
+    implementation libs.kotlin.coroutines
+    api project(":tegral-services:tegral-services-api")
+}

@@ -6,7 +6,7 @@ dependencyResolutionManagement {
     }
 
     versionCatalogs {
-        tegral {
+        tegralLibs {
             from("guru.zoroark.tegral:tegral-catalog:0.0.1-SNAPSHOT")
         }
     }

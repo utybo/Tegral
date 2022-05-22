@@ -7,10 +7,15 @@ dokka = "1.6.10"
 mockk = "1.12.3"
 koin2 = "2.2.3"
 koin3 = "3.1.5"
-ktor = "1.6.8"
+ktor = "2.0.1"
+jackson = "2.13.1"
 versions = "0.42.0"
 gradleTestLogger = "3.2.0"
 kotlinBcv = "0.8.0"
+hoplite = "2.1.4"
+jimfs = "1.2"
+slf4j = "1.7.36"
+logback = "1.2.11"
 
 [libraries]
 # Dependencies
@@ -18,6 +23,24 @@ kotlinBcv = "0.8.0"
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+
+ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
+ktor-server-host = { module = "io.ktor:ktor-server-host-common", version.ref = "ktor" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+ktor-server-contentNegotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-serialization-jackson = { module = "io.ktor:ktor-serialization-jackson", version.ref = "ktor" }
+
+jackson-time = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
+
+hoplite-json = { module = "com.sksamuel.hoplite:hoplite-json", version.ref = "hoplite" }
+hoplite-yaml = { module = "com.sksamuel.hoplite:hoplite-yaml", version.ref = "hoplite" }
+hoplite-toml = { module = "com.sksamuel.hoplite:hoplite-toml", version.ref = "hoplite" }
+
+jimfs = { module = "com.google.jimfs:jimfs", version.ref = "jimfs" }
+
+slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
 # Test dependencies
 

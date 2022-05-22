@@ -1,0 +1,13 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-common-conventions'
+}
+
+dependencies {
+    api libs.hoplite.toml
+    api libs.hoplite.yaml
+    api libs.hoplite.json
+
+    implementation project(":tegral-core")
+
+    testImplementation libs.jimfs
+}
