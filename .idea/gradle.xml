@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/tegral-catalog" />
+            <option value="$PROJECT_DIR$/tegral-core" />
+            <option value="$PROJECT_DIR$/tegral-di" />
+            <option value="$PROJECT_DIR$/tegral-di/tegral-di-core" />
+            <option value="$PROJECT_DIR$/tegral-di/tegral-di-test" />
+            <option value="$PROJECT_DIR$/tegral-web" />
+            <option value="$PROJECT_DIR$/tegral-web/tegral-web-appdsl" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$" name="Tegral">
+                <projects>
+                  <project path="$PROJECT_DIR$" />
+                  <project path="$PROJECT_DIR$/tegral-catalog" />
+                  <project path="$PROJECT_DIR$/tegral-core" />
+                  <project path="$PROJECT_DIR$/tegral-di" />
+                  <project path="$PROJECT_DIR$/tegral-di/tegral-di-core" />
+                  <project path="$PROJECT_DIR$/tegral-di/tegral-di-test" />
+                  <project path="$PROJECT_DIR$/tegral-web" />
+                  <project path="$PROJECT_DIR$/tegral-web/tegral-web-appdsl" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/samples/stage-1" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/samples/stage-1" />
+            <option value="$PROJECT_DIR$/tegral-catalog" />
+            <option value="$PROJECT_DIR$/tegral-core" />
+            <option value="$PROJECT_DIR$/tegral-di" />
+            <option value="$PROJECT_DIR$/tegral-di/tegral-di-core" />
+            <option value="$PROJECT_DIR$/tegral-di/tegral-di-test" />
+            <option value="$PROJECT_DIR$/tegral-web" />
+            <option value="$PROJECT_DIR$/tegral-web/tegral-web-appdsl" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
