@@ -1,4 +1,6 @@
 plugins {
+    id 'guru.zoroark.tegral.base-conventions'
+
     id 'org.jetbrains.kotlin.jvm'
     id 'io.gitlab.arturbosch.detekt'
 
@@ -8,9 +10,6 @@ plugins {
 repositories {
     mavenCentral()
 }
-
-version = rootProject.version
-group = rootProject.group
 
 dependencies {
     implementation libs.kotlin.stdlib
