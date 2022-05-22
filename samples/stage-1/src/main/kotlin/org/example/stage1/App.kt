@@ -1,14 +1,21 @@
 package org.example.stage1
 
-import guru.zoroark.tegral.web.appdsl.*
+import guru.zoroark.tegral.di.dsl.put
+import guru.zoroark.tegral.di.dsl.tegralDiModule
+import guru.zoroark.tegral.di.environment.InjectionScope
+import guru.zoroark.tegral.di.environment.invoke
+import guru.zoroark.tegral.web.appdsl.tegral
 
-val appModule = tegralModule {
+
+val appModule = tegralDiModule {
     put(::Service)
     put(::Controller)
 }
 
-fun main() = tegral {
-    put(appModule)
+fun main() {
+    tegral {
+        put(appModule)
+    }
 }
 
 class Service {
