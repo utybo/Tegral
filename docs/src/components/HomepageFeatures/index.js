@@ -4,35 +4,59 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Focus on your app',
+    Svg: require('@site/static/img/undraw_developer_activity.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Tegral provides all the fundamentals, leaving you free to build whatever
+        you want. You no longer need to spend hours looking for libraries to
+        build your own Kotlin-centric back-end stack.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Integrable by design',
+    Svg: require('@site/static/img/undraw_good_team.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Tegral is designed from the ground up for interoperability. You can take
+        just a handful of libraries, or the entire framework. We want to make
+        your life easier, not lock you into an ecosystem.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Powered by Open-Source',
+    Svg: require('@site/static/img/undraw_product_teardown.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Tegral is built on top of awesome open-source libraries like Ktor,
+        Exposed, and more. It's everything you love about these libraries, even
+        more integrated and painless!
       </>
     ),
   },
+  {
+    title: 'Did someone say \'tests\'?',
+    Svg: require('@site/static/img/undraw_science.svg').default,
+    description: (
+      <>
+        Easy unit tests? Check. Easy integration and end-to-end tests? Check.
+        Testing is not an afterthought. Tegral is built with tests in mind.
+      </>
+    )
+  },
+  {
+    title: 'No magic.',
+    Svg: require('@site/static/img/undraw_random_thoughts.svg').default,
+    description: (
+      <>
+        Tegral comes with zero code generation or magic symbol processing. This
+        keeps the build process simple and straightforward. 100% pure awesome
+        Kotlin!
+      </>
+    )
+  }
 ];
 
 function Feature({Svg, title, description}) {

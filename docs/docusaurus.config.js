@@ -7,12 +7,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Tegral',
-  tagline: 'Kotlin libraries for better web applications',
+  tagline: 'Libraries for better Kotlin applications.',
   url: 'https://your-docusaurus-test-site.com', // TODO
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
-  favicon: 'img/favicon.ico', // TODO replace with something else
+  favicon: 'img/tegral_logo.png', // TODO replace with something else
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -59,8 +59,8 @@ const config = {
       navbar: {
         title: 'Tegral',
         logo: {
-          alt: 'Tegral Logo', // TODO
-          src: 'img/logo.svg', // TODO
+          alt: 'Tegral Logo',
+          src: 'img/tegral_logo.svg',
         },
         items: [
           {
@@ -134,6 +134,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+        additionalLanguages: ['kotlin', 'groovy'],
       },
     }),
 };
