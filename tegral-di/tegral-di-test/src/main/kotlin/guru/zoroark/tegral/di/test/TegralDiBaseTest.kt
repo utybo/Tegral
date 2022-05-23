@@ -7,9 +7,11 @@ import guru.zoroark.tegral.di.dsl.tegralDi
 import guru.zoroark.tegral.di.dsl.tegralDiModule
 import guru.zoroark.tegral.di.environment.Identifier
 import guru.zoroark.tegral.di.environment.InjectableModule
+import kotlinx.coroutines.runBlocking
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.jvm.jvmErasure
+
 
 /**
  * Base class for testing Tegral DI-applications.
@@ -59,10 +61,10 @@ import kotlin.reflect.jvm.jvmErasure
  * @param subjectClass The class of the subject, used for [subject] to work properly.
  * @param baseModule The base module as an [InjectableModule] instance.
  */
-open class TegralDiBaseTest<S : Any>(
-    private val subjectClass: KClass<S>,
+abstract class TegralSubjectTest<TSubject : Any>(
+    subjectClass: KClass<TSubject>,
     private val baseModule: InjectableModule
-) {
+) : TegralAbstractSubjectTest<TSubject, UnsafeMutableEnvironment>(subjectClass) {
     /**
      * This constructor takes a module builder and the subject's class, builds the module then uses that as a base.
      *
@@ -81,7 +83,7 @@ open class TegralDiBaseTest<S : Any>(
      * @param subjectClass The class of the subject, used for [subject] to work properly.
      * @param baseModuleBuilder The base module as a builder, just like the body of a [tegralDiModule] call.
      */
-    constructor(subjectClass: KClass<S>, baseModuleBuilder: ContextBuilderDsl.() -> Unit) : this(
+    constructor(subjectClass: KClass<TSubject>, baseModuleBuilder: ContextBuilderDsl.() -> Unit) : this(
         subjectClass, tegralDiModule("<base test module>", baseModuleBuilder)
     )
 
@@ -99,32 +101,39 @@ open class TegralDiBaseTest<S : Any>(
      * ```
      */
     @Suppress("UNCHECKED_CAST")
-    constructor(constructor: KFunction<S>) : this(
-        constructor.returnType.jvmErasure as KClass<S>,
-        { put(constructor.returnType.jvmErasure as KClass<S>, constructor) }
+    constructor(constructor: KFunction<TSubject>) : this(
+        constructor.returnType.jvmErasure as KClass<TSubject>,
+        { put(constructor.returnType.jvmErasure as KClass<TSubject>, constructor) }
     )
 
-    /**
-     * Create a new environment from this instance's base module (and an optional [additionalBuilder]) and execute
-     * the [block] within it.
-     *
-     * See the example [on this class][TegralDiBaseTest]
-     */
     @TegralDsl
-    open fun <T> test(
-        additionalBuilder: ContextBuilderDsl.() -> Unit = {},
-        block: UnsafeMutableEnvironment.() -> T
-    ): T {
+    override fun <T> test(additionalBuilder: ContextBuilderDsl.() -> Unit, block: suspend UnsafeMutableEnvironment.() -> T): T {
         val env = tegralDi(UnsafeMutableEnvironment) {
             put(baseModule)
             additionalBuilder()
         }
-        return with(env) { block() }
+        return runBlocking { with(env) { block() } }
     }
+}
+
+abstract class TegralAbstractSubjectTest<TSubject : Any, TTestContext : TestMutableInjectionEnvironment>(
+    protected val subjectClass: KClass<TSubject>
+) : TegralDiBaseTest<TTestContext>() {
+    protected val TTestContext.subject
+        get() = this.get(Identifier(subjectClass))
+}
+
+abstract class TegralDiBaseTest<TTestContext : TestMutableInjectionEnvironment> {
 
     /**
-     * Returns the subject of this test class within this environment.
+     * Create a new environment from this instance's configuration (and an optional [additionalBuilder]) and execute the
+     * [block] within it.
+     *
+     * See the example [on this class][TegralDiBaseTest]
      */
-    val UnsafeMutableEnvironment.subject: S
-        get() = this.get(Identifier(subjectClass))
+    @TegralDsl
+    protected abstract fun <T> test(
+        additionalBuilder: ContextBuilderDsl.() -> Unit = {},
+        block: suspend TTestContext.() -> T
+    ): T
 }

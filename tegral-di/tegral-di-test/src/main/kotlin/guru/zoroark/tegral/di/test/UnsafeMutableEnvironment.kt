@@ -33,7 +33,7 @@ import kotlin.reflect.KProperty
  * - **Active object injection**. Objects are re-injected at every use.
  * - **NI/Mutable**. Objects can be replaced, injection methods will not always return the same thing.
  */
-class UnsafeMutableEnvironment(baseContext: EnvironmentContext) : InjectionEnvironment, ContextBuilderDsl {
+class UnsafeMutableEnvironment(baseContext: EnvironmentContext) : TestMutableInjectionEnvironment, ContextBuilderDsl {
     companion object : InjectionEnvironmentKind<UnsafeMutableEnvironment> {
         override fun build(context: EnvironmentContext) = UnsafeMutableEnvironment(context)
     }
@@ -51,7 +51,7 @@ class UnsafeMutableEnvironment(baseContext: EnvironmentContext) : InjectionEnvir
      * The internal components map used by this environment. You can use it to directly manipulate and retrieve
      * components stored in this environment.
      */
-    val components = baseContext.declarations.mapValues { (_, decl) ->
+    override val components = baseContext.declarations.mapValues { (_, decl) ->
         decl.supplier(ScopedContext(EnvironmentBasedScope(this)))
     }.toMutableMap()
 
@@ -65,21 +65,4 @@ class UnsafeMutableEnvironment(baseContext: EnvironmentContext) : InjectionEnvir
         components[declaration.identifier] =
             declaration.supplier(ScopedContext(EnvironmentBasedScope(this)))
     }
-
-    /**
-     * Allows to add an object to the environment right after its creation, saving a separate `put` call, e.g.
-     *
-     * ```
-     * @Test
-     * fun `My Test`() = test {
-     *     SomeClass().alsoPut()
-     *     // SomeClass is now available in the environment.
-     * }
-     * ```
-     *
-     * This is strictly equivalent to calling `also { put { this } }`.
-     */
-    @TegralDsl
-    inline fun <reified T : Any> T.alsoPut(): T =
-        also { put { this@alsoPut } }
 }

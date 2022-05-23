@@ -5,8 +5,6 @@ plugins {
 ext.includeInBundles = ["web-test"]
 
 dependencies {
-    api project(":tegral-web:tegral-web-controllers")
     api project(":tegral-di:tegral-di-test")
-
-    api libs.ktor.server.test
+    api libs.mockk
 }

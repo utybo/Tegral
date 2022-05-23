@@ -4,9 +4,11 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="delegatedBuild" value="true" />
+        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="gradleHome" value="/usr/share/java/gradle" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -19,6 +21,7 @@
             <option value="$PROJECT_DIR$/tegral-di/tegral-di-core" />
             <option value="$PROJECT_DIR$/tegral-di/tegral-di-services" />
             <option value="$PROJECT_DIR$/tegral-di/tegral-di-test" />
+            <option value="$PROJECT_DIR$/tegral-di/tegral-di-test-mockk" />
             <option value="$PROJECT_DIR$/tegral-featureful" />
             <option value="$PROJECT_DIR$/tegral-logging" />
             <option value="$PROJECT_DIR$/tegral-services" />
@@ -29,6 +32,7 @@
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-appdsl" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-config" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers" />
+            <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers-test" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -47,6 +51,7 @@
                   <project path="$PROJECT_DIR$/tegral-di/tegral-di-core" />
                   <project path="$PROJECT_DIR$/tegral-di/tegral-di-services" />
                   <project path="$PROJECT_DIR$/tegral-di/tegral-di-test" />
+                  <project path="$PROJECT_DIR$/tegral-di/tegral-di-test-mockk" />
                   <project path="$PROJECT_DIR$/tegral-featureful" />
                   <project path="$PROJECT_DIR$/tegral-logging" />
                   <project path="$PROJECT_DIR$/tegral-services" />
@@ -57,14 +62,18 @@
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-appdsl" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-config" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-controllers" />
+                  <project path="$PROJECT_DIR$/tegral-web/tegral-web-controllers-test" />
                 </projects>
               </build>
             </builds>
           </compositeBuild>
         </compositeConfiguration>
+        <option name="delegatedBuild" value="true" />
+        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/samples/stage-1" />
-        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="gradleHome" value="/usr/share/java/gradle" />
+        <option name="gradleJvm" value="17" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -78,6 +87,7 @@
             <option value="$PROJECT_DIR$/tegral-di/tegral-di-core" />
             <option value="$PROJECT_DIR$/tegral-di/tegral-di-services" />
             <option value="$PROJECT_DIR$/tegral-di/tegral-di-test" />
+            <option value="$PROJECT_DIR$/tegral-di/tegral-di-test-mockk" />
             <option value="$PROJECT_DIR$/tegral-featureful" />
             <option value="$PROJECT_DIR$/tegral-logging" />
             <option value="$PROJECT_DIR$/tegral-services" />
@@ -88,6 +98,7 @@
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-appdsl" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-config" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers" />
+            <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers-test" />
           </set>
         </option>
       </GradleProjectSettings>
