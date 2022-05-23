@@ -1,5 +1,5 @@
 plugins {
-    id 'guru.zoroark.tegral.kotlin-common-conventions'
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
 }
 
 dependencies {
