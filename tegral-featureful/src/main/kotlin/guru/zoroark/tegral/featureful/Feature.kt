@@ -1,7 +1,6 @@
 package guru.zoroark.tegral.featureful
 
 import guru.zoroark.tegral.core.TegralDsl
-import guru.zoroark.tegral.di.environment.InjectableModule
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 
 interface Feature {

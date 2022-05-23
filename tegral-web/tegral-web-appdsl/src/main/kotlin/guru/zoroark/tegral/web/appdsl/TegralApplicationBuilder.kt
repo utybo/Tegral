@@ -17,7 +17,6 @@ import guru.zoroark.tegral.featureful.ConfigurableFeature
 import guru.zoroark.tegral.featureful.Feature
 import guru.zoroark.tegral.web.appdefaults.AppDefaultsFeature
 import guru.zoroark.tegral.web.appdefaults.TegralConfigurationContainer
-import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 
 typealias ContextInstallationHook = ExtensibleContextBuilderDsl.() -> Unit
@@ -86,7 +85,7 @@ class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplicati
     override fun build(): TegralApplication {
         // Build all required features
         val toInstall =
-            (this@TegralApplicationBuilder.featuresBuilders.toMutableSet() + this@TegralApplicationBuilder.defaultFeatureBuilder)
+            (featuresBuilders.toMutableSet() + defaultFeatureBuilder)
                 .map { it.build() }
                 .toMutableSet()
 
@@ -127,8 +126,6 @@ private fun ContextBuilderDsl.unsafePut(kclass: KClass<*>, provider: ScopedSuppl
     }
     genericsHackPut<Any>()
 }
-
-private val logger = LoggerFactory.getLogger("tegral.web.appdsl.applyDefaults")
 
 @TegralDsl
 fun TegralApplicationDsl.applyDefaults() {

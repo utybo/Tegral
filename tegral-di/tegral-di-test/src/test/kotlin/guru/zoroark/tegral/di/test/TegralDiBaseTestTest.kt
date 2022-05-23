@@ -26,7 +26,7 @@ class Controller(scope: InjectionScope) {
     fun htmlThing() = "<html>${service.someThing()}</html>"
 }
 
-class TegralDiBaseTestTest {
+class TegralSubjectTestTest {
     @Test
     fun `Test with function constructor`() {
         var wasHit = false
@@ -35,7 +35,7 @@ class TegralDiBaseTestTest {
             override fun someThing() = "Hello there!"
         }
 
-        class Test : TegralDiBaseTest<Controller>(::Controller) {
+        class Test : TegralSubjectTest<Controller>(::Controller) {
             fun myTest() = test {
                 put<ServiceContract>(::ServiceImpl)
 
@@ -52,7 +52,7 @@ class TegralDiBaseTestTest {
     fun `Test getting unknown component`() {
         var wasHit = false
         class SubjectUnderTest
-        class Test : TegralDiBaseTest<SubjectUnderTest>(SubjectUnderTest::class, { put(::SubjectUnderTest) }) {
+        class Test : TegralSubjectTest<SubjectUnderTest>(SubjectUnderTest::class, { put(::SubjectUnderTest) }) {
             fun myTest() = test {
                 assertNull(getOrNull<String>())
                 wasHit = true
@@ -71,7 +71,7 @@ class TegralDiBaseTestTest {
             override fun someThing() = "Hello there!"
         }
 
-        class Test : TegralDiBaseTest<Controller>(Controller::class, { put(::Controller) }) {
+        class Test : TegralSubjectTest<Controller>(Controller::class, { put(::Controller) }) {
             fun myTest() = test {
                 put<ServiceContract>(::ServiceImpl)
 
@@ -96,7 +96,7 @@ class TegralDiBaseTestTest {
             put { Controller(scope) }
         }
 
-        class Test : TegralDiBaseTest<Controller>(Controller::class, module) {
+        class Test : TegralSubjectTest<Controller>(Controller::class, module) {
             fun myTest() = test {
                 put<ServiceContract>(::ServiceImpl)
 
@@ -128,7 +128,7 @@ class TegralDiBaseTestTest {
         }
 
         // Test code
-        class TestService : TegralDiBaseTest<Service>(::Service) {
+        class TestService : TegralSubjectTest<Service>(::Service) {
             fun `Accepts incoming text properly`() = test {
                 put<Repository> {
                     mockk { every { storeThis("hello") } just runs }
@@ -158,9 +158,9 @@ class TegralDiBaseTestTest {
         }
 
         // Test code
-        class TestService : TegralDiBaseTest<Service>(::Service) {
+        class TestService : TegralSubjectTest<Service>(::Service) {
             fun `Accepts incoming text properly`() = test {
-                mockk<Repository> { every { storeThis("hello") } just runs }.alsoPut()
+                mockk<Repository> { every { storeThis("hello") } just runs }.also { put { it } }
 
                 subject.incomingText("hello")
 

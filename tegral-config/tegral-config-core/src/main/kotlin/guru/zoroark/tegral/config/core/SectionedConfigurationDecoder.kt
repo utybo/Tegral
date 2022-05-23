@@ -5,20 +5,19 @@ import com.sksamuel.hoplite.ConfigResult
 import com.sksamuel.hoplite.DecoderContext
 import com.sksamuel.hoplite.MapNode
 import com.sksamuel.hoplite.Node
-import com.sksamuel.hoplite.decoder.Decoder
 import com.sksamuel.hoplite.decoder.NullHandlingDecoder
 import com.sksamuel.hoplite.fp.Validated
 import com.sksamuel.hoplite.fp.flatMap
 import com.sksamuel.hoplite.fp.invalid
 import com.sksamuel.hoplite.fp.valid
 import kotlin.reflect.KType
-import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.typeOf
 
 class SectionedConfigurationDecoder(
     private val sections: List<ConfigurationSection<*>>
 ) : NullHandlingDecoder<SectionedConfiguration> {
+    @Suppress("ReturnCount")
     override fun safeDecode(node: Node, type: KType, context: DecoderContext): ConfigResult<SectionedConfiguration> {
         if (node !is MapNode) {
             return ConfigFailure.DecodeError(node, type).invalid()

@@ -2,7 +2,6 @@ package guru.zoroark.tegral.web.appdefaults
 
 import guru.zoroark.tegral.services.api.TegralService
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.cancel

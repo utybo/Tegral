@@ -12,7 +12,6 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.jvm.jvmErasure
 
-
 /**
  * Base class for testing Tegral DI-applications.
  *
@@ -107,7 +106,10 @@ abstract class TegralSubjectTest<TSubject : Any>(
     )
 
     @TegralDsl
-    override fun <T> test(additionalBuilder: ContextBuilderDsl.() -> Unit, block: suspend UnsafeMutableEnvironment.() -> T): T {
+    override fun <T> test(
+        additionalBuilder: ContextBuilderDsl.() -> Unit,
+        block: suspend UnsafeMutableEnvironment.() -> T
+    ): T {
         val env = tegralDi(UnsafeMutableEnvironment) {
             put(baseModule)
             additionalBuilder()

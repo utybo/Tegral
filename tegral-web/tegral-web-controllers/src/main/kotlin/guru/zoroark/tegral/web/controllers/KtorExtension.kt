@@ -1,10 +1,13 @@
 package guru.zoroark.tegral.web.controllers
 
-import guru.zoroark.tegral.di.environment.*
+import guru.zoroark.tegral.di.environment.Declaration
+import guru.zoroark.tegral.di.environment.Identifier
+import guru.zoroark.tegral.di.environment.InjectionEnvironment
+import guru.zoroark.tegral.di.environment.InjectionScope
+import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.di.extensions.DeclarationsProcessor
 import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironment
 import kotlin.reflect.full.isSubclassOf
-
 
 /**
  * The Ktor extension object that is injected into the meta-environment. Keeps track of implementations of
@@ -23,19 +26,22 @@ class KtorExtension(scope: InjectionScope) : DeclarationsProcessor {
     private val modulesIdentifiers = mutableListOf<Identifier<out KtorModule>>()
 
     override fun processDeclarations(sequence: Sequence<Declaration<*>>) {
-        modulesIdentifiers += sequence.map { it.identifier}.filterIsKclassSubclassOf()
+        modulesIdentifiers += sequence.map { it.identifier }.filterIsKclassSubclassOf()
     }
 }
 
 inline fun <reified T : Any> Sequence<Identifier<*>>.filterIsKclassSubclassOf(): List<Identifier<out T>> {
     return filter { it.kclass.isSubclassOf(T::class) }
-            .filterIsInstance<Identifier<out T>>() // Note that this does not actually do anything due to type erasure
-            .toList()
+        .filterIsInstance<Identifier<out T>>() // Note that this does not actually do anything due to type erasure
+        .toList()
 }
 
-fun InjectionEnvironment.getKtorModulesByPriority(allIdentifiers: List<Identifier<out KtorModule>>, appName: String?): List<KtorModule> {
+fun InjectionEnvironment.getKtorModulesByPriority(
+    allIdentifiers: List<Identifier<out KtorModule>>,
+    appName: String?
+): List<KtorModule> {
     return allIdentifiers
-            .map { get(it) }
-            .filter { it.restrictToAppName == appName }
-            .sortedByDescending { it.moduleInstallationPriority }
+        .map { get(it) }
+        .filter { it.restrictToAppName == appName }
+        .sortedByDescending { it.moduleInstallationPriority }
 }

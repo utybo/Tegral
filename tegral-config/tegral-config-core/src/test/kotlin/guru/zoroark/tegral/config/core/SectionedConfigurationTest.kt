@@ -5,13 +5,9 @@ import com.google.common.jimfs.Jimfs
 import com.sksamuel.hoplite.ConfigException
 import com.sksamuel.hoplite.ConfigLoaderBuilder
 import com.sksamuel.hoplite.addPathSource
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.assertThrows
 import java.nio.file.FileSystem
 import java.nio.file.Files
-import javax.print.attribute.standard.MediaSize.Other
-import javax.swing.text.html.Option
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -51,7 +47,10 @@ class SectionedConfigurationTest {
         return fs
     }
 
-    private fun setupAndLoadTomlConfig(content: String, vararg sections: ConfigurationSection<*>): SectionedConfigurationContainer {
+    private fun setupAndLoadTomlConfig(
+        content: String,
+        vararg sections: ConfigurationSection<*>
+    ): SectionedConfigurationContainer {
         val fs = setupFs("/test.toml", content)
 
         return configLoader(sections.toList())

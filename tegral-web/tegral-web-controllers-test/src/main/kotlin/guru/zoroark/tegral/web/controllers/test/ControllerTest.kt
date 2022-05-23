@@ -5,11 +5,16 @@ import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
 import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.dsl.tegralDi
 import guru.zoroark.tegral.di.environment.InjectableModule
-import guru.zoroark.tegral.di.test.*
+import guru.zoroark.tegral.di.test.TegralAbstractSubjectTest
+import guru.zoroark.tegral.di.test.TestMutableInjectionEnvironment
+import guru.zoroark.tegral.di.test.UnsafeMutableEnvironment
 import guru.zoroark.tegral.web.controllers.KtorModule
 import guru.zoroark.tegral.web.controllers.filterIsKclassSubclassOf
 import guru.zoroark.tegral.web.controllers.getKtorModulesByPriority
-import io.ktor.server.testing.*
+import io.ktor.server.testing.ApplicationTestBuilder
+import io.ktor.server.testing.ClientProvider
+import io.ktor.server.testing.TestApplicationBuilder
+import io.ktor.server.testing.testApplication
 import kotlin.reflect.KClass
 
 abstract class TegralControllerTest<TSubject : Any>(

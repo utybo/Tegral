@@ -1,6 +1,5 @@
 package guru.zoroark.tegral.services.feature
 
-import guru.zoroark.tegral.di.environment.InjectableModule
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.services.useServices
 import guru.zoroark.tegral.featureful.Feature

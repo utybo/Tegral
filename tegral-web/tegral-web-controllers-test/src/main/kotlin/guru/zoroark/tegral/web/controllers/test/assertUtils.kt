@@ -1,6 +1,6 @@
 package guru.zoroark.tegral.web.controllers.test
 
-import io.ktor.client.statement.*
+import io.ktor.client.statement.HttpResponse
 import kotlin.test.assertTrue
 
 fun assert2xx(response: HttpResponse) {
