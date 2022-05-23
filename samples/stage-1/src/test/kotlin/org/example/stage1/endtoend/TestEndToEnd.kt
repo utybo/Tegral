@@ -1,4 +1,4 @@
-package org.example.stage1.integr
+package org.example.stage1.endtoend
 
 class TestIntegration : TegralIntegrationTest() {
     override fun TegralEnvironmentDsl.initialize() {

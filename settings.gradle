@@ -5,4 +5,4 @@ include 'tegral-di:tegral-di-core', 'tegral-di:tegral-di-test', 'tegral-di:tegra
 include 'tegral-featureful'
 include 'tegral-logging'
 include 'tegral-services:tegral-services-api', 'tegral-services:tegral-services-feature'
-include 'tegral-web:tegral-web-appdefaults', 'tegral-web:tegral-web-appdsl', 'tegral-web:tegral-web-config', 'tegral-web:tegral-web-controllers'
+include 'tegral-web:tegral-web-appdefaults', 'tegral-web:tegral-web-appdsl', 'tegral-web:tegral-web-config', 'tegral-web:tegral-web-controllers', 'tegral-web:tegral-web-controllers-test'

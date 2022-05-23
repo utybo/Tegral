@@ -14,6 +14,15 @@ application {
 
 dependencies {
     implementation tegralLibs.bundles.web
+
+    testImplementation tegralLibs.bundles.web.test
+    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5:1.6.20'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {

@@ -111,7 +111,7 @@ open class TegralDiBaseTest<S : Any>(
      * See the example [on this class][TegralDiBaseTest]
      */
     @TegralDsl
-    fun <T> test(
+    open fun <T> test(
         additionalBuilder: ContextBuilderDsl.() -> Unit = {},
         block: UnsafeMutableEnvironment.() -> T
     ): T {
