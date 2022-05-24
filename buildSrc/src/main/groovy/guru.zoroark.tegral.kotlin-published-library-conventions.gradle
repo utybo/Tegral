@@ -1,5 +1,6 @@
 plugins {
     id 'guru.zoroark.tegral.kotlin-common-conventions'
+    id 'org.jetbrains.dokka'
 }
 
 project.ext.includeInCatalog = true

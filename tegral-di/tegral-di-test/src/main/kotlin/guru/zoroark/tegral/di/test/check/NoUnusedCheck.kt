@@ -9,7 +9,7 @@ import guru.zoroark.tegral.di.environment.InjectableModule
 import guru.zoroark.tegral.di.environment.Qualifier
 import kotlin.reflect.KClass
 
-private const val noUnusedFooterHelp =
+private const val NO_UNUSED_FOOTER_HELP =
     """
     If some or all of the components mentioned above are still used outside of injections (e.g. via a 'get' call on ^
     the environment), you can exclude them from this rule by adding them after the 'noUnused':
@@ -41,7 +41,7 @@ class NoUnusedCheck(private val ignoredValues: Set<Identifier<*>>) : IndividualC
             val message = "'noUnused' check failed.\n" +
                 "$introLine\n" +
                 deps.joinToString(separator = "\n") { "--> $it" } + "\n\n" +
-                noUnusedFooterHelp.trimIndent().replace("^\n", "")
+                NO_UNUSED_FOOTER_HELP.trimIndent().replace("^\n", "")
             throw TegralDiCheckException(message)
         }
     }
@@ -54,6 +54,7 @@ class NoUnusedCheck(private val ignoredValues: Set<Identifier<*>>) : IndividualC
  *
  * You can exclude components from this check using a lambda right after `noUnused`.
  */
+// TODO do not use this pattern anymore and use a regular function, too risky to let people forget a +
 @TegralDsl
 val noUnused = NoUnusedCheck(setOf())
 
