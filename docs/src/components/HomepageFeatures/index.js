@@ -52,8 +52,17 @@ const FeatureList = [
     description: (
       <>
         Tegral comes with zero code generation or magic symbol processing. This
-        keeps the build process simple and straightforward. 100% pure awesome
-        Kotlin!
+        keeps your build process simple and straightforward.
+      </>
+    )
+  },
+  {
+    title: 'Powered by Kotlin',
+    Svg: require('@site/static/img/undraw_kotlin_life.svg').default,
+    description: (
+      <>
+        Tegral is built on top of Kotlin, a modern programming language that
+        makes creating all kinds of apps easy and fun.
       </>
     )
   }

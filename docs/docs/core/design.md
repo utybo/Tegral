@@ -26,3 +26,14 @@ Tegral libraries can have a number of dependencies, both on other libraries from
 - **Heavy:** relies on many Tegral libraries and third party libraries of all kinds. These libraries generally assume that you are building a full Tegral-based application.
 
 Ideally, most libraries should fall in the minimal and light categories, some in the medium one while very few are in the heavy one.
+
+## Restrictions and philosophy
+
+The following rules must be followed by Tegral libraries:
+
+- **No mandatory modification of build processes.** This means that no Tegral component may impose the use of custom build processing. This means no custom Gradle plugin, no code generation and no build tool complications. The only exception being the Tegral catalog because it makes dependency management easier and does not really "do" anything (apart from providing aliases).
+- **Expect people to use Tegral partially.** Tegral libraries (outside of `tegral-web-*`) are expected to be used as-is, without modifications and without full Tegral integrations.
+- **A feature that is not documented does not exist.** In order for a feature to be considered documented, there must be:
+  - KDoc documentation (MUST)
+  - Some amount of documentation for usage on this website (SHOULD)
+  - Integration into an existing tutorial *or* a new tutorial about the feature if large enough (MAY)
