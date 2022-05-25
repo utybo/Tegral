@@ -63,7 +63,7 @@ task docusaurusBuild(type: NpxTask) {
         inputs.files(input)
     }
 
-    //outputs.files(layout.buildDirectory.dir('docusaurus')) // TODO
+    outputs.files(fileTree(layout.buildDirectory.dir('docusaurus')))
 }
 
 artifacts {
