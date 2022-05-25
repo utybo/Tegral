@@ -170,4 +170,4 @@ val environment = tegralDi {
 
 ### Testing support
 
-Tegral DI provides tools to aid the creation of test in environments: see our [testing documentation](/Testing) for more information.
+Tegral DI provides tools to aid the creation of test in environments: see our [testing documentation](./testing/check.md) for more information.

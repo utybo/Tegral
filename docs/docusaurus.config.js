@@ -75,12 +75,17 @@ const config = {
             position: 'left',
             label: 'Web'
           },
+          {
+            href: 'pathname:///api',
+            label: 'API',
+            position: 'right'
+          },
           // {to: '/blog', label: 'Blog', position: 'left'}, // TODO
           {
             href: 'https://github.com/utybo/tegral',
             label: 'GitHub',
             position: 'right'
-          },
+          }
         ],
       },
       footer: {
@@ -90,10 +95,10 @@ const config = {
           {
             title: 'Docs',
             items: [
-              {
+              /*{
                 label: 'Tutorial',
                 to: '/docs/intro',
-              },
+              },*/
             ],
           },
           // TODO

@@ -14,6 +14,7 @@ kotlinBcv = "0.8.0"
 ktor = "2.0.1"
 logback = "1.2.11"
 mockk = "1.12.4"
+nodeGradle = "3.3.0"
 slf4j = "1.7.36"
 versions = "0.42.0"
 
@@ -64,3 +65,4 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 versions = { id = "com.github.ben-manes.versions", version.ref = "versions" }
 gradleTestLogger = { id = "com.adarshr.test-logger", version.ref = "gradleTestLogger" }
 kotlinBcv = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinBcv" }
+nodeGradle = { id = "com.github.node-gradle.node", version.ref = "nodeGradle" }

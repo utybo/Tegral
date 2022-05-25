@@ -1,0 +1,73 @@
+plugins {
+    id 'com.github.node-gradle.node'
+    id 'base'
+}
+
+configurations {
+    web {
+        canBeConsumed = true
+        canBeResolved = true
+    }
+}
+
+def docsInputFiles = [
+    'babel.config.js',
+    'docusaurus.config.js',
+    'sidebars.js'
+]
+
+def docsInputDirs = [
+    'blog',
+    'docs',
+    'src',
+    'static'
+]
+
+task pnpmInstall(type: NpxTask) {
+    command = 'pnpm'
+    args = [ 'install' ]
+
+    inputs.file('package.json')
+    inputs.file('pnpm-lock.yaml')
+
+    outputs.file('node_modules/.modules.yaml')
+    outputs.file('node_modules/.package-lock.json')
+}
+
+task docusaurusStart(type: NpxTask) {
+    command = 'pnpm'
+    args = [ 'start' ]
+
+    for (input in docsInputFiles) {
+        inputs.file(input)
+    }
+    for (input in docsInputDirs) {
+        inputs.files(input)
+    }
+
+    dependsOn pnpmInstall
+}
+
+task docusaurusBuild(type: NpxTask) {
+    command = 'pnpm'
+    args = [ 
+        'build', 
+        '--out-dir',
+        layout.buildDirectory.dir('docusaurus').get().toString()
+    ]
+
+    for (input in docsInputFiles) {
+        inputs.file(input)
+    }
+    for (input in docsInputDirs) {
+        inputs.files(input)
+    }
+
+    //outputs.files(layout.buildDirectory.dir('docusaurus')) // TODO
+}
+
+artifacts {
+    web(layout.buildDirectory.dir("docusaurus")) {
+        builtBy docusaurusBuild
+    }
+}

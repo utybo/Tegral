@@ -9,3 +9,11 @@ detekt {
     config = files(rootProject.layout.projectDirectory.file("detekt-config.published.yaml"))
     buildUponDefaultConfig = true
 }
+
+tasks.dokkaHtmlPartial {
+    dokkaSourceSets {
+        configureEach {
+            includes.from("MODULE.md")
+        }
+    }
+}
