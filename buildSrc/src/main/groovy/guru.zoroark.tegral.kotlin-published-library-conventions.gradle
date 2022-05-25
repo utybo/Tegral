@@ -4,3 +4,8 @@ plugins {
 }
 
 project.ext.includeInCatalog = true
+
+detekt {
+    config = files(rootProject.layout.projectDirectory.file("detekt-config.published.yaml"))
+    buildUponDefaultConfig = true
+}
