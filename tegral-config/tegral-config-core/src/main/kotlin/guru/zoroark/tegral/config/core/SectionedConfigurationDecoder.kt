@@ -14,6 +14,12 @@ import kotlin.reflect.KType
 import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.typeOf
 
+/**
+ * Hoplite decode for [SectionedConfiguration].
+ *
+ * Note that this decoder is not loaded automatically. You need to manually add it to the Hoplite builder with the
+ * sections you are interested in.
+ */
 class SectionedConfigurationDecoder(
     private val sections: List<ConfigurationSection<*>>
 ) : NullHandlingDecoder<SectionedConfiguration> {

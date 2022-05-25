@@ -13,6 +13,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/docs" />
             <option value="$PROJECT_DIR$/tegral-catalog" />
             <option value="$PROJECT_DIR$/tegral-config" />
             <option value="$PROJECT_DIR$/tegral-config/tegral-config-core" />
@@ -33,6 +34,7 @@
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-config" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers-test" />
+            <option value="$PROJECT_DIR$/website" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -43,6 +45,7 @@
               <build path="$PROJECT_DIR$" name="Tegral">
                 <projects>
                   <project path="$PROJECT_DIR$" />
+                  <project path="$PROJECT_DIR$/docs" />
                   <project path="$PROJECT_DIR$/tegral-catalog" />
                   <project path="$PROJECT_DIR$/tegral-config" />
                   <project path="$PROJECT_DIR$/tegral-config/tegral-config-core" />
@@ -63,6 +66,7 @@
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-config" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-controllers" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-controllers-test" />
+                  <project path="$PROJECT_DIR$/website" />
                 </projects>
               </build>
             </builds>
@@ -78,6 +82,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/docs" />
             <option value="$PROJECT_DIR$/samples/stage-1" />
             <option value="$PROJECT_DIR$/tegral-catalog" />
             <option value="$PROJECT_DIR$/tegral-config" />
@@ -99,6 +104,7 @@
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-config" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers-test" />
+            <option value="$PROJECT_DIR$/website" />
           </set>
         </option>
       </GradleProjectSettings>

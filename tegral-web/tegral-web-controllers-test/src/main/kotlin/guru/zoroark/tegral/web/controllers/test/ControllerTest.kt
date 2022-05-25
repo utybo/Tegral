@@ -17,6 +17,10 @@ import io.ktor.server.testing.TestApplicationBuilder
 import io.ktor.server.testing.testApplication
 import kotlin.reflect.KClass
 
+/**
+ * A [subject-based][TegralAbstractSubjectTest] test for Controllers-based classes (more specifically, for subclasses of
+ * [KtorModule] and [KtorController]).
+ */
 abstract class TegralControllerTest<TSubject : Any>(
     subjectClass: KClass<TSubject>,
     private val baseModule: InjectableModule,
@@ -52,10 +56,26 @@ abstract class TegralControllerTest<TSubject : Any>(
     }
 }
 
+/**
+ * The context provided to applications in [TegralControllerTest.test]'s block.
+ *
+ * Three kinds of elements are available:
+ *
+ * - Elements from the Tegral DI test environment (provided via [TestMutableInjectionEnvironment])
+ * - The test Ktor clients (provided via [ClientProvider])
+ * - Additional configuration from the [TestApplicationBuilder] (provided via [applicationBuilder])
+ */
 interface ControllerTestContext : TestMutableInjectionEnvironment, ClientProvider {
+    /**
+     * Provides this test's [TestApplicationBuilder] in the lambda, which can be used to further set up Ktor's test
+     * facilities.
+     */
     fun applicationBuilder(block: TestApplicationBuilder.() -> Unit)
 }
 
+/**
+ * A default implementation of [ControllerTestContext] that delegates implementations to existing elements.
+ */
 class DefaultControllerTestContext(
     private val appBuilder: ApplicationTestBuilder,
     private val environment: TestMutableInjectionEnvironment

@@ -5,6 +5,9 @@ import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.featureful.Feature
 import guru.zoroark.tegral.services.feature.ServicesFeature
 
+/**
+ * Feature object for Tegral Web Controllers.
+ */
 object WebControllersFeature : Feature {
     override val id = "tegral.web.controllers"
     override val name = "Tegral Web Controllers"

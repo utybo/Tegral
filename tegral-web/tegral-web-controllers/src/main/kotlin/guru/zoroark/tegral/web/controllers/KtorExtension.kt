@@ -30,12 +30,25 @@ class KtorExtension(scope: InjectionScope) : DeclarationsProcessor {
     }
 }
 
+/**
+ * Utility functions that filters declarations to only those that are subclasses of [KtorModule], and returns a properly
+ * typed list for them.
+ */
 inline fun <reified T : Any> Sequence<Identifier<*>>.filterIsKclassSubclassOf(): List<Identifier<out T>> {
     return filter { it.kclass.isSubclassOf(T::class) }
         .filterIsInstance<Identifier<out T>>() // Note that this does not actually do anything due to type erasure
         .toList()
 }
 
+/**
+ * Retrieves all implementations of [KtorModule] subclasses in the given environment, sorted by decreasing priority.
+ *
+ * You should be able to use the output of this function as is in a for-each, like:
+ *
+ * ```kotlin
+ * getKtorModulesByPriority(...).forEach { install() }
+ * ```
+ */
 fun InjectionEnvironment.getKtorModulesByPriority(
     allIdentifiers: List<Identifier<out KtorModule>>,
     appName: String?

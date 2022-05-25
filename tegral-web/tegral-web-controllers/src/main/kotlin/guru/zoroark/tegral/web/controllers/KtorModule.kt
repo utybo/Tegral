@@ -23,9 +23,17 @@ abstract class KtorModule(
 ) {
     companion object {
         /**
-         * The default priority for modules (see [KtorModule.moduleInstallationPriority]
+         * The default priority for modules
+         *
+         * @see KtorModule.moduleInstallationPriority
          */
         const val DEFAULT_MODULE_PRIORITY = 500
+
+        /**
+         * The default priority for controllers
+         *
+         * @see KtorModule.moduleInstallationPriority
+         */
         const val DEFAULT_CONTROLLER_PRIORITY = 300
     }
 

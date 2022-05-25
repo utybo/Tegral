@@ -26,5 +26,10 @@
       <option name="name" value="MavenLocal" />
       <option name="url" value="file:$MAVEN_REPOSITORY$/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven" />
+      <option name="name" value="maven" />
+      <option name="url" value="https://gitlab.com/api/v4/projects/29365238/packages/maven" />
+    </remote-repository>
   </component>
 </project>

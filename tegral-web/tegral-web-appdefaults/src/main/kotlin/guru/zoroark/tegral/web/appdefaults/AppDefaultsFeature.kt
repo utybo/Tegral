@@ -8,6 +8,11 @@ import guru.zoroark.tegral.services.feature.ServicesFeature
 import guru.zoroark.tegral.web.config.WebConfiguration
 import guru.zoroark.tegral.web.controllers.WebControllersFeature
 
+/**
+ * Feature for Tegral AppDefaults. Adds related services to the environment.
+ *
+ * See the Tegral AppDefaults documentation for more information.
+ */
 object AppDefaultsFeature : ConfigurableFeature {
     override val id = "tegral-appdefaults"
     override val name = "Tegral AppDefaults"

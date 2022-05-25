@@ -13,6 +13,15 @@ import io.ktor.server.application.install
 import io.ktor.server.netty.Netty
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 
+/**
+ * A basic implementation of [KtorApplication] that uses sane defaults.
+ *
+ * This implementation sets up the following:
+ *
+ * - Adds the ContentNegotiation feature to the application with Jackson (and sets up the JavaTimeModule on Jackson)
+ * - Uses Netty as the server backend
+ * - Uses the [WebConfiguration] to configure the host and port of the application
+ */
 open class DefaultKtorApplication(scope: InjectionScope) : KtorApplication(scope) {
     private val tegralConfig: TegralConfig by scope()
 

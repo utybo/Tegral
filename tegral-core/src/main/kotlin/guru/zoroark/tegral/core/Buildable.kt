@@ -10,6 +10,9 @@ fun interface Buildable<T> {
     fun build(): T
 
     companion object {
+        /**
+         * Creates a [Buildable] object that will always return the given [result].
+         */
         fun <T> of(result: T): Buildable<T> = Buildable { result }
     }
 }

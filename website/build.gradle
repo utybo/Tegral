@@ -23,10 +23,11 @@ task rewriteDokkaLinks(type: Copy) {
     into layout.buildDirectory.dir("dokkaHtml")
 
     from(rootProject.layout.buildDirectory.dir("dokka/htmlMultiModule")) {
-        filesMatching(["*.html"]) {
+        filesMatching(["index.html"]) {
             filter { line -> 
                 line.replaceAll("href=\"", "href=\"/api/")
                     .replaceAll("src=\"", "src=\"/api/")
+                    .replaceAll("pathToRoot = \"\"", "pathToRoot = \"/api\"")
             }
         }
 

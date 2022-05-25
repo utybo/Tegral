@@ -118,6 +118,15 @@ abstract class TegralSubjectTest<TSubject : Any>(
     }
 }
 
+/**
+ * Abstract class for tests that aim to test a "subject". This means tests that are based around testing features from a
+ * single component, with additional supporting modules/components added to the mix.
+ *
+ * For simple components, see [TegralSubjectTest]. An example of a more complex use case is the Tegral Web Controllers
+ * test class `TegralControllerTest`.
+ *
+ * @see TegralSubjectTest
+ */
 abstract class TegralAbstractSubjectTest<TSubject : Any, TTestContext : TestMutableInjectionEnvironment>(
     protected val subjectClass: KClass<TSubject>
 ) : TegralDiBaseTest<TTestContext>() {
@@ -125,13 +134,14 @@ abstract class TegralAbstractSubjectTest<TSubject : Any, TTestContext : TestMuta
         get() = this.get(Identifier(subjectClass))
 }
 
+/**
+ * Common base class for tests that use Tegral DI. This is mostly here to set the basic syntax of tests.
+ */
 abstract class TegralDiBaseTest<TTestContext : TestMutableInjectionEnvironment> {
 
     /**
      * Create a new environment from this instance's configuration (and an optional [additionalBuilder]) and execute the
      * [block] within it.
-     *
-     * See the example [on this class][TegralDiBaseTest]
      */
     @TegralDsl
     protected abstract fun <T> test(

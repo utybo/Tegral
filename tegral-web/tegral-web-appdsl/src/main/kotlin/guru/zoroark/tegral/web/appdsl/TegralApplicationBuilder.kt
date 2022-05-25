@@ -21,6 +21,13 @@ import kotlin.reflect.KClass
 
 typealias ContextInstallationHook = ExtensibleContextBuilderDsl.() -> Unit
 
+/**
+ * This class allows for the dynamic creation of ad-hoc features.
+ *
+ * Usage of this class is discouraged (follow the guidelines set forth by the [Feature] documentation instead). It is
+ * only really useful if you are dynamically creating features, such as when you are using the [tegral] block: your
+ * entire application is represented as a feature within the Tegral application.
+ */
 class TegralCustomFeature(
     override val id: String,
     override val name: String,
@@ -32,6 +39,9 @@ class TegralCustomFeature(
     }
 }
 
+/**
+ * Builder for a [TegralCustomFeature] specifically tailored to contain the logic from the [tegral] block.
+ */
 class TegralApplicationFeatureBuilder : ExtensibleContextBuilderDsl, Buildable<Feature> {
     private val contextBuilderHooks = mutableListOf<ContextInstallationHook>()
     override fun meta(action: ContextBuilderDsl.() -> Unit) {
@@ -54,6 +64,11 @@ class TegralApplicationFeatureBuilder : ExtensibleContextBuilderDsl, Buildable<F
     }
 }
 
+/**
+ * Builder for a Tegral application. This class allows you to install features, tweak the application's configuration,
+ * add modules, classes and components of your own, etc. This is the class that is used as a receiver within the
+ * [tegral] block.
+ */
 class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplication> {
     private val defaultFeatureBuilder: TegralApplicationFeatureBuilder = TegralApplicationFeatureBuilder()
     private val featuresBuilders: MutableList<Buildable<Feature>> = mutableListOf()
@@ -121,12 +136,24 @@ class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplicati
 }
 
 private fun ContextBuilderDsl.unsafePut(kclass: KClass<*>, provider: ScopedSupplier<*>) {
+    @Suppress("UNCHECKED_CAST")
     fun <T : Any> genericsHackPut() {
         put(kclass as KClass<T>, EmptyQualifier, provider as ScopedSupplier<T>)
     }
     genericsHackPut<Any>()
 }
 
+/**
+ * Applies sane defaults to the given application builder. Specifically, this function:
+ *
+ * - Adds the Tegral Web AppDefaults feature ([AppDefaultsFeature])
+ * - Sets [TegralConfigurationContainer] as the configuration class (i.e. your configuration files will be parsed into
+ *   a [TegralConfigurationContainer] instance)
+ * - Adds the classpath resources `/tegral.toml`, `/tegral.yaml` and `/tegral.json` as configuration sources (if
+ *   present).
+ *
+ * This function is called automatically by [tegral], you should not need to call it again.
+ */
 @TegralDsl
 fun TegralApplicationDsl.applyDefaults() {
     install(AppDefaultsFeature)
