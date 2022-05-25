@@ -6,8 +6,8 @@ import guru.zoroark.tegral.di.extensions.DeclarationTag
 /**
  * Additional policies that can be applied to components to control how the Service extension will treat them.
  *
- * By default, any component whose class implements [ShedinjaService] or [SuspendShedinjaService] will be started and
- * stopped when requested. Policies allow you to prevent this.
+ * By default, any component whose class implements [TegralService] will be started and stopped when requested.
+ * Policies allow you to prevent this.
  */
 enum class IgnorePolicy : DeclarationTag {
     /**

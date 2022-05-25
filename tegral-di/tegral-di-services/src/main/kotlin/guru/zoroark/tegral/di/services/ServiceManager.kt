@@ -38,7 +38,7 @@ private fun OperationType.isBlockedByPolicy(policy: IgnorePolicy?): Boolean {
 /**
  * Exceptions that occur within the starting or stopping process are wrapped with this type.
  */
-class ShedinjaServiceException(message: String, cause: Throwable) : TegralDiException(message, cause)
+class TegralServiceException(message: String, cause: Throwable) : TegralDiException(message, cause)
 
 /**
  * Class for the [services extension][useServices] logic.
@@ -62,11 +62,8 @@ class ServiceManager(scope: InjectionScope) : DeclarationsProcessor {
     /**
      * Starts all the [TegralService] components registered in this environment.
      *
-     * Services [tagged][guru.zoroark.shedinja.extensions.DeclarationTag] with [noService]/[IgnorePolicy.IgnoreAll] or
+     * Services [tagged][guru.zoroark.tegral.di.extensions.DeclarationTag] with [noService]/[IgnorePolicy.IgnoreAll] or
      * [noServiceStart]/[IgnorePolicy.IgnoreStart] are ignored and do not get started when calling this function.
-     *
-     * This function runs blocking code (i.e. [ShedinjaService.start]) within the [Dispatchers.IO] dispatcher, and runs
-     * suspending functions (i.e. [SuspendShedinjaService.start]) asynchronously within the current context.
      */
     suspend fun startAll(
         messageHandler: (String) -> Unit = { /* no-op */ }
@@ -77,13 +74,10 @@ class ServiceManager(scope: InjectionScope) : DeclarationsProcessor {
         ) { it.start() }
 
     /**
-     * Stops all the [ShedinjaService] and [SuspendShedinjaService] components registered in this environment.
+     * Stops all the [TegralService] components registered in this environment.
      *
-     * Services [tagged][guru.zoroark.shedinja.extensions.DeclarationTag] with [noService]/[IgnorePolicy.IgnoreAll] or
+     * Services [tagged][guru.zoroark.tegral.di.extensions.DeclarationTag] with [noService]/[IgnorePolicy.IgnoreAll] or
      * [noServiceStop]/[IgnorePolicy.IgnoreStop] are ignored and do not get started when calling this function.
-     *
-     * This function runs blocking code (i.e. [ShedinjaService.stop]) within the [Dispatchers.IO] dispatcher, and runs
-     * suspending functions (i.e. [SuspendShedinjaService.stop]) asynchronously within the current context.
      */
     suspend fun stopAll(
         messageHandler: (String) -> Unit = { /* no-op */ }
@@ -129,7 +123,7 @@ class ServiceManager(scope: InjectionScope) : DeclarationsProcessor {
             return block()
         } catch (e: Exception) {
             if (e is CancellationException) throw e
-            throw ShedinjaServiceException(
+            throw TegralServiceException(
                 "${operationType.ingWord.capitalize()} service $identifier failed", e
             )
         }
@@ -147,8 +141,7 @@ class ServiceManager(scope: InjectionScope) : DeclarationsProcessor {
  *
  * ### Creating services
  *
- * A service is a component that implements either [ShedinjaService] or [SuspendShedinjaService]. Note that services
- * should not (and generally cannot due to compiler limitations) implement both interfaces.
+ * A service is just a component within a Tegrall DI environment that implements [TegralService].
  *
  * ### Starting and stopping services
  *
@@ -176,8 +169,12 @@ fun ExtensibleContextBuilderDsl.useServices() {
  * Throws an exception if the extension is not currently installed.
  */
 val ExtensibleInjectionEnvironment.services: ServiceManager
-    get() = metaEnvironment.getOrNull()
-        ?: throw ExtensionNotInstalledException(
-            "Services extension is not installed. Install the service manager by adding 'useServices()' in your " +
-                "'shedinja' block."
-        )
+    get() = metaEnvironment.getOrNull() ?: throw ExtensionNotInstalledException(
+        """
+        Services extension is not installed.
+        --> Building a full Tegral application?
+            Use 'install(ServicesFeature)' (from tegral-services-feature) in your 'tegral' block.
+        --> Just using Tegral DI?
+            Install the service manager by adding 'useServices()' in your 'tegralDi' block.
+        """.trimIndent()
+    )

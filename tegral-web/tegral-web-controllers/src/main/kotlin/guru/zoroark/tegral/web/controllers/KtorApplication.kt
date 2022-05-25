@@ -12,7 +12,7 @@ private const val STOP_GRACE_PERIOD_MS = 1000L
 private const val STOP_TIMEOUT_MS = 2000L
 
 /**
- * Superclass for Ktor applications that use the `shedinja-ktor` extension.
+ * Superclass for Ktor applications that use Tegral Web Application.
  */
 abstract class KtorApplication(
     scope: InjectionScope,
