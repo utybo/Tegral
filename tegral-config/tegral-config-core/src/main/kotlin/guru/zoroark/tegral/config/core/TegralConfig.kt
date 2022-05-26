@@ -1,3 +1,6 @@
 package guru.zoroark.tegral.config.core
 
-typealias TegralConfig = SectionedConfiguration
+/**
+ * Sectioned configuration class used by the `[tegral]` block.
+ */
+class TegralConfig(elements: ConfigurationSections) : SectionedConfiguration(elements)

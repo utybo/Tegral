@@ -1,9 +1,7 @@
 package guru.zoroark.tegral.web.appdefaults
 
 import guru.zoroark.tegral.config.core.RootConfiguration
-import guru.zoroark.tegral.config.core.SectionedConfiguration
-
-typealias TegralConfig = SectionedConfiguration
+import guru.zoroark.tegral.config.core.TegralConfig
 
 /**
  * The default configuration object for `tegral.toml` files.

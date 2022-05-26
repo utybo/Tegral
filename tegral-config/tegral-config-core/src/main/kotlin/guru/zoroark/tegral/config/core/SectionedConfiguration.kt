@@ -1,5 +1,7 @@
 package guru.zoroark.tegral.config.core
 
+typealias ConfigurationSections = Map<ConfigurationSection<*>, Any>
+
 /**
  * A class that can contain an arbitrary number of "sections".
  *
@@ -11,7 +13,7 @@ open class SectionedConfiguration(
      * The sections available in this configuration. Consider using the [get] operator instead of directly using this
      * map.
      */
-    val sections: Map<ConfigurationSection<*>, Any>
+    val sections: ConfigurationSections
 ) {
     /**
      * Retrieves a configuration via its section, or throws an exception if no such section could be found.

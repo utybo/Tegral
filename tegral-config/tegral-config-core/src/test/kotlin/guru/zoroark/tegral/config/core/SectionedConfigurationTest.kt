@@ -18,6 +18,14 @@ class SectionedConfigurationTest {
         val sc: SectionedConfiguration
     )
 
+    class SectionedConfigurationOne(sections: ConfigurationSections) : SectionedConfiguration(sections)
+    class SectionedConfigurationTwo(sections: ConfigurationSections) : SectionedConfiguration(sections)
+
+    data class DoubleConfigurationContainer(
+        val scOne: SectionedConfigurationOne,
+        val scTwo: SectionedConfigurationTwo
+    )
+
     data class SimpleSection(val key: String) {
         companion object :
             ConfigurationSection<SimpleSection>("simple-section", SectionOptionality.Required, SimpleSection::class)
@@ -36,10 +44,17 @@ class SectionedConfigurationTest {
         )
     }
 
+    data class RandomSection(val hello: String) {
+        companion object :
+            ConfigurationSection<RandomSection>("random-section", SectionOptionality.Required, RandomSection::class)
+    }
+
     private fun configLoader(sections: List<ConfigurationSection<*>>) =
         ConfigLoaderBuilder.default()
             .strict()
-            .addDecoder(SectionedConfigurationDecoder(sections))
+            .addDecoder(
+                SectionedConfigurationDecoder(SectionedConfiguration::class, ::SectionedConfiguration, sections)
+            )
 
     private fun setupFs(filePath: String, fileContent: String): FileSystem {
         val fs = Jimfs.newFileSystem(Configuration.unix())
@@ -105,5 +120,40 @@ class SectionedConfigurationTest {
         val message = exc.message
         assertNotNull(message)
         assertTrue(message.contains("other-section"))
+    }
+
+    @Test
+    fun `toml, two different sectioned configs can coexist`() {
+        val toml = """
+            [scOne.simple-section]
+            key = "value one"
+            
+            [scTwo.random-section]
+            hello = "world"
+        """.trimIndent()
+        val fs = setupFs("/test.toml", toml)
+
+        val config = ConfigLoaderBuilder.default()
+            .strict()
+            .addDecoder(
+                SectionedConfigurationDecoder(
+                    SectionedConfigurationOne::class,
+                    ::SectionedConfigurationOne,
+                    listOf(SimpleSection)
+                )
+            )
+            .addDecoder(
+                SectionedConfigurationDecoder(
+                    SectionedConfigurationTwo::class,
+                    ::SectionedConfigurationTwo,
+                    listOf(RandomSection)
+                )
+            )
+            .addPathSource(fs.getPath("/test.toml"))
+            .build()
+            .loadConfigOrThrow<DoubleConfigurationContainer>()
+
+        assertEquals(SimpleSection(key = "value one"), config.scOne[SimpleSection])
+        assertEquals(RandomSection(hello = "world"), config.scTwo[RandomSection])
     }
 }

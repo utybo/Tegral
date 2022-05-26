@@ -4,6 +4,7 @@ import com.sksamuel.hoplite.ConfigLoaderBuilder
 import com.sksamuel.hoplite.ConfigSource
 import guru.zoroark.tegral.config.core.RootConfiguration
 import guru.zoroark.tegral.config.core.SectionedConfigurationDecoder
+import guru.zoroark.tegral.config.core.TegralConfig
 import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
@@ -117,7 +118,7 @@ class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplicati
         // Retrieve [tegral.*] configuration sections
         val sections = toInstall.filterIsInstance<ConfigurableFeature>().flatMap { it.configurationSections }.distinct()
         // Create a decoder adapted to said sections and add it to the config loader
-        config.addDecoder(SectionedConfigurationDecoder(sections.toList()))
+        config.addDecoder(SectionedConfigurationDecoder(TegralConfig::class, ::TegralConfig, sections.toList()))
 
         // Build and load configuration
         val appConfig = config.build().loadConfigOrThrow(configClass, configSources)
