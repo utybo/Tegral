@@ -22,4 +22,14 @@ open class SectionedConfiguration(
     operator fun <T : Any> get(section: ConfigurationSection<T>): T = sections.getOrElse(section) {
         throw UnknownSectionException(section.name)
     } as T
+
+
+    override fun toString(): String {
+        return buildString {
+            append(this@SectionedConfiguration::class.simpleName ?: "SectionedConfiguration")
+            append("(")
+            sections.map { (section, value) -> "${section.name}=$value" }.joinTo(this, ", ")
+            append(")")
+        }
+    }
 }

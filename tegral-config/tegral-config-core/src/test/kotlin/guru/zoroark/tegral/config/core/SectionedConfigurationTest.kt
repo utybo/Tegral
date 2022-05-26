@@ -156,4 +156,12 @@ class SectionedConfigurationTest {
         assertEquals(SimpleSection(key = "value one"), config.scOne[SimpleSection])
         assertEquals(RandomSection(hello = "world"), config.scTwo[RandomSection])
     }
+
+    @Test
+    fun `simple to string`() {
+        val configuration = SectionedConfigurationOne(
+            mapOf(SimpleSection to SimpleSection("value"))
+        )
+        assertEquals("SectionedConfigurationOne(simple-section=SimpleSection(key=value))", configuration.toString())
+    }
 }
