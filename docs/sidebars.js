@@ -37,6 +37,14 @@ const sidebars = {
           ]
         }
       ]
+    },
+    {
+      type: 'category',
+      label: 'Tegral Config',
+      link: { type: 'doc', id: 'core/config/index' },
+      items: [
+        'core/config/sections'
+      ]
     }
   ],
   web: [
