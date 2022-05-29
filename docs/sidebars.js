@@ -30,6 +30,15 @@ const sidebars = {
         'core/di/modules',
         {
           type: 'category',
+          label: 'Testing',
+          link: { type: 'doc', id: 'core/di/testing/index' },
+          items: [
+            'core/di/testing/writing-tests',
+            'core/di/testing/checks'
+          ]
+        },
+        {
+          type: 'category',
           label: 'Extensions',
           link: { type: 'doc', id: 'core/di/extensions/introduction' },
           items: [
