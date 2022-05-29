@@ -26,7 +26,7 @@ private const val NO_UNUSED_FOOTER_HELP =
  * Checks that all the components within modules are injected somewhere, except for the specified in the set passed as
  * a parameter.
  */
-class NoUnusedCheck(private val ignoredValues: Set<Identifier<*>>) : IndividualCheck {
+class NoUnusedCheck(private val ignoredValues: Set<Identifier<*>>) : TegralDiCheck {
     override fun check(modules: List<InjectableModule>) {
         val env = tegralDi(DependencyTrackingInjectionEnvironment) {
             modules.forEach { put(it) }
@@ -48,22 +48,16 @@ class NoUnusedCheck(private val ignoredValues: Set<Identifier<*>>) : IndividualC
 }
 
 /**
- * Creates a [NoUnusedCheck] without excluding any class.
+ * Creates a [NoUnusedCheck].
  *
- * Note that this check succeeding means that [noCycle] will always fail.
+ * You can optionally add a lambda as a parameter to exclude specific components from this check.
  *
- * You can exclude components from this check using a lambda right after `noUnused`.
- */
-// TODO do not use this pattern anymore and use a regular function, too risky to let people forget a +
-@TegralDsl
-val noUnused = NoUnusedCheck(setOf())
-
-/**
- * Creates a [NoUnusedCheck], using the block given as a parameter to exclude specific components from this check.
+ * This check succeeding without any components being excluded means that [noCycle] will always fail.
  */
 @TegralDsl
-inline fun noUnused(block: NoUnusedCheckDsl.() -> Unit): NoUnusedCheck =
-    NoUnusedCheckDsl().apply(block).build()
+inline fun TegralDiCheckDsl.noUnused(block: NoUnusedCheckDsl.() -> Unit = {}) {
+    checks.add(NoUnusedCheckDsl().apply(block).build())
+}
 
 /**
  * DSL receiver for creating a [NoUnusedCheck] with excluded components. Use the [exclude] functions to exclude

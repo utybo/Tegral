@@ -6,6 +6,7 @@ import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.dsl.tegralDi
 import guru.zoroark.tegral.di.environment.EnvironmentContext
 import guru.zoroark.tegral.di.environment.Identifier
+import guru.zoroark.tegral.di.environment.InjectableModule
 import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionEnvironmentKind
 import guru.zoroark.tegral.di.environment.Injector
@@ -55,19 +56,25 @@ private class CrashOnUseEnvironment(context: EnvironmentContext) : InjectionEnvi
     }
 }
 
+private object SafeInjectionCheck : TegralDiCheck {
+    override fun check(modules: List<InjectableModule>) {
+        try {
+            tegralDi(CrashOnUseEnvironment) {
+                modules.forEach { put(it) }
+            }
+        } catch (ex: InvocationTargetException) {
+            val original = ex.getUpperCause<TegralDiCheckException>()
+            throw original ?: throw InternalErrorException("Unexpected error in 'safeInjection' check", ex)
+        }
+    }
+}
+
 /**
  * Check that verifies no injection is actually performed during the instantiation of components.
  */
 @TegralDsl
-val safeInjection = IndividualCheck { modules ->
-    try {
-        tegralDi(CrashOnUseEnvironment) {
-            modules.forEach { put(it) }
-        }
-    } catch (ex: InvocationTargetException) {
-        val original = ex.getUpperCause<TegralDiCheckException>()
-        throw original ?: throw InternalErrorException("Unexpected error in 'safeInjection' check", ex)
-    }
+fun TegralDiCheckDsl.safeInjection() {
+    checks.add(SafeInjectionCheck)
 }
 
 private inline fun <reified T : Throwable> InvocationTargetException.getUpperCause(): T? {

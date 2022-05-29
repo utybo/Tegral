@@ -23,7 +23,6 @@ open class SectionedConfiguration(
         throw UnknownSectionException(section.name)
     } as T
 
-
     override fun toString(): String {
         return buildString {
             append(this@SectionedConfiguration::class.simpleName ?: "SectionedConfiguration")

@@ -65,7 +65,7 @@ class CyclicCheckTest {
             tegralDiCheck {
                 modules(module)
 
-                +noCycle
+                noCycle()
             }
         }
     }
@@ -80,7 +80,7 @@ class CyclicCheckTest {
             tegralDiCheck {
                 modules(module)
 
-                +noCycle
+                noCycle()
             }
         }.assertMessage(
             """
@@ -106,7 +106,7 @@ class CyclicCheckTest {
             tegralDiCheck {
                 modules(module)
 
-                +noCycle
+                noCycle()
             }
         }.assertMessage(
             """

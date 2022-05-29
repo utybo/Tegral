@@ -46,7 +46,7 @@ class SafeInjectionCheckTest {
             tegralDiCheck {
                 modules(module)
 
-                +safeInjection
+                safeInjection()
             }
         }
     }
@@ -64,7 +64,7 @@ class SafeInjectionCheckTest {
             tegralDiCheck {
                 modules(module)
 
-                +safeInjection
+                safeInjection()
             }
         }.assertMessage(
             """

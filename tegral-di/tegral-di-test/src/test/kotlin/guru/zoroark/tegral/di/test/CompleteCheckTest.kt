@@ -63,7 +63,7 @@ class CompleteCheckTest {
             tegralDiCheck {
                 modules(module)
 
-                +complete
+                complete()
             }
         }
     }
@@ -78,7 +78,7 @@ class CompleteCheckTest {
         assertThrows<TegralDiCheckException> {
             tegralDiCheck {
                 modules(module)
-                +complete
+                complete()
             }
         }.assertMessage(
             """
@@ -106,7 +106,7 @@ class CompleteCheckTest {
         assertThrows<TegralDiCheckException> {
             tegralDiCheck {
                 modules(module, module2)
-                +complete
+                complete()
             }
         }.assertMessage(
             """
@@ -135,7 +135,7 @@ class CompleteCheckTest {
         assertDoesNotThrow {
             tegralDiCheck {
                 modules(module)
-                +complete
+                complete()
             }
         }
     }

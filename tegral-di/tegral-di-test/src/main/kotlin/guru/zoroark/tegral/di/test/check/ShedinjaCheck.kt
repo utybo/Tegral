@@ -10,9 +10,9 @@ import guru.zoroark.tegral.di.environment.InjectableModule
 class TegralDiCheckException(message: String) : TegralDiException(message)
 
 /**
- * An individual check that can be ran.
+ * An individual Tegral DI check that can be ran.
  */
-fun interface IndividualCheck {
+fun interface TegralDiCheck {
     /**
      * Run this check on the given list of modules.
      */
@@ -30,17 +30,9 @@ class TegralDiCheckDsl {
     val modules = mutableListOf<InjectableModule>()
 
     /**
-     * Checks that should be ran. Consider using the [unaryPlus] operator for a more DSLish look.
+     * Checks that should be ran.
      */
-    val checks = mutableListOf<IndividualCheck>()
-
-    /**
-     * Adds this individual check to this Tegral DI check instance.
-     */
-    @TegralDsl
-    operator fun IndividualCheck.unaryPlus() {
-        checks += this
-    }
+    val checks = mutableListOf<TegralDiCheck>()
 }
 
 /**

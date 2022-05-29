@@ -50,7 +50,7 @@ class NoUnusedCheckTest {
             tegralDiCheck {
                 modules(module)
 
-                +noUnused
+                noUnused()
             }
         }
     }
@@ -67,7 +67,7 @@ class NoUnusedCheckTest {
             tegralDiCheck {
                 modules(module)
 
-                +noUnused
+                noUnused()
             }
         }.assertMessage(
             """
@@ -101,7 +101,7 @@ class NoUnusedCheckTest {
             tegralDiCheck {
                 modules(module)
 
-                +noUnused
+                noUnused()
             }
         }.assertMessage(
             """
@@ -139,7 +139,7 @@ class NoUnusedCheckTest {
             tegralDiCheck {
                 modules(module)
 
-                +noUnused {
+                noUnused {
                     dsl()
                 }
             }
@@ -193,7 +193,7 @@ class NoUnusedCheckTest {
             tegralDiCheck {
                 modules(module)
 
-                +noUnused {
+                noUnused {
                     dsl()
                 }
             }
