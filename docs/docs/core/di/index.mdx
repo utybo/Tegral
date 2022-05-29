@@ -1,3 +1,5 @@
+import PackageVersions from '@site/src/components/PackageVersions';
+
 # Tegral DI
 
 Tegral DI, formerly known as Shedinja, is an easy-to-use dependency injection framework for Kotlin, mainly inspired by [Koin](https://insert-koin.io) with the objective of being more flexible and safer.
@@ -52,3 +54,10 @@ Tegral DI is the successor of (and a fork of) [Shedinja](https://shedinja.zoroar
 - Shedinja provides Koin 2 and Koin 3 libraries that have not been ported to Tegral.
 
 You can safely migrate to Tegral DI without many issues (some classes and functions have been renamed) if you do not use the Koin integration nor the Ktor extension.
+
+<PackageVersions libraries={[
+    { name: 'tegral-di-core', catalog: 'di.core' },
+    { name: 'tegral-di-test', catalog: 'di.test' },
+    { name: 'tegral-di-test-mockk', catalog: 'di.test.mockk' },
+    { name: 'tegral-di-services', catalog: 'di.services' }
+]} />
