@@ -16,6 +16,7 @@ const sidebars = {
   core: [
     'core/index',
     'core/design',
+    'core/catalog/index',
     {
       type: 'category',
       label: 'Tegral DI',
@@ -45,7 +46,8 @@ const sidebars = {
       items: [
         'core/config/sections'
       ]
-    }
+    },
+    'core/featureful/index'
   ],
   web: [
     'web/index'
