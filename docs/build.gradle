@@ -50,8 +50,10 @@ task docusaurusStart(type: NpxTask) {
 
 task docusaurusBuild(type: NpxTask) {
     command = 'pnpm'
-    args = [ 
+    args = [
+        'run',
         'build', 
+        '--',
         '--out-dir',
         layout.buildDirectory.dir('docusaurus').get().toString()
     ]

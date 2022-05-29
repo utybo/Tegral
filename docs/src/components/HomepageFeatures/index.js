@@ -26,7 +26,7 @@ const FeatureList = [
     ),
   },
   {
-    title: 'Powered by Open-Source',
+    title: 'Built on Open-Source',
     Svg: require('@site/static/img/undraw_product_teardown.svg').default,
     description: (
       <>
