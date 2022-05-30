@@ -37,5 +37,8 @@ jobs:
           java-version: '17'
       - uses: actions/setup-node@v3
       - run: npm i -g pnpm
-      - run: cd docs && pnpm build
+      - run: pnpm install
+        working-directory: docs
+      - run: pnpm build
+        working-directory: docs
       - run: ./gradlew :website:assembleFiles
