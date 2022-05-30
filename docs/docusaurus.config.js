@@ -141,6 +141,13 @@ const config = {
         darkTheme: darkCodeTheme,
         additionalLanguages: ['kotlin', 'groovy', 'toml'],
       },
+      announcementBar: {
+        id: 'not-released-yet',
+        content: '<strong>Tegral has not been released yet!</strong> Check back soon for 0.1!',
+        backgroundColor: '#834cff',
+        textColor: '#ffffff',
+        isCloseable: false
+      }
     }),
 };
 
