@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Tegral',
   tagline: 'Libraries for better Kotlin applications.',
-  url: 'https://your-docusaurus-test-site.com', // TODO
+  url: 'https://tegral.zoroark.guru',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
@@ -34,17 +34,15 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/', // TODO update to proper URL
+            'https://github.com/utybo/Tegral/tree/main/docs/',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/', // TODO update to proper URL
+          //editUrl:
+          //  'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/'
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -86,7 +84,7 @@ const config = {
             label: 'API',
             position: 'right'
           },
-          // {to: '/blog', label: 'Blog', position: 'left'}, // TODO
+          // {to: '/blog', label: 'Blog', position: 'left'}, // TODO re-add once blog has some content
           {
             href: 'https://github.com/utybo/tegral',
             label: 'GitHub',
@@ -97,7 +95,7 @@ const config = {
       footer: {
         style: 'dark',
         links: [
-          // TODO
+          // TODO add links
           {
             title: 'Docs',
             items: [
@@ -107,7 +105,7 @@ const config = {
               },*/
             ],
           },
-          // TODO
+          // TODO add links
           {
             title: 'Community',
             items: [
@@ -125,17 +123,17 @@ const config = {
               },
             ],
           },
-          // TODO
+          // TODO add links
           {
             title: 'More',
             items: [
-              /*{ // TODO
+              /*{ // TODO re-add when blog has content
                 label: 'Blog',
                 to: '/blog',
               },*/
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/utybo/Tegral',
               },
             ],
           },
