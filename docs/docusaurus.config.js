@@ -12,7 +12,7 @@ const config = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
-  favicon: 'img/tegral_logo.png', // TODO replace with something else
+  favicon: 'img/tegral_logo.png',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -74,6 +74,12 @@ const config = {
             docId: 'web/index',
             position: 'left',
             label: 'Web'
+          },
+          {
+            type: 'doc',
+            docId: 'about/contributing',
+            position: 'left',
+            label: 'About'
           },
           {
             href: 'pathname:///api',

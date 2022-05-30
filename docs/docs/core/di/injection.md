@@ -31,7 +31,7 @@ class AuthService(scope: InjectionScope) {
 }
 ```
 
-### Meta-environment injections
+## Meta-environment injections
 
 :::note
 
@@ -62,7 +62,7 @@ Note that `meta` actually just returns an injection scope bound to the meta-envi
 
 :::caution
 
-Unless otherwise noted, meta-injections are ignored in [checks](./testing/check.md) and will not raise errors.
+Unless otherwise noted, meta-injections are ignored in [checks](./testing/checks.md) and will not raise errors.
 
 :::
 

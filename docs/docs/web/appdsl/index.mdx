@@ -1,0 +1,49 @@
+import PackageVersions from '@site/src/components/PackageVersions';
+
+# TW AppDSL
+
+Tegral Web AppDSL is the library that provides you wish an entrypoint to define your Tegral application as well as some routines for starting, stopping and maintaining Tegral Web applications.
+
+
+<PackageVersions libraries={[
+    { name: 'tegral-web-appdsl', catalog: 'web.appdsl' }
+]} />
+
+## The `tegral` block
+
+Most of the ways you will be interacting with AppDSL is via (surprise!) the `tegral` DSL.
+
+```kotlin
+tegral {
+    // ...
+}
+```
+
+The `tegral` block allows you to build a Tegral Web application, install features, add components. This is the main entrypoint for a full Tegral application.
+
+### Included in the box
+
+By default, quite a few things happen in the `tegral` block without you having to specify anything.
+
+- [Tegral Web AppDefaults](/web/appdefaults/index.mdx) gets installed, along with its dependencies (i.e. [Tegral Web Controllers](/web/controllers/index.mdx), [Tegral Services](/core/services/index.mdx), [Tegral Logging](/core/logging/index.mdx)) and what it brings to the environment.
+- A default configuration class that only contains a `tegral` property gets installed. This means that, unless you want to customize what is available in your configuration, you do not need to do anything to use `[tegral.*]` configuration sections
+- Sets up loading the following files from your `resources`:
+    - `/tegral.toml` using TOML. This is the recommended way you should configure your applications.
+    - `/tegral.yaml` using YAML.
+    - `/tegral.json` using JSON.
+- A decoder for the `tegral` section of the configuration gets configured
+- A Tegral DI environment is created.
+
+## Configuring your app
+
+<!-- TODO -->
+
+## Tegral DI environment
+
+AppDSL automatically creates a Tegral DI environment and adds the following components:
+
+- The application configuration (i.e. the class you pass to `useConfiguration` or `TegralConfigurationContainer` by default).
+- The `tegral` section of the application configuration (i.e. `TegralConfig`).
+- All of the installed features' `Feature` object.
+- Anything features do with the environment via their `install()` function.
+

@@ -1,18 +1,16 @@
-# Services
-
-<!-- TODO outdated documentation -->
-
-:::caution
-
-This extension is experimental.
-
-:::
+# Services support
 
 *This is an installable extension that is only compatible with extensible environments.*
 
 The services extension provides an easy way to "start and stop all components". The exact meaning of "starting components" is up to you: it could be connecting to a database, starting a web server, or anything else.
 
 It is somewhat equivalent to [hosted services on ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services). Note that Tegral DI services are not autostarted: you need to call `env.services.startAll()` manually.
+
+:::note
+
+In Tegral Web appplications, starting and stopping is managed by the application's environment. You should not call `env.services.startAll()` yourself.
+
+:::
 
 ## Usage
 
@@ -30,24 +28,23 @@ val env = tegralDi {
 }
 ```
 
+If you are building a full Tegral application where [features](/core/featureful/index.mdx) can be installed, consider installing the [Tegral Services feature](/core/featureful/index.mdx) instead.
+
 ### Creating services
 
-Services are regular components that implement `TegralDiService` or `SuspendTegralDiService`.
-
-* You should use `TegralDiService` if your start/stop functions are blocking.
-* You should use `SuspendTegralDiService` if your start/stop functions are suspending (or can be made suspending via the use of Kotlin coroutines facilities).
+Services are regular components that implement `TegralDiService`.
 
 Here is an example using a (fictional) database system:
 
 ```kotlin
-class DatabaseService(scope: InjectionScope) : TegralDiService /* or SuspendTegralDiService */ {
+class DatabaseService(scope: InjectionScope) : TegralDiService {
     private val db by scope<DatabaseConfiguration>() wrapIn { Database(it) }
 
-    override fun start() { // or override suspend fun start() for SuspendTegralDiService
+    override suspend fun start() {
         db.connect()
     }
 
-    override fun stop() { // or override suspend fun stop() for SuspendTegralDiService
+    override suspend fun stop() {
         db.disconnect()
     }
 }
@@ -67,7 +64,6 @@ val env = tegralDi {
 
 Once your environment is created, you can then call `.services.startAll()` and `.services.stopAll()` to start and stop all services.
 
-
 ```kotlin
 val env = tegralDi {
     useServices()
@@ -80,7 +76,7 @@ env.services.startAll()
 env.services.stopAll()
 ```
 
-Note that `startAll` and `stopAll` are suspending functions. If you are not using coroutines within your application at all, you may want to wrap the `startAll`/`stopAll` within a `runBlocking { ... }` block.
+Note that `startAll` and `stopAll` are suspending functions. If you wish to start/stop your services from some non-coroutine code, wrap the call in `runBlocking { ... }` like so:
 
 ```kotlin
 runBlocking { env.services.startAll() }
@@ -109,7 +105,7 @@ env.services.stopAll(::println)
 
 ### Excluding services
 
-You may exclude services from being started/stopped by tagging their `put` statement with `noService`, `noServiceStart` or `noServiceStop`.
+You may exclude services from being started/stopped by [tagging](./introduction.md#tags) their `put` statement with `noService`, `noServiceStart` or `noServiceStop`.
 
 ```kotlin
 val env = tegralDi {

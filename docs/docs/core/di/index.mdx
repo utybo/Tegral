@@ -39,21 +39,11 @@ val env = tegralDi {
 }
 ```
 
-:::note
+:::info
 
 You do not need to use `tegralDi` when running full Tegral applications (i.e. when using AppDSL). The actual environment is managed for you.
 
 :::
-
-## Differences with Shedinja
-
-Tegral DI is the successor of (and a fork of) [Shedinja](https://shedinja.zoroark.guru). The main differences are:
-
-- Tegral DI's services extension is integrated with Tegral CoreServices instead of using its own service interface.
-- Tegral provides a more powerful way of interfacing DI with Ktor via the Tegral Controllers library.
-- Shedinja provides Koin 2 and Koin 3 libraries that have not been ported to Tegral.
-
-You can safely migrate to Tegral DI without many issues (some classes and functions have been renamed) if you do not use the Koin integration nor the Ktor extension.
 
 <PackageVersions libraries={[
     { name: 'tegral-di-core', catalog: 'di.core' },
@@ -61,3 +51,21 @@ You can safely migrate to Tegral DI without many issues (some classes and functi
     { name: 'tegral-di-test-mockk', catalog: 'di.test.mockk' },
     { name: 'tegral-di-services', catalog: 'di.services' }
 ]} />
+
+## Differences with Shedinja
+
+Tegral DI is the successor of (and a fork of) [Shedinja](https://shedinja.zoroark.guru). The main differences are:
+
+- Tegral DI's services extension is integrated with Tegral Services instead of using its own service interface.
+  - As a result, this means that Tegral DI services are *always* suspending when starting/stopping.
+- Tegral provides a more powerful way of interfacing DI with Ktor via the Tegral Controllers library.
+- Shedinja provides Koin 2 and Koin 3 libraries that have not been ported to Tegral.
+- Tegral DI checks use the `checkName()` DSL instead of the `+checkName` DSL for adding checks.
+
+You can safely migrate to Tegral DI without many issues (some classes and functions have been renamed) if you do not use the Koin integration nor the Ktor extension by:
+
+- Updating your imports.
+- Changing the name of Shedinja classes to their new name (in general, classes like `ShedinjaFoobar` were renamed to `TegralDiFoobar`).
+- Updating your `shedinjaCheck` to use `tegralDi` with the updated checks DSL.
+
+

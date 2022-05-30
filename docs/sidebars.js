@@ -56,10 +56,20 @@ const sidebars = {
         'core/config/sections'
       ]
     },
-    'core/featureful/index'
+    'core/featureful/index',
+    'core/services/index',
+    'core/logging/index'
   ],
   web: [
-    'web/index'
+    'web/index',
+    'web/appdsl/index',
+    'web/appdefaults/index',
+    'web/controllers/index',
+    'web/config/index'
+  ],
+  about: [
+    'about/contributing',
+    'about/security'
   ]
 };
 

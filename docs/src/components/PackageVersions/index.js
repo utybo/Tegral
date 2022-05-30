@@ -15,7 +15,7 @@ export default function PackageVersions({ libraries }) {
           <thead>
             <tr>
               <th align="center">Package name</th>
-              <th><a href="/core/catalog/index.md">Catalog</a> dependency</th>
+              <th><a href="/docs/core/catalog/">Catalog</a> dependency</th>
               <th>Full Gradle name</th>
             </tr>
           </thead>

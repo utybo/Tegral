@@ -32,7 +32,7 @@ Since the entire point of sectioned configurations is to be able to contain arbi
 A section can be defined using the following pattern, where:
 
 - The actual section content is defined in a data class (this is required for Hoplite to automatically decode this class).
-- The section data class gets a companion object that subclasses `ConfigurationSection`. This companion object additionally defines the name of the section (e.g. the name used in the configuration file) as well as whether it is required or not, and if not, the default value.
+- The section data class gets a companion object that subclasses `ConfigurationSection`. This companion object additionally defines the name of the section (e.g. the name used in the configuration file) as well as whether it is required or not and, if not, the default value.
 
 ```kotlin
 // An example of a mandatory section
@@ -123,7 +123,7 @@ println(config)
 You can get sectioned configuration objects in a few ways:
 
 - either by parsing a configuration file as described [in the section above](#creating-sectioned-configurations)
-- via your environment providing you with, e.g. when using Tegral Web AppDSL <!-- TODO AppDSL link -->
+- via your environment providing you with, e.g. when using [Tegral Web AppDSL](/web/appdsl/index.mdx)
 - by instantiating a `SectionedConfiguration` object yourself (but where's the fun in that?)
 
 Once you have such an object, you can access the sections either by using the `sections` property, or by using the `get` operator directly:

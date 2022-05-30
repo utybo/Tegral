@@ -17,6 +17,12 @@ Tegral Catalog is a settings plugin, meaning that you will need to add it in you
 
 <!-- TODO example will not work until actually publishing to maven central -->
 
+:::warning
+
+Due to Tegral not being published on Maven Central (yet?), this example does not actually work.
+
+:::
+
 ```groovy title="settings.gradle"
 dependencyResolutionManagement {
     repositories {
