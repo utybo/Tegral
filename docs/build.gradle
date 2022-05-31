@@ -52,10 +52,7 @@ task docusaurusBuild(type: NpxTask) {
     command = 'pnpm'
     args = [
         'run',
-        'build', 
-        '--',
-        '--out-dir',
-        layout.buildDirectory.dir('docusaurus').get().toString()
+        'build'
     ]
 
     for (input in docsInputFiles) {

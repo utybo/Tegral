@@ -22,6 +22,8 @@ import org.apache.tools.ant.filters.ReplaceTokens
 task rewriteDokkaLinks(type: Copy) {
     into layout.buildDirectory.dir("dokkaHtml")
 
+    dependsOn rootProject.tasks.dokkaHtmlMultiModule
+
     from(rootProject.layout.buildDirectory.dir("dokka/htmlMultiModule")) {
         filesMatching(["index.html"]) {
             filter { line -> 
