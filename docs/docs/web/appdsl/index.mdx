@@ -47,3 +47,65 @@ AppDSL automatically creates a Tegral DI environment and adds the following comp
 - All of the installed features' `Feature` object.
 - Anything features do with the environment via their `install()` function.
 
+You will need to add your own components, modules, controllers and services to this environment using the [`put(...)` functions](/core/di/environment.md).
+
+## Examples
+
+### Hello World
+
+Here's an example of a simple "hello world" app using Tegral Web AppDSL:
+
+```kotlin title="App.kt"
+class Controller : KtorController() {
+    fun Routing.install() {
+        get("/") {
+            call.respondText("Hello World!")
+        }
+    }
+}
+
+fun main() {
+    tegral {
+        put(::Controller)
+    }
+}
+```
+
+```toml title="/tegral.toml"
+[tegral.web]
+port = 8080
+```
+
+### Hello World (with DI)
+
+Here's another example that uses simple [dependency injection](/core/di/injection.md).
+
+```kotlin title="App.kt"
+class Controller(scope: InjectionScope) : KtorController() {
+    private val service: GreeterService by scope()
+
+    fun Routing.install() {
+        get("/") {
+            call.respondText(service.greet())
+        }
+    }
+}
+
+class GreeterService(scope: InjectionScope) {
+    fun greet() {
+        return "Hello World!"
+    }
+}
+
+fun main() {
+    tegral {
+        put(::Controller)
+        put(::GreeterService)
+    }
+}
+```
+
+```toml title="/tegral.toml"
+[tegral.web]
+port = 8080
+```

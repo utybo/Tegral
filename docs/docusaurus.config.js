@@ -99,10 +99,14 @@ const config = {
           {
             title: 'Docs',
             items: [
-              /*{
-                label: 'Tutorial',
-                to: '/docs/intro',
-              },*/
+              {
+                label: 'Tegral Core',
+                to: '/docs/core'
+              },
+              {
+                label: 'Tegral Web',
+                to: '/docs/web'
+              },
             ],
           },
           // TODO add links
