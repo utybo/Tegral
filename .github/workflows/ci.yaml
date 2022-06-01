@@ -23,7 +23,8 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - run: ./gradlew check
+          cache: 'gradle'
+      - run: ./gradlew check --no-daemon
 
   build-docs:
     name: "Build docs"
@@ -35,10 +36,13 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: 'gradle'
       - uses: actions/setup-node@v3
+        with:
+          cache: 'pnpm'
       - run: npm i -g pnpm
       - run: pnpm install
         working-directory: docs
       - run: pnpm build
         working-directory: docs
-      - run: ./gradlew :website:assembleFiles
+      - run: ./gradlew :website:assembleFiles --no-daemon
