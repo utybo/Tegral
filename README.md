@@ -1,4 +1,4 @@
-# Tegral
+# <img src="assets/tegral_logo_200.png" alt="Tegral logo" width=32> Tegral
 
 Tegral is a set of Kotlin libraries that happen to make a great web frameworks.
 
