@@ -38,9 +38,6 @@ jobs:
           java-version: '17'
           cache: 'gradle'
       - uses: actions/setup-node@v3
-        with:
-          cache: 'pnpm'
-          cache-dependency-path: docs/pnpm-lock.yaml
       - run: npm i -g pnpm
       - run: pnpm install
         working-directory: docs
