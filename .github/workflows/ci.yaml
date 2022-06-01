@@ -13,6 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: gradle/wrapper-validation-action@v1
+
   check:
     name: "Run tests & checks"
     runs-on: ubuntu-latest
@@ -25,7 +26,19 @@ jobs:
           java-version: '17'
           cache: 'gradle'
       - run: ./gradlew check --no-daemon
-      - name: Generate documentation
+
+  build-dokka:
+    name: "Generate Dokka files"
+    runs-on: ubuntu-latest
+    needs: [validate-wrapper]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+      - name: Generate Dokka documentation
         run: ./gradlew :website:rewriteDokkaLinks --no-daemon
       - uses: actions/upload-artifact@v3
         with:
@@ -47,7 +60,8 @@ jobs:
       - run: npm i -g pnpm
       - run: pnpm install
         working-directory: docs
-      - run: ./gradlew :docs:docusaurusBuild --no-daemon
+      - name: Build Docusaurus site
+        run: ./gradlew :docs:docusaurusBuild --no-daemon
       - uses: actions/upload-artifact@v3
         with:
           name: docusaurus-output
@@ -55,7 +69,7 @@ jobs:
    
   build-deploy-website:
     name: Build and deploy website
-    needs: [validate-wrapper, build-docs, check]
+    needs: [validate-wrapper, build-docs, build-dokka]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -74,11 +88,13 @@ jobs:
         with:
           name: docusaurus-output
           path: docs/build
+      # -x parameters ensure that we use output from previous builds and that we do not re-run the builds here
       - run: ./gradlew :website:assembleFiles --no-daemon -x :website:rewriteDokkaLinks -x :docs:docusaurusBuild
       - uses: BetaHuhn/deploy-to-vercel-action@v1.9.1
         with:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           PRODUCTION: "false"
+          WORKING_DIRECTORY: "website/build/output"
