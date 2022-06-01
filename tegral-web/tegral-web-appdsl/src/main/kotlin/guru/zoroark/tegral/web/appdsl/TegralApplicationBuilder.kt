@@ -96,9 +96,6 @@ class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplicati
 
     override fun useConfiguration(configuration: ConfigLoaderBuilder.() -> Unit) {
         config.configuration()
-        useConfiguration {
-            
-        }
     }
 
     override fun install(featureBuilder: Buildable<Feature>) {
