@@ -74,7 +74,7 @@ jobs:
         with:
           name: docusaurus-output
           path: docs/build
-      - run: ./gradlew :website:assembleFiles --no-daemon
+      - run: ./gradlew :website:assembleFiles --no-daemon -x :website:rewriteDokkaLinks -x :docs:docusaurusBuild
       - uses: BetaHuhn/deploy-to-vercel-action@v1.9.1
         with:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
