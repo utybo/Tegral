@@ -10,7 +10,7 @@ Tegral Web AppDefaults is a [feature](/core/featureful/index.mdx) for Tegral-bas
 
 It provides sane defaults for Web applications. Most notably:
 
-- It provides the `DefaultKtorApplication` class, which is a [`KtorApplication`](/web/controllers/index.mdx#ktorapplication) <!-- TODO add link --> implementation that uses the Tegral Web configuration and sets up basic features like [content negotiation](https://ktor.io/docs/serialization.html#receive_send_data) with [Jackson](https://github.com/FasterXML/jackson).
+- It provides the `DefaultKtorApplication` class, which is a [`KtorApplication`](/web/controllers/index.mdx#ktorapplication) implementation that uses the Tegral Web configuration and sets up basic features like [content negotiation](https://ktor.io/docs/serialization.html#receive_send_data) with [Jackson](https://github.com/FasterXML/jackson).
 
 - It provides the `KeepAliveService` class, which is a service that simply keeps the application alive while the application is `start`ed. This is required for Ktor applications, since all threads used by Ktor are [daemon threads](https://www.baeldung.com/java-daemon-thread) which do not actually keep the JVM running.
 

@@ -110,7 +110,7 @@ const config = {
             ],
           },
           // TODO add links
-          {
+          /*{
             title: 'Community',
             items: [
               {
@@ -126,7 +126,7 @@ const config = {
                 href: 'https://twitter.com/docusaurus',
               },
             ],
-          },
+          },*/
           // TODO add links
           {
             title: 'More',

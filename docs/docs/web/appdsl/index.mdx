@@ -36,7 +36,76 @@ By default, quite a few things happen in the `tegral` block without you having t
 
 ## Configuring your app
 
-<!-- TODO -->
+Configuration in AppDSL is powered by [Hoplite](https://github.com/sksamuel/hoplite), with additional features from [Tegral Config](/core/config/index.mdx).
+
+### Configuration sources
+
+Applications ran with AppDSL can be configured using a number of ways (in a descending order of priority):
+
+- Using the default Hoplite configuration sources.
+    - [System properties](https://github.com/sksamuel/hoplite#systempropertiespropertysource)
+    - [`~/.userconfig.<ext>` file](https://github.com/sksamuel/hoplite#usersettingspropertysource). Formats available out of the box when using AppDSL are Properties, JSON, YAML and TOML, with TOML being the recommended format.
+- Using the `/tegral.toml`, `/tegral.yaml` and/or `/tegral.json` files (in that order).
+    - These files must be placed within the root of your JAR file, i.e. in your `src/main/resources` folder.
+
+### Custom configuration class
+
+Your application's configuration is parsed into a data class that implements `RootConfig`. By default, said data class only contains a `tegral` field (as this field is used by all Tegral features for configuration), but you can also define your own class by:
+
+- Having it implement `RootConfig` (this is once again to ensure that there is a `tegral` field present)
+- Using `useConfiguration<...>()` within the `tegral { }` block to specify the class.
+
+```kotlin
+class MyConfig(
+    override val tegral: TegralConfig,
+    val hello: String,
+    val foo: FooConfig
+) : RootConfig
+
+data class FooConfig(val bar: String)
+
+// Example usage in a regular class:
+
+class FoobarService(scope: InjectionScope) {
+    private val config: MyConfig by scope()
+
+    fun printInfo() {
+        println("foo.bar = " + config.foo.bar)
+    }
+}
+
+fun main() {
+    val app = tegral {
+        useConfiguration<MyConfig>()
+
+        put(::FoobarService)
+    }
+}
+```
+
+### Configuring Hoplite
+
+You can also further configure Hoplite by passing a lambda to `useConfiguration()`:
+
+```kotlin
+fun main() {
+    tegral {
+        // highlight-start
+        useConfiguration<MyConfig> { // this: ConfigLoaderBuilder
+            // You can use any ConfigLoaderBuilder function here
+        }
+        // highlight-end
+
+        // highlight-start
+        // If you only want to modify the config loader without changing the
+        // type of the configuration, you can also just not specify the <T>
+        useConfiguration { // this: ConfigLoaderBuilder
+            // ...
+        }
+        // highlight-end
+    }
+}
+```
 
 ## Tegral DI environment
 
