@@ -14,7 +14,7 @@ Note that Tegral Featureful in itself is not an "application engine". It only al
 
 Features are simply objects that act upon the dependency injection environment of an application. This generally means that:
 
-- Simpler features will simply `put()` things in the environment that applications will then be able to request and consume. An example of such a feature is `tegral-logging`. <!-- TODO link -->
+- Simpler features will simply `put()` things in the environment that applications will then be able to request and consume. An example of such a feature is [`tegral-logging`](/core/logging/index.mdx). <!-- TODO link -->
 - More complex features will also add [DI extensions](/core/di/extensions/introduction.md) that will automatically discover and interact with other elements within the dependency injection environment.
 
 Let's create a feature that just injects a dummy "Foo" object in the dependency injection environment. Features are defined by creating a feature object that implements the `Feature` interface.
