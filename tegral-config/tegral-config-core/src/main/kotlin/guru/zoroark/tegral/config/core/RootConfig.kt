@@ -7,7 +7,7 @@ package guru.zoroark.tegral.config.core
  * first-party features use this section to configure their own settings. This interface enforces this pattern even if
  * you use custom data classes for your configuration.
  */
-interface RootConfiguration {
+interface RootConfig {
     /**
      * The [TegralConfig] instance for this configuration.
      */

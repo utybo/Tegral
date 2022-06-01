@@ -2,7 +2,7 @@ package guru.zoroark.tegral.web.appdsl
 
 import com.sksamuel.hoplite.ConfigLoaderBuilder
 import com.sksamuel.hoplite.ConfigSource
-import guru.zoroark.tegral.config.core.RootConfiguration
+import guru.zoroark.tegral.config.core.RootConfig
 import guru.zoroark.tegral.config.core.SectionedConfigurationDecoder
 import guru.zoroark.tegral.config.core.TegralConfig
 import guru.zoroark.tegral.core.Buildable
@@ -75,7 +75,7 @@ class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplicati
     private val featuresBuilders: MutableList<Buildable<Feature>> = mutableListOf()
 
     private val config: ConfigLoaderBuilder = ConfigLoaderBuilder.default()
-    private var configClass: KClass<out RootConfiguration> = TegralConfigurationContainer::class
+    private var configClass: KClass<out RootConfig> = TegralConfigurationContainer::class
     override val configSources = mutableListOf<ConfigSource>()
 
     override fun meta(action: ContextBuilderDsl.() -> Unit) {
@@ -86,12 +86,19 @@ class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplicati
         defaultFeatureBuilder.put(declaration)
     }
 
-    override fun <T : RootConfiguration> useConfiguration(
+    override fun <T : RootConfig> useConfiguration(
         configClass: KClass<T>,
         configuration: ConfigLoaderBuilder.() -> Unit
     ) {
         this.configClass = configClass
         config.configuration()
+    }
+
+    override fun useConfiguration(configuration: ConfigLoaderBuilder.() -> Unit) {
+        config.configuration()
+        useConfiguration {
+            
+        }
     }
 
     override fun install(featureBuilder: Buildable<Feature>) {

@@ -2,7 +2,7 @@ package guru.zoroark.tegral.web.appdsl
 
 import com.sksamuel.hoplite.ConfigLoaderBuilder
 import com.sksamuel.hoplite.ConfigSource
-import guru.zoroark.tegral.config.core.RootConfiguration
+import guru.zoroark.tegral.config.core.RootConfig
 import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.featureful.Feature
@@ -14,17 +14,23 @@ import kotlin.reflect.KClass
  */
 interface TegralApplicationDsl : ExtensibleContextBuilderDsl {
     /**
-     * Sets the class to use for loading the configuration classes.
+     * Sets the class to use for loading the configuration classes and optionally applies custom logic to the Hoplite
+     * `ConfigLoaderBuilder` instance.
      *
-     * This class must be a `data class` that implements [RootConfiguration].
+     * This class must be a `data class` that implements [RootConfig].
      *
      * By default, [applyDefaults] will set this to be [TegralConfigurationContainer], which only contains a single
      * `tegral: TegralConfig` property.
      */
-    fun <T : RootConfiguration> useConfiguration(
+    fun <T : RootConfig> useConfiguration(
         configClass: KClass<T>,
         configuration: ConfigLoaderBuilder.() -> Unit = {}
     )
+
+    /**
+     * Configures the `ConfigLoaderBuilder` used to load application configuration using the given lambda.
+     */
+    fun useConfiguration(configuration: ConfigLoaderBuilder.() -> Unit)
 
     /**
      * Adds a feature that will be installed in the application upon build.
@@ -44,7 +50,7 @@ interface TegralApplicationDsl : ExtensibleContextBuilderDsl {
  *
  * For example, `useConfiguration<MyConfig>()` is strictly equivalent to calling `useConfiguration(MyConfig::class)`.
  */
-inline fun <reified T : RootConfiguration> TegralApplicationDsl.useConfiguration(
+inline fun <reified T : RootConfig> TegralApplicationDsl.useConfiguration(
     noinline configuration: ConfigLoaderBuilder.() -> Unit = {}
 ) {
     useConfiguration(T::class, configuration)
