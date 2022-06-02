@@ -121,7 +121,7 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           WORKING_DIRECTORY: "website/build/output"
           PR_LABELS: "false"
-          PRODUCTION: "${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}"
+          PRODUCTION: "${{ github.event_name == 'push' }}"
 
   publish-snapshot:
     name: Publish snapshot
