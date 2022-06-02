@@ -80,7 +80,7 @@ const config = {
             label: 'About'
           },
           {
-            href: 'pathname:///api',
+            href: 'pathname:///dokka',
             label: 'API',
             position: 'right'
           },

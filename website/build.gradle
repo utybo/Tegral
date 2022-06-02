@@ -27,9 +27,9 @@ task rewriteDokkaLinks(type: Copy) {
     from(rootProject.layout.buildDirectory.dir("dokka/htmlMultiModule")) {
         filesMatching(["index.html"]) {
             filter { line -> 
-                line.replaceAll("href=\"", "href=\"/api/")
-                    .replaceAll("src=\"", "src=\"/api/")
-                    .replaceAll("pathToRoot = \"\"", "pathToRoot = \"/api\"")
+                line.replaceAll("href=\"", "href=\"/dokka/")
+                    .replaceAll("src=\"", "src=\"/dokka/")
+                    .replaceAll("pathToRoot = \"\"", "pathToRoot = \"/dokka\"")
             }
         }
 
@@ -38,7 +38,7 @@ task rewriteDokkaLinks(type: Copy) {
         }
 
         filesMatching(["scripts/navigation-loader.js"]) {
-            filter { line -> line.replaceAll("pathToRoot", "\"/api/\"") }
+            filter { line -> line.replaceAll("pathToRoot", "\"/dokka/\"") }
         }
     }
 }
@@ -48,7 +48,7 @@ task assembleFiles(type: Copy) {
 
     from(configurations.docusaurus)
     from(layout.buildDirectory.dir("dokkaHtml")) {
-        into 'api'
+        into 'dokka'
     }
     from('_redirects')
 
