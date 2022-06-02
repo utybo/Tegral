@@ -1,0 +1,19 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-common-conventions'
+    id 'org.jetbrains.dokka'
+}
+
+project.ext.includeInCatalog = true
+
+detekt {
+    config = files(rootProject.layout.projectDirectory.file("detekt-config.published.yaml"))
+    buildUponDefaultConfig = true
+}
+
+tasks.dokkaHtmlPartial {
+    dokkaSourceSets {
+        configureEach {
+            includes.from("MODULE.md")
+        }
+    }
+}

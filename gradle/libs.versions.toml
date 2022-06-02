@@ -1,16 +1,22 @@
 [versions]
-kotlin = "1.6.10"
-coroutines = "1.6.0"
-detekt = "1.19.0"
+coroutines = "1.6.1"
+detekt = "1.20.0"
+dokka = "1.6.21"
+gradleTestLogger = "3.2.0"
+hoplite = "2.1.5"
+jackson = "2.13.1"
+jimfs = "1.2"
 junit = "5.8.2"
-dokka = "1.6.10"
-mockk = "1.12.3"
 koin2 = "2.2.3"
 koin3 = "3.1.5"
-ktor = "1.6.8"
-versions = "0.42.0"
-gradleTestLogger = "3.2.0"
+kotlin = "1.6.21"
 kotlinBcv = "0.8.0"
+ktor = "2.0.1"
+logback = "1.2.11"
+mockk = "1.12.4"
+nodeGradle = "3.3.0"
+slf4j = "1.7.36"
+versions = "0.42.0"
 
 [libraries]
 # Dependencies
@@ -19,9 +25,28 @@ kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.re
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 
+ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
+ktor-server-host = { module = "io.ktor:ktor-server-host-common", version.ref = "ktor" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+ktor-server-contentNegotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-server-test = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
+ktor-serialization-jackson = { module = "io.ktor:ktor-serialization-jackson", version.ref = "ktor" }
+
+jackson-time = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
+
+hoplite-json = { module = "com.sksamuel.hoplite:hoplite-json", version.ref = "hoplite" }
+hoplite-yaml = { module = "com.sksamuel.hoplite:hoplite-yaml", version.ref = "hoplite" }
+hoplite-toml = { module = "com.sksamuel.hoplite:hoplite-toml", version.ref = "hoplite" }
+
+jimfs = { module = "com.google.jimfs:jimfs", version.ref = "jimfs" }
+
+slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+
 # Test dependencies
 
-kotlin-test-common = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
@@ -40,3 +65,4 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 versions = { id = "com.github.ben-manes.versions", version.ref = "versions" }
 gradleTestLogger = { id = "com.adarshr.test-logger", version.ref = "gradleTestLogger" }
 kotlinBcv = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinBcv" }
+nodeGradle = { id = "com.github.node-gradle.node", version.ref = "nodeGradle" }

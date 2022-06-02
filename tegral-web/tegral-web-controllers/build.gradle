@@ -1,0 +1,14 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+}
+
+dependencies {
+    api project(":tegral-di:tegral-di-core")
+    api project(":tegral-featureful")
+    api project(":tegral-services:tegral-services-feature")
+
+    implementation libs.ktor.server.core
+    implementation libs.ktor.server.host
+    api libs.ktor.server.contentNegotiation
+    api libs.ktor.serialization.jackson
+}

@@ -1,0 +1,8 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+}
+
+dependencies {
+    api project(":tegral-core")
+    implementation libs.kotlin.reflect
+}

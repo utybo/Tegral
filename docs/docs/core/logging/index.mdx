@@ -1,0 +1,52 @@
+import PackageVersions from '@site/src/components/PackageVersions';
+
+# Tegral Logging
+
+Tegral Logging is a feature that makes it easy to add logging to a Tegral application.
+
+Tegral Logging uses SLF4J behind the scenes, which makes it compatible with any SLF4J-enabled logging system, such as [logback](https://logback.qos.ch).
+
+<PackageVersions libraries={[
+    { name: 'tegral-logging', catalog: 'logging' }
+]}/>
+
+## Using Tegral Logging
+
+You will need to install the feature like so:
+
+```kotlin
+install(LoggingFeature)
+```
+
+:::info
+
+Tegral Logging is installed by default when using Tegral Web [AppDefaults](/web/appdefaults/index.mdx)/[AppDSL](/web/appdsl/index.mdx), requiring no additional action
+
+:::
+
+Once installed, Tegral Logging will add a Logger factory within the DI environment. Here is an example of a class that uses Tegral Logging to get its logger:
+
+```kotlin
+class MyClass(scope: InjectionScope) {
+    // highlight-start
+    private val logger: Logger by scope.factory()
+    // highlight-end
+
+    fun printSomething() {
+        logger.info("Hello World!")
+    }
+}
+```
+
+The name of the logger is automatically determined for the fully qualified name (FQN) of the class that is requesting said logger. Optionally, you can also specify a custom logger name by adding the `@LoggerName` annotation to your class:
+
+```kotlin
+// highlight-start
+@LoggerName("my.class")
+// highlight-end
+class MyClass(scope: InjectionScope) {
+    private val logger: Logger by scope.factory()
+
+    // ...
+}
+```

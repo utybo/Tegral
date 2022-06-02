@@ -1,0 +1,14 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+}
+
+ext.includeInBundles = ["web-test"]
+
+dependencies {
+    api project(":tegral-di:tegral-di-core")
+    implementation libs.kotlin.reflect
+    api libs.kotlin.test
+    implementation libs.kotlin.coroutines
+
+    testImplementation libs.mockk
+}

@@ -1,0 +1,3 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+}

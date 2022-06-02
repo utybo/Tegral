@@ -1,0 +1,21 @@
+import PackageVersions from '@site/src/components/PackageVersions'
+
+# TW AppDefaults
+
+Tegral Web AppDefaults is a [feature](/core/featureful/index.mdx) for Tegral-based applications.
+
+<PackageVersions libraries={[
+    { name: 'tegral-web-appdefaults', catalog: 'web.appdefaults' }
+]}/>
+
+It provides sane defaults for Web applications. Most notably:
+
+- It provides the `DefaultKtorApplication` class, which is a [`KtorApplication`](/web/controllers/index.mdx#ktorapplication) implementation that uses the Tegral Web configuration and sets up basic features like [content negotiation](https://ktor.io/docs/serialization.html#receive_send_data) with [Jackson](https://github.com/FasterXML/jackson).
+
+- It provides the `KeepAliveService` class, which is a service that simply keeps the application alive while the application is `start`ed. This is required for Ktor applications, since all threads used by Ktor are [daemon threads](https://www.baeldung.com/java-daemon-thread) which do not actually keep the JVM running.
+
+- It also provides a default [configuration class](/core/config/sections.md#defining-the-class), meaning that you do not have to define your own `Config` class if you intend on only using the `[tegral]` section.
+
+The AppDefaults feature also has a dependency on the Tegral Services feature and on [Tegral Web Controllers](/web/controllers/index.mdx) and sets up the `[tegral.web]` configuration section (i.e. `WebConfiguration`)
+
+[AppDSL](/web/appdsl/index.mdx) automatically installs AppDefaults, meaning that you do not need to install AppDefaults yourself if you use AppDSL.

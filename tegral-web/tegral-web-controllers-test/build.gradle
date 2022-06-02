@@ -1,0 +1,12 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+}
+
+ext.includeInBundles = ["web-test"]
+
+dependencies {
+    api project(":tegral-web:tegral-web-controllers")
+    api project(":tegral-di:tegral-di-test")
+
+    api libs.ktor.server.test
+}

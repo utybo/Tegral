@@ -1,0 +1,76 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Tegral DI dependencies
+
+Tegral DI, being a **platform** dependency, works independently of other Tegral libraries.
+
+## Adding Tegral DI
+
+You can add Tegral DI to your project via Gradle or Maven. Replace `VERSION` with the version of Tegral DI you want to use.
+
+<Tabs>
+<TabItem value="gradle-groovy" label="Gradle (Groovy)" default>
+
+**With Tegral Catalog**
+
+```groovy
+dependencies {
+    implementation tegral.di.core
+    testImplementation tegral.di.test
+}
+```
+
+**Without Tegral Catalog**
+
+```groovy
+dependencies {
+    implementation 'guru.zoroark.tegral:tegral-di-core:VERSION'
+    testImplementation 'guru.zoroark.tegral:tegral-di-test:VERSION'
+}
+```
+
+</TabItem>
+    
+<TabItem value="gradle-kotlin" label="Gradle (Kotlin)">
+
+**With Tegral Catalog**
+
+```kotlin
+dependencies {
+    implementation(tegral.di.core)
+    testImplementation(tegral.di.test)
+}
+```
+
+**Without Tegral Catalog**
+
+```kotlin
+dependencies {
+    implementation("guru.zoroark.tegral:tegral-di-core:VERSION")
+    testImplementation("guru.zoroark.tegral:tegral-di-test:VERSION")
+}
+```
+
+</TabItem>
+
+<TabItem value="maven" label="Maven">
+
+```xml
+<!-- Add these to your dependencies -->
+<dependency>
+    <groupId>guru.zoroark.tegral</groupId>
+    <artifactId>tegral-di-text</artifactId>
+    <version>VERSION</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>guru.zoroark.tegral</groupId>
+    <artifactId>tegral-di-test</artifactId>
+    <version>VERSION</version>
+</dependency>
+```
+
+</TabItem>
+
+</Tabs>

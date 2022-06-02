@@ -1,4 +1,6 @@
 plugins {
+    id 'guru.zoroark.tegral.base-conventions'
+
     id 'org.jetbrains.kotlin.jvm'
     id 'io.gitlab.arturbosch.detekt'
 
@@ -9,11 +11,8 @@ repositories {
     mavenCentral()
 }
 
-version = rootProject.version
-group = rootProject.group
-
 dependencies {
-    implementation libs.kotlin.stdlib
+    api libs.kotlin.stdlib
 
     testImplementation libs.kotlin.test
     testImplementation libs.kotlin.test.junit5
@@ -30,5 +29,11 @@ testing {
             // Use JUnit Jupiter test framework
             useJUnitJupiter()
         }
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    kotlinOptions {
+        jvmTarget = "11"
     }
 }

@@ -1,0 +1,66 @@
+plugins {
+
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://gitlab.com/api/v4/projects/29365238/packages/maven' }
+}
+
+configurations {
+    servine
+    docusaurus
+}
+
+dependencies {
+    servine 'guru.zoroark.servine:servine:0.0.2-SNAPSHOT'
+    docusaurus(project(path: ":docs", configuration: 'web'))
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+task rewriteDokkaLinks(type: Copy) {
+    into layout.buildDirectory.dir("dokkaHtml")
+
+    dependsOn rootProject.tasks.dokkaHtmlMultiModule
+
+    from(rootProject.layout.buildDirectory.dir("dokka/htmlMultiModule")) {
+        filesMatching(["index.html"]) {
+            filter { line -> 
+                line.replaceAll("href=\"", "href=\"/api/")
+                    .replaceAll("src=\"", "src=\"/api/")
+                    .replaceAll("pathToRoot = \"\"", "pathToRoot = \"/api\"")
+            }
+        }
+
+        filesMatching(["scripts/pages.json"]) {
+            filter { line -> line.replaceAll("\"location\":\"", "\"location\":\"api/") }
+        }
+
+        filesMatching(["scripts/navigation-loader.js"]) {
+            filter { line -> line.replaceAll("pathToRoot", "\"/api/\"") }
+        }
+    }
+}
+
+task assembleFiles(type: Copy) {
+    into layout.buildDirectory.dir("output")
+
+    from(configurations.docusaurus)
+    from(layout.buildDirectory.dir("dokkaHtml")) {
+        into 'api'
+    }
+    from('_redirects')
+
+    dependsOn rewriteDokkaLinks
+}
+
+task serve(type: JavaExec) {
+    mainClass = "guru.zoroark.servine.app.AppKt"
+    classpath = configurations.servine
+
+    dependsOn assembleFiles
+
+    def params = [layout.buildDirectory.dir("output").get().toString()]
+    args(params)
+}
