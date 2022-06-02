@@ -10,3 +10,7 @@ dependencies {
     api libs.logback
     implementation libs.kotlin.reflect
 }
+
+ext.humanName = "Tegral Logging"
+ext.description = "Logging feature for Tegral apps that makes it easy to create and manage loggers."
+ext.url = "https://tegral.zoroark.guru/docs/core/logging/"

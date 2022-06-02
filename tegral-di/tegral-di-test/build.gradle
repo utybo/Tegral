@@ -12,3 +12,7 @@ dependencies {
 
     testImplementation libs.mockk
 }
+
+ext.humanName = "Tegral DI Test"
+ext.description = "Test utilities for Tegrarl DI-powered applications."
+ext.url = "https://tegral.zoroark.guru/docs/core/di/testing/"

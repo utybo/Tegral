@@ -1,3 +1,7 @@
 plugins {
     id 'guru.zoroark.tegral.kotlin-published-library-conventions'
 }
+
+ext.humanName = "Tegral Core"
+ext.description = "Contains a few common Tegral classes, annotations and interfaces required by all other Tegral modules"
+ext.url = "https://tegral.zoroark.guru/docs/core"
