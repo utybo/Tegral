@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, publish-setup]
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -120,3 +120,48 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           WORKING_DIRECTORY: "website/build/output"
           PR_LABELS: "false"
+
+  publish-snapshot:
+    name: Publish snapshot
+    if: "github.event_name == 'push' && (startsWith(github.ref, 'refs/tags/') || startsWith(github.ref, 'refs/heads/'))"
+    runs-on: ubuntu-latest
+    needs: [validate-wrapper, check]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Publish snapshot
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralSnapshotsUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralSnapshotsPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
+          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}
+        run: ./gradlew -PpublishSnapshot -Psign publish
+
+  publish-release:
+    if: "github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')"
+    runs-on: ubuntu-latest
+    needs: [ validate-wrapper, check, publish-snapshot ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Publish release
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralReleaseUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralReleasePassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
+          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}
+        run: ./gradlew -PpublishRelease -Psign publish

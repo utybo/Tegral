@@ -13,6 +13,9 @@ publishing {
                 credentials(PasswordCredentials)
             }
         } else if (project.hasProperty("publishRelease")) {
+            if (project.version.endsWith("-SNAPSHOT")) {
+                throw new Exception("Cannot use -PpublishRelease when version ends in -SNAPSHOT")
+            }
             maven {
                 name = "mavenCentralRelease"
                 url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
@@ -62,6 +65,11 @@ publishing {
 
 if (project.properties.containsKey("sign")) {
     signing {
+        if (!project.properties.containsKey("signLocally")) {
+            def signingKey = findProperty("signingKey")
+            def signingPassword = findProperty("signingPassword")
+            useInMemoryPgpKeys(signingKey, signingPassword)
+        }
         sign publishing.publications.maven
     }
 }
