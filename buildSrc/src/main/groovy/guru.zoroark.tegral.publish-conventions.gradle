@@ -14,7 +14,7 @@ publishing {
                     credentials(PasswordCredentials)
                 }
             } else {
-                logger.warning("-PpublishSnapshot is present, but no -SNAPSHOT suffix: skipping snapshot deployment")
+                logger.warn("-PpublishSnapshot is present, but no -SNAPSHOT suffix: skipping snapshot deployment")
             }
         } else if (project.hasProperty("publishRelease")) {
             if (project.version.endsWith("-SNAPSHOT")) {
