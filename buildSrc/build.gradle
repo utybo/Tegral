@@ -14,7 +14,8 @@ dependencies {
         libs.plugins.versions,
         libs.plugins.gradleTestLogger,
         libs.plugins.kotlinBcv,
-        libs.plugins.nodeGradle
+        libs.plugins.nodeGradle,
+        libs.plugins.licenser
     ]
 
     for (pluginDef in pluginsDef) {
