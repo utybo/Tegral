@@ -15,6 +15,7 @@
 package guru.zoroark.tegral.web.appdsl
 
 import guru.zoroark.tegral.core.TegralDsl
+import guru.zoroark.tegral.web.appdefaults.applyLoggingOverrides
 import org.slf4j.LoggerFactory
 
 private val logger = LoggerFactory.getLogger("tegral.web.appdsl.tegralblock")
@@ -28,17 +29,22 @@ private val logger = LoggerFactory.getLogger("tegral.web.appdsl.tegralblock")
  * - Builds the application.
  * - Starts the application.
  * - Returns the application object.
+ *
+ * @param enableLoggingOverrides Set to false if you customize logback's configuration yourself. Otherwise, AppDSL will
+ * configure Logback with sensible defaults.
  */
 @TegralDsl
-fun tegral(block: TegralApplicationDsl.() -> Unit): TegralApplication {
-    logger.debug("Configuring application from tegral block...")
+fun tegral(enableLoggingOverrides: Boolean = true, block: TegralApplicationDsl.() -> Unit): TegralApplication {
+    if (enableLoggingOverrides) applyLoggingOverrides()
+
+    logger.info("Configuring application from tegral block...")
     val builder = TegralApplicationBuilder()
     builder.applyDefaults()
     block(builder)
 
-    logger.debug("Building application...")
+    logger.info("Building application...")
     val application = builder.build()
-    logger.debug("Application environment built, starting.")
+    logger.info("Application environment built, starting.")
     application.start()
     return application
 }
