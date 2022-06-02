@@ -157,6 +157,19 @@ const config = {
         isCloseable: false
       }
     }),
+  plugins: [
+    [
+      'docusaurus-plugin-ackee',
+      {
+        domainId: 'cea4d752-ff51-4b02-a9c4-f29765562938',
+        server: 'https://ackee.blastoise-1.zoroark.guru',
+        detailed: false,
+        ignoredLocalhost: false,
+        ignoreOwnVisits: true,
+        ackeeTrackerFile: 'rowlet.js'
+      }
+    ]
+  ]
 };
 
 module.exports = config;
