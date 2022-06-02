@@ -7,10 +7,14 @@ plugins {
 publishing {
     repositories {
         if (project.hasProperty("publishSnapshot")) {
-            maven {
-                name = "mavenCentralSnapshots"
-                url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-                credentials(PasswordCredentials)
+            if (project.version.endsWith("-SNAPSHOT")) {
+                maven {
+                    name = "mavenCentralSnapshots"
+                    url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+                    credentials(PasswordCredentials)
+                }
+            } else {
+                logger.warning("-PpublishSnapshot is present, but no -SNAPSHOT suffix: skipping snapshot deployment")
             }
         } else if (project.hasProperty("publishRelease")) {
             if (project.version.endsWith("-SNAPSHOT")) {
