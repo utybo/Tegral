@@ -63,6 +63,12 @@ const config = {
         items: [
           {
             type: 'doc',
+            docId: 'get-started/index',
+            position: 'left',
+            label: 'Get Started'
+          },
+          {
+            type: 'doc',
             docId: 'core/index',
             position: 'left',
             label: 'Core',
