@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
 
     id 'guru.zoroark.tegral.base-conventions'
+    id 'guru.zoroark.tegral.publish-conventions'
 }
 
 List<String> computeLibrariesToInclude() {
@@ -63,3 +64,7 @@ publishing {
         }
     }
 }
+
+ext.humanName = "Tegral Catalog"
+ext.description = "Gradle Versions Catalog that makes it easy to get dependencies from the Tegral project"
+ext.url = "https://tegral.zoroark.guru/docs/core/catalog/"

@@ -1,0 +1,75 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+}
+
+publishing {
+    repositories {
+        if (project.hasProperty("publishSnapshot")) {
+            maven {
+                name = "mavenCentralSnapshots"
+                url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+                credentials(PasswordCredentials)
+            }
+        } else if (project.hasProperty("publishRelease")) {
+            if (project.version.endsWith("-SNAPSHOT")) {
+                throw new Exception("Cannot use -PpublishRelease when version ends in -SNAPSHOT")
+            }
+            maven {
+                name = "mavenCentralRelease"
+                url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+                credentials(PasswordCredentials)
+            }
+        }
+    }
+
+    publications {
+        maven(MavenPublication) {
+            pom {
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'utybo'
+                        name = 'Matthieu S'
+                        email = 'utybodev@gmail.com'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:git://github.com/utybo/Tegral.git'
+                    developerConnection = 'scm:git:ssh://github.com:utybo/Tegral.git'
+                    url = 'https://github.com/utybo/Tegral'
+                }
+
+                afterEvaluate {
+                    for (requiredExtProp in ['humanName', 'description', 'url']) {
+                        if (!project.extensions.extraProperties.properties.containsKey(requiredExtProp)) {
+                            throw new Exception("Missing projet.ext." + requiredExtProp)
+                        }
+                    }
+                    name = project.ext.humanName
+                    description = project.ext.description
+                    url = project.ext.url
+                }
+            }
+        }
+    }
+}
+
+if (project.properties.containsKey("sign")) {
+    signing {
+        if (!project.properties.containsKey("signLocally")) {
+            def signingKey = findProperty("signingKey")
+            def signingPassword = findProperty("signingPassword")
+            useInMemoryPgpKeys(signingKey, signingPassword)
+        }
+        sign publishing.publications.maven
+    }
+}

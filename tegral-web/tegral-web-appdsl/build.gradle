@@ -16,3 +16,7 @@ dependencies {
     implementation libs.kotlin.stdlib
     implementation libs.kotlin.reflect
 }
+
+ext.humanName = "Tegral Web AppDSL"
+ext.description = "Contains common classes for writing Tegral features that will get integrated in main applications."
+ext.url = "https://tegral.zoroark.guru/docs/web/appdsl"

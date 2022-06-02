@@ -10,3 +10,7 @@ dependencies {
 
     api libs.ktor.server.test
 }
+
+ext.humanName = "Tegral Web Controllers Test"
+ext.description = "Test classes for testing Tegral Web Controllers classes easily."
+ext.url = "https://tegral.zoroark.guru/docs/web/controllers"

@@ -1,6 +1,9 @@
 plugins {
     id 'guru.zoroark.tegral.kotlin-common-conventions'
+    id 'guru.zoroark.tegral.publish-conventions'
     id 'org.jetbrains.dokka'
+    id 'maven-publish'
+    id 'signing'
 }
 
 project.ext.includeInCatalog = true
@@ -14,6 +17,19 @@ tasks.dokkaHtmlPartial {
     dokkaSourceSets {
         configureEach {
             includes.from("MODULE.md")
+        }
+    }
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
         }
     }
 }
