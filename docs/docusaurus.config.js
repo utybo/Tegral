@@ -84,6 +84,11 @@ const config = {
             label: 'API',
             position: 'right'
           },
+          {
+            href: 'https://github.com/utybo/tegral/tree/main/CHANGELOG.md',
+            label: 'Changelog',
+            position: 'right'
+          },
           // {to: '/blog', label: 'Blog', position: 'left'}, // TODO re-add once blog has some content
           {
             href: 'https://github.com/utybo/tegral',
@@ -139,6 +144,10 @@ const config = {
                 label: 'GitHub',
                 href: 'https://github.com/utybo/Tegral',
               },
+              {
+                label: 'Changelog',
+                href: 'https://github.com/utybo/Tegral/tree/main/CHANGELOG.md'
+              }
             ],
           },
         ],
