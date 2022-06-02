@@ -8,6 +8,29 @@
   text-align: center;
   position: relative;
   overflow: hidden;
+  display: flex;
+  background-image: url('/img/paul-pastourmatzis-rSLLnn0snVM-unsplash.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.heroBanner .container {
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: black;
+}
+
+.heroBanner .container h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.heroBanner .container h1 img {
+  height: 3rem;
 }
 
 @media screen and (max-width: 996px) {

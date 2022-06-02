@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Tegral',
-  tagline: 'Libraries for better Kotlin applications.',
+  tagline: 'Frameworks, libraries and DSLs for awesome Kotlin applications.',
   url: 'https://tegral.zoroark.guru',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -89,7 +89,7 @@ const config = {
             label: 'Changelog',
             position: 'right'
           },
-          // {to: '/blog', label: 'Blog', position: 'left'}, // TODO re-add once blog has some content
+          { to: '/blog', label: 'Blog', position: 'left' },
           {
             href: 'https://github.com/utybo/tegral',
             label: 'GitHub',
@@ -160,7 +160,7 @@ const config = {
       },
       announcementBar: {
         id: 'not-released-yet',
-        content: '<strong>Tegral has not been released yet!</strong> Check back soon for 0.1!',
+        content: '<strong>Welcome to Tegral!</strong> Check out the 0.0.1 <a href="/blog/welcome-to-tegral-v0-0-1">announcement</a>!',
         backgroundColor: '#834cff',
         textColor: '#ffffff',
         isCloseable: false
