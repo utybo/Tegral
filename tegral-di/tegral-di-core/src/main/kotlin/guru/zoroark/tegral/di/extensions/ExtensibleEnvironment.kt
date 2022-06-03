@@ -83,10 +83,10 @@ abstract class DefaultExtensibleInjectionEnvironment(
  * should either call this function to create your meta environment, or subclass [DefaultExtensibleInjectionEnvironment]
  * which will do it for you.
  */
-fun ExtensibleInjectionEnvironment.createMetaEnvironment(
+fun <T : InjectionEnvironment> ExtensibleInjectionEnvironment.createMetaEnvironment(
     context: ExtensibleEnvironmentContext,
-    metaContextKind: InjectionEnvironmentKind<*>
-): InjectionEnvironment {
+    metaContextKind: InjectionEnvironmentKind<T>
+): T {
     val metaEnvironment = metaContextKind.build(
         context.metaContext.let {
             // Inject the EIE within the meta-environment

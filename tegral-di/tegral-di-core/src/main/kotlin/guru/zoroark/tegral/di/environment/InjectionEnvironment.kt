@@ -58,7 +58,7 @@ import guru.zoroark.tegral.di.ComponentNotFoundException
  * Implementors should have a companion object that implements [InjectionEnvironmentKind], allowing for easy usage
  * within the DSL. For example:
  *
- * ```
+ * ```kotlin
  * class MyInjectionEnvironment : InjectionEnvironment {
  *     companion object : InjectionEnvironmentKind {
  *         fun build(context: EnvironmentContext): MyInjectionEnvironment {

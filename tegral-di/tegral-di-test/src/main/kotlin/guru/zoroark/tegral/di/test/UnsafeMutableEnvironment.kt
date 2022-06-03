@@ -19,14 +19,22 @@ import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.environment.EnvironmentBasedScope
 import guru.zoroark.tegral.di.environment.EnvironmentContext
 import guru.zoroark.tegral.di.environment.Identifier
+import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionEnvironmentKind
+import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.Injector
+import guru.zoroark.tegral.di.environment.MetalessInjectionScope
 import guru.zoroark.tegral.di.environment.ScopedContext
+import guru.zoroark.tegral.di.environment.SimpleEnvironmentBasedScope
 import guru.zoroark.tegral.di.environment.ensureInstance
+import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
+import guru.zoroark.tegral.di.extensions.ExtensibleEnvironmentContext
+import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironmentKind
+import guru.zoroark.tegral.di.extensions.createMetaEnvironment
 import kotlin.reflect.KProperty
 
 /**
- * A fully mutable environment implementation with very little safety.
+ * A fully mutable extensible environment implementation with very little safety.
  *
  * This class **should not be used in main code** and only within test code that typically requires more flexibility
  * and the ability to add elements on the fly.
@@ -36,7 +44,12 @@ import kotlin.reflect.KProperty
  * ### Mutability
  *
  * You can mutate this environment (i.e. add components) by using any [put] function you are already used to. You can
- * `put` components and modules. You can also use [alsoPut] to add them in a suffix-style.
+ * `put` components and modules.
+ *
+ * You can also mutate this environment's meta-environment, either by:
+ *
+ * - using the [`meta { }`][meta] DSL like you would in a `tegralDi { }` block
+ * - retrieving the meta-environment with [metaEnvironment]
  *
  * ### Characteristics
  *
@@ -44,36 +57,101 @@ import kotlin.reflect.KProperty
  * - **Active object injection**. Objects are re-injected at every use.
  * - **NI/Mutable**. Objects can be replaced, injection methods will not always return the same thing.
  */
-class UnsafeMutableEnvironment(baseContext: EnvironmentContext) : TestMutableInjectionEnvironment, ContextBuilderDsl {
-    companion object : InjectionEnvironmentKind<UnsafeMutableEnvironment> {
-        override fun build(context: EnvironmentContext) = UnsafeMutableEnvironment(context)
+class UnsafeMutableEnvironment(
+    baseContext: ExtensibleEnvironmentContext
+) : TestMutableInjectionEnvironment, ExtensibleContextBuilderDsl {
+
+    override val metaEnvironment: MutableEnvironment
+    val actualEnvironment: MutableEnvironment
+
+    init {
+        this.metaEnvironment = createMetaEnvironment(baseContext) {
+            MutableEnvironment(null, it)
+        }
+        this.actualEnvironment = MutableEnvironment(metaEnvironment, EnvironmentContext(baseContext.declarations))
     }
 
-    private inner class UMEInjector<T : Any>(
-        private val identifier: Identifier<T>,
-        private val onInjection: (T) -> Unit
-    ) : Injector<T> {
-        override fun getValue(thisRef: Any?, property: KProperty<*>): T {
-            return get(identifier).also(onInjection)
+    override val components: Map<Identifier<*>, Any>
+        get() = actualEnvironment.components
+
+    override fun getAllIdentifiers(): Sequence<Identifier<*>> =
+        actualEnvironment.getAllIdentifiers()
+
+    override fun <T : Any> getOrNull(identifier: Identifier<T>): T? =
+        actualEnvironment.getOrNull(identifier)
+
+    override fun <T : Any> createInjector(identifier: Identifier<T>, onInjection: (T) -> Unit): Injector<T> =
+        actualEnvironment.createInjector(identifier, onInjection)
+
+    override fun meta(action: ContextBuilderDsl.() -> Unit) {
+        metaEnvironment.action()
+    }
+
+    override fun <T : Any> put(declaration: Declaration<T>) {
+        actualEnvironment.put(declaration)
+    }
+
+    companion object : ExtensibleInjectionEnvironmentKind<UnsafeMutableEnvironment> {
+        override fun build(
+            context: ExtensibleEnvironmentContext,
+            metaEnvironmentKind: InjectionEnvironmentKind<*>
+        ): UnsafeMutableEnvironment {
+            if (metaEnvironmentKind != Meta) {
+                error(
+                    "Cannot create UnsafeMutableEnvironment with any meta environment other than " +
+                        "UnsafeMutableEnvironment.Meta"
+                )
+            } else {
+                return UnsafeMutableEnvironment(context)
+            }
         }
     }
 
-    /**
-     * The internal components map used by this environment. You can use it to directly manipulate and retrieve
-     * components stored in this environment.
-     */
-    override val components = baseContext.declarations.mapValues { (_, decl) ->
-        decl.supplier(ScopedContext(EnvironmentBasedScope(this)))
-    }.toMutableMap()
+    object Meta : InjectionEnvironmentKind<Nothing> {
+        override fun build(context: EnvironmentContext): Nothing {
+            error("UnsafeMutableEnvironment.Meta environments cannot be created directly.")
+        }
+    }
 
-    override fun <T : Any> getOrNull(identifier: Identifier<T>): T? =
-        components[identifier]?.let { ensureInstance(identifier.kclass, it) }
+    class MutableEnvironment(
+        private val metaEnvironment: MutableEnvironment?,
+        baseContext: EnvironmentContext
+    ) : InjectionEnvironment, ContextBuilderDsl {
+        private inner class UMEInjector<T : Any>(
+            private val identifier: Identifier<T>,
+            private val onInjection: (T) -> Unit
+        ) : Injector<T> {
+            override fun getValue(thisRef: Any?, property: KProperty<*>): T {
+                return get(identifier).also(onInjection)
+            }
+        }
 
-    override fun <T : Any> createInjector(identifier: Identifier<T>, onInjection: (T) -> Unit): Injector<T> =
-        UMEInjector(identifier, onInjection)
+        val components = baseContext.declarations.mapValues { (_, decl) ->
+            decl.supplier(
+                ScopedContext(
+                    if (metaEnvironment == null) SimpleEnvironmentBasedScope(this)
+                    else object : InjectionScope {
+                        override val meta: MetalessInjectionScope
+                            get() = SimpleEnvironmentBasedScope(metaEnvironment)
 
-    override fun <T : Any> put(declaration: Declaration<T>) {
-        components[declaration.identifier] =
-            declaration.supplier(ScopedContext(EnvironmentBasedScope(this)))
+                        override fun <T : Any> inject(what: Identifier<T>): Injector<T> =
+                            this@MutableEnvironment.createInjector(what)
+                    }
+                )
+            )
+        }.toMutableMap()
+
+        override fun <T : Any> getOrNull(identifier: Identifier<T>): T? =
+            components[identifier]?.let { ensureInstance(identifier.kclass, it) }
+
+        override fun <T : Any> createInjector(identifier: Identifier<T>, onInjection: (T) -> Unit): Injector<T> =
+            UMEInjector(identifier, onInjection)
+
+        override fun <T : Any> put(declaration: Declaration<T>) {
+            components[declaration.identifier] =
+                declaration.supplier(ScopedContext(EnvironmentBasedScope(this)))
+        }
+
+        fun getAllIdentifiers() = components.keys.asSequence()
     }
 }
