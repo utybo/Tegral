@@ -12,12 +12,16 @@
  * limitations under the License.
  */
 
-package guru.zoroark.tegral.di.environment
+package guru.zoroark.tegral.di.test.environment
 
 import guru.zoroark.tegral.di.NotExtensibleException
-import guru.zoroark.tegral.di.entryOf
-import org.junit.jupiter.api.assertThrows
-import kotlin.test.Test
+import guru.zoroark.tegral.di.environment.EnvironmentContext
+import guru.zoroark.tegral.di.environment.InjectionEnvironment
+import guru.zoroark.tegral.di.environment.InjectionScope
+import guru.zoroark.tegral.di.environment.invoke
+import guru.zoroark.tegral.di.test.entryOf
+import kotlin.reflect.KFunction
+import kotlin.test.assertFailsWith
 
 @Suppress("UnnecessaryAbstractClass")
 abstract class NotExtensibleEnvironmentBaseTest(
@@ -28,7 +32,12 @@ abstract class NotExtensibleEnvironmentBaseTest(
         val b: B by scope.meta()
     }
 
-    @Test
+    final override val additionalTests: List<KFunction<Unit>>
+        get() = listOf(
+            this::`(Not extensible) Attempting meta injection should fail`
+        )
+
+    @Suppress("FunctionName")
     fun `(Not extensible) Attempting meta injection should fail`() {
         val context = EnvironmentContext(
             mapOf(
@@ -37,7 +46,7 @@ abstract class NotExtensibleEnvironmentBaseTest(
                 }
             )
         )
-        assertThrows<NotExtensibleException> {
+        assertFailsWith<NotExtensibleException> {
             provider(context)
         }
     }

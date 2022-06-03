@@ -12,25 +12,85 @@
  * limitations under the License.
  */
 
-package guru.zoroark.tegral.di.environment
+package guru.zoroark.tegral.di.test.environment
 
-import guru.zoroark.tegral.di.AnotherElementClass
-import guru.zoroark.tegral.di.AtoB
-import guru.zoroark.tegral.di.BtoA
 import guru.zoroark.tegral.di.ComponentNotFoundException
-import guru.zoroark.tegral.di.ElementClass
-import guru.zoroark.tegral.di.OtherElementClass
-import guru.zoroark.tegral.di.entryOf
-import org.junit.jupiter.api.assertThrows
-import kotlin.test.Test
+import guru.zoroark.tegral.di.environment.EnvironmentContext
+import guru.zoroark.tegral.di.environment.Identifier
+import guru.zoroark.tegral.di.environment.InjectionEnvironment
+import guru.zoroark.tegral.di.environment.InjectionScope
+import guru.zoroark.tegral.di.environment.get
+import guru.zoroark.tegral.di.environment.invoke
+import guru.zoroark.tegral.di.environment.named
+import guru.zoroark.tegral.di.environment.optional
+import guru.zoroark.tegral.di.test.entryOf
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
+import kotlin.reflect.KFunction
+import kotlin.test.fail
 
-@Suppress("UnnecessaryAbstractClass")
-abstract class EnvironmentBaseTest(private val provider: (EnvironmentContext) -> InjectionEnvironment) {
+/**
+ * A base test class that provides basic tests that any environment should respect.
+ *
+ * **This class DOES NOT run tests merely by subclassing it. Create a test of your own in your subclass that runs
+ * [runTests].** For example:
+ *
+ * ```kotlin
+ * class TestEagerEnvironment : NotExtensibleEnvironmentBaseTest(::EagerImmutableMetaEnvironment) {
+ *     @Test
+ *     fun `Base tests`() {
+ *         runTests()
+ *     }
+ * }
+ * ```
+ *
+ * You should consider using [NotExtensibleEnvironmentBaseTest] or [ExtensibleEnvironmentBaseTest] depending on which
+ * environment you wish to test.
+ */
+@Suppress("UnnecessaryAbstractClass", "FunctionName")
+abstract class EnvironmentBaseTest(
+    private val provider: (EnvironmentContext) -> InjectionEnvironment
+) {
+    abstract val additionalTests: List<KFunction<Unit>>
+    fun runTests() {
+        val tests = listOf<KFunction<Unit>>(
+            this::`(Basic) Put and get a single element`,
+            this::`(Basic) Put and get multiple elements`,
+            this::`(Basic) Put, get and inject multiple elements`,
+            this::`(Basic) Put, get and inject multiple elements with qualifiers`,
+            this::`(Basic) Objects are created eagerly`,
+            this::`(Basic) Injecting unknown component should fail`,
+            this::`(Basic) Optional injection with absent component should work`,
+            this::`(Basic) Optional injection with present component should work`
+        ) + additionalTests
+        val failingTests = tests.mapNotNull {
+            val result = runCatching { it.call() }
+            if (result.isSuccess) {
+                println("OK: ${it.name}")
+                null
+            } else {
+                val exception = result.exceptionOrNull()!!
+                it.name to exception
+            }
+        }
+        if (failingTests.isNotEmpty()) {
+            failingTests.forEach { (name, exception) ->
+                System.err.println()
+                System.err.println("KO: $name FAILED")
+                exception.printStackTrace()
+            }
+            fail("Multiple failing tests. Refer to the log output for details.")
+        }
+    }
+
+    class Simple
+    class SimpleTwo
+    class SimpleThree
+
     class A(scope: InjectionScope) {
         val c: C by scope()
         val b: B by scope()
@@ -54,32 +114,32 @@ abstract class EnvironmentBaseTest(private val provider: (EnvironmentContext) ->
 
     class F
 
-    @Test
+    @Suppress("MemberVisibilityCanBePrivate")
     fun `(Basic) Put and get a single element`() {
-        var element: ElementClass? = null
-        val context = EnvironmentContext(mapOf(entryOf { ElementClass().also { element = it } }))
+        var element: Simple? = null
+        val context = EnvironmentContext(mapOf(entryOf { Simple().also { element = it } }))
         val env = provider(context)
         assertSame(element, env.get())
     }
 
-    @Test
+    @Suppress("MemberVisibilityCanBePrivate")
     fun `(Basic) Put and get multiple elements`() {
-        var element: ElementClass? = null
-        var otherElement: OtherElementClass? = null
-        var anotherElement: AnotherElementClass? = null
+        var element: Simple? = null
+        var otherElement: SimpleTwo? = null
+        var anotherElement: SimpleThree? = null
         val context = EnvironmentContext(
             mapOf(
                 entryOf {
                     assertNull(element, "Called builder twice!")
-                    ElementClass().also { element = it }
+                    Simple().also { element = it }
                 },
                 entryOf {
                     assertNull(otherElement, "Called builder twice!")
-                    OtherElementClass().also { otherElement = it }
+                    SimpleTwo().also { otherElement = it }
                 },
                 entryOf {
                     assertNull(anotherElement, "Called builder twice!")
-                    AnotherElementClass().also { anotherElement = it }
+                    SimpleThree().also { anotherElement = it }
                 }
             )
         )
@@ -89,7 +149,7 @@ abstract class EnvironmentBaseTest(private val provider: (EnvironmentContext) ->
         assertSame(anotherElement, env.get())
     }
 
-    @Test
+    @Suppress("MemberVisibilityCanBePrivate")
     fun `(Basic) Put, get and inject multiple elements`() {
         var a: A? = null
         var b: B? = null
@@ -119,7 +179,7 @@ abstract class EnvironmentBaseTest(private val provider: (EnvironmentContext) ->
         assertSame(c, env.get())
     }
 
-    @Test
+    @Suppress("MemberVisibilityCanBePrivate")
     fun `(Basic) Put, get and inject multiple elements with qualifiers`() {
         var d: D? = null
         var e: E? = null
@@ -157,11 +217,11 @@ abstract class EnvironmentBaseTest(private val provider: (EnvironmentContext) ->
         assertNotNull(e)
         assertNotNull(eBis)
 
-        assertSame(d, env.get<D>())
-        assertSame(f1, env.get<F>(named("f1")))
-        assertSame(f2, env.get<F>(named("f2")))
-        assertSame(e, env.get<E>())
-        assertSame(eBis, env.get<E>(named("eBis")))
+        assertSame(d, env.get())
+        assertSame(f1, env.get(named("f1")))
+        assertSame(f2, env.get(named("f2")))
+        assertSame(e, env.get())
+        assertSame(eBis, env.get(named("eBis")))
 
         assertSame(d?.e, e)
         assertSame(d?.eBis, eBis)
@@ -173,14 +233,14 @@ abstract class EnvironmentBaseTest(private val provider: (EnvironmentContext) ->
         assertSame(eBis?.f2, f2)
     }
 
-    @Test
+    @Suppress("MemberVisibilityCanBePrivate")
     fun `(Basic) Objects are created eagerly`() {
         var wasFirstBuilt = false
         var wasSecondBuilt = false
         val context = EnvironmentContext(
             mapOf(
-                entryOf { ElementClass().also { wasFirstBuilt = true } },
-                entryOf { OtherElementClass().also { wasSecondBuilt = true } }
+                entryOf { Simple().also { wasFirstBuilt = true } },
+                entryOf { SimpleTwo().also { wasSecondBuilt = true } }
             )
         )
         provider(context)
@@ -188,33 +248,33 @@ abstract class EnvironmentBaseTest(private val provider: (EnvironmentContext) ->
         assertTrue(wasSecondBuilt)
     }
 
-    @Test
+    @Suppress("MemberVisibilityCanBePrivate")
     fun `(Basic) Getting unknown component should fail`() {
         val context = EnvironmentContext(
             mapOf(
-                entryOf { ElementClass() }
+                entryOf { Simple() }
             )
         )
         val env = provider(context)
-        val ex = assertThrows<ComponentNotFoundException> {
-            env.get<OtherElementClass>()
+        val ex = assertFailsWith<ComponentNotFoundException> {
+            env.get<SimpleTwo>()
         }
-        assertEquals(Identifier(OtherElementClass::class), ex.notFound)
+        assertEquals(Identifier(SimpleTwo::class), ex.notFound)
     }
 
-    @Test
+    @Suppress("MemberVisibilityCanBePrivate")
     fun `(Basic) Injecting unknown component should fail`() {
         val context = EnvironmentContext(
             mapOf(
-                entryOf { AtoB(scope) }
+                entryOf { B(scope) }
             )
         )
-        val ex = assertThrows<ComponentNotFoundException> {
+        val ex = assertFailsWith<ComponentNotFoundException> {
             val env = provider(context) // Eager envs will fail here
-            val aToB = env.get<AtoB>()
-            aToB.useB() // Lazy envs will fail here
+            val b = env.get<B>()
+            b.c // Lazy envs will fail here
         }
-        assertEquals(Identifier(BtoA::class), ex.notFound)
+        assertEquals(Identifier(C::class), ex.notFound)
     }
 
     class OptionalA
@@ -222,7 +282,7 @@ abstract class EnvironmentBaseTest(private val provider: (EnvironmentContext) ->
         val a: OptionalA? by scope.optional()
     }
 
-    @Test
+    @Suppress("MemberVisibilityCanBePrivate")
     fun `(Basic) Optional injection with present component should work`() {
         val context = EnvironmentContext(
             mapOf(
@@ -232,10 +292,10 @@ abstract class EnvironmentBaseTest(private val provider: (EnvironmentContext) ->
         )
         val env = provider(context)
         val aFromEnv = assertNotNull(env.get<OptionalB>().a)
-        assertSame(env.get<OptionalA>(), aFromEnv)
+        assertSame(env.get(), aFromEnv)
     }
 
-    @Test
+    @Suppress("MemberVisibilityCanBePrivate")
     fun `(Basic) Optional injection with absent component should work`() {
         val context = EnvironmentContext(
             mapOf(
