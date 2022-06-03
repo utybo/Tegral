@@ -26,65 +26,81 @@ import guru.zoroark.tegral.di.extensions.DeclarationsProcessor
 import guru.zoroark.tegral.di.extensions.ExtensibleEnvironmentContext
 import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironment
 import guru.zoroark.tegral.di.test.entryOf
-import kotlin.reflect.KFunction
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertSame
 
+/**
+ * An [EnvironmentBaseTest] specifically for extensible environments.
+ *
+ * **Remember to have at least one test that executes [runTests], see [EnvironmentBaseTest]'s documentation for more
+ * information.
+ */
 @Suppress("UnnecessaryAbstractClass", "FunctionName")
 abstract class ExtensibleEnvironmentBaseTest(
     private val provider: (ExtensibleEnvironmentContext) -> ExtensibleInjectionEnvironment
 ) : EnvironmentBaseTest({ ctx ->
     provider(ExtensibleEnvironmentContext(ctx.declarations, EnvironmentContext(mapOf())))
-}
-) {
-    final override val additionalTests: List<KFunction<Unit>>
+}) {
+    final override val additionalTests: List<Pair<String, () -> Unit>>
         get() = listOf(
-            this::`(Extension) Injection pass-through to meta-environment`,
-            this::`(Extension) getAllIdentifiers`,
-            this::`(Extension) Environment injects itself within meta environment`,
-            this::`(Extension) Environment calls declaration processors`,
-            this::`(Extension) Optional meta injection with present component should work`,
-            this::`(Extension) Optional meta injection with absent component should work`
+            "(Extension) Injection pass-through to meta-environment" to
+                this::`(Extension) Injection pass-through to meta-environment`,
+            "(Extension) getAllIdentifiers" to
+                this::`(Extension) getAllIdentifiers`,
+            "(Extension) Environment injects itself within meta environment" to
+                this::`(Extension) Environment injects itself within meta environment`,
+            "(Extension) Environment calls declaration processors" to
+                this::`(Extension) Environment calls declaration processors`,
+            "(Extension) Optional meta injection with present component should work" to
+                this::`(Extension) Optional meta injection with present component should work`,
+            "(Extension) Optional meta injection with absent component should work" to
+                this::`(Extension) Optional meta injection with absent component should work`,
         )
 
-    class B
-    class A(scope: InjectionScope) {
+    private class B
+    private class A(scope: InjectionScope) {
         val b: B by scope.meta()
     }
 
-    class D
-    class E
-    class F
+    private class D
+    private class E
+    private class F
 
-    class OptionalA
-    class OptionalB(scope: InjectionScope) {
+    private class OptionalA
+    private class OptionalB(scope: InjectionScope) {
         val a: OptionalA? by scope.meta.optional()
     }
 
-    @Suppress("MemberVisibilityCanBePrivate")
-    fun `(Extension) Injection pass-through to meta-environment`() {
+    private fun `(Extension) Injection pass-through to meta-environment`() {
         var a: A? = null
         var b: B? = null
-        val context = ExtensibleEnvironmentContext(mapOf(entryOf {
-            assertNull(a, "Called builder twice!")
-            A(scope).also { a = it }
-        }), EnvironmentContext(mapOf(entryOf {
-            assertNull(b, "Called builder twice!")
-            B().also { b = it }
-        })))
+        val context = ExtensibleEnvironmentContext(
+            mapOf(
+                entryOf {
+                    assertNull(a, "Called builder twice!")
+                    A(scope).also { a = it }
+                }
+            ),
+            EnvironmentContext(
+                mapOf(
+                    entryOf {
+                        assertNull(b, "Called builder twice!")
+                        B().also { b = it }
+                    }
+                )
+            )
+        )
         val env = provider(context)
         assertSame(a, env.get())
         assertSame(b, env.metaEnvironment.get())
         assertSame(a?.b, b)
     }
 
-    @Suppress("MemberVisibilityCanBePrivate")
-    fun `(Extension) getAllIdentifiers`() {
+    private fun `(Extension) getAllIdentifiers`() {
         val ctx = ExtensibleEnvironmentContext(
-            mapOf(entryOf { D() }, entryOf(named("E")) { E() }, entryOf { F() }),
-            EnvironmentContext(mapOf())
+            mapOf(entryOf { D() }, entryOf(named("E")) { E() }, entryOf { F() }), EnvironmentContext(mapOf())
         )
         val expectedIdentifiers = setOf(
             Identifier(D::class), Identifier(E::class, named("E")), Identifier(F::class)
@@ -93,14 +109,12 @@ abstract class ExtensibleEnvironmentBaseTest(
         assertEquals(expectedIdentifiers, env.getAllIdentifiers().toSet())
     }
 
-    @Suppress("MemberVisibilityCanBePrivate")
-    fun `(Extension) Environment injects itself within meta environment`() {
+    private fun `(Extension) Environment injects itself within meta environment`() {
         val env = provider(ExtensibleEnvironmentContext(mapOf(), EnvironmentContext(mapOf())))
         assertSame(env, env.metaEnvironment.get())
     }
 
-    @Suppress("MemberVisibilityCanBePrivate")
-    fun `(Extension) Environment calls declaration processors`() {
+    private fun `(Extension) Environment calls declaration processors`() {
         val processed = mutableListOf<Declaration<*>>()
         val processor = object : DeclarationsProcessor {
             override fun processDeclarations(sequence: Sequence<Declaration<*>>) {
@@ -109,17 +123,15 @@ abstract class ExtensibleEnvironmentBaseTest(
         }
         provider(
             ExtensibleEnvironmentContext(
-                mapOf(entryOf { "Hello" }), EnvironmentContext(
-                    mapOf(entryOf { processor })
-                )
+                mapOf(entryOf { "Hello" }),
+                EnvironmentContext(mapOf(entryOf { processor }))
             )
         )
         assertEquals(1, processed.size)
         assertEquals(Identifier(String::class), processed[0].identifier)
     }
 
-    @Suppress("MemberVisibilityCanBePrivate")
-    fun `(Extension) Optional meta injection with present component should work`() {
+    private fun `(Extension) Optional meta injection with present component should work`() {
         val context = ExtensibleEnvironmentContext(
             mapOf(entryOf { OptionalB(scope) }),
             EnvironmentContext(mapOf(entryOf { OptionalA() }))
@@ -129,8 +141,7 @@ abstract class ExtensibleEnvironmentBaseTest(
         assertSame(env.metaEnvironment.get(), aFromEnv)
     }
 
-    @Suppress("MemberVisibilityCanBePrivate")
-    fun `(Extension) Optional meta injection with absent component should work`() {
+    private fun `(Extension) Optional meta injection with absent component should work`() {
         val context = ExtensibleEnvironmentContext(mapOf(entryOf { OptionalB(scope) }), EnvironmentContext(mapOf()))
         val env = provider(context)
         assertNull(env.get<OptionalB>().a)

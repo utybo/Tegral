@@ -16,7 +16,6 @@ package guru.zoroark.tegral.di.test
 
 import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
 import guru.zoroark.tegral.di.environment.Identifier
-import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironment
 
 /**

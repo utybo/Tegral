@@ -55,14 +55,14 @@ import kotlin.reflect.KProperty
  *
  * - **Eager object creation**. Objects are created upon construction of this environment.
  * - **Active object injection**. Objects are re-injected at every use.
- * - **NI/Mutable**. Objects can be replaced, injection methods will not always return the same thing.
+ * - **NI/Mutable**. Objects can be replaced, injection methods will not always return the same thing.<
  */
 class UnsafeMutableEnvironment(
     baseContext: ExtensibleEnvironmentContext
 ) : TestMutableInjectionEnvironment, ExtensibleContextBuilderDsl {
 
     override val metaEnvironment: MutableEnvironment
-    val actualEnvironment: MutableEnvironment
+    private val actualEnvironment: MutableEnvironment
 
     init {
         this.metaEnvironment = createMetaEnvironment(baseContext) {
@@ -126,7 +126,7 @@ class UnsafeMutableEnvironment(
             }
         }
 
-        val components = baseContext.declarations.mapValues { (_, decl) ->
+        internal val components = baseContext.declarations.mapValues { (_, decl) ->
             decl.supplier(
                 ScopedContext(
                     if (metaEnvironment == null) SimpleEnvironmentBasedScope(this)
@@ -152,6 +152,6 @@ class UnsafeMutableEnvironment(
                 declaration.supplier(ScopedContext(EnvironmentBasedScope(this)))
         }
 
-        fun getAllIdentifiers() = components.keys.asSequence()
+        internal fun getAllIdentifiers() = components.keys.asSequence()
     }
 }
