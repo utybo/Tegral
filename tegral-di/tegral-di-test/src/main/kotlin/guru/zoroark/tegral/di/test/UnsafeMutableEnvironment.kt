@@ -107,12 +107,25 @@ class UnsafeMutableEnvironment(
         }
     }
 
+    /**
+     * Dummy environment kind for use with [UnsafeMutableEnvironment].
+     *
+     * UnsafeMutableEnvironment owns and manages its own meta-environment (which is of type [MutableEnvironment]). In
+     * order to "opt-in" to this behavior, you will need to specify this environment as the meta-environment kind.
+     */
     object Meta : InjectionEnvironmentKind<Nothing> {
         override fun build(context: EnvironmentContext): Nothing {
             error("UnsafeMutableEnvironment.Meta environments cannot be created directly.")
         }
     }
 
+    /**
+     * A simple, mutable environment that can also dispatch requests for a meta-environment to the one passed as a
+     * constructor parameter.
+     *
+     * You should not use this class directly. Consider instead using [UnsafeMutableEnvironment], which manages two
+     * instances of `MutableEnvironment` internally.
+     */
     class MutableEnvironment(
         private val metaEnvironment: MutableEnvironment?,
         baseContext: EnvironmentContext
