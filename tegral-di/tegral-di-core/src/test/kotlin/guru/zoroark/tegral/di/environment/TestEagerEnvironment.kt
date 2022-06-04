@@ -20,14 +20,20 @@ import guru.zoroark.tegral.di.FakeComponent
 import guru.zoroark.tegral.di.OtherElementClass
 import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.dsl.tegralDi
-import guru.zoroark.tegral.di.entryOf
 import guru.zoroark.tegral.di.extensions.EagerImmutableMetaEnvironment
+import guru.zoroark.tegral.di.test.entryOf
+import guru.zoroark.tegral.di.test.environment.NotExtensibleEnvironmentBaseTest
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class TestEagerEnvironment : NotExtensibleEnvironmentBaseTest(::EagerImmutableMetaEnvironment) {
+    @Test
+    fun `Base tests`() {
+        runTests()
+    }
+
     @Test
     fun `Test object injection is eager`() {
         val context = EnvironmentContext(

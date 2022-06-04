@@ -17,8 +17,9 @@ package guru.zoroark.tegral.di.environment
 import guru.zoroark.tegral.di.ElementClass
 import guru.zoroark.tegral.di.FakeComponent
 import guru.zoroark.tegral.di.OtherElementClass
-import guru.zoroark.tegral.di.entryOf
 import guru.zoroark.tegral.di.extensions.ExtensibleEnvironmentContext
+import guru.zoroark.tegral.di.test.entryOf
+import guru.zoroark.tegral.di.test.environment.ExtensibleEnvironmentBaseTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -27,6 +28,11 @@ import kotlin.test.assertTrue
 class TestMixedEnvironment : ExtensibleEnvironmentBaseTest({
     MixedImmutableEnvironment.build(it)
 }) {
+    @Test
+    fun `Base tests`() {
+        runTests()
+    }
+
     @Test
     fun `Test object injection is lazy`() {
         val context = ExtensibleEnvironmentContext(

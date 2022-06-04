@@ -5,6 +5,8 @@ plugins {
 dependencies {
     api project(":tegral-core")
     implementation libs.kotlin.reflect
+
+    testImplementation project(":tegral-di:tegral-di-test")
 }
 
 ext.humanName = "Tegral DI Core"

@@ -124,7 +124,7 @@ abstract class TegralSubjectTest<TSubject : Any>(
         additionalBuilder: ContextBuilderDsl.() -> Unit,
         block: suspend UnsafeMutableEnvironment.() -> T
     ): T {
-        val env = tegralDi(UnsafeMutableEnvironment) {
+        val env = tegralDi(UnsafeMutableEnvironment, UnsafeMutableEnvironment.Meta) {
             put(baseModule)
             additionalBuilder()
         }

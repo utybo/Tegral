@@ -12,24 +12,39 @@
  * limitations under the License.
  */
 
-package guru.zoroark.tegral.di.environment
+package guru.zoroark.tegral.di.test.environment
 
 import guru.zoroark.tegral.di.NotExtensibleException
-import guru.zoroark.tegral.di.entryOf
-import org.junit.jupiter.api.assertThrows
-import kotlin.test.Test
+import guru.zoroark.tegral.di.environment.EnvironmentContext
+import guru.zoroark.tegral.di.environment.InjectionEnvironment
+import guru.zoroark.tegral.di.environment.InjectionScope
+import guru.zoroark.tegral.di.environment.invoke
+import guru.zoroark.tegral.di.test.entryOf
+import kotlin.test.assertFailsWith
 
+/**
+ * An [EnvironmentBaseTest] specifically for non-extensible environments.
+ *
+ * **Remember to have at least one test that executes [runTests], see [EnvironmentBaseTest]'s documentation for more
+ * information.
+ */
 @Suppress("UnnecessaryAbstractClass")
 abstract class NotExtensibleEnvironmentBaseTest(
     private val provider: (EnvironmentContext) -> InjectionEnvironment
 ) : EnvironmentBaseTest(provider) {
-    class B
-    class A(scope: InjectionScope) {
+    private class B
+    private class A(scope: InjectionScope) {
         val b: B by scope.meta()
     }
 
-    @Test
-    fun `(Not extensible) Attempting meta injection should fail`() {
+    final override val additionalTests: List<Pair<String, () -> Unit>>
+        get() = listOf(
+            "(Not extensible) Attempting meta injection should fail" to
+                this::`(Not extensible) Attempting meta injection should fail`
+        )
+
+    @Suppress("FunctionName")
+    protected fun `(Not extensible) Attempting meta injection should fail`() {
         val context = EnvironmentContext(
             mapOf(
                 entryOf {
@@ -37,7 +52,7 @@ abstract class NotExtensibleEnvironmentBaseTest(
                 }
             )
         )
-        assertThrows<NotExtensibleException> {
+        assertFailsWith<NotExtensibleException> {
             provider(context)
         }
     }

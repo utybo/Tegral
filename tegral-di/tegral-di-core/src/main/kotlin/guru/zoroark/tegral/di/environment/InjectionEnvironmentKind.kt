@@ -20,7 +20,7 @@ package guru.zoroark.tegral.di.environment
  *
  * @type E The type of the injection environment built by this object.
  */
-interface InjectionEnvironmentKind<E : InjectionEnvironment> {
+fun interface InjectionEnvironmentKind<E : InjectionEnvironment> {
     /**
      * Builds the injection environment using the given context.
      *

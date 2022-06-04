@@ -19,6 +19,7 @@ import guru.zoroark.tegral.di.environment.InjectableModule
 import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionEnvironmentKind
 import guru.zoroark.tegral.di.environment.MixedImmutableEnvironment
+import guru.zoroark.tegral.di.extensions.EagerImmutableMetaEnvironment
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.ExtensibleEnvironmentContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironment
@@ -36,7 +37,7 @@ import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironmentKind
  */
 @TegralDsl
 fun tegralDi(builder: ExtensibleContextBuilderDsl.() -> Unit): MixedImmutableEnvironment =
-    tegralDi(MixedImmutableEnvironment, builder)
+    tegralDi(MixedImmutableEnvironment, builder = builder)
 
 /**
  * Entry point for the Tegral DI DSL, used to build an injection environment.
@@ -76,10 +77,11 @@ fun <E : InjectionEnvironment> tegralDi(
 @TegralDsl
 fun <E : ExtensibleInjectionEnvironment> tegralDi(
     environmentKind: ExtensibleInjectionEnvironmentKind<E>,
+    metaEnvironmentKind: InjectionEnvironmentKind<*> = EagerImmutableMetaEnvironment,
     builder: ExtensibleContextBuilderDsl.() -> Unit
 ): E {
     val res = ExtensibleEnvironmentContextBuilderDsl().apply(builder).build()
-    return environmentKind.build(res)
+    return environmentKind.build(res, metaEnvironmentKind)
 }
 
 /**

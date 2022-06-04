@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] (0.0.2)
 
+### Added
+
+- `tegral-di-test`
+  - `UnsafeMutableEnvironment` is now an extensible environment. ([#16](https://github/utybo/Tegral/pull/16))
+  - Added `entryOf` utility function. ([#16](https://github/utybo/Tegral/pull/16))
+  - Utility classes for testing environments' behavior (`EnvironmentBaseTest`, `ExtensibleEnvironmentBaseTest` and `NotExtensibleEnvironmentBaseTest`). ([#16](https://github/utybo/Tegral/pull/16))([#16](https://github/utybo/Tegral/pull/16))
+
+### Changed
+
+- `tegral-di-core`
+  - `tegralDi` now takes an additional, optional `metaEnvironmentKind` parameter when creating extensible environments. ([#16](https://github/utybo/Tegral/pull/16))
+  - `InjectionEnvironmentKind<E>` interface is now a functional interface. ([#16](https://github/utybo/Tegral/pull/16))
+  - `createMetaEnvironment` function now returns the correct type of `InjectionEnvironment`, determined via the generic parameter of `InjectionEnvironmentKind` ([#16](https://github/utybo/Tegral/pull/16))
+
 ## [0.0.1] - 2022-06-02
 
 Initial release of Tegral.
