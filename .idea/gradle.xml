@@ -31,6 +31,7 @@
             <option value="$PROJECT_DIR$/tegral-web" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-appdefaults" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-appdsl" />
+            <option value="$PROJECT_DIR$/tegral-web/tegral-web-apptest" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-config" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers-test" />
@@ -63,6 +64,7 @@
                   <project path="$PROJECT_DIR$/tegral-web" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-appdefaults" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-appdsl" />
+                  <project path="$PROJECT_DIR$/tegral-web/tegral-web-apptest" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-config" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-controllers" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-controllers-test" />
@@ -101,6 +103,7 @@
             <option value="$PROJECT_DIR$/tegral-web" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-appdefaults" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-appdsl" />
+            <option value="$PROJECT_DIR$/tegral-web/tegral-web-apptest" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-config" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers-test" />
