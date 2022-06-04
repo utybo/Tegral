@@ -28,8 +28,8 @@ import io.ktor.server.routing.Routing
 import io.ktor.server.routing.get
 import io.ktor.utils.io.charsets.Charset
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
-import kotlin.test.assertEquals
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class IntegrationTestTest {
     class ExampleSimpleController : KtorController() {

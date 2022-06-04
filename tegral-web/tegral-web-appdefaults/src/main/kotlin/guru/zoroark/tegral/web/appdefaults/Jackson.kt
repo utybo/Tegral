@@ -12,18 +12,19 @@
  * limitations under the License.
  */
 
-package guru.zoroark.tegral.web.apptest
+package guru.zoroark.tegral.web.appdefaults
 
-import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 
 /**
- * An installable module for integration testing.
+ * Applies the AppDefaults configuration for Jackson. This configuration simply
  *
- * Similar in concept to a Tegral Featureful feature.
+ * - Registers the Kotlin module
+ * - Registers the Java Time module
  */
-interface IntegrationTestFeature {
-    /**
-     * Installs this feature onto the environment, putting element into the Tegral DI environment and meta-environment.
-     */
-    fun ExtensibleContextBuilderDsl.install()
+fun ObjectMapper.defaultTegralConfiguration() {
+    registerKotlinModule()
+    registerModule(JavaTimeModule())
 }

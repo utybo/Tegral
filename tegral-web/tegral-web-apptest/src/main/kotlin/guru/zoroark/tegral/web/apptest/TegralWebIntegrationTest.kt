@@ -14,32 +14,71 @@
 
 package guru.zoroark.tegral.web.apptest
 
+import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
 import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.ExtensibleEnvironmentContextBuilderDsl
 import guru.zoroark.tegral.di.services.services
-import guru.zoroark.tegral.di.services.useServices
 import guru.zoroark.tegral.di.test.TegralDiBaseTest
 import guru.zoroark.tegral.di.test.TestMutableInjectionEnvironment
 import guru.zoroark.tegral.di.test.UnsafeMutableEnvironment
-import guru.zoroark.tegral.services.feature.ServicesFeature
+import guru.zoroark.tegral.web.controllers.test.TegralControllerTest
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.HttpClientEngineConfig
-import io.ktor.server.testing.ClientProvider
 import kotlinx.coroutines.runBlocking
 
-interface MultiClientProvider : ClientProvider {
-    fun client(appName: String?): HttpClient
-    fun createClient(appName: String?, block: HttpClientConfig<out HttpClientEngineConfig>.() -> Unit): HttpClient
-
-    override val client: HttpClient get() = client(null)
-    override fun createClient(block: HttpClientConfig<out HttpClientEngineConfig>.() -> Unit): HttpClient =
-        createClient(null, block)
+/**
+ * DSL provided for building integration test environments.
+ */
+interface WebIntegrationTestContextDsl : ExtensibleContextBuilderDsl {
+    /**
+     * Adds the given integration test feature to the environment.
+     */
+    fun install(testFeature: IntegrationTestFeature)
 }
 
-class WebIntegrationTestEnvironment(
+/**
+ * Builder for integration test environments.
+ *
+ * Comparable to a regular Tegral DI environment builder, with the addition of installable features.
+ */
+class WebIntegrationTestContextBuilder : WebIntegrationTestContextDsl {
+    private val envBuilder = ExtensibleEnvironmentContextBuilderDsl()
+    private val features = mutableListOf<IntegrationTestFeature>()
+
+    override fun <T : Any> put(declaration: Declaration<T>) {
+        envBuilder.put(declaration)
+    }
+
+    override fun install(testFeature: IntegrationTestFeature) {
+        features += testFeature
+    }
+
+    override fun meta(action: ContextBuilderDsl.() -> Unit) {
+        envBuilder.meta(action)
+    }
+
+    /**
+     * Build a [WebIntegrationTestContext], installing required features, constructing an environment, etc.
+     */
+    fun build(): WebIntegrationTestContext {
+        for (feature in features) {
+            with(feature) { install() }
+        }
+        val env = UnsafeMutableEnvironment(envBuilder.build())
+        return WebIntegrationTestContext(env)
+    }
+}
+
+/**
+ * Context within which integration tests are run.
+ *
+ * This is similar to any regular Tegral DI test environment (as in, you can get, put elements, etc.), with the addition
+ * of the ability to retrieve HTTP clients to send requests to Ktor applications present in the environment.
+ */
+class WebIntegrationTestContext(
     private val env: UnsafeMutableEnvironment
 ) : TestMutableInjectionEnvironment by env, MultiClientProvider {
     private fun findTestApp(appName: String?): KtorTestApplication {
@@ -57,51 +96,35 @@ class WebIntegrationTestEnvironment(
     ): HttpClient {
         return findTestApp(appName).createClient(block)
     }
-
 }
 
-interface TestWebApplicationDsl : ExtensibleContextBuilderDsl {
-    fun install(testFeature: IntegrationTestFeature)
-}
-
-class TestWebApplicationBuilder : TestWebApplicationDsl {
-    private val envBuilder = ExtensibleEnvironmentContextBuilderDsl()
-    private val features = mutableListOf<IntegrationTestFeature>()
-
-    override fun <T : Any> put(declaration: Declaration<T>) {
-        envBuilder.put(declaration)
-    }
-
-    override fun install(testFeature: IntegrationTestFeature) {
-        features += testFeature
-    }
-
-    override fun meta(action: ContextBuilderDsl.() -> Unit) {
-        envBuilder.meta(action)
-    }
-
-    fun build(): WebIntegrationTestEnvironment {
-        for (feature in features) {
-            with(feature) { install() }
-        }
-        val env = UnsafeMutableEnvironment(envBuilder.build())
-        return WebIntegrationTestEnvironment(env)
-    }
-}
-
+/**
+ * Test class for integration tests.
+ *
+ * Integration tests provide a lightweight [feature-based][IntegrationTestFeature] environment to run (portions of)
+ * applications.
+ *
+ * This is comparable to a [TegralControllerTest] on steroids.
+ */
 abstract class TegralWebIntegrationTest(
-    private val baseSetup: TestWebApplicationDsl.() -> Unit
-) : TegralDiBaseTest<WebIntegrationTestEnvironment>() {
-    open fun TestWebApplicationDsl.setupDefaults() {
+    private val baseSetup: WebIntegrationTestContextDsl.() -> Unit
+) : TegralDiBaseTest<WebIntegrationTestContext>() {
+    /**
+     * Installs default features (most notably [TestServicesFeature] and [KtorTestApplicationFeature]). Can be
+     * overridden if you want to change the defaults -- otherwise, adding components should be done via the [baseSetup]
+     * parameter in the [TegralWebIntegrationTest] constructor.
+     */
+    open fun WebIntegrationTestContextDsl.setupDefaults() {
         install(TestServicesFeature)
         install(KtorTestApplicationFeature)
     }
 
+    @TegralDsl
     override fun <T> test(
         additionalBuilder: ContextBuilderDsl.() -> Unit,
-        block: suspend WebIntegrationTestEnvironment.() -> T
+        block: suspend WebIntegrationTestContext.() -> T
     ): T {
-        val builder = TestWebApplicationBuilder()
+        val builder = WebIntegrationTestContextBuilder()
         builder.apply { setupDefaults() }
         builder.apply(baseSetup)
         builder.apply(additionalBuilder)
@@ -114,4 +137,3 @@ abstract class TegralWebIntegrationTest(
         }
     }
 }
-

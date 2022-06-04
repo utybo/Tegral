@@ -36,7 +36,7 @@ abstract class KtorApplication(
      * default value and does not have any specific meaning (it does NOT mean "put this module everywhere").
      */
     val appName: String? = null
-) : TegralService, KtorModule(Int.MAX_VALUE, appName) {
+) : TegralService, KtorModule(DEFAULT_APP_SETUP_MODULE_PRIORITY, appName) {
     private val ktorExtension: KtorExtension by scope.meta()
 
     /**
