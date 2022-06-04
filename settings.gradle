@@ -16,5 +16,7 @@ include 'tegral-catalog',
         'tegral-web:tegral-web-controllers',
         'tegral-web:tegral-web-controllers-test'
 
+include 'examples:simple-json-api'
+
 include 'docs'
 include 'website'

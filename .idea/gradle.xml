@@ -14,6 +14,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/docs" />
+            <option value="$PROJECT_DIR$/examples" />
+            <option value="$PROJECT_DIR$/examples/simple-json-api" />
             <option value="$PROJECT_DIR$/tegral-catalog" />
             <option value="$PROJECT_DIR$/tegral-config" />
             <option value="$PROJECT_DIR$/tegral-config/tegral-config-core" />
@@ -47,6 +49,8 @@
                 <projects>
                   <project path="$PROJECT_DIR$" />
                   <project path="$PROJECT_DIR$/docs" />
+                  <project path="$PROJECT_DIR$/examples" />
+                  <project path="$PROJECT_DIR$/examples/simple-json-api" />
                   <project path="$PROJECT_DIR$/tegral-catalog" />
                   <project path="$PROJECT_DIR$/tegral-config" />
                   <project path="$PROJECT_DIR$/tegral-config/tegral-config-core" />
@@ -85,6 +89,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/docs" />
+            <option value="$PROJECT_DIR$/examples" />
+            <option value="$PROJECT_DIR$/examples/simple-json-api" />
             <option value="$PROJECT_DIR$/samples/stage-1" />
             <option value="$PROJECT_DIR$/tegral-catalog" />
             <option value="$PROJECT_DIR$/tegral-config" />

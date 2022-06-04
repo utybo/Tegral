@@ -1,0 +1,17 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-common-conventions'
+    id 'application'
+}
+
+dependencies {
+    implementation project(":tegral-web:tegral-web-appdsl")
+
+    testImplementation project(":tegral-di:tegral-di-test")
+    testImplementation project(":tegral-di:tegral-di-test-mockk")
+    testImplementation project(":tegral-web:tegral-web-controllers-test")
+    testImplementation project(":tegral-web:tegral-web-apptest")
+}
+
+application {
+    mainClass = "guru.zoroark.tegral.examples.simplejsonapi.AppKt"
+}
