@@ -15,6 +15,8 @@ dependencies {
 
     implementation libs.kotlin.stdlib
     implementation libs.kotlin.reflect
+
+    testImplementation libs.ktor.client.java
 }
 
 ext.humanName = "Tegral Web AppDSL"

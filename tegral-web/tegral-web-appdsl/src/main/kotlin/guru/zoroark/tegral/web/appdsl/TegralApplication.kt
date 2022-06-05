@@ -38,8 +38,13 @@ class TegralApplication(
      * Note that you **do not** need to call this method if you are using the [tegral] block, which takes care of
      * launching the application for you.
      */
-    fun start() {
+    suspend fun start() {
         val logger = LoggerFactory.getLogger("tegral.web.appdsl.start")
-        runBlocking { environment.services.startAll(logger::info) }
+        environment.services.startAll(logger::info)
+    }
+
+    suspend fun stop() {
+        val logger = LoggerFactory.getLogger("tegral.web.appdsl.stop")
+        environment.services.stopAll(logger::info)
     }
 }

@@ -25,10 +25,10 @@ import java.io.File
  * Ktor.
  */
 class KtorApplicationSettings<TEngine : ApplicationEngine, TConfiguration : ApplicationEngine.Configuration>(
-    private val engine: ApplicationEngineFactory<TEngine, TConfiguration>,
-    private val port: Int = 80,
-    private val host: String = "0.0.0.0",
-    private val watchPaths: List<String> = listOf(File(".").canonicalPath),
+    val engine: ApplicationEngineFactory<TEngine, TConfiguration>,
+    val port: Int = 80,
+    val host: String = "0.0.0.0",
+    val watchPaths: List<String> = listOf(File(".").canonicalPath),
     private val configure: TConfiguration.() -> Unit = {}
 ) {
     /**
