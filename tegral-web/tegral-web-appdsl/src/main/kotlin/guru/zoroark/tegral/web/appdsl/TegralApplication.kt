@@ -16,7 +16,6 @@ package guru.zoroark.tegral.web.appdsl
 
 import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironment
 import guru.zoroark.tegral.di.services.services
-import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 
 /**
@@ -43,6 +42,9 @@ class TegralApplication(
         environment.services.startAll(logger::info)
     }
 
+    /**
+     * Stops this application with all its components.
+     */
     suspend fun stop() {
         val logger = LoggerFactory.getLogger("tegral.web.appdsl.stop")
         environment.services.stopAll(logger::info)

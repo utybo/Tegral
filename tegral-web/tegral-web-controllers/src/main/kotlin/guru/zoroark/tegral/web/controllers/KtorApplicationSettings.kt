@@ -25,9 +25,25 @@ import java.io.File
  * Ktor.
  */
 class KtorApplicationSettings<TEngine : ApplicationEngine, TConfiguration : ApplicationEngine.Configuration>(
+    /**
+     * The engine to use for the Ktor application.
+     *
+     * See [Ktor's documentation](https://ktor.io/docs/engines.html) for more information.
+     */
     val engine: ApplicationEngineFactory<TEngine, TConfiguration>,
+    /**
+     * The port on which to listen for HTTP connections. `80` by default.
+     */
     val port: Int = 80,
+    /**
+     * The host on which to listen for HTTP connections. `0.0.0.0` by default.
+     */
     val host: String = "0.0.0.0",
+    /**
+     * Paths which are listened to for changes to reload classes in dev mode.
+     *
+     * See [Ktor's documentation](https://ktor.io/docs/auto-reload.html#watch-paths) for more information.
+     */
     val watchPaths: List<String> = listOf(File(".").canonicalPath),
     private val configure: TConfiguration.() -> Unit = {}
 ) {
