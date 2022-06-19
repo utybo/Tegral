@@ -29,3 +29,5 @@ inline fun <reified T : Any> entryOf(qualifier: Qualifier = EmptyQualifier, noin
     ScopedSupplierDeclaration(Identifier(T::class, qualifier), supplier).let {
         it.identifier to it
     }
+
+fun <T : Any> entryOf(declaration: Declaration<T>) = declaration.identifier to declaration

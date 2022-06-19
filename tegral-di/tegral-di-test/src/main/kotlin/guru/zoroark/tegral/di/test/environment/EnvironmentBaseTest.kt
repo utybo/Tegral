@@ -23,6 +23,7 @@ import guru.zoroark.tegral.di.environment.get
 import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.di.environment.named
 import guru.zoroark.tegral.di.environment.optional
+import guru.zoroark.tegral.di.extensions.AliasDeclaration
 import guru.zoroark.tegral.di.test.entryOf
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -82,6 +83,14 @@ sealed class EnvironmentBaseTest(
                 this::`(Basic) Optional injection with absent component should work`,
             "(Basic) Optional injection with present component should work" to
                 this::`(Basic) Optional injection with present component should work`,
+            "(Basic) Alias get with same type but different qualifier should work" to
+                this::`(Basic) Alias get with same type but different qualifier should work`,
+            "(Basic) Alias get with different type but same qualifier should work" to
+                this::`(Basic) Alias get with different type but same qualifier should work`,
+            "(Basic) Alias inject with same type but different qualifier should work" to
+                this::`(Basic) Alias inject with same type but different qualifier should work`,
+            "(Basic) Alias inject with different type but same qualifier should work" to
+                this::`(Basic) Alias inject with different type but same qualifier should work`,
         ) + additionalTests
         val failingTests = tests.mapNotNull { (name, test) ->
             val result = runCatching { test() }
@@ -129,6 +138,19 @@ sealed class EnvironmentBaseTest(
     }
 
     private class F
+
+    private interface ExampleContract
+    private class ExampleImpl : ExampleContract
+
+    private class DoubleRetriever(scope: InjectionScope) {
+        val simpleNoQualifier: Simple by scope()
+        val simpleQualifier: Simple by scope(named("alias"))
+    }
+
+    private class DoubleRetriever2(scope: InjectionScope) {
+        val contract: ExampleContract by scope()
+        val impl: ExampleImpl by scope()
+    }
 
     private fun `(Basic) Put and get a single element`() {
         var element: Simple? = null
@@ -311,5 +333,57 @@ sealed class EnvironmentBaseTest(
         )
         val env = provider(context)
         assertNull(env.get<OptionalB>().a)
+    }
+
+    private fun `(Basic) Alias get with same type but different qualifier should work`() {
+        val context = EnvironmentContext(
+            mapOf(
+                entryOf { Simple() },
+                entryOf(AliasDeclaration(Identifier(Simple::class, named("alias")), Identifier(Simple::class)))
+            )
+        )
+        val env = provider(context)
+        val simpleA = env.get<Simple>()
+        val simpleB = env.get<Simple>(named("alias"))
+        assertSame(simpleA, simpleB)
+    }
+
+    private fun `(Basic) Alias get with different type but same qualifier should work`() {
+        val context = EnvironmentContext(
+            mapOf(
+                entryOf { ExampleImpl() },
+                entryOf(AliasDeclaration(Identifier(ExampleContract::class), Identifier(ExampleImpl::class)))
+            )
+        )
+        val env = provider(context)
+        val simpleA = env.get<ExampleImpl>()
+        val simpleB = env.get<ExampleContract>()
+        assertSame(simpleA, simpleB)
+    }
+
+    private fun `(Basic) Alias inject with same type but different qualifier should work`() {
+        val context = EnvironmentContext(
+            mapOf(
+                entryOf { Simple() },
+                entryOf(AliasDeclaration(Identifier(Simple::class, named("alias")), Identifier(Simple::class))),
+                entryOf { DoubleRetriever(scope) }
+            )
+        )
+        val env = provider(context)
+        val retriever = env.get<DoubleRetriever>()
+        assertSame(retriever.simpleNoQualifier, retriever.simpleQualifier)
+    }
+
+    private fun `(Basic) Alias inject with different type but same qualifier should work`() {
+        val context = EnvironmentContext(
+            mapOf(
+                entryOf { ExampleImpl() },
+                entryOf(AliasDeclaration(Identifier(ExampleContract::class), Identifier(ExampleImpl::class))),
+                entryOf { DoubleRetriever2(scope) }
+            )
+        )
+        val env = provider(context)
+        val retriever = env.get<DoubleRetriever2>()
+        assertSame(retriever.impl, retriever.contract)
     }
 }
