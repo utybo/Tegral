@@ -100,6 +100,8 @@ interface InjectionEnvironment {
     fun <T : Any> createInjector(identifier: Identifier<T>, onInjection: (T) -> Unit = {}): Injector<T>
 }
 
+typealias EnvironmentComponents = Map<Identifier<*>, IdentifierResolver<*>>
+
 /**
  * Gets the component identified by the given type turned into an [Identifier] with an optional [qualifier][Qualifier].
  * Throws an exception if no component with this identifier exists.

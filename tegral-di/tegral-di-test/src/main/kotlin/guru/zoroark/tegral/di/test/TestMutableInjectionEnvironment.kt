@@ -16,6 +16,7 @@ package guru.zoroark.tegral.di.test
 
 import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
 import guru.zoroark.tegral.di.environment.Identifier
+import guru.zoroark.tegral.di.environment.IdentifierResolver
 import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironment
 
 /**
@@ -27,5 +28,5 @@ interface TestMutableInjectionEnvironment : ExtensibleInjectionEnvironment, Cont
     /**
      * The components that have been registered in this environment.
      */
-    val components: Map<Identifier<*>, Any>
+    val components: Map<Identifier<*>, IdentifierResolver<*>>
 }

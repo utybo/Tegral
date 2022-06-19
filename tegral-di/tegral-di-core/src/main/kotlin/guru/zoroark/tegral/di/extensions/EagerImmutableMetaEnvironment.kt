@@ -18,18 +18,23 @@ import guru.zoroark.tegral.di.ComponentNotFoundException
 import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.environment.Declarations
 import guru.zoroark.tegral.di.environment.EnvironmentBasedScope
+import guru.zoroark.tegral.di.environment.EnvironmentComponents
 import guru.zoroark.tegral.di.environment.EnvironmentContext
 import guru.zoroark.tegral.di.environment.Identifier
+import guru.zoroark.tegral.di.environment.IdentifierResolver
 import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionEnvironmentKind
 import guru.zoroark.tegral.di.environment.Injector
+import guru.zoroark.tegral.di.environment.ResolvableDeclaration
 import guru.zoroark.tegral.di.environment.ScopedContext
+import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
+import guru.zoroark.tegral.di.environment.SimpleIdentifierResolver
 import guru.zoroark.tegral.di.environment.ensureInstance
 import kotlin.reflect.KProperty
 
 private data class EIEBeingBuiltInformation(
     val declarations: Declarations,
-    val componentsBeingBuilt: MutableMap<Identifier<*>, Any>
+    val componentsBeingBuilt: MutableMap<Identifier<*>, IdentifierResolver<*>>
 )
 
 private class StaticInjector<T : Any>(private val value: T) : Injector<T> {
@@ -61,8 +66,8 @@ class EagerImmutableMetaEnvironment(context: EnvironmentContext) : InjectionEnvi
     private val components = initializeComponents(context)
     private var buildingInformation: EIEBeingBuiltInformation? = null
 
-    private fun initializeComponents(context: EnvironmentContext): Map<Identifier<*>, Any> {
-        val componentsNow = mutableMapOf<Identifier<*>, Any>()
+    private fun initializeComponents(context: EnvironmentContext): EnvironmentComponents {
+        val componentsNow = mutableMapOf<Identifier<*>, IdentifierResolver<*>>()
         buildingInformation = EIEBeingBuiltInformation(context.declarations, componentsNow)
 
         for ((_, declaration) in context.declarations) {
@@ -74,7 +79,7 @@ class EagerImmutableMetaEnvironment(context: EnvironmentContext) : InjectionEnvi
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> getOrNull(identifier: Identifier<T>): T? {
-        return components[identifier]?.also { ensureInstance(identifier.kclass, it) } as T?
+        return components[identifier]?.resolve(components)?.also { ensureInstance(identifier.kclass, it) } as T?
     }
 
     override fun <T : Any> createInjector(identifier: Identifier<T>, onInjection: (T) -> Unit): Injector<T> {
@@ -97,10 +102,14 @@ class EagerImmutableMetaEnvironment(context: EnvironmentContext) : InjectionEnvi
 
 @Suppress("UNCHECKED_CAST")
 private fun <T : Any> EagerImmutableMetaEnvironment.initializeComponent(
-    components: MutableMap<Identifier<*>, Any>,
+    components: MutableMap<Identifier<*>, IdentifierResolver<*>>,
     declaration: Declaration<T>
 ): T {
     return components.getOrPut(declaration.identifier) {
-        declaration.supplier(ScopedContext(EnvironmentBasedScope(this)))
-    } as T
+        when (declaration) {
+            is ScopedSupplierDeclaration<T> ->
+                SimpleIdentifierResolver(declaration.supplier(ScopedContext(EnvironmentBasedScope(this))))
+            is ResolvableDeclaration<T> -> declaration.buildResolver()
+        }
+    }.resolve(components) as T
 }

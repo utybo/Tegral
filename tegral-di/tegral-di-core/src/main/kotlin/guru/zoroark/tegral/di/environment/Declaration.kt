@@ -17,6 +17,14 @@ package guru.zoroark.tegral.di.environment
 import guru.zoroark.tegral.di.ComponentNotFoundException
 import guru.zoroark.tegral.di.extensions.DeclarationTag
 
+
+sealed class Declaration<T : Any>(val identifier: Identifier<T>) {
+    /**
+     * Tags attached to this declaration.
+     */
+    val tags = mutableListOf<DeclarationTag>()
+}
+
 /**
  * A declaration within an [EnvironmentContext].
  *
@@ -26,11 +34,11 @@ import guru.zoroark.tegral.di.extensions.DeclarationTag
  * @property identifier The identifier for this declaration.
  * @property supplier The supplier for this declaration.
  */
-class Declaration<T : Any>(val identifier: Identifier<T>, val supplier: ScopedSupplier<T>) {
-    /**
-     * Tags attached to this declaration.
-     */
-    val tags = mutableListOf<DeclarationTag>()
+class ScopedSupplierDeclaration<T : Any>(identifier: Identifier<T>, val supplier: ScopedSupplier<T>) :
+    Declaration<T>(identifier)
+
+abstract class ResolvableDeclaration<T : Any>(identifier: Identifier<T>) : Declaration<T>(identifier) {
+    abstract fun buildResolver(): IdentifierResolver<T>
 }
 
 /**

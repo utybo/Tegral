@@ -22,6 +22,7 @@ import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.Injector
 import guru.zoroark.tegral.di.environment.MetalessInjectionScope
 import guru.zoroark.tegral.di.environment.ScopedContext
+import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
 import guru.zoroark.tegral.di.test.NotAvailableInTestEnvironmentException
 import kotlin.reflect.KProperty
 
@@ -54,7 +55,7 @@ class DependencyTrackingInjectionEnvironment(context: EnvironmentContext) : Inje
      */
     val dependencies = context.declarations.mapValues { (_, v) ->
         currentInjections.clear()
-        v.supplier(ScopedContext(EnvironmentBasedIgnoringMetaScope(this)))
+        if (v is ScopedSupplierDeclaration) v.supplier(ScopedContext(EnvironmentBasedIgnoringMetaScope(this)))
         currentInjections.toList()
     }
 

@@ -14,13 +14,13 @@
 
 package guru.zoroark.tegral.di.extensions
 
-import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.environment.Identifier
+import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class TagsTest {
-    private fun makeDeclaration() = Declaration(Identifier(String::class)) { "Hello!" }
+    private fun makeDeclaration() = ScopedSupplierDeclaration(Identifier(String::class)) { "Hello!" }
 
     object TagOne : DeclarationTag
     object TagTwo : DeclarationTag

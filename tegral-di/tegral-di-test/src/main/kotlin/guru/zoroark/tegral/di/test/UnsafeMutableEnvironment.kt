@@ -16,16 +16,20 @@ package guru.zoroark.tegral.di.test
 
 import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
 import guru.zoroark.tegral.di.environment.Declaration
-import guru.zoroark.tegral.di.environment.EnvironmentBasedScope
+import guru.zoroark.tegral.di.environment.EnvironmentComponents
 import guru.zoroark.tegral.di.environment.EnvironmentContext
 import guru.zoroark.tegral.di.environment.Identifier
+import guru.zoroark.tegral.di.environment.IdentifierResolver
 import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionEnvironmentKind
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.Injector
 import guru.zoroark.tegral.di.environment.MetalessInjectionScope
+import guru.zoroark.tegral.di.environment.ResolvableDeclaration
 import guru.zoroark.tegral.di.environment.ScopedContext
+import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
 import guru.zoroark.tegral.di.environment.SimpleEnvironmentBasedScope
+import guru.zoroark.tegral.di.environment.SimpleIdentifierResolver
 import guru.zoroark.tegral.di.environment.ensureInstance
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.ExtensibleEnvironmentContext
@@ -71,7 +75,7 @@ class UnsafeMutableEnvironment(
         this.actualEnvironment = MutableEnvironment(metaEnvironment, EnvironmentContext(baseContext.declarations))
     }
 
-    override val components: Map<Identifier<*>, Any>
+    override val components: EnvironmentComponents
         get() = actualEnvironment.components
 
     override fun getAllIdentifiers(): Sequence<Identifier<*>> =
@@ -139,30 +143,40 @@ class UnsafeMutableEnvironment(
             }
         }
 
-        internal val components = baseContext.declarations.mapValues { (_, decl) ->
-            decl.supplier(
-                ScopedContext(
-                    if (metaEnvironment == null) SimpleEnvironmentBasedScope(this)
-                    else object : InjectionScope {
-                        override val meta: MetalessInjectionScope
-                            get() = SimpleEnvironmentBasedScope(metaEnvironment)
+        internal val components: MutableMap<Identifier<*>, IdentifierResolver<*>> = mutableMapOf()
 
-                        override fun <T : Any> inject(what: Identifier<T>): Injector<T> =
-                            this@MutableEnvironment.createInjector(what)
-                    }
-                )
-            )
-        }.toMutableMap()
+        init {
+            for ((_, decl) in baseContext.declarations) {
+                put(decl)
+            }
+        }
+
+        inner class MutableEnvironmentRedirectedInjectionScope : InjectionScope {
+            override val meta: MetalessInjectionScope
+                get() = SimpleEnvironmentBasedScope(this@MutableEnvironment.metaEnvironment!!)
+
+            override fun <T : Any> inject(what: Identifier<T>): Injector<T> =
+                this@MutableEnvironment.createInjector(what)
+        }
 
         override fun <T : Any> getOrNull(identifier: Identifier<T>): T? =
-            components[identifier]?.let { ensureInstance(identifier.kclass, it) }
+            components[identifier]?.resolve(components)?.let { ensureInstance(identifier.kclass, it) }
 
         override fun <T : Any> createInjector(identifier: Identifier<T>, onInjection: (T) -> Unit): Injector<T> =
             UMEInjector(identifier, onInjection)
 
         override fun <T : Any> put(declaration: Declaration<T>) {
-            components[declaration.identifier] =
-                declaration.supplier(ScopedContext(EnvironmentBasedScope(this)))
+            components[declaration.identifier] = when (declaration) {
+                is ScopedSupplierDeclaration<*> -> SimpleIdentifierResolver(
+                    declaration.supplier(
+                        ScopedContext(
+                            if (metaEnvironment == null) SimpleEnvironmentBasedScope(this)
+                            else MutableEnvironmentRedirectedInjectionScope()
+                        )
+                    )
+                )
+                is ResolvableDeclaration -> declaration.buildResolver()
+            }
         }
 
         internal fun getAllIdentifiers() = components.keys.asSequence()

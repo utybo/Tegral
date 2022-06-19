@@ -20,6 +20,7 @@ import guru.zoroark.tegral.di.environment.EnvironmentContext
 import guru.zoroark.tegral.di.environment.Identifier
 import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionEnvironmentKind
+import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
 import kotlin.reflect.full.isSubclassOf
 
 /**
@@ -90,7 +91,7 @@ fun <T : InjectionEnvironment> ExtensibleInjectionEnvironment.createMetaEnvironm
     val metaEnvironment = metaContextKind.build(
         context.metaContext.let {
             // Inject the EIE within the meta-environment
-            val declaration = Declaration(Identifier(ExtensibleInjectionEnvironment::class)) {
+            val declaration = ScopedSupplierDeclaration(Identifier(ExtensibleInjectionEnvironment::class)) {
                 this@createMetaEnvironment
             }
             val newDeclarations = it.declarations.toMutableMap()

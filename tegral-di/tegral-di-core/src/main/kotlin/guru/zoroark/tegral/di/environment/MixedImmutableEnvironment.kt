@@ -58,21 +58,25 @@ class MixedImmutableEnvironment(
         private val onInjection: (T) -> Unit
     ) : Injector<T> {
         private val value by lazy {
-            val result = components[identifier] ?: throw ComponentNotFoundException(identifier)
+            val result = components[identifier]?.resolve(components) ?: throw ComponentNotFoundException(identifier)
             ensureInstance(identifier.kclass, result).also(onInjection)
         }
 
         override fun getValue(thisRef: Any?, property: KProperty<*>): T = value
     }
 
-    private val components = context.declarations.mapValues { (_, decl) ->
-        decl.supplier(ScopedContext(EnvironmentBasedScope(this)))
+    private val components: EnvironmentComponents = context.declarations.mapValues { (_, decl) ->
+        when (decl) {
+            is ResolvableDeclaration<*> -> decl.buildResolver()
+            is ScopedSupplierDeclaration<*> ->
+                SimpleIdentifierResolver(decl.supplier(ScopedContext(EnvironmentBasedScope(this))))
+        }
     }
 
     override fun getAllIdentifiers(): Sequence<Identifier<*>> = components.keys.asSequence()
 
     override fun <T : Any> getOrNull(identifier: Identifier<T>): T? =
-        components[identifier]?.let { ensureInstance(identifier.kclass, it) }
+        components[identifier]?.resolve(components)?.let { ensureInstance(identifier.kclass, it) }
 
     override fun <T : Any> createInjector(
         identifier: Identifier<T>,

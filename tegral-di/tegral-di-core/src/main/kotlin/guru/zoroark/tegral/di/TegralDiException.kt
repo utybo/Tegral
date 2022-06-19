@@ -57,3 +57,5 @@ class InternalErrorException(message: String, throwable: Throwable? = null) : Te
  * Thrown when an extension that needs to be installed was attempted to be used without being installed first.
  */
 class ExtensionNotInstalledException(message: String) : TegralDiException(message)
+
+class FailedToResolveException(message: String) : TegralDiException(message)

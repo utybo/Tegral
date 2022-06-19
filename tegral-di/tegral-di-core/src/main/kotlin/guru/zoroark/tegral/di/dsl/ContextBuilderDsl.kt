@@ -23,6 +23,7 @@ import guru.zoroark.tegral.di.environment.InjectableModule
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.Qualifier
 import guru.zoroark.tegral.di.environment.ScopedSupplier
+import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.createType
@@ -86,7 +87,7 @@ fun <T : Any> ContextBuilderDsl.put(
     kclass: KClass<T>,
     qualifier: Qualifier = EmptyQualifier,
     supplier: ScopedSupplier<T>
-) = Declaration(Identifier(kclass, qualifier), supplier)
+) = ScopedSupplierDeclaration(Identifier(kclass, qualifier), supplier)
     .also { put(it) }
 
 /**
