@@ -118,6 +118,26 @@ AppDSL automatically creates a Tegral DI environment and adds the following comp
 
 You will need to add your own components, modules, controllers and services to this environment using the [`put(...)` functions](/core/di/environment.md).
 
+## `TegralApplication`
+
+The `tegral` block returns an object of type `TegralApplication`. You can use this object to act upon the environment in a few ways:
+
+- Stop the application using the `stop()` function. Note that a `start()` function is also present but is automatically called by the `tegral` function, so you should not call it yourself.
+- Access the [DI environment](/core/di/environment.md) of the application, which you can then use to `get` DI components. For example:
+
+```kotlin
+class MyComponent {
+    fun hello() {
+        println("Hello!")
+    }
+}
+
+val app = tegral {
+    put(::MyComponent)
+}
+app.environment.get<MyComponent>().hello() // Hello!
+```
+
 ## Examples
 
 ### Hello World

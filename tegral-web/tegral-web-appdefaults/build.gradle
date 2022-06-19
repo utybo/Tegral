@@ -9,6 +9,9 @@ dependencies {
     api project(":tegral-logging")
     implementation libs.jackson.time
     implementation libs.ktor.server.netty
+
+    testImplementation project(":tegral-di:tegral-di-test")
+    testImplementation project(":tegral-di:tegral-di-test-mockk")
 }
 
 ext.humanName = "Tegral Web AppDefaults"
