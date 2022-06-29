@@ -13,6 +13,10 @@
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
+  'get-started': [
+    'get-started/index',
+    'get-started/tutorial/step-1-hello-world'
+  ],
   core: [
     'core/index',
     'core/design',

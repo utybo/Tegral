@@ -1,0 +1,247 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Step 1: Hello World!
+
+Let's get started with our project! This step will cover setting up our Gradle build, some basic configuration and a Hello World endpoint.
+
+## Prerequisites
+
+In order to follow this tutorial, you'll need some software:
+
+- A JDK (at least version 11). You can get the Eclipse Temurin JDK [here](https://adoptium.net/) (click on "Latest LTS release" to get the latest version).
+- Gradle. See installation instructions [here](https://gradle.org/install).
+- IntelliJ IDEA. See [here](https://www.jetbrains.com/idea/download/) for downloads. The Community edition is fine for this tutorial.
+
+Once all three elements are installed, we can get started with building our application!
+
+## Gradle setup
+
+Let's create a project. First, let's create a new folder and go to it.
+
+```shell
+mkdir my-great-project
+cd my-great-project
+```
+
+Let's initialize our Gradle project:
+
+```shell
+gradle init
+```
+
+Gradle will prompt you with a few questions about what you want to build. Here is an example of a setup that will work well with this tutorial:
+
+- Choose `application` for the kind of build
+- Choose `Kotlin` for the application's language
+- Select `no` for multiple subprojects. Gradle will generate an architecture that can easily be converted to a multi-module project later on as your project grows, even if you select `no`.
+- Choose either Groovy or Kotlin for the DSL.
+- You can choose either "yes" or "no" when prompted to use new APIs and behaviors. Choosing "yes" can be beneficial in order to get the latest and greatest features from Gradle (some of which are pretty helpful).
+- Choose an appropriate project name and package.
+
+Now, open the project in IntelliJ IDEA. You should see a bunch of files on the left side of the screen.
+
+:::note
+
+Some of the next steps will depend on whether you chose Kotlin or Groovy for the Gradle DSL. If unsure, check your `.gradle` files: if they end in `.gradle.kts`, you chose Kotlin. If they end in `.gradle`, you chose Groovy.
+
+:::
+
+### Setting up Tegral Catalog
+
+[Tegral Catalog](/core/catalog/index.md) is a plugin that allows you to easily import Tegral libraries into your project.
+
+<Tabs groupId="gradle-dsl">
+<TabItem value="groovy" label="Groovy DSL">
+
+Copy and paste this snippet at the bottom of the `settings.gradle` file:
+
+```groovy title="settings.gradle"
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+
+    versionCatalogs {
+        tegralLibs {
+            from "guru.zoroark.tegral:tegral-catalog:0.0.1"
+        }
+    }
+}
+```
+
+</TabItem>
+<TabItem value="kotlin" label="Kotlin DSL">
+
+Copy and paste this snippet at the bottom of the `settings.gradle.kts` file:
+
+```kotlin title="settings.gradle.kts"
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+
+    versionCatalogs {
+        create("tegralLibs") {
+            from("guru.zoroark.tegral:tegral-catalog:0.0.1")
+        }
+    }
+}
+```
+
+</TabItem>
+</Tabs>
+
+### Configuring our application's build file
+
+Now that we have added Tegral Catalog, hop into the `app/build.gradle(.kts)` file.
+
+You should see that Gradle has generated quite a lot of content for us. First, remove the line that mentions "Guava" -- we will not be using it in this tutorial. Then, in the dependencies block, add the following line:
+
+<Tabs groupId="gradle-dsl">
+<TabItem value="groovy" label="Groovy DSL">
+
+```groovy title="app/build.gradle"
+implementation tegralLibs.bundles.web
+```
+
+</TabItem>
+<TabItem value="kotlin" label="Kotlin DSL">
+
+```kotlin title="app/build.gradle.kts"
+implementation(tegralLibs.bundles.web)
+```
+
+</TabItem>
+</Tabs>
+
+Next, we'll need to configure the JDK version for the Kotlin compilation. Tegral libraries require at least JDK 11, but Kotlin uses JDK 8 by default.
+
+In order to do this, add the following at the bottom of your `app/build.gradle(.kts)` file:
+
+<Tabs groupId="gradle-dsl">
+<TabItem value="groovy" label="Groovy DSL">
+
+```groovy title="app/build.gradle"
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+}
+```
+
+</TabItem>
+<TabItem value="kotlin" label="Kotlin DSL">
+
+```kotlin title="app/build.gradle.kts"
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Creating a controller
+
+Next, go to `src/main/kotlin`. You should see a package with an `App.kt` file.
+
+We'll first write our controller. Right-click on the package and choose `New > Kotlin class/file`. Make sure "class" is selected and name it "HelloController". Press enter.
+
+You should now be in a file that looks like this:
+
+```kotlin title="HelloController.kt"
+package your.package.here // Depends on what you chose while setting up your application
+
+class HelloController {
+}
+```
+
+Let's first make this class extend [`KtorController`](/web/controllers/index.mdx#ktorcontroller):
+
+```kotlin title="HelloController.kt"
+// highlight-start
+class HelloController : KtorController() {
+// highlight-end
+}
+```
+
+:::info
+
+Note that you may get red squiggly lines under `KtorController`. In this case, put your cursor on `KtorController`, use Alt+Enter and choose "Import".
+
+You may need to do this for most Tegral and Ktor symbols (i.e. functions and classes) used in this tutorial if IntelliJ does not import them automatically.
+
+:::
+
+
+IntelliJ will complain that our class is missing an `install` function. Let's create that function:
+
+```kotlin title="HelloController.kt"
+class HelloController : KtorController() {
+    // highlight-start
+    override fun Routing.install() {
+
+    }
+    // highlight-end
+}
+```
+
+We can now write [Ktor routes](https://ktor.io/docs/routing-in-ktor.html#define_route) inside the `install` function. Let's start by adding a simple `GET /` route:
+
+```kotlin title="HelloController.kt"
+class HelloController : KtorController() {
+    override fun Routing.install() {
+        get("/") {
+            call.respondText("Hello, world!")
+        }
+    }
+}
+```
+
+### Writing a `main` function
+
+Go in the `App.kt` file and remove everything in the `main` function. Then, add a [`tegral` block](/web/appdsl/index.mdx#the-tegral-block):
+
+```kotlin title="App.kt"
+fun main() {
+    // highlight-start
+    tegral {
+
+    }
+    // highlight-end
+}
+```
+
+In this block, we can set up our application with features and components. Let's add our controller using the `put` function:
+
+```kotlin title="App.kt"
+fun main() {
+    tegral {
+        // highlight-start
+        put(::HelloController)
+        // highlight-end
+    }
+}
+```
+
+## Adding a configuration file
+
+Before running our application, we'll need to configure it. We'll do this by creating a `tegral.toml` file in the `src/main/resources` folder:
+
+```toml title="/tegral.toml"
+[tegral.web]
+port = 8123
+```
+
+This tells Tegral to start our web application on port `8123`.
+
+## Running our application
+
+We can now run our application! Click on the green triangle to the left of your `main` function, and choose "Run AppKt" to run the application.
+
+Now, to go [`localhost:8123`](http://localhost:8123), and you should see your "Hello World!" message.
+
+Congratulations, you just built your first application using Tegral!
