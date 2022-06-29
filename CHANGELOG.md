@@ -2,24 +2,55 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on
+[Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
+adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased] (0.0.2)
 
 ### Added
 
 - `tegral-di-test`
-  - `UnsafeMutableEnvironment` is now an extensible environment. ([#16](https://github/utybo/Tegral/pull/16))
-  - Added `entryOf` utility function. ([#16](https://github/utybo/Tegral/pull/16))
-  - Utility classes for testing environments' behavior (`EnvironmentBaseTest`, `ExtensibleEnvironmentBaseTest` and `NotExtensibleEnvironmentBaseTest`). ([#16](https://github/utybo/Tegral/pull/16))([#16](https://github/utybo/Tegral/pull/16))
+  - `UnsafeMutableEnvironment` is now an extensible environment.
+    ([#16](https://github/utybo/Tegral/pull/16))
+  - Added `entryOf` utility function.
+    ([#16](https://github/utybo/Tegral/pull/16))
+  - Utility classes for testing environments' behavior (`EnvironmentBaseTest`,
+    `ExtensibleEnvironmentBaseTest` and `NotExtensibleEnvironmentBaseTest`).
+    ([#16](https://github/utybo/Tegral/pull/16))([#16](https://github/utybo/Tegral/pull/16))
+- `tegral-web-appdefaults`
+  - Added `ObjectMapper.defaultTegralConfiguration()` function, which lets you
+    apply Tegral's defaults to your own object mappers.
+    ([#17](https://github.com/utybo/Tegral/pull/17))
+- `tegral-web-apptest`
+  - Initial release. ([#17](https://github.com/utybo/Tegral/pull/17))
+- `tegral-web-controllers-test`
+  - `client` instances will probably be configured to work out of the box
+    against AppDefaults powered applications. For now, this means that JSON
+    content will work out of the box.
+    ([#17](https://github.com/utybo/Tegral/pull/17))
+  - Added `DEFAULT_APP_SETUP_MODULE_PRIORITY` constant.
+    ([#17](https://github.com/utybo/Tegral/pull/17))
 
 ### Changed
 
+- General
+  - Bumped Ktor version to version 2.0.2
+    ([#17](https://github/utybo/Tegral/pull/17))
 - `tegral-di-core`
-  - `tegralDi` now takes an additional, optional `metaEnvironmentKind` parameter when creating extensible environments. ([#16](https://github/utybo/Tegral/pull/16))
-  - `InjectionEnvironmentKind<E>` interface is now a functional interface. ([#16](https://github/utybo/Tegral/pull/16))
-  - `createMetaEnvironment` function now returns the correct type of `InjectionEnvironment`, determined via the generic parameter of `InjectionEnvironmentKind` ([#16](https://github/utybo/Tegral/pull/16))
+  - `tegralDi` now takes an additional, optional `metaEnvironmentKind` parameter
+    when creating extensible environments.
+    ([#16](https://github/utybo/Tegral/pull/16))
+  - `InjectionEnvironmentKind<E>` interface is now a functional interface.
+    ([#16](https://github/utybo/Tegral/pull/16))
+  - `createMetaEnvironment` function now returns the correct type of
+    `InjectionEnvironment`, determined via the generic parameter of
+    `InjectionEnvironmentKind` ([#16](https://github/utybo/Tegral/pull/16))
+- `tegral-web-appdefaults`
+  - Split declaration of default Ktor configuration into a separate Ktor module.
+    This means that AppDefaults no longer does anything in its `setup` function.
+    This was done for compatibility with integration testing.
+    ([#17](https://github/utybo/Tegral/pull/17)))
 
 ## [0.0.1] - 2022-06-02
 
