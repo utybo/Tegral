@@ -65,7 +65,8 @@ const sidebars = {
     'web/appdsl/index',
     'web/appdefaults/index',
     'web/controllers/index',
-    'web/config/index'
+    'web/config/index',
+    'web/apptest/index'
   ],
   about: [
     'about/contributing',
