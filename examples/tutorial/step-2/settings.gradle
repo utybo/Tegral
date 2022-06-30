@@ -1,17 +1,20 @@
 rootProject.name = 'step-2'
 include('app')
 
-includeBuild '../../..' // TODO rm
-
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
-        mavenLocal() // TODO rm
+        mavenLocal() // Delete this line if you want to run this example outside
+                     // of the Tegral source code.
     }
 
     versionCatalogs {
         tegralLibs {
-            from "guru.zoroark.tegral:tegral-catalog:0.0.2-SNAPSHOT" // TODO version
+            // NOTE: uncomment the following line and delete the next if you
+            //       want to run this example outside of the Tegral source code.
+            // from "guru.zoroark.tegral:tegral-catalog:VERSION" // <-- put your desired Tegral version here.
+            
+            from("guru.zoroark.tegral:tegral-catalog:" + file("../../../version.txt").text.trim())
         }
     }
 }

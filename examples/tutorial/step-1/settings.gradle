@@ -8,7 +8,11 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         tegralLibs {
-            from "guru.zoroark.tegral:tegral-catalog:0.0.1"
+            // NOTE: uncomment the following line and delete the next if you
+            //       want to run this example outside of the Tegral source code.
+            // from "guru.zoroark.tegral:tegral-catalog:VERSION" // <-- put your desired Tegral version here.
+            
+            from("guru.zoroark.tegral:tegral-catalog:" + file("../../../version.txt").text.trim())
         }
     }
 }
