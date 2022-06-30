@@ -13,6 +13,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/code-coverage" />
             <option value="$PROJECT_DIR$/docs" />
             <option value="$PROJECT_DIR$/examples" />
             <option value="$PROJECT_DIR$/examples/simple-json-api" />
@@ -48,6 +49,7 @@
               <build path="$PROJECT_DIR$" name="Tegral">
                 <projects>
                   <project path="$PROJECT_DIR$" />
+                  <project path="$PROJECT_DIR$/code-coverage" />
                   <project path="$PROJECT_DIR$/docs" />
                   <project path="$PROJECT_DIR$/examples" />
                   <project path="$PROJECT_DIR$/examples/simple-json-api" />
@@ -88,6 +90,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/code-coverage" />
             <option value="$PROJECT_DIR$/docs" />
             <option value="$PROJECT_DIR$/examples" />
             <option value="$PROJECT_DIR$/examples/simple-json-api" />

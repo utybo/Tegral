@@ -33,17 +33,10 @@ jobs:
       - name: Run checks and tests
         run: ./gradlew check
 
-      - name: List generated JaCoCo reports
-        id: glob-jacoco-reports
-        uses: tj-actions/glob@v9.2
-        with:
-          files: "**/build/reports/jacoco/test/jacocoTestReport.xml"
-          separator: ","
-
       - name: Upload code coverage to CodeCov
         uses: codecov/codecov-action@v2
         with:
-          files: "${{ steps.glob-jacoco-reports.outputs.paths }}"
+          files: "code-coverage/build/reports/jacoco/testCodeCoverageReport/testCodeCoverageReport.xml"
 
   check-examples:
     name: "Check examples"
