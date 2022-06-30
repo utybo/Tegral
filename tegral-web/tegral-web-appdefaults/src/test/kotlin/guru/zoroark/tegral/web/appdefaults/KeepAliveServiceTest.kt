@@ -26,7 +26,7 @@ class KeepAliveServiceTest {
     @Test
     fun `Keep alive start stop properly stops scope`(): Unit = runBlocking {
         val kas = KeepAliveService()
-        withTimeout(500) {
+        withTimeout(3000) {
             launch {
                 kas.start()
                 kas.stop()
