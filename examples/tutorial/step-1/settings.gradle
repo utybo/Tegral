@@ -1,0 +1,14 @@
+rootProject.name = 'step-1'
+include('app')
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+
+    versionCatalogs {
+        tegralLibs {
+            from "guru.zoroark.tegral:tegral-catalog:0.0.1"
+        }
+    }
+}
