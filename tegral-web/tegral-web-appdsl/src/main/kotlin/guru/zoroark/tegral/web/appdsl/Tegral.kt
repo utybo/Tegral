@@ -15,6 +15,7 @@
 package guru.zoroark.tegral.web.appdsl
 
 import guru.zoroark.tegral.core.TegralDsl
+import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 
 private val logger = LoggerFactory.getLogger("tegral.web.appdsl.tegralblock")
@@ -39,6 +40,6 @@ fun tegral(block: TegralApplicationDsl.() -> Unit): TegralApplication {
     logger.debug("Building application...")
     val application = builder.build()
     logger.debug("Application environment built, starting.")
-    application.start()
+    runBlocking { application.start() }
     return application
 }

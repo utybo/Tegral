@@ -63,6 +63,12 @@ const config = {
         items: [
           {
             type: 'doc',
+            docId: 'get-started/index',
+            position: 'left',
+            label: 'Get Started'
+          },
+          {
+            type: 'doc',
             docId: 'core/index',
             position: 'left',
             label: 'Core',
@@ -164,6 +170,11 @@ const config = {
         backgroundColor: '#834cff',
         textColor: '#ffffff',
         isCloseable: false
+      },
+      algolia: {
+        appId: 'XKS5FWH0DJ',
+        apiKey: '6f8c788df7af2f39272bb5497cc19a8b',
+        indexName: 'tegral-zoroark'
       }
     }),
   plugins: [

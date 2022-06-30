@@ -22,6 +22,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   - Added `ObjectMapper.defaultTegralConfiguration()` function, which lets you
     apply Tegral's defaults to your own object mappers.
     ([#17](https://github.com/utybo/Tegral/pull/17))
+- `tegral-web-appdsl`
+  - Added `TegralApplication.stop()` ([#19](https://github/utybo/Tegral/pull/19))
 - `tegral-web-apptest`
   - Initial release. ([#17](https://github.com/utybo/Tegral/pull/17))
 - `tegral-web-controllers-test`
@@ -51,6 +53,12 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
     This means that AppDefaults no longer does anything in its `setup` function.
     This was done for compatibility with integration testing.
     ([#17](https://github/utybo/Tegral/pull/17)))
+- `tegral-web-appdsl`
+  - `TegralApplication.start()` is now a suspending function.
+    ([#19](https://github/utybo/Tegral/pull/19))
+- `tegral-web-controllers`
+  - Made some `KtorApplicationSettings` properties public: `engine`, `port`,
+    `host`, `watchPaths` ([#19](https://github/utybo/Tegral/pull/19))
 
 ## [0.0.1] - 2022-06-02
 

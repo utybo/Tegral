@@ -28,7 +28,7 @@ import java.util.concurrent.Executors
 class KeepAliveService : TegralService {
     private val executor = Executors.newSingleThreadExecutor()
     private val dispatcher = executor.asCoroutineDispatcher()
-    private val scope = CoroutineScope(dispatcher)
+    internal val scope = CoroutineScope(dispatcher)
 
     override suspend fun start() {
         scope.launch { awaitCancellation() }
