@@ -1,0 +1,17 @@
+rootProject.name = 'step-2'
+include('app')
+
+includeBuild '../../..' // TODO rm
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        mavenLocal() // TODO rm
+    }
+
+    versionCatalogs {
+        tegralLibs {
+            from "guru.zoroark.tegral:tegral-catalog:0.0.2-SNAPSHOT" // TODO version
+        }
+    }
+}
