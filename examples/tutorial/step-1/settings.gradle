@@ -4,6 +4,8 @@ include('app')
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
+        mavenLocal() // Delete this line if you want to run this example outside
+                     // of the Tegral source code.
     }
 
     versionCatalogs {
