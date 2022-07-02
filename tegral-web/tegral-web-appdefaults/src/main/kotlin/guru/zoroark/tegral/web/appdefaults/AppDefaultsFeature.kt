@@ -36,6 +36,7 @@ object AppDefaultsFeature : ConfigurableFeature {
 
     override fun ExtensibleContextBuilderDsl.install() {
         put(::DefaultKtorApplication)
+        put(::DefaultAppDefaultsModule)
         put(::KeepAliveService)
     }
 }

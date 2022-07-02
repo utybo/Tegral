@@ -15,6 +15,7 @@ dependencies {
     api libs.kotlin.stdlib
 
     testImplementation libs.kotlin.test
+    testImplementation libs.mockk
     testImplementation libs.kotlin.test.junit5
     testImplementation libs.junit.jupiterApi
     testRuntimeOnly libs.junit.jupiterEngine

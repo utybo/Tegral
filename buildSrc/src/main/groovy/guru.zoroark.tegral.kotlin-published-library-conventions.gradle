@@ -4,6 +4,8 @@ plugins {
     id 'org.jetbrains.dokka'
     id 'maven-publish'
     id 'signing'
+
+    id 'jacoco'
 }
 
 project.ext.includeInCatalog = true
@@ -31,5 +33,19 @@ publishing {
         maven(MavenPublication) {
             from components.java
         }
+    }
+}
+
+
+// https://docs.gradle.org/current/userguide/jacoco_plugin.html#sec:jacoco_getting_started
+test {
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
     }
 }

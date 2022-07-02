@@ -1,0 +1,40 @@
+plugins {
+    id 'base'
+    id 'jacoco-report-aggregation'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    jacocoAggregation project(':tegral-catalog')
+    jacocoAggregation project(':tegral-config:tegral-config-core')
+    jacocoAggregation project(':tegral-core')
+    jacocoAggregation project(':tegral-di:tegral-di-core')
+    jacocoAggregation project(':tegral-di:tegral-di-services')
+    jacocoAggregation project(':tegral-di:tegral-di-test')
+    jacocoAggregation project(':tegral-di:tegral-di-test-mockk')
+    jacocoAggregation project(':tegral-featureful')
+    jacocoAggregation project(':tegral-logging')
+    jacocoAggregation project(':tegral-services:tegral-services-api')
+    jacocoAggregation project(':tegral-services:tegral-services-feature')
+    jacocoAggregation project(':tegral-web:tegral-web-appdefaults')
+    jacocoAggregation project(':tegral-web:tegral-web-appdsl')
+    jacocoAggregation project(':tegral-web:tegral-web-apptest')
+    jacocoAggregation project(':tegral-web:tegral-web-config')
+    jacocoAggregation project(':tegral-web:tegral-web-controllers')
+    jacocoAggregation project(':tegral-web:tegral-web-controllers-test')
+}
+
+reporting {
+    reports {
+        testCodeCoverageReport(JacocoCoverageReport) {
+            testType = TestSuiteType.UNIT_TEST
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('testCodeCoverageReport', JacocoReport)
+}

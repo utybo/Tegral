@@ -11,6 +11,10 @@ dependencies {
     implementation libs.ktor.server.host
     api libs.ktor.server.contentNegotiation
     api libs.ktor.serialization.jackson
+
+    testImplementation libs.ktor.server.netty
+    testImplementation libs.ktor.client.java
+    testImplementation libs.ktor.client.contentNegotiation
 }
 
 ext.humanName = "Tegral Web Controllers"

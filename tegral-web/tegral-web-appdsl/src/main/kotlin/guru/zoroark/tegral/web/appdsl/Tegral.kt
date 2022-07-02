@@ -16,6 +16,7 @@ package guru.zoroark.tegral.web.appdsl
 
 import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.web.appdefaults.applyLoggingOverrides
+import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 
 private val logger = LoggerFactory.getLogger("tegral.web.appdsl.tegralblock")
@@ -45,6 +46,6 @@ fun tegral(enableLoggingOverrides: Boolean = true, block: TegralApplicationDsl.(
     logger.info("Building application...")
     val application = builder.build()
     logger.info("Application environment built, starting.")
-    application.start()
+    runBlocking { application.start() }
     return application
 }

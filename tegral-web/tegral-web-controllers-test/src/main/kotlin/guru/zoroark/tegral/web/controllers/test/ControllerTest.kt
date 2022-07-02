@@ -18,28 +18,70 @@ import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
 import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.dsl.tegralDi
+import guru.zoroark.tegral.di.dsl.tegralDiModule
 import guru.zoroark.tegral.di.environment.InjectableModule
+import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.test.TegralAbstractSubjectTest
+import guru.zoroark.tegral.di.test.TegralSubjectTest
 import guru.zoroark.tegral.di.test.TestMutableInjectionEnvironment
 import guru.zoroark.tegral.di.test.UnsafeMutableEnvironment
+import guru.zoroark.tegral.web.appdefaults.DefaultAppDefaultsModule
 import guru.zoroark.tegral.web.controllers.KtorModule
 import guru.zoroark.tegral.web.controllers.filterIsKclassSubclassOf
-import guru.zoroark.tegral.web.controllers.getKtorModulesByPriority
+import io.ktor.client.HttpClient
+import io.ktor.client.HttpClientConfig
+import io.ktor.client.engine.HttpClientEngineConfig
 import io.ktor.server.testing.ApplicationTestBuilder
 import io.ktor.server.testing.ClientProvider
 import io.ktor.server.testing.TestApplicationBuilder
 import io.ktor.server.testing.testApplication
 import kotlin.reflect.KClass
+import kotlin.reflect.KFunction
+import kotlin.reflect.jvm.jvmErasure
+
+typealias KtorTestClientConfig = HttpClientConfig<out HttpClientEngineConfig>
 
 /**
  * A [subject-based][TegralAbstractSubjectTest] test for Controllers-based classes (more specifically, for subclasses of
  * [KtorModule] and [KtorController]).
+ *
+ * The constructors follow the same pattern as [TegralSubjectTest]
  */
+// TODO document that it is appname insensitive
 abstract class TegralControllerTest<TSubject : Any>(
     subjectClass: KClass<TSubject>,
-    private val baseModule: InjectableModule,
-    private val appName: String? = null
+    private val baseModule: InjectableModule
 ) : TegralAbstractSubjectTest<TSubject, ControllerTestContext>(subjectClass) {
+
+    constructor(subjectClass: KClass<TSubject>, baseModuleBuilder: ContextBuilderDsl.() -> Unit) : this(
+        subjectClass, tegralDiModule("<base test module>", baseModuleBuilder)
+    )
+
+    @Suppress("UNCHECKED_CAST")
+    constructor(constructor: KFunction<TSubject>) : this(
+        constructor.returnType.jvmErasure as KClass<TSubject>,
+        { put(constructor.returnType.jvmErasure as KClass<TSubject>, constructor) }
+    )
+
+    /**
+     * Applies default values for the application.
+     *
+     * By default, this just puts [DefaultAppDefaultsModule] in the environment to apply application defaults from
+     * AppDefaults. Override this function if you wish to add something else.
+     */
+    protected open fun ExtensibleContextBuilderDsl.applyDefaultsModule() {
+        put(::DefaultAppDefaultsModule)
+    }
+
+    /**
+     * A default configuration for clients you can retrieve while running tests.
+     *
+     * By default, this applies sane defaults for interacting with AppDefaults-powered applications. You can override
+     * this function to change its behavior.
+     */
+    protected open fun KtorTestClientConfig.configureClient() {
+        applyDefaultsModule()
+    }
 
     @TegralDsl
     override fun <T> test(
@@ -49,20 +91,20 @@ abstract class TegralControllerTest<TSubject : Any>(
         // Very dirty, but testApplication is not inline and does not have a contract :(
         val resultRef = mutableListOf<T>()
         // Initialize base test environment
-        val env = tegralDi(UnsafeMutableEnvironment) {
+        val env = tegralDi(UnsafeMutableEnvironment, UnsafeMutableEnvironment.Meta) {
+            applyDefaultsModule()
             put(baseModule)
             additionalBuilder()
         }
         // Initialize application client
-        val modules =
-            env.getKtorModulesByPriority(
-                env.components.keys.asSequence().filterIsKclassSubclassOf<KtorModule>(),
-                appName
-            )
+        env.getAllIdentifiers()
+        val modules = env.components.keys.asSequence().filterIsKclassSubclassOf<KtorModule>()
+            .map { env.get(it) }
+            .sortedByDescending { it.moduleInstallationPriority }
         testApplication {
             application { modules.forEach { with(it) { install() } } }
             env.put { this@testApplication }
-            val context = DefaultControllerTestContext(this@testApplication, env)
+            val context = DefaultControllerTestContext(this@testApplication, env) { configureClient() }
             resultRef += context.block()
         }
         return resultRef.singleOrNull()
@@ -92,9 +134,18 @@ interface ControllerTestContext : TestMutableInjectionEnvironment, ClientProvide
  */
 class DefaultControllerTestContext(
     private val appBuilder: ApplicationTestBuilder,
-    private val environment: TestMutableInjectionEnvironment
-) : ControllerTestContext, TestMutableInjectionEnvironment by environment, ClientProvider by appBuilder {
+    private val environment: TestMutableInjectionEnvironment,
+    private val configureClient: KtorTestClientConfig.() -> Unit
+) : ControllerTestContext, TestMutableInjectionEnvironment by environment, ClientProvider {
     override fun applicationBuilder(block: TestApplicationBuilder.() -> Unit) {
         appBuilder.block()
     }
+
+    override val client: HttpClient by lazy { createClient { } }
+
+    override fun createClient(block: HttpClientConfig<out HttpClientEngineConfig>.() -> Unit): HttpClient =
+        appBuilder.createClient {
+            this@DefaultControllerTestContext.configureClient(this)
+            block()
+        }
 }
