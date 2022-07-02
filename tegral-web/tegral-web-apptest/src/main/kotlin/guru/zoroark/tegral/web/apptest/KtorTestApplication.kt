@@ -56,8 +56,7 @@ abstract class KtorTestApplication(
      * You can use this to apply required presets. For example, [DefaultKtorTestApplication] uses this to call
      * [applyDefaultsModule] which applies AppDefaults settings to make the client work.
      */
-    open fun KtorTestClientConfig.configureClient() {
-    }
+    abstract fun KtorTestClientConfig.configureClient()
 
     override suspend fun start() {
         val modules = ktorExtension.getModulesForAppName(appName)

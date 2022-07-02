@@ -30,6 +30,7 @@ import io.ktor.utils.io.charsets.Charset
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class IntegrationTestTest {
     class ExampleSimpleController : KtorController() {
@@ -49,10 +50,46 @@ class IntegrationTestTest {
             assertEquals(ContentType.Text.Plain.withCharset(Charset.forName("UTF-8")), response.contentType())
             assertEquals("OK!", response.bodyAsText())
         }
+
+        fun testWithCreateClient() = test {
+            val response = createClient(null) { }.get("/")
+            assertEquals(HttpStatusCode.OK, response.status)
+            assertEquals(ContentType.Text.Plain.withCharset(Charset.forName("UTF-8")), response.contentType())
+            assertEquals("OK!", response.bodyAsText())
+        }
+
+        fun testWithCreateClientWithoutName() = test {
+            val response = createClient { }.get("/")
+            assertEquals(HttpStatusCode.OK, response.status)
+            assertEquals(ContentType.Text.Plain.withCharset(Charset.forName("UTF-8")), response.contentType())
+            assertEquals("OK!", response.bodyAsText())
+        }
+
+        fun testNonExistentClient() = test {
+            createClient("I do not exist") { }
+        }
     }
 
     @Test
     fun `Test simple integration test setup`() {
         assertDoesNotThrow { SimpleIntegrationTest().testOk() }
+    }
+
+    @Test
+    fun `Test simple integration test with createClient`() {
+        assertDoesNotThrow { SimpleIntegrationTest().testWithCreateClient() }
+    }
+
+    @Test
+    fun `Test simple integration test with createClient, without name`() {
+        assertDoesNotThrow { SimpleIntegrationTest().testWithCreateClientWithoutName() }
+    }
+
+    @Test
+    fun `Test creating client on missing application fails`() {
+        val exc = assertFailsWith<TegralIntegrationTestException> {
+            SimpleIntegrationTest().testNonExistentClient()
+        }
+        assertEquals("Test application not found 'I do not exist'.", exc.message)
     }
 }

@@ -85,7 +85,8 @@ class WebIntegrationTestContext(
         return env.components.values.asSequence()
             .filterIsInstance<KtorTestApplication>()
             .firstOrNull { it.appName == appName }
-            ?: error("Test application not found $appName") // TODO add instructions for adding separate app
+            ?: throw TegralIntegrationTestException("Test application not found '$appName'.")
+        // TODO add instructions for adding separate app in exception message
     }
 
     override fun client(appName: String?): HttpClient = findTestApp(appName).client
