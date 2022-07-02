@@ -1,0 +1,6 @@
+{
+    "Changelog Pull Request reference": {
+        "prefix": "cpr",
+        "body": "([#$1](https://github.com/utybo/Tegral/pull/$1))$0"
+    }
+}

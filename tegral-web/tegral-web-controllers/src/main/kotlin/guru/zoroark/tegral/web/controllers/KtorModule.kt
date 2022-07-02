@@ -26,7 +26,7 @@ import io.ktor.server.application.Application
 abstract class KtorModule(
     /**
      * The installation priority of this module within the application. Modules are installed from largest to smallest
-     * priority. The default value is available in the [DEFAULT_PRIORITY] constant.
+     * priority. The default value is available in the `DEFAULT_*_PRIORITY` constants.
      */
     val moduleInstallationPriority: Int = DEFAULT_MODULE_PRIORITY,
     /**
@@ -49,6 +49,13 @@ abstract class KtorModule(
          * @see KtorModule.moduleInstallationPriority
          */
         const val DEFAULT_CONTROLLER_PRIORITY = 300
+
+        /**
+         * The default priority for [KtorApplication.setup] functions.
+         *
+         * @see KtorModule.moduleInstallationPriority
+         */
+        const val DEFAULT_APP_SETUP_MODULE_PRIORITY = Int.MAX_VALUE
     }
 
     /**
