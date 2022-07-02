@@ -112,7 +112,7 @@ const config = {
               {
                 label: 'Get Started & Tutorials',
                 to: '/docs/get-started'
-              }
+              },
               {
                 label: 'Tegral Core',
                 to: '/docs/core'
