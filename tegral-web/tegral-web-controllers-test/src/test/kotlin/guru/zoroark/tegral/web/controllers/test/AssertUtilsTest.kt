@@ -31,7 +31,11 @@ class AssertUtilsTest {
 
     @Test
     fun `2xx assertion works with 200-like responses`() {
-        for (code in listOf(HttpStatusCode.OK, HttpStatusCode.NoContent, HttpStatusCode.Created)) {
+        listOf(
+            HttpStatusCode.OK,
+            HttpStatusCode.NoContent,
+            HttpStatusCode.Created
+        ).forEach { code ->
             val response = responseWithStatus(code)
             assertDoesNotThrow { assert2xx(response) }
         }
@@ -39,7 +43,12 @@ class AssertUtilsTest {
 
     @Test
     fun `2xx assertion does not work with other responses`() {
-        for (code in listOf(HttpStatusCode.Continue, HttpStatusCode.PermanentRedirect, HttpStatusCode.NotFound, HttpStatusCode.ServiceUnavailable)) {
+        listOf(
+            HttpStatusCode.Continue,
+            HttpStatusCode.PermanentRedirect,
+            HttpStatusCode.NotFound,
+            HttpStatusCode.ServiceUnavailable
+        ).forEach { code ->
             val response = responseWithStatus(code)
             assertFails { assert2xx(response) }
         }
@@ -47,7 +56,11 @@ class AssertUtilsTest {
 
     @Test
     fun `3xx assertion works with 300-like responses`() {
-        for (code in listOf(HttpStatusCode.TemporaryRedirect, HttpStatusCode.Found, HttpStatusCode.PermanentRedirect)) {
+        listOf(
+            HttpStatusCode.TemporaryRedirect,
+            HttpStatusCode.Found,
+            HttpStatusCode.PermanentRedirect
+        ).forEach { code ->
             val response = responseWithStatus(code)
             assertDoesNotThrow { assert3xx(response) }
         }
@@ -55,7 +68,12 @@ class AssertUtilsTest {
 
     @Test
     fun `3xx assertion does not work with other responses`() {
-        for (code in listOf(HttpStatusCode.Continue, HttpStatusCode.Created, HttpStatusCode.NotFound, HttpStatusCode.ServiceUnavailable)) {
+        listOf(
+            HttpStatusCode.Continue,
+            HttpStatusCode.Created,
+            HttpStatusCode.NotFound,
+            HttpStatusCode.ServiceUnavailable
+        ).forEach { code ->
             val response = responseWithStatus(code)
             assertFails { assert3xx(response) }
         }
@@ -63,7 +81,11 @@ class AssertUtilsTest {
 
     @Test
     fun `4xx assertion works with 400-like responses`() {
-        for (code in listOf(HttpStatusCode.NotFound, HttpStatusCode.Conflict, HttpStatusCode.BadRequest)) {
+        listOf(
+            HttpStatusCode.NotFound,
+            HttpStatusCode.Conflict,
+            HttpStatusCode.BadRequest
+        ).forEach { code ->
             val response = responseWithStatus(code)
             assertDoesNotThrow { assert4xx(response) }
         }
@@ -71,7 +93,12 @@ class AssertUtilsTest {
 
     @Test
     fun `4xx assertion does not work with other responses`() {
-        for (code in listOf(HttpStatusCode.Continue, HttpStatusCode.Created, HttpStatusCode.TemporaryRedirect, HttpStatusCode.ServiceUnavailable)) {
+        listOf(
+            HttpStatusCode.Continue,
+            HttpStatusCode.Created,
+            HttpStatusCode.TemporaryRedirect,
+            HttpStatusCode.ServiceUnavailable
+        ).forEach { code ->
             val response = responseWithStatus(code)
             assertFails { assert4xx(response) }
         }
@@ -79,7 +106,11 @@ class AssertUtilsTest {
 
     @Test
     fun `5xx assertion works with 500-like responses`() {
-        for (code in listOf(HttpStatusCode.InternalServerError, HttpStatusCode.GatewayTimeout, HttpStatusCode.InsufficientStorage)) {
+        listOf(
+            HttpStatusCode.InternalServerError,
+            HttpStatusCode.GatewayTimeout,
+            HttpStatusCode.InsufficientStorage
+        ).forEach { code ->
             val response = responseWithStatus(code)
             assertDoesNotThrow { assert5xx(response) }
         }
@@ -87,7 +118,12 @@ class AssertUtilsTest {
 
     @Test
     fun `5xx assertion does not work with other responses`() {
-        for (code in listOf(HttpStatusCode.Continue, HttpStatusCode.Created, HttpStatusCode.TemporaryRedirect, HttpStatusCode.NotFound)) {
+        listOf(
+            HttpStatusCode.Continue,
+            HttpStatusCode.Created,
+            HttpStatusCode.TemporaryRedirect,
+            HttpStatusCode.NotFound
+        ).forEach { code ->
             val response = responseWithStatus(code)
             assertFails { assert5xx(response) }
         }
