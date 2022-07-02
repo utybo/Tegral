@@ -84,12 +84,11 @@ fun tegralDiCheck(block: TegralDiCheckDsl.() -> Unit) {
 private fun TegralDiCheckDsl.check() {
     if (checks.isEmpty()) {
         throw TegralDiCheckException(
-            // TODO update documentation link
             """
             tegralDiCheck called without any rule, which checks nothing.
             --> Add rules using +ruleName (for example '+complete', do not forget the +)
             --> If you do not want to run any checks, remove the tegralDiCheck block entirely.
-            For more information, visit https://shedinja.zoroark.guru/ShedinjaCheck
+            For more information, visit https://tegral.zoroark.guru/docs/core/di/testing/checks
             """.trimIndent()
         )
     } else {

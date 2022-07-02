@@ -16,7 +16,6 @@ dependencies {
 
     implementation tegralLibs.bundles.web
 
-    // TODO ADDED
     testImplementation tegralLibs.bundles.web.test
 }
 
