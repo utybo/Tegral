@@ -15,6 +15,7 @@
 package guru.zoroark.tegral.di.environment
 
 import guru.zoroark.tegral.di.ComponentNotFoundException
+import guru.zoroark.tegral.di.DynLazy
 import guru.zoroark.tegral.di.extensions.DefaultExtensibleInjectionEnvironment
 import guru.zoroark.tegral.di.extensions.EagerImmutableMetaEnvironment
 import guru.zoroark.tegral.di.extensions.ExtensibleEnvironmentContext
@@ -57,12 +58,13 @@ class MixedImmutableEnvironment(
         private val identifier: Identifier<T>,
         private val onInjection: (T) -> Unit
     ) : Injector<T> {
-        private val value by lazy {
-            val result = components[identifier]?.resolve(components) ?: throw ComponentNotFoundException(identifier)
+        private val value = DynLazy<T>()
+
+        override fun getValue(thisRef: Any?, property: KProperty<*>): T = value.getOrInitialize {
+            val result =
+                components[identifier]?.resolve(thisRef, components) ?: throw ComponentNotFoundException(identifier)
             ensureInstance(identifier.kclass, result).also(onInjection)
         }
-
-        override fun getValue(thisRef: Any?, property: KProperty<*>): T = value
     }
 
     private val components: EnvironmentComponents = context.declarations.mapValues { (_, decl) ->
@@ -76,7 +78,7 @@ class MixedImmutableEnvironment(
     override fun getAllIdentifiers(): Sequence<Identifier<*>> = components.keys.asSequence()
 
     override fun <T : Any> getOrNull(identifier: Identifier<T>): T? =
-        components[identifier]?.resolve(components)?.let { ensureInstance(identifier.kclass, it) }
+        components[identifier]?.resolve(null, components)?.let { ensureInstance(identifier.kclass, it) }
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> getResolverOrNull(identifier: Identifier<T>): IdentifierResolver<T>? =

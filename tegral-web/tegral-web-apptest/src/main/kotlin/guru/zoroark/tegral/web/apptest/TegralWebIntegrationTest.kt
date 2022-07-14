@@ -19,6 +19,7 @@ import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
 import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.ExtensibleEnvironmentContextBuilderDsl
+import guru.zoroark.tegral.di.extensions.filterSubclassesOf
 import guru.zoroark.tegral.di.services.services
 import guru.zoroark.tegral.di.test.TegralDiBaseTest
 import guru.zoroark.tegral.di.test.TestMutableInjectionEnvironment
@@ -82,8 +83,9 @@ class WebIntegrationTestContext(
     private val env: UnsafeMutableEnvironment
 ) : TestMutableInjectionEnvironment by env, MultiClientProvider {
     private fun findTestApp(appName: String?): KtorTestApplication {
-        return env.components.values.asSequence()
-            .filterIsInstance<KtorTestApplication>()
+        return env.getAllIdentifiers()
+            .filterSubclassesOf(env, KtorTestApplication::class)
+            .map { env.get(it) }
             .firstOrNull { it.appName == appName }
             ?: throw TegralIntegrationTestException("Test application not found '$appName'.")
         // TODO add instructions for adding separate app in exception message

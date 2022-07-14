@@ -26,8 +26,11 @@ interface IdentifierResolver<T : Any> {
     /**
      * Resolve using the given components. The components may be used in case the resolver requires more complicated
      * use cases.
+     *
+     * @param requester The component requesting the resolution in the case of injections *or* null if the resolution
+     * was caused manually (e.g. by calling `get` on an environment).
      */
-    fun resolve(components: EnvironmentComponents): T
+    fun resolve(requester: Any?, components: EnvironmentComponents): T
 }
 
 /**
@@ -48,7 +51,7 @@ abstract class CanonicalIdentifierResolver<T : Any> : IdentifierResolver<T> {
 class SimpleIdentifierResolver<T : Any>(private val instance: T) : CanonicalIdentifierResolver<T>() {
     override val actualClass: KClass<out T> = instance::class
 
-    override fun resolve(components: EnvironmentComponents): T {
+    override fun resolve(requester: Any?, components: EnvironmentComponents): T {
         return instance
     }
 }
@@ -57,9 +60,9 @@ class SimpleIdentifierResolver<T : Any>(private val instance: T) : CanonicalIden
  * A resolver that is aliased to another identifier. Not canonical.
  */
 class AliasIdentifierResolver<T : Any>(private val actualIdentifier: Identifier<out T>) : IdentifierResolver<T> {
-    override fun resolve(components: EnvironmentComponents): T {
+    override fun resolve(requester: Any?, components: EnvironmentComponents): T {
         @Suppress("UNCHECKED_CAST") // TODO provide a hand-made check for this?
-        return (components[actualIdentifier] as IdentifierResolver<T>?)?.resolve(components)
+        return (components[actualIdentifier] as IdentifierResolver<T>?)?.resolve(requester, components)
             ?: throw FailedToResolveException(
                 "Failed to resolve $actualIdentifier against environment. Please report this."
             )

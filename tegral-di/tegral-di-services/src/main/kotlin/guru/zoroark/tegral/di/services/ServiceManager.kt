@@ -18,23 +18,22 @@ import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.di.ExtensionNotInstalledException
 import guru.zoroark.tegral.di.TegralDiException
 import guru.zoroark.tegral.di.dsl.put
-import guru.zoroark.tegral.di.environment.CanonicalIdentifierResolver
 import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.environment.Identifier
 import guru.zoroark.tegral.di.environment.InjectionScope
-import guru.zoroark.tegral.di.environment.get
 import guru.zoroark.tegral.di.environment.getOrNull
 import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.di.extensions.DeclarationsProcessor
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironment
+import guru.zoroark.tegral.di.extensions.filterSubclassesOf
 import guru.zoroark.tegral.services.api.TegralService
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import java.util.Locale
-import kotlin.reflect.full.isSubclassOf
+import java.util.*
+import kotlin.collections.set
 import kotlin.system.measureTimeMillis
 
 private enum class OperationType(val confirmationWord: String, val ingWord: String) {
@@ -69,10 +68,7 @@ class ServiceManager(scope: InjectionScope) : DeclarationsProcessor {
     private fun getServices(operationType: OperationType): Sequence<Pair<Identifier<*>, TegralService>> =
         environment.getAllIdentifiers()
             .filterNot { operationType.isBlockedByPolicy(ignorePolicies[it]) }
-            .filter {
-                (environment.getResolverOrNull(it) as? CanonicalIdentifierResolver<*>)
-                    ?.actualClass?.isSubclassOf(TegralService::class) ?: false
-            }
+            .filterSubclassesOf(environment, TegralService::class)
             .map { identifier ->
                 identifier to (environment.get(identifier) as TegralService)
             }

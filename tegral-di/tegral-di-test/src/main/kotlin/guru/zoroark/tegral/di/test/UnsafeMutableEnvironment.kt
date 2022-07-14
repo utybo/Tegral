@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.di.test
 
+import guru.zoroark.tegral.di.ComponentNotFoundException
 import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
 import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.environment.EnvironmentComponents
@@ -31,7 +32,6 @@ import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
 import guru.zoroark.tegral.di.environment.SimpleEnvironmentBasedScope
 import guru.zoroark.tegral.di.environment.SimpleIdentifierResolver
 import guru.zoroark.tegral.di.environment.ensureInstance
-import guru.zoroark.tegral.di.environment.getOrNull
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.ExtensibleEnvironmentContext
 import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironmentKind
@@ -144,7 +144,8 @@ class UnsafeMutableEnvironment(
             private val onInjection: (T) -> Unit
         ) : Injector<T> {
             override fun getValue(thisRef: Any?, property: KProperty<*>): T {
-                return get(identifier).also(onInjection)
+                return (getOrNull(thisRef, identifier) ?: throw ComponentNotFoundException(identifier))
+                    .also(onInjection)
             }
         }
 
@@ -164,8 +165,10 @@ class UnsafeMutableEnvironment(
                 this@MutableEnvironment.createInjector(what)
         }
 
-        override fun <T : Any> getOrNull(identifier: Identifier<T>): T? =
-            components[identifier]?.resolve(components)?.let { ensureInstance(identifier.kclass, it) }
+        private fun <T : Any> getOrNull(parent: Any?, identifier: Identifier<T>): T? =
+            components[identifier]?.resolve(parent, components)?.let { ensureInstance(identifier.kclass, it) }
+
+        override fun <T : Any> getOrNull(identifier: Identifier<T>): T? = getOrNull(null, identifier)
 
         override fun <T : Any> createInjector(identifier: Identifier<T>, onInjection: (T) -> Unit): Injector<T> =
             UMEInjector(identifier, onInjection)
