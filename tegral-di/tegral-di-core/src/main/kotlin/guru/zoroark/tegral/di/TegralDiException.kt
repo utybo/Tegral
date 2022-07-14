@@ -58,4 +58,7 @@ class InternalErrorException(message: String, throwable: Throwable? = null) : Te
  */
 class ExtensionNotInstalledException(message: String) : TegralDiException(message)
 
+/**
+ * Exception when a resolver cannot find a component in the components map it was provided.
+ */
 class FailedToResolveException(message: String) : TegralDiException(message)

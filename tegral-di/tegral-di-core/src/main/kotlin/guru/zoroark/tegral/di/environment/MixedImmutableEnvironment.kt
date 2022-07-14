@@ -78,6 +78,10 @@ class MixedImmutableEnvironment(
     override fun <T : Any> getOrNull(identifier: Identifier<T>): T? =
         components[identifier]?.resolve(components)?.let { ensureInstance(identifier.kclass, it) }
 
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : Any> getResolverOrNull(identifier: Identifier<T>): IdentifierResolver<T>? =
+        components[identifier]?.let { it as IdentifierResolver<T> }
+
     override fun <T : Any> createInjector(
         identifier: Identifier<T>,
         onInjection: (T) -> Unit

@@ -18,9 +18,11 @@ import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.di.ExtensionNotInstalledException
 import guru.zoroark.tegral.di.TegralDiException
 import guru.zoroark.tegral.di.dsl.put
+import guru.zoroark.tegral.di.environment.CanonicalIdentifierResolver
 import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.environment.Identifier
 import guru.zoroark.tegral.di.environment.InjectionScope
+import guru.zoroark.tegral.di.environment.get
 import guru.zoroark.tegral.di.environment.getOrNull
 import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.di.extensions.DeclarationsProcessor
@@ -66,11 +68,13 @@ class ServiceManager(scope: InjectionScope) : DeclarationsProcessor {
 
     private fun getServices(operationType: OperationType): Sequence<Pair<Identifier<*>, TegralService>> =
         environment.getAllIdentifiers()
-            .filter { it.kclass.isSubclassOf(TegralService::class) }
             .filterNot { operationType.isBlockedByPolicy(ignorePolicies[it]) }
-            .map {
-                @Suppress("UNCHECKED_CAST")
-                it to environment.get(it as Identifier<TegralService>)
+            .filter {
+                (environment.getResolverOrNull(it) as? CanonicalIdentifierResolver<*>)
+                    ?.actualClass?.isSubclassOf(TegralService::class) ?: false
+            }
+            .map { identifier ->
+                identifier to (environment.get(identifier) as TegralService)
             }
 
     /**

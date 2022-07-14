@@ -17,7 +17,14 @@ package guru.zoroark.tegral.di.environment
 import guru.zoroark.tegral.di.ComponentNotFoundException
 import guru.zoroark.tegral.di.extensions.DeclarationTag
 
-
+/**
+ * A declaration within an environment that is being built. These declarations can be:
+ *
+ * - [Simple declarations][ScopedSupplierDeclaration], based on a lambda or a constructor.
+ * - [Declarations][ResolvableDeclaration] that build into more complicated [resolvers][IdentifierResolver].
+ *
+ * @property identifier The identifier for this declaration.
+ */
 sealed class Declaration<T : Any>(val identifier: Identifier<T>) {
     /**
      * Tags attached to this declaration.
@@ -37,7 +44,13 @@ sealed class Declaration<T : Any>(val identifier: Identifier<T>) {
 class ScopedSupplierDeclaration<T : Any>(identifier: Identifier<T>, val supplier: ScopedSupplier<T>) :
     Declaration<T>(identifier)
 
+/**
+ * A [declaration][Declaration] that can be built into an [IdentifierResolver].
+ */
 abstract class ResolvableDeclaration<T : Any>(identifier: Identifier<T>) : Declaration<T>(identifier) {
+    /**
+     * Create the resolver.
+     */
     abstract fun buildResolver(): IdentifierResolver<T>
 }
 

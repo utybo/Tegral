@@ -30,4 +30,7 @@ inline fun <reified T : Any> entryOf(qualifier: Qualifier = EmptyQualifier, noin
         it.identifier to it
     }
 
+/**
+ * Creates an entry directly from a declaration instead of from a qualifier + supplier.
+ */
 fun <T : Any> entryOf(declaration: Declaration<T>) = declaration.identifier to declaration

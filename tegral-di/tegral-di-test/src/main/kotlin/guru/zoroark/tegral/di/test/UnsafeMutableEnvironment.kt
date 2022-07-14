@@ -31,6 +31,7 @@ import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
 import guru.zoroark.tegral.di.environment.SimpleEnvironmentBasedScope
 import guru.zoroark.tegral.di.environment.SimpleIdentifierResolver
 import guru.zoroark.tegral.di.environment.ensureInstance
+import guru.zoroark.tegral.di.environment.getOrNull
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.ExtensibleEnvironmentContext
 import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironmentKind
@@ -83,6 +84,10 @@ class UnsafeMutableEnvironment(
 
     override fun <T : Any> getOrNull(identifier: Identifier<T>): T? =
         actualEnvironment.getOrNull(identifier)
+
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : Any> getResolverOrNull(identifier: Identifier<T>): IdentifierResolver<T>? =
+        actualEnvironment.components[identifier]?.let { it as IdentifierResolver<T> }
 
     override fun <T : Any> createInjector(identifier: Identifier<T>, onInjection: (T) -> Unit): Injector<T> =
         actualEnvironment.createInjector(identifier, onInjection)
@@ -151,7 +156,7 @@ class UnsafeMutableEnvironment(
             }
         }
 
-        inner class MutableEnvironmentRedirectedInjectionScope : InjectionScope {
+        private inner class MutableEnvironmentRedirectedInjectionScope : InjectionScope {
             override val meta: MetalessInjectionScope
                 get() = SimpleEnvironmentBasedScope(this@MutableEnvironment.metaEnvironment!!)
 

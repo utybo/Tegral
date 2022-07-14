@@ -35,6 +35,13 @@ fun interface InjectableFactory<T : Any> {
 
 // Creation in module
 
+@PublishedApi
+internal class InjectableFactoryImpl<T : Any>(private val supplier: (Any) -> T) : InjectableFactory<T> {
+    override fun make(requester: Any): T {
+        return supplier(requester)
+    }
+}
+
 /**
  * Allows to put a factory within the module or environment.
  *
@@ -42,8 +49,8 @@ fun interface InjectableFactory<T : Any> {
  * services (also known as a singleton), factories
  */
 @TegralDsl
-inline fun <reified T : Any> ContextBuilderDsl.putFactory(crossinline block: (Any) -> T) {
-    put(typed<T>()) { InjectableFactory { block(it) } }
+inline fun <reified T : Any> ContextBuilderDsl.putFactory(noinline block: (Any) -> T) {
+    put<InjectableFactory<T>>(typed<T>()) { InjectableFactoryImpl(block) }
 }
 
 /**
