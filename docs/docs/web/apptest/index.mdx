@@ -1,0 +1,121 @@
+import PackageVersions from '@site/src/components/PackageVersions';
+
+# TW AppTest
+
+Tegral Web AppTest is a simple and straight-forward integration/end-to-end testing library for Tegral Web applications.
+
+<PackageVersions libraries={[
+    { name: 'tegral-web-apptest', catalog: 'web.apptest' }
+]} />
+
+Note that, while AppTest may seem similar to [Controllers tests](../controllers/index.mdx) on the surface, but they have a few fundamental differences:
+
+- Controller tests are made for lightweight testing that does not require much else other than a pre-setup Ktor environment.
+- Controller tests follow the "test subject" pattern, whereas integration tests do not provide direct access to the controllers
+- Controller tests are built with mocking in mind, which is not the case of integration tests.
+- AppTest tests allow installation of special features to abstract away complicated test setups that may occur with databases, Ktor, etc.
+- AppTest automatically starts and stops services
+
+## Writing a test
+
+Let's say that we have a module that contains all of our application's components.
+
+```kotlin
+class GreetingService {
+    fun greet(who: String?): String = "Hello World!"
+}
+
+class GreetingController(scope: InjectionScope) : KtorController() {
+    private val service: GreetingService by scope()
+
+    override fun Routing.install() {
+        get("/greet") {
+            call.respond(service.greet())
+        }
+    }
+}
+
+val appModule = tegralDiModule {
+    put(::GreetingService)
+    put(::GreetingController)
+}
+```
+
+Tests with AppTest are written by subclassing the `TegralWebIntegrationTest` class:
+
+```kotlin
+// highlight-start
+class ExampleTest : TegralWebIntegrationTest({
+// highlight-end
+    // Integration test AppDSL-like block
+}) {
+    // ...
+}
+```
+
+You can then add features, modules, etc. in the block provided to the TegralWebIntegrationTest constructor:
+
+```kotlin
+class ExampleTest : TegralWebIntegrationTest({
+    // highlight-start
+    put(appModule)
+    // highlight-end
+}) {
+    // ...
+}
+```
+
+Then, add tests using the `test` function. Here's an example of a test for the `/greet` endpoint in our example:
+
+```kotlin
+class ExampleTest : TegralWebIntegrationTest({
+    put(appModule)
+}) {
+    // highlight-start
+    @Test
+    fun `greet endpoint test without arguments`() = test {
+        // ...
+    }
+    // highlight-end
+}
+```
+
+Within the `test` block, you have access to the `client` object that allows you to send HTTP requests to your client, just like you would with a regular [Ktor client](https://ktor.io/docs/request.html).
+
+```kotlin
+class ExampleTest : TegralWebIntegrationTest({
+    put(appModule)
+}) {
+    
+    @Test
+    fun `greet endpoint test without arguments`() = test {
+        // highlight-start
+        val result = client.get("/greet").body<Greeting>()
+        assertEquals(Greeting("hello", "world"), result)
+        // highlight-end
+    }
+}
+```
+
+## Configuring the client
+
+You can further configure the client as you see fit by using the `createClient`
+function.
+
+```kotlin
+class ExampleTest : TegralWebIntegrationTest({
+    put(appModule)
+}) {
+    
+    @Test
+    fun `greet endpoint test without arguments`() = test {
+        // highlight-start
+        val customClient = createClient(null) { // null is because we want the default app
+            // Configure your client here
+            // See https://ktor.io/docs/create-client.html#configure-client
+        }
+        // highlight-end
+        // ...
+    }
+}
+```

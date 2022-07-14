@@ -63,6 +63,12 @@ const config = {
         items: [
           {
             type: 'doc',
+            docId: 'get-started/index',
+            position: 'left',
+            label: 'Get Started'
+          },
+          {
+            type: 'doc',
             docId: 'core/index',
             position: 'left',
             label: 'Core',
@@ -100,10 +106,13 @@ const config = {
       footer: {
         style: 'dark',
         links: [
-          // TODO add links
           {
             title: 'Docs',
             items: [
+              {
+                label: 'Get Started & Tutorials',
+                to: '/docs/get-started'
+              },
               {
                 label: 'Tegral Core',
                 to: '/docs/core'
@@ -112,6 +121,10 @@ const config = {
                 label: 'Tegral Web',
                 to: '/docs/web'
               },
+              {
+                label: 'API documentation (Dokka)',
+                to: 'pathname:///dokka'
+              }
             ],
           },
           // TODO add links
@@ -132,14 +145,13 @@ const config = {
               },
             ],
           },*/
-          // TODO add links
           {
             title: 'More',
             items: [
-              /*{ // TODO re-add when blog has content
+              {
                 label: 'Blog',
                 to: '/blog',
-              },*/
+              },
               {
                 label: 'GitHub',
                 href: 'https://github.com/utybo/Tegral',

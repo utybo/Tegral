@@ -1,0 +1,39 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.6.21'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Align versions of all Kotlin components
+    implementation platform('org.jetbrains.kotlin:kotlin-bom')
+
+    // Use the Kotlin JDK 8 standard library.
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+
+    implementation tegralLibs.bundles.web
+
+    testImplementation tegralLibs.bundles.web.test
+}
+
+testing {
+    suites {
+        test {
+            useKotlinTest()
+        }
+    }
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'org.example.tegraltutorial.AppKt'
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+}

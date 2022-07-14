@@ -13,6 +13,11 @@
 
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
+  'get-started': [
+    'get-started/index',
+    'get-started/tutorial/step-1-hello-world',
+    'get-started/tutorial/step-2-adding-tests'
+  ],
   core: [
     'core/index',
     'core/design',
@@ -65,7 +70,8 @@ const sidebars = {
     'web/appdsl/index',
     'web/appdefaults/index',
     'web/controllers/index',
-    'web/config/index'
+    'web/config/index',
+    'web/apptest/index'
   ],
   about: [
     'about/contributing',

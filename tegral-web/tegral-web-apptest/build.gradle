@@ -1,0 +1,15 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+}
+
+ext.includeInBundles = ["web-test"]
+
+dependencies {
+    api project(":tegral-di:tegral-di-test")
+    api project(":tegral-web:tegral-web-appdsl")
+    api project(":tegral-web:tegral-web-controllers-test")
+}
+
+ext.humanName = "Tegral Web AppTest"
+ext.description = "Integration testing utilities for Tegral applications."
+ext.url = "https://tegral.zoroark.guru/docs/web/apptest"

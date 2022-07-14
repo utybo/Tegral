@@ -13,7 +13,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/code-coverage" />
             <option value="$PROJECT_DIR$/docs" />
+            <option value="$PROJECT_DIR$/examples" />
+            <option value="$PROJECT_DIR$/examples/simple-json-api" />
             <option value="$PROJECT_DIR$/tegral-catalog" />
             <option value="$PROJECT_DIR$/tegral-config" />
             <option value="$PROJECT_DIR$/tegral-config/tegral-config-core" />
@@ -31,6 +34,7 @@
             <option value="$PROJECT_DIR$/tegral-web" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-appdefaults" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-appdsl" />
+            <option value="$PROJECT_DIR$/tegral-web/tegral-web-apptest" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-config" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers-test" />
@@ -45,7 +49,10 @@
               <build path="$PROJECT_DIR$" name="Tegral">
                 <projects>
                   <project path="$PROJECT_DIR$" />
+                  <project path="$PROJECT_DIR$/code-coverage" />
                   <project path="$PROJECT_DIR$/docs" />
+                  <project path="$PROJECT_DIR$/examples" />
+                  <project path="$PROJECT_DIR$/examples/simple-json-api" />
                   <project path="$PROJECT_DIR$/tegral-catalog" />
                   <project path="$PROJECT_DIR$/tegral-config" />
                   <project path="$PROJECT_DIR$/tegral-config/tegral-config-core" />
@@ -63,6 +70,7 @@
                   <project path="$PROJECT_DIR$/tegral-web" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-appdefaults" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-appdsl" />
+                  <project path="$PROJECT_DIR$/tegral-web/tegral-web-apptest" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-config" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-controllers" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-controllers-test" />
@@ -82,7 +90,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/code-coverage" />
             <option value="$PROJECT_DIR$/docs" />
+            <option value="$PROJECT_DIR$/examples" />
+            <option value="$PROJECT_DIR$/examples/simple-json-api" />
             <option value="$PROJECT_DIR$/samples/stage-1" />
             <option value="$PROJECT_DIR$/tegral-catalog" />
             <option value="$PROJECT_DIR$/tegral-config" />
@@ -101,6 +112,7 @@
             <option value="$PROJECT_DIR$/tegral-web" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-appdefaults" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-appdsl" />
+            <option value="$PROJECT_DIR$/tegral-web/tegral-web-apptest" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-config" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers-test" />

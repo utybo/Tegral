@@ -1,11 +1,24 @@
-include 'tegral-catalog'
-include 'tegral-config:tegral-config-core'
-include 'tegral-core'
-include 'tegral-di:tegral-di-core', 'tegral-di:tegral-di-services', 'tegral-di:tegral-di-test', 'tegral-di:tegral-di-test-mockk'
-include 'tegral-featureful'
-include 'tegral-logging'
-include 'tegral-services:tegral-services-api', 'tegral-services:tegral-services-feature'
-include 'tegral-web:tegral-web-appdefaults', 'tegral-web:tegral-web-appdsl', 'tegral-web:tegral-web-config', 'tegral-web:tegral-web-controllers', 'tegral-web:tegral-web-controllers-test'
+// NOTE: When adding projects here, do not forget to also add them as dependencies in the 'code-coverage' project!
+include 'tegral-catalog',
+        'tegral-config:tegral-config-core',
+        'tegral-core',
+        'tegral-di:tegral-di-core',
+        'tegral-di:tegral-di-services',
+        'tegral-di:tegral-di-test',
+        'tegral-di:tegral-di-test-mockk',
+        'tegral-featureful',
+        'tegral-logging',
+        'tegral-services:tegral-services-api',
+        'tegral-services:tegral-services-feature',
+        'tegral-web:tegral-web-appdefaults',
+        'tegral-web:tegral-web-appdsl',
+        'tegral-web:tegral-web-apptest',
+        'tegral-web:tegral-web-config',
+        'tegral-web:tegral-web-controllers',
+        'tegral-web:tegral-web-controllers-test'
 
+include 'examples:simple-json-api'
+
+include 'code-coverage'
 include 'docs'
 include 'website'

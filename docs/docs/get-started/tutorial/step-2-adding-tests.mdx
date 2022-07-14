@@ -1,0 +1,326 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Step 2: DI and tests
+
+Now that we have a basic endpoint, time to add some dependency injected components and test everything!
+
+:::note
+
+In case you need it, the code you should get by the end of this tutorial is available [here](https://github.com/utybo/Tegral/tree/main/examples/tutorial/step-2).
+
+:::
+
+## Adapting our App.kt
+
+Assuming that you completed [step 1](./step-1-hello-world.mdx), you should have a pretty basic `App.kt` file. Open it.
+
+We'll need to split our module declaration from our `tegral` block. This is required because, when testing, we're testing *parts* of our application and not the entire application (e.g. we're not actually launching a web server when running tests). Right now, we've added the parts *inside* the `tegral` block: we'll split them into a separate [dependency injection module](/core/di/modules.md) to allow our tests to grab just these parts.
+
+In a nutshell, this means adapting our `App.kt` file to look like this:
+
+```kotlin title="App.kt"
+// highlight-start
+val appModule = tegralDiModule {
+    put(::HelloController)
+}
+// highlight-end
+
+fun main() {
+    tegral {
+        // highlight-start
+        put(appModule)
+        // highlight-end
+    }
+}
+```
+
+## Creating a GreeterService
+
+In order to better illustrate the purpose of unit and integration testing, we'll create a simple service that will provide the actual greeting string.
+
+Let's create a `HelloService.kt` file and add the following to it:
+
+```kotlin title="HelloService.kt"
+class HelloService {
+    fun greet(): String = "Hello, world!"
+}
+```
+
+### Injecting the service
+
+We'll now adapt our controller so that it:
+
+- Gets an instance of `HelloService` from the Tegral app's environment.
+- Uses this instance to get the greeting string.
+
+First, we'll need to add a constructor to our `HelloController` class and add an [`InjectionScope`](/core/di/injection.md) argument. This argument is automatically added by Tegral when constructing your controller, and is the primary way to get other components from the app's environment (i.e., to do *dependency injection*).
+
+```kotlin title="HelloController.kt"
+// highlight-start
+class HelloController(scope: InjectionScope) : KtorController() {
+// highlight-end
+    // ...
+}
+```
+
+Dependency injection is done by declaring a private property with the type we want to retrieve, then adding `by scope()` next to it. Let's do just that:
+
+```kotlin title="HelloController.kt"
+class HelloController(scope: InjectionScope) : KtorController() {
+    // highlight-start
+    private val helloService: HelloService by scope()
+    // highlight-end
+
+    // ...
+}
+```
+
+Now, we can just call `helloService` like any regular property, and call `greet()` on it:
+
+```kotlin title="HelloController.kt"
+class HelloController(scope: InjectionScope) : KtorController() {
+    private val helloService: HelloService by scope()
+
+    override fun Routing.install() {
+        get("/") {
+            // highlight-start
+            call.respondText(helloService.greet())
+            // highlight-end
+        }
+    }
+}
+```
+
+### Registering the service
+
+Finally, just like we needed to `put` our controller into the environment, we'll `put` our `HelloService` into our environment in `App.kt`.
+
+```kotlin title="App.kt"
+val appModule = tegralDiModule {
+    put(::HelloController)
+    // highlight-start
+    put(::HelloService)
+    // highlight-end
+}
+```
+
+Run your application, and you should see the same "Hello, world!" message as before. Congrats, you just used dependency injection in Tegral!
+
+## Testing it all
+
+Tests are first-class citizens in Tegral. Writing tests is easy, fast and makes developing robust applications painless (or, at least, less painful).
+
+### Setting up
+
+For fairly obvious reasons, Tegral does not ship test dependencies as part of its main code dependency bundle. We'll need to add a secondary bundle called `web.test` to our test dependencies.
+
+Let's go back to our `build.gradle(.kts)` file. Add the following line at the end of the `dependencies` block:
+
+<Tabs groupId="gradle-dsl">
+<TabItem value="groovy" label="Groovy DSL">
+
+```groovy title="app/build.gradle"
+dependencies {
+    // ...
+
+    // highlight-start
+    testImplementation tegralLibs.bundles.web.test
+    // highlight-end
+}
+```
+
+</TabItem>
+<TabItem value="kotlin" label="Kotlin DSL">
+
+```kotlin title="app/build.gradle.kts"
+dependencies {
+    // ...
+
+    // highlight-start
+    testImplementation(tegralLibs.bundles.web.test)
+    // highlight-end
+}
+```
+
+</TabItem>
+</Tabs>
+
+### Unit testing our service
+
+While you could test your HelloService directly like any regular Kotlin class, it may happen in the future that you will want to inject dependencies *into* `HelloService`. In order to future-proof, let's create a test class that will fully support dependency injection in the future.
+
+Testing in Tegral is based around having your test classes subclassing Tegral test classes, then using a `test` function to set up a proper test environment.
+
+Let's create a simple test:
+
+```kotlin
+class HelloServiceTest : TegralSubjectTest<HelloService>(::HelloService) {
+    @Test
+    fun `should say hello`() = test {
+        assertEquals("Hello, world!", subject.greet())
+    }
+}
+```
+
+You may notice a few things here:
+
+- We subclassed `TegralSubjectTest`, which is a class that implements the common pattern of testing a Tegral DI component as our "subject". This super class takes two arguments.
+    - A generic type, which is the type of our subject. In this case, we're testing `HelloService`, so we'll put that as our generic type.
+    - Arguments. In the most simple case like here, where we only really want to have `HelloService` in our test environment, we can just add `::HelloService`, similarly to a `put()` call.
+- We added a test that immediately calls a built-in test functino (`= test {`). Within the `test` function, Tegral will set up a test DI environment with our `HelloService`. We can then access this `HelloService` using the `subject` property.
+
+Run the test using the green triangle on the left. Everything should be green!
+
+### Unit testing our controller
+
+Next, we'll unit test our controller. This is a more interesting test because:
+
+- Our controller has a dependency on our service, which we'll need to supply in our test.
+- Our controller actually does not exposed any functions, it only provides Ktor setup code.
+
+This is all fine when using Tegral.
+
+First, let's write a test "ignoring" the fact that we need to supply a service. The setup is very similar to that of a `TegralSubjectTest`, but uses `TegralControllerTest` instead, since Tegral will do extra work to set up a test Ktor environment.
+
+```kotlin
+class HelloControllerTest : TegralControllerTest<HelloController>(::HelloController) {
+    @Test
+    fun `should return hello world`() = test {
+        val response = client.get("/")
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals("Hello World!", response.bodyAsText())
+    }
+}
+```
+
+Once again, a few things to note here:
+
+- In order to send requests to our controller, we can use the `client` property, which is actually a regular Ktor client wired to call into our test environment.
+- We'll use Ktor's standard functions and properties for the rest.
+
+:::note
+
+While we can still use `subject` (which would return our `HelloController` instance), this is not super useful, as we can't really call anything except `install`, which requires a Ktor setup.
+
+:::
+
+If you try to run this test, you should get an error message similar to the following:
+
+```
+Component not found: org.example.tegraltutorial.HelloService (<no qualifier>)
+guru.zoroark.tegral.di.ComponentNotFoundException: Component not found: org.example.tegraltutorial.HelloService (<no qualifier>)
+	at guru.zoroark.tegral.di.environment.InjectionEnvironment$DefaultImpls.get(InjectionEnvironment.kt:82)
+    ...
+```
+
+As previously mentioned, we need to supply a `HelloService` instance. Here, we'll do this by *mocking* our `HelloService` class with MockK, which is automatically included wwhen using the `web.test` bundle.
+
+### Mocking our service
+
+Because we are currently unit testing our code, we want to only test a *unit* of code, in this case the `HelloController` class. We do not care about what `HelloService` does -- even if the implementation of `HelloService` is completely wrong, our unit tests in `HelloController` should still work perfectly fine.
+
+We'll do this using a mock. Let's adapt the test we just created:
+
+```kotlin
+@Test
+fun `should return hello world`() = test {
+    // highlight-start
+    val mockHelloService = mockk<HelloService> {
+        every { greet() } returns "Greeting from service"
+    }
+    put { mockHelloService }
+    // highlight-end
+    // ...
+}
+```
+
+The `mockk` call is just a standard MockK mock, which returns a `HelloService` object wired up to do exactly what we told it to.
+
+Note that we are immediately `put`ting the resulting object into the test DI environment. This is actually one of the superpowers of DI in our testing code: we can add whatever component we want at any time! In this case, this is very useful so that we can just add the service we want.
+
+Because this "mock-then-put" pattern is so frequent, Tegral provides a shorthand for it:
+
+```kotlin
+@Test
+fun `should return hello world`() = test {
+    // highlight-start
+    val mockHelloService = putMock<HelloService> {
+        every { greet() } returns "Greeting from service"
+    }
+    // highlight-end
+    // ...
+}
+```
+
+Not only does it save a pretty boring line of code, doing this ensures that you do not forget a `put` call. Note that `putMock` immediately returns the created mock, which we'll need to perform validation later on.
+
+We can now use our controller with our mock.
+
+```kotlin
+@Test
+fun `should return hello world`() = test {
+    val mockHelloService = putMock<HelloService> {
+        every { greet() } returns "Greeting from service"
+    }
+
+    val response = client.get("/")
+    assertEquals(HttpStatusCode.OK, response.status)
+    assertEquals("Greeting from service", response.bodyAsText())
+}
+```
+
+:::note
+
+Note that, in this case, we're returning a string that is different from what is actually implemented in `HelloService`. This is useful to ensure that our controller actually returns what the service returned, and is not just returning hard-coded responses.
+
+:::
+
+For good measure, we'll add some verification, which will ensure that our mock was actually called. This is mostly useful for functions that return `Unit`, as it would otherwise be very hard to know if our function *actually* called them.
+
+```kotlin
+@Test
+fun `should return hello world`() = test {
+    val mockHelloService = putMock<HelloService> {
+        every { greet() } returns "Greeting from service"
+    }
+
+    val response = client.get("/")
+    assertEquals(HttpStatusCode.OK, response.status)
+    assertEquals("Greeting from service", response.bodyAsText())
+
+    verify { mockHelloService.greet() }
+}
+```
+
+### Integration testing
+
+While unit testing is useful for ensuring that classes are implemented correctly, they're not necessarily the best option for testing actual *features*. A powerful tool for this is integration-testing. While not exactly end-to-end testing (as we are once again not really launching a full web server), integration testing allows us to check that all of the parts of our application are working correctly together.
+
+In this example, we'll write integration tests that will test both our controller *and* our service. In short, it will allow us to test our entire "stack".
+
+Integration tests diverge a little bit from the syntax we've seen so far, as they do not have a "subject" since we are testing API endpoints on top of a more complex test environment.
+
+```kotlin
+class HelloIntegrationTest : TegralWebIntegrationTest({
+    put(::HelloService)
+    put(::HelloController)
+}) {
+    @Test
+    fun `test greeting endpoint`() = test {
+        val response = client.get("/")
+        assertEquals(HttpStatusCode.OK, response.status)
+        assertEquals("Hello, world!", response.bodyAsText())
+    }
+}
+```
+
+Here are the notable differences:
+
+- We are using the `TegralWebIntegrationTest` superclass, which is initialized differently from the superclasses we've seen so far. Here, you have to `put` all of the components that will take part in your integration tests. You can also put entire modules if you wish.
+- Our `test` block once again provides us with a `client`.
+- Here, we are not actually mocking anything. We are testing our entire application's behavior!
+
+Run your test, and everything should be green.
+
+Congrats! You just added dependency injection and tests to your application.
