@@ -21,6 +21,7 @@ import guru.zoroark.tegral.di.environment.InjectionEnvironmentKind
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.Injector
 import guru.zoroark.tegral.di.environment.MetalessInjectionScope
+import guru.zoroark.tegral.di.environment.ResolvableDeclaration
 import guru.zoroark.tegral.di.environment.ScopedContext
 import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
 import guru.zoroark.tegral.di.test.NotAvailableInTestEnvironmentException
@@ -32,11 +33,23 @@ private class FakeInjector<T : Any> : Injector<T> {
     }
 }
 
+enum class DependencyKind(val arrow: String) {
+    Injection("-->"),
+    Resolution("R->")
+}
+
+data class IdentifierDependencies(val kind: DependencyKind, val dependencies: List<Identifier<*>>)
+
 /**
  * Fake environment that tracks dependencies on the instantiation of components.
  *
  * Environment of this kind should rarely be created manually: they are used behind the scenes in rules that check for
  * the coherence of the contents of an environment (completeness check, cyclic dependency check...)
+ *
+ * This environment performs dependency analysis on:
+ *
+ * - Components
+ * - Injection resolution
  */
 class DependencyTrackingInjectionEnvironment(context: EnvironmentContext) : InjectionEnvironment {
     companion object : InjectionEnvironmentKind<DependencyTrackingInjectionEnvironment> {
@@ -53,10 +66,17 @@ class DependencyTrackingInjectionEnvironment(context: EnvironmentContext) : Inje
     /**
      * The dependencies represented as a map from an identifier to the identifiers this identifier depends on.
      */
-    val dependencies = context.declarations.mapValues { (_, v) ->
-        currentInjections.clear()
-        if (v is ScopedSupplierDeclaration) v.supplier(ScopedContext(EnvironmentBasedIgnoringMetaScope(this)))
-        currentInjections.toList()
+    val dependencies: Map<Identifier<*>, IdentifierDependencies> = context.declarations.mapValues { (_, v) ->
+        when (v) {
+            is ScopedSupplierDeclaration -> {
+                currentInjections.clear()
+                v.supplier(ScopedContext(EnvironmentBasedIgnoringMetaScope(this)))
+                IdentifierDependencies(DependencyKind.Injection, currentInjections.toList())
+            }
+            is ResolvableDeclaration -> {
+                IdentifierDependencies(DependencyKind.Resolution, v.buildResolver().requirements)
+            }
+        }
     }
 
     override fun <T : Any> createInjector(identifier: Identifier<T>, onInjection: (T) -> Unit): Injector<T> {
