@@ -61,10 +61,11 @@ class SimpleIdentifierResolver<T : Any>(private val instance: T) : CanonicalIden
  */
 class AliasIdentifierResolver<T : Any>(private val actualIdentifier: Identifier<out T>) : IdentifierResolver<T> {
     override fun resolve(requester: Any?, components: EnvironmentComponents): T {
-        @Suppress("UNCHECKED_CAST") // TODO provide a hand-made check for this?
-        return (components[actualIdentifier] as IdentifierResolver<T>?)?.resolve(requester, components)
+        val actualInstance = components[actualIdentifier]?.resolve(requester, components)
             ?: throw FailedToResolveException(
-                "Failed to resolve $actualIdentifier against environment. Please report this."
+                "Failed to resolve $actualIdentifier against environment. Make sure that what your alias is pointing " +
+                    "to ($actualIdentifier) actually exists in the environment."
             )
+        return ensureInstance(actualIdentifier.kclass, actualInstance)
     }
 }

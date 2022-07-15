@@ -15,6 +15,7 @@
 package guru.zoroark.tegral.di.extensions.factory
 
 import guru.zoroark.tegral.core.TegralDsl
+import guru.zoroark.tegral.di.InvalidDeclarationException
 import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
 import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.environment.EnvironmentComponents
@@ -52,9 +53,18 @@ internal class InjectableFactoryImpl<T : Any>(private val supplier: (Any) -> T) 
  */
 class FactoryResolver<T : Any>(private val makerIdentifier: Identifier<InjectableFactory<T>>) : IdentifierResolver<T> {
     override fun resolve(requester: Any?, components: EnvironmentComponents): T {
+        if (requester == null) {
+            throw InvalidDeclarationException(
+                "Cannot resolve a factory outside of a component, because factories need to know the requesting " +
+                    "object. If you wish to manually instantiate factory-provided components, try getting the " +
+                    "corresponding InjectableFactory<T> object, then call its .make() function with a proper " +
+                    "requester. Otherwise, please report this, as it may mean that Tegral DI did not properly " +
+                    "determine the requesting object."
+            )
+        }
         val maker =
             (components[makerIdentifier]!! as IdentifierResolver<InjectableFactory<T>>).resolve(requester, components)
-        return maker.make(requester ?: error("put proper message here")) // TODO error msg
+        return maker.make(requester)
     }
 }
 

@@ -15,6 +15,7 @@
 package guru.zoroark.tegral.di.extensions
 
 import guru.zoroark.tegral.di.ComponentNotFoundException
+import guru.zoroark.tegral.di.InternalErrorException
 import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.environment.Declarations
 import guru.zoroark.tegral.di.environment.EnvironmentBasedScope
@@ -108,7 +109,9 @@ class EagerImmutableMetaEnvironment(context: EnvironmentContext) : InjectionEnvi
 
         fun resolve(requester: Any, components: EnvironmentComponents) {
             val previousState = state
-            if (previousState !is Prepared) error("Already resolved") // TODO proper exception type
+            if (previousState !is Prepared) {
+                throw InternalErrorException("Attempted to resolve an injector that was already resolved.")
+            }
 
             state = Resolved(previousState.resolver.resolve(requester, components))
         }
@@ -116,8 +119,7 @@ class EagerImmutableMetaEnvironment(context: EnvironmentContext) : InjectionEnvi
         override fun getValue(thisRef: Any?, property: KProperty<*>): T {
             val actualState = state
             if (actualState !is Resolved) {
-                // TODO proper exception type
-                error("Injector was created but was not resolved.")
+                throw InternalErrorException("Attempted to get a value from an injector that was not resolved.")
             }
             return actualState.instance
         }
@@ -127,8 +129,9 @@ class EagerImmutableMetaEnvironment(context: EnvironmentContext) : InjectionEnvi
         val info = buildingInformation
         return if (info != null) {
             if (info.injectorsOfCurrentInstance == null) {
-                // TODO proper exception type
-                error("createInjector called during build phase without an actual parent being created?")
+                throw InternalErrorException(
+                    "createInjector called during build phase without an actual parent being created. Please report this."
+                )
             }
             val injector = initializeComponentResolver(
                 (info.declarations[identifier] ?: throw ComponentNotFoundException(identifier)) as Declaration<T>
