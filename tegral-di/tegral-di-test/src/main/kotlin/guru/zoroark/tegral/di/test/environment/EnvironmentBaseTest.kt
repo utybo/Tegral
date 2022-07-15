@@ -437,6 +437,9 @@ sealed class EnvironmentBaseTest(
     }
 
     internal class ParentTrackingResolver : IdentifierResolver<Parent.Dummy> {
+        override val requirements: List<Identifier<*>>
+            get() = error("N/A")
+
         val parents = mutableSetOf<KClass<*>?>()
         override fun resolve(requester: Any?, components: EnvironmentComponents): Parent.Dummy {
             parents += requester?.let { it::class }

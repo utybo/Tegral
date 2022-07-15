@@ -31,6 +31,15 @@ interface IdentifierResolver<T : Any> {
      * was caused manually (e.g. by calling `get` on an environment).
      */
     fun resolve(requester: Any?, components: EnvironmentComponents): T
+
+    /**
+     * The requirements for this resolver, i.e. the identifiers that this resolver needs from the `components` argument
+     * of [resolve]. This information is used for dependency analysis to properly "link" components that are resolved
+     * against during resolution, such as with aliases.
+     *
+     * It is valid (and expected) to return an empty list here in case you do not need the `components` argument at all.
+     */
+    val requirements: List<Identifier<*>>
 }
 
 /**
@@ -50,6 +59,7 @@ abstract class CanonicalIdentifierResolver<T : Any> : IdentifierResolver<T> {
  */
 class SimpleIdentifierResolver<T : Any>(private val instance: T) : CanonicalIdentifierResolver<T>() {
     override val actualClass: KClass<out T> = instance::class
+    override val requirements: List<Identifier<*>> = emptyList()
 
     override fun resolve(requester: Any?, components: EnvironmentComponents): T {
         return instance
@@ -60,6 +70,8 @@ class SimpleIdentifierResolver<T : Any>(private val instance: T) : CanonicalIden
  * A resolver that is aliased to another identifier. Not canonical.
  */
 class AliasIdentifierResolver<T : Any>(private val actualIdentifier: Identifier<out T>) : IdentifierResolver<T> {
+    override val requirements: List<Identifier<*>> = listOf(actualIdentifier)
+
     override fun resolve(requester: Any?, components: EnvironmentComponents): T {
         val actualInstance = components[actualIdentifier]?.resolve(requester, components)
             ?: throw FailedToResolveException(
