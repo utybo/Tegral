@@ -19,7 +19,6 @@ import guru.zoroark.tegral.di.dsl.tegralDi
 import guru.zoroark.tegral.di.dsl.tegralDiModule
 import guru.zoroark.tegral.di.environment.InjectableModule
 import guru.zoroark.tegral.di.environment.InjectionEnvironment
-import guru.zoroark.tegral.di.environment.InjectionEnvironmentKind
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.MixedImmutableEnvironment
 import guru.zoroark.tegral.di.environment.get

@@ -70,7 +70,7 @@ class ServiceManager(scope: InjectionScope) : DeclarationsProcessor {
             .filterNot { operationType.isBlockedByPolicy(ignorePolicies[it]) }
             .filterSubclassesOf(environment, TegralService::class)
             .map { identifier ->
-                identifier to (environment.get(identifier) as TegralService)
+                identifier to environment.get(identifier)
             }
 
     /**
