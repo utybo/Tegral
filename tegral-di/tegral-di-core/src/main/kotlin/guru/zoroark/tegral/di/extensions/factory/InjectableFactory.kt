@@ -17,10 +17,15 @@ package guru.zoroark.tegral.di.extensions.factory
 import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
 import guru.zoroark.tegral.di.dsl.put
+import guru.zoroark.tegral.di.environment.EnvironmentComponents
+import guru.zoroark.tegral.di.environment.Identifier
+import guru.zoroark.tegral.di.environment.IdentifierResolver
 import guru.zoroark.tegral.di.environment.InjectionScope
+import guru.zoroark.tegral.di.environment.ResolvableDeclaration
 import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.di.environment.typed
 import kotlin.properties.ReadOnlyProperty
+import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 
 /**
@@ -42,6 +47,23 @@ internal class InjectableFactoryImpl<T : Any>(private val supplier: (Any) -> T) 
     }
 }
 
+class FactoryResolver<T : Any>(private val makerIdentifier: Identifier<InjectableFactory<T>>) : IdentifierResolver<T> {
+    override fun resolve(requester: Any?, components: EnvironmentComponents): T {
+        val maker =
+            (components[makerIdentifier]!! as IdentifierResolver<InjectableFactory<T>>).resolve(requester, components)
+        return maker.make(requester ?: error("put proper message here")) // TODO error msg
+    }
+}
+
+class FactoryDeclaration<T : Any>(
+    actualIdentifier: Identifier<T>,
+    private val makerIdentifier: Identifier<InjectableFactory<T>>
+) : ResolvableDeclaration<T>(actualIdentifier) {
+    override fun buildResolver(): IdentifierResolver<T> {
+        return FactoryResolver(makerIdentifier)
+    }
+}
+
 /**
  * Allows to put a factory within the module or environment.
  *
@@ -51,6 +73,13 @@ internal class InjectableFactoryImpl<T : Any>(private val supplier: (Any) -> T) 
 @TegralDsl
 inline fun <reified T : Any> ContextBuilderDsl.putFactory(noinline block: (Any) -> T) {
     put<InjectableFactory<T>>(typed<T>()) { InjectableFactoryImpl(block) }
+    @Suppress("UNCHECKED_CAST")
+    put(
+        FactoryDeclaration(
+            Identifier(T::class),
+            Identifier(InjectableFactory::class as KClass<InjectableFactory<T>>, typed<T>())
+        )
+    )
 }
 
 /**
