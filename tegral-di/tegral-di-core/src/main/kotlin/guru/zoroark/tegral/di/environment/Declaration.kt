@@ -15,7 +15,23 @@
 package guru.zoroark.tegral.di.environment
 
 import guru.zoroark.tegral.di.ComponentNotFoundException
+import guru.zoroark.tegral.di.environment.resolvers.IdentifierResolver
 import guru.zoroark.tegral.di.extensions.DeclarationTag
+
+/**
+ * A declaration within an environment that is being built. These declarations can be:
+ *
+ * - [Simple declarations][ScopedSupplierDeclaration], based on a lambda or a constructor.
+ * - [Declarations][ResolvableDeclaration] that build into more complicated [resolvers][IdentifierResolver].
+ *
+ * @property identifier The identifier for this declaration.
+ */
+sealed class Declaration<T : Any>(val identifier: Identifier<T>) {
+    /**
+     * Tags attached to this declaration.
+     */
+    val tags = mutableListOf<DeclarationTag>()
+}
 
 /**
  * A declaration within an [EnvironmentContext].
@@ -26,11 +42,17 @@ import guru.zoroark.tegral.di.extensions.DeclarationTag
  * @property identifier The identifier for this declaration.
  * @property supplier The supplier for this declaration.
  */
-class Declaration<T : Any>(val identifier: Identifier<T>, val supplier: ScopedSupplier<T>) {
+class ScopedSupplierDeclaration<T : Any>(identifier: Identifier<T>, val supplier: ScopedSupplier<T>) :
+    Declaration<T>(identifier)
+
+/**
+ * A [declaration][Declaration] that can be built into an [IdentifierResolver].
+ */
+abstract class ResolvableDeclaration<T : Any>(identifier: Identifier<T>) : Declaration<T>(identifier) {
     /**
-     * Tags attached to this declaration.
+     * Create the resolver.
      */
-    val tags = mutableListOf<DeclarationTag>()
+    abstract fun buildResolver(): IdentifierResolver<T>
 }
 
 /**

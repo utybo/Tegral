@@ -15,6 +15,7 @@
 package guru.zoroark.tegral.di.environment
 
 import guru.zoroark.tegral.di.ComponentNotFoundException
+import guru.zoroark.tegral.di.environment.resolvers.IdentifierResolver
 
 /**
  * An injection environment is, in a nutshell, a container for injectable components. These injectable components can be
@@ -99,6 +100,8 @@ interface InjectionEnvironment {
      */
     fun <T : Any> createInjector(identifier: Identifier<T>, onInjection: (T) -> Unit = {}): Injector<T>
 }
+
+typealias EnvironmentComponents = Map<Identifier<*>, IdentifierResolver<*>>
 
 /**
  * Gets the component identified by the given type turned into an [Identifier] with an optional [qualifier][Qualifier].

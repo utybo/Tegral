@@ -15,15 +15,20 @@
 package guru.zoroark.tegral.di.test.environment
 
 import guru.zoroark.tegral.di.ComponentNotFoundException
+import guru.zoroark.tegral.di.environment.EnvironmentComponents
 import guru.zoroark.tegral.di.environment.EnvironmentContext
 import guru.zoroark.tegral.di.environment.Identifier
 import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionScope
+import guru.zoroark.tegral.di.environment.ResolvableDeclaration
 import guru.zoroark.tegral.di.environment.get
 import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.di.environment.named
 import guru.zoroark.tegral.di.environment.optional
+import guru.zoroark.tegral.di.environment.resolvers.IdentifierResolver
+import guru.zoroark.tegral.di.extensions.AliasDeclaration
 import guru.zoroark.tegral.di.test.entryOf
+import kotlin.reflect.KClass
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
@@ -82,6 +87,16 @@ sealed class EnvironmentBaseTest(
                 this::`(Basic) Optional injection with absent component should work`,
             "(Basic) Optional injection with present component should work" to
                 this::`(Basic) Optional injection with present component should work`,
+            "(Basic) Alias get with same type but different qualifier should work" to
+                this::`(Basic) Alias get with same type but different qualifier should work`,
+            "(Basic) Alias get with different type but same qualifier should work" to
+                this::`(Basic) Alias get with different type but same qualifier should work`,
+            "(Basic) Alias inject with same type but different qualifier should work" to
+                this::`(Basic) Alias inject with same type but different qualifier should work`,
+            "(Basic) Alias inject with different type but same qualifier should work" to
+                this::`(Basic) Alias inject with different type but same qualifier should work`,
+            "(Basic) Parent is properly resolved without cycles" to
+                this::`(Basic) Parent is properly resolved without cycles`,
         ) + additionalTests
         val failingTests = tests.mapNotNull { (name, test) ->
             val result = runCatching { test() }
@@ -129,6 +144,19 @@ sealed class EnvironmentBaseTest(
     }
 
     private class F
+
+    private interface ExampleContract
+    private class ExampleImpl : ExampleContract
+
+    private class DoubleRetriever(scope: InjectionScope) {
+        val simpleNoQualifier: Simple by scope()
+        val simpleQualifier: Simple by scope(named("alias"))
+    }
+
+    private class DoubleRetriever2(scope: InjectionScope) {
+        val contract: ExampleContract by scope()
+        val impl: ExampleImpl by scope()
+    }
 
     private fun `(Basic) Put and get a single element`() {
         var element: Simple? = null
@@ -311,5 +339,158 @@ sealed class EnvironmentBaseTest(
         )
         val env = provider(context)
         assertNull(env.get<OptionalB>().a)
+    }
+
+    private fun `(Basic) Alias get with same type but different qualifier should work`() {
+        val context = EnvironmentContext(
+            mapOf(
+                entryOf { Simple() },
+                entryOf(AliasDeclaration(Identifier(Simple::class, named("alias")), Identifier(Simple::class)))
+            )
+        )
+        val env = provider(context)
+        val simpleA = env.get<Simple>()
+        val simpleB = env.get<Simple>(named("alias"))
+        assertSame(simpleA, simpleB)
+    }
+
+    private fun `(Basic) Alias get with different type but same qualifier should work`() {
+        val context = EnvironmentContext(
+            mapOf(
+                entryOf { ExampleImpl() },
+                entryOf(AliasDeclaration(Identifier(ExampleContract::class), Identifier(ExampleImpl::class)))
+            )
+        )
+        val env = provider(context)
+        val simpleA = env.get<ExampleImpl>()
+        val simpleB = env.get<ExampleContract>()
+        assertSame(simpleA, simpleB)
+    }
+
+    private fun `(Basic) Alias inject with same type but different qualifier should work`() {
+        val context = EnvironmentContext(
+            mapOf(
+                entryOf { Simple() },
+                entryOf(AliasDeclaration(Identifier(Simple::class, named("alias")), Identifier(Simple::class))),
+                entryOf { DoubleRetriever(scope) }
+            )
+        )
+        val env = provider(context)
+        val retriever = env.get<DoubleRetriever>()
+        assertSame(retriever.simpleNoQualifier, retriever.simpleQualifier)
+    }
+
+    private fun `(Basic) Alias inject with different type but same qualifier should work`() {
+        val context = EnvironmentContext(
+            mapOf(
+                entryOf { ExampleImpl() },
+                entryOf(AliasDeclaration(Identifier(ExampleContract::class), Identifier(ExampleImpl::class))),
+                entryOf { DoubleRetriever2(scope) }
+            )
+        )
+        val env = provider(context)
+        val retriever = env.get<DoubleRetriever2>()
+        assertSame(retriever.impl, retriever.contract)
+    }
+
+    internal class Parent {
+
+        internal interface TriggerResolution {
+            fun triggerResolution() {}
+        }
+
+        internal class A(scope: InjectionScope) : TriggerResolution {
+            val b: B by scope()
+            val g: Dummy by scope(named("g"))
+
+            override fun triggerResolution() {
+                b
+                g
+            }
+        }
+
+        internal class B(scope: InjectionScope) : TriggerResolution {
+            val c: Dummy by scope(named("c"))
+            val d: D by scope()
+
+            override fun triggerResolution() {
+                c
+                d
+            }
+        }
+
+        internal class D(scope: InjectionScope) : TriggerResolution {
+            val c: Dummy by scope(named("c"))
+            val e: Dummy by scope(named("e"))
+            val f: Dummy by scope(named("f"))
+            val g: Dummy by scope(named("g"))
+
+            override fun triggerResolution() {
+                c
+                e
+                f
+                g
+            }
+        }
+
+        internal interface Dummy
+    }
+
+    internal class ParentTrackingResolver : IdentifierResolver<Parent.Dummy> {
+        override val requirements: List<Identifier<*>>
+            get() = error("N/A")
+
+        val parents = mutableSetOf<KClass<*>?>()
+        override fun resolve(requester: Any?, components: EnvironmentComponents): Parent.Dummy {
+            parents += requester?.let { it::class }
+            return object : Parent.Dummy {}
+        }
+    }
+
+    private fun <T : Any> entryOf(identifier: Identifier<T>, resolver: IdentifierResolver<T>) =
+        identifier to object : ResolvableDeclaration<T>(identifier) {
+            override fun buildResolver(): IdentifierResolver<T> {
+                return resolver
+            }
+        }
+
+    private fun `(Basic) Parent is properly resolved without cycles`() {
+        /*
+         * A tree of resolvers like this:
+         *       /------> C
+         * A -> B      /--^
+         * |     \-> D -> E F
+         * |          \-> G
+         * +--------------^
+         */
+        val (cResolver, eResolver, fResolver, gResolver) = List(4) { ParentTrackingResolver() }
+        val context = EnvironmentContext(
+            mapOf(
+                entryOf { Parent.B(scope) },
+                entryOf { Parent.A(scope) },
+                entryOf { Parent.D(scope) },
+                entryOf(Identifier(Parent.Dummy::class, named("c")), cResolver),
+                entryOf(Identifier(Parent.Dummy::class, named("e")), eResolver),
+                entryOf(Identifier(Parent.Dummy::class, named("f")), fResolver),
+                entryOf(Identifier(Parent.Dummy::class, named("g")), gResolver)
+            )
+        )
+
+        val env = provider(context)
+        // The following is specifically for lazy environments
+        val b = env.get<Parent.B>()
+        b.triggerResolution()
+        val a = env.get<Parent.A>()
+        a.triggerResolution()
+        val d = env.get<Parent.D>()
+        d.triggerResolution()
+
+        // Should add null to E's parents list
+        env.get<Parent.Dummy>(named("e"))
+
+        assertEquals(setOf(Parent.B::class, Parent.D::class), cResolver.parents as Set<KClass<*>?>)
+        assertEquals(setOf(Parent.D::class, null), eResolver.parents as Set<KClass<*>?>)
+        assertEquals(setOf(Parent.D::class), fResolver.parents as Set<KClass<*>?>)
+        assertEquals(setOf(Parent.A::class, Parent.D::class), gResolver.parents as Set<KClass<*>?>)
     }
 }

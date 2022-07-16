@@ -15,22 +15,23 @@
 package guru.zoroark.tegral.di.extensions
 
 import guru.zoroark.tegral.di.ComponentNotFoundException
+import guru.zoroark.tegral.di.InternalErrorException
 import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.environment.Declarations
 import guru.zoroark.tegral.di.environment.EnvironmentBasedScope
+import guru.zoroark.tegral.di.environment.EnvironmentComponents
 import guru.zoroark.tegral.di.environment.EnvironmentContext
 import guru.zoroark.tegral.di.environment.Identifier
 import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionEnvironmentKind
 import guru.zoroark.tegral.di.environment.Injector
+import guru.zoroark.tegral.di.environment.ResolvableDeclaration
 import guru.zoroark.tegral.di.environment.ScopedContext
+import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
 import guru.zoroark.tegral.di.environment.ensureInstance
+import guru.zoroark.tegral.di.environment.resolvers.IdentifierResolver
+import guru.zoroark.tegral.di.environment.resolvers.SimpleIdentifierResolver
 import kotlin.reflect.KProperty
-
-private data class EIEBeingBuiltInformation(
-    val declarations: Declarations,
-    val componentsBeingBuilt: MutableMap<Identifier<*>, Any>
-)
 
 private class StaticInjector<T : Any>(private val value: T) : Injector<T> {
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {
@@ -61,46 +62,115 @@ class EagerImmutableMetaEnvironment(context: EnvironmentContext) : InjectionEnvi
     private val components = initializeComponents(context)
     private var buildingInformation: EIEBeingBuiltInformation? = null
 
-    private fun initializeComponents(context: EnvironmentContext): Map<Identifier<*>, Any> {
-        val componentsNow = mutableMapOf<Identifier<*>, Any>()
-        buildingInformation = EIEBeingBuiltInformation(context.declarations, componentsNow)
+    private fun initializeComponents(context: EnvironmentContext): EnvironmentComponents {
+        val componentsNow = mutableMapOf<Identifier<*>, IdentifierResolver<*>>()
+        val bi = EIEBeingBuiltInformation(context.declarations, componentsNow)
+        buildingInformation = bi
 
+        // Preparation phase
         for ((_, declaration) in context.declarations) {
-            initializeComponent(componentsNow, declaration)
+            initializeComponentResolver(declaration)
         }
+
+        // Resolution phase
+        for ((parent, childInjectors) in bi.injectors) {
+            // Note that "parent" will always be a simple resolver (i.e. just mapped to an instance). The actual
+            // requester does not matter during its resolution.
+            val parentInstance = bi.componentsBeingBuilt[parent]!!.resolve(null, bi.componentsBeingBuilt)
+            for (childInjector in childInjectors) {
+                childInjector.resolve(parentInstance, bi.componentsBeingBuilt)
+            }
+        }
+
         buildingInformation = null
         return componentsNow.toMap()
     }
 
-    @Suppress("UNCHECKED_CAST")
     override fun <T : Any> getOrNull(identifier: Identifier<T>): T? {
-        return components[identifier]?.also { ensureInstance(identifier.kclass, it) } as T?
+        val resolver = components[identifier] ?: return null
+        val instance = resolver.resolve(null, components)
+        return ensureInstance(identifier.kclass, instance)
+    }
+
+    private data class EIEBeingBuiltInformation(
+        val declarations: Declarations,
+        val componentsBeingBuilt: MutableMap<Identifier<*>, IdentifierResolver<*>>,
+        val injectors: MutableMap<Identifier<*>, List<TwoPhaseInjector<*>>> = mutableMapOf(),
+        var injectorsOfCurrentInstance: MutableList<TwoPhaseInjector<*>>? = null
+    )
+
+    private class TwoPhaseInjector<T : Any>(
+        resolver: IdentifierResolver<T>
+    ) : Injector<T> {
+        private sealed class State<T : Any>
+        private class Prepared<T : Any>(val resolver: IdentifierResolver<T>) : State<T>()
+        private class Resolved<T : Any>(val instance: T) : State<T>()
+
+        var state: State<T> = Prepared(resolver)
+
+        fun resolve(requester: Any, components: EnvironmentComponents) {
+            val previousState = state
+            if (previousState !is Prepared) {
+                throw InternalErrorException("Attempted to resolve an injector that was already resolved.")
+            }
+
+            state = Resolved(previousState.resolver.resolve(requester, components))
+        }
+
+        override fun getValue(thisRef: Any?, property: KProperty<*>): T {
+            val actualState = state
+            if (actualState !is Resolved) {
+                throw InternalErrorException("Attempted to get a value from an injector that was not resolved.")
+            }
+            return actualState.instance
+        }
     }
 
     override fun <T : Any> createInjector(identifier: Identifier<T>, onInjection: (T) -> Unit): Injector<T> {
         val info = buildingInformation
-        if (info != null) {
-            @Suppress("UNCHECKED_CAST")
-            return StaticInjector(
-                initializeComponent(
-                    info.componentsBeingBuilt,
-                    (info.declarations[identifier] ?: throw ComponentNotFoundException(identifier)) as Declaration<T>
-                ).also(onInjection)
+        return if (info != null) {
+            if (info.injectorsOfCurrentInstance == null) {
+                throw InternalErrorException(
+                    "createInjector called during build phase without an actual parent being created. " +
+                        "Please report this."
+                )
+            }
+            val injector = initializeComponentResolver(
+                (info.declarations[identifier] ?: throw ComponentNotFoundException(identifier)) as Declaration<T>
             )
+            info.injectorsOfCurrentInstance!!.add(injector)
+            injector
         } else {
             val value = getOrNull(identifier) ?: throw ComponentNotFoundException(identifier)
             onInjection(value)
-            return StaticInjector(value)
+            StaticInjector(value)
         }
     }
-}
 
-@Suppress("UNCHECKED_CAST")
-private fun <T : Any> EagerImmutableMetaEnvironment.initializeComponent(
-    components: MutableMap<Identifier<*>, Any>,
-    declaration: Declaration<T>
-): T {
-    return components.getOrPut(declaration.identifier) {
-        declaration.supplier(ScopedContext(EnvironmentBasedScope(this)))
-    } as T
+    @Suppress("UNCHECKED_CAST")
+    private fun <T : Any> initializeComponentResolver(
+        declaration: Declaration<T>
+    ): TwoPhaseInjector<T> {
+        val bi = buildingInformation
+            ?: throw InternalErrorException("initializeComponentResolver called outside of building phase")
+        // Initialize the component's resolver *or* grab it from the components map.
+        // In case the resolver is for an actual instance, this is where the instantiation is done.
+        val resolver = bi.componentsBeingBuilt.getOrPut(declaration.identifier) {
+            when (declaration) {
+                is ScopedSupplierDeclaration<T> -> {
+                    val prevInjectors = bi.injectorsOfCurrentInstance
+
+                    bi.injectorsOfCurrentInstance = mutableListOf()
+                    val resolver =
+                        SimpleIdentifierResolver(declaration.supplier(ScopedContext(EnvironmentBasedScope(this))))
+                    bi.injectors[declaration.identifier] = bi.injectorsOfCurrentInstance!!.toList()
+
+                    bi.injectorsOfCurrentInstance = prevInjectors
+                    resolver
+                }
+                is ResolvableDeclaration<T> -> declaration.buildResolver()
+            }
+        } as IdentifierResolver<T>
+        return TwoPhaseInjector(resolver)
+    }
 }

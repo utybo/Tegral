@@ -18,6 +18,8 @@ import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.dsl.tegralDiModule
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.invoke
+import guru.zoroark.tegral.di.environment.named
+import guru.zoroark.tegral.di.extensions.putAlias
 import guru.zoroark.tegral.di.test.check.TegralDiCheckException
 import guru.zoroark.tegral.di.test.check.modules
 import guru.zoroark.tegral.di.test.check.noCycle
@@ -103,6 +105,7 @@ class CyclicCheckTest {
                 guru.zoroark.tegral.di.test.CyclicCheckTest.A (<no qualifier>)
             --> guru.zoroark.tegral.di.test.CyclicCheckTest.B (<no qualifier>)
             --> guru.zoroark.tegral.di.test.CyclicCheckTest.A (<no qualifier>)
+
             Note: --> represents an injection (i.e. A --> B means 'A depends on B').
             """.trimIndent()
         )
@@ -131,7 +134,99 @@ class CyclicCheckTest {
             --> guru.zoroark.tegral.di.test.CyclicCheckTest.E (<no qualifier>)
             --> guru.zoroark.tegral.di.test.CyclicCheckTest.F (<no qualifier>)
             --> guru.zoroark.tegral.di.test.CyclicCheckTest.C (<no qualifier>)
+
             Note: --> represents an injection (i.e. A --> B means 'A depends on B').
+            """.trimIndent()
+        )
+    }
+
+    interface AliasAContract
+    class AliasAImpl(scope: InjectionScope) : AliasAContract {
+        val b: AliasBContract by scope()
+    }
+
+    interface AliasBContract
+    class AliasBImpl(scope: InjectionScope) : AliasBContract {
+        val a: AliasAContract by scope()
+    }
+
+    @Test
+    fun `Test single-element cycle via alias`() {
+        val module = tegralDiModule {
+            putAlias<AliasAContract, AliasAContract>()
+        }
+        assertThrows<TegralDiCheckException> {
+            tegralDiCheck {
+                modules(module)
+
+                noCycle()
+            }
+        }.assertMessage(
+            """
+            'noCycle' check failed.
+            Cyclic dependency found:
+                guru.zoroark.tegral.di.test.CyclicCheckTest.AliasAContract (<no qualifier>)
+            R-> guru.zoroark.tegral.di.test.CyclicCheckTest.AliasAContract (<no qualifier>)
+
+            Note: --> represents an injection (i.e. A --> B means 'A depends on B').
+                  R-> represents a resolution dependency (e.g. an alias being resolved).
+            """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `Test two-elements cycle only via alias`() {
+        val module = tegralDiModule {
+            putAlias<AliasAContract, AliasAContract>(targetQualifier = named("second"))
+            putAlias<AliasAContract, AliasAContract>(aliasQualifier = named("second"))
+        }
+        assertThrows<TegralDiCheckException> {
+            tegralDiCheck {
+                modules(module)
+
+                noCycle()
+            }
+        }.assertMessage(
+            """
+            'noCycle' check failed.
+            Cyclic dependency found:
+                guru.zoroark.tegral.di.test.CyclicCheckTest.AliasAContract (<no qualifier>)
+            R-> guru.zoroark.tegral.di.test.CyclicCheckTest.AliasAContract (NameQualifier(name=second))
+            R-> guru.zoroark.tegral.di.test.CyclicCheckTest.AliasAContract (<no qualifier>)
+
+            Note: --> represents an injection (i.e. A --> B means 'A depends on B').
+                  R-> represents a resolution dependency (e.g. an alias being resolved).
+            """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `Test multi-element cycle with alias and regular injection`() {
+        val module = tegralDiModule {
+            put(::AliasAImpl)
+            putAlias<AliasAContract, AliasAImpl>()
+
+            put(::AliasBImpl)
+            putAlias<AliasBContract, AliasBImpl>()
+        }
+        assertThrows<TegralDiCheckException> {
+            tegralDiCheck {
+                modules(module)
+
+                noCycle()
+            }
+        }.assertMessage(
+            """
+            'noCycle' check failed.
+            Cyclic dependency found:
+                guru.zoroark.tegral.di.test.CyclicCheckTest.AliasAImpl (<no qualifier>)
+            --> guru.zoroark.tegral.di.test.CyclicCheckTest.AliasBContract (<no qualifier>)
+            R-> guru.zoroark.tegral.di.test.CyclicCheckTest.AliasBImpl (<no qualifier>)
+            --> guru.zoroark.tegral.di.test.CyclicCheckTest.AliasAContract (<no qualifier>)
+            R-> guru.zoroark.tegral.di.test.CyclicCheckTest.AliasAImpl (<no qualifier>)
+
+            Note: --> represents an injection (i.e. A --> B means 'A depends on B').
+                  R-> represents a resolution dependency (e.g. an alias being resolved).
             """.trimIndent()
         )
     }

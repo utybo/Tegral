@@ -21,7 +21,9 @@ import guru.zoroark.tegral.di.environment.InjectionEnvironmentKind
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.Injector
 import guru.zoroark.tegral.di.environment.MetalessInjectionScope
+import guru.zoroark.tegral.di.environment.ResolvableDeclaration
 import guru.zoroark.tegral.di.environment.ScopedContext
+import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
 import guru.zoroark.tegral.di.test.NotAvailableInTestEnvironmentException
 import kotlin.reflect.KProperty
 
@@ -32,10 +34,49 @@ private class FakeInjector<T : Any> : Injector<T> {
 }
 
 /**
+ * A "kind" of dependency detected by [DependencyTrackingInjectionEnvironment].
+ */
+enum class DependencyKind(
+    /**
+     * The look of the 3-characters arrow used to represent such a dependency in check messages.
+     */
+    val arrow: String
+) {
+    /**
+     * An injection dependency, i.e. a component that requests another via a `by scope()` call.
+     */
+    Injection("-->"),
+
+    /**
+     * A resolution dependency, i.e. a resolver that uses, as part of its resolution, another component.
+     */
+    Resolution("R->")
+}
+
+/**
+ * The dependencies for an identifier, with the kind of dependency "towards" those dependencies.
+ */
+data class IdentifierDependencies(
+    /**
+     * The kind of dependency.
+     */
+    val kind: DependencyKind,
+    /**
+     * The identifiers of the dependencies.
+     */
+    val dependencies: List<Identifier<*>>
+)
+
+/**
  * Fake environment that tracks dependencies on the instantiation of components.
  *
  * Environment of this kind should rarely be created manually: they are used behind the scenes in rules that check for
  * the coherence of the contents of an environment (completeness check, cyclic dependency check...)
+ *
+ * This environment performs dependency analysis on:
+ *
+ * - Components
+ * - Injection resolution
  */
 class DependencyTrackingInjectionEnvironment(context: EnvironmentContext) : InjectionEnvironment {
     companion object : InjectionEnvironmentKind<DependencyTrackingInjectionEnvironment> {
@@ -52,10 +93,17 @@ class DependencyTrackingInjectionEnvironment(context: EnvironmentContext) : Inje
     /**
      * The dependencies represented as a map from an identifier to the identifiers this identifier depends on.
      */
-    val dependencies = context.declarations.mapValues { (_, v) ->
-        currentInjections.clear()
-        v.supplier(ScopedContext(EnvironmentBasedIgnoringMetaScope(this)))
-        currentInjections.toList()
+    val dependencies: Map<Identifier<*>, IdentifierDependencies> = context.declarations.mapValues { (_, v) ->
+        when (v) {
+            is ScopedSupplierDeclaration -> {
+                currentInjections.clear()
+                v.supplier(ScopedContext(EnvironmentBasedIgnoringMetaScope(this)))
+                IdentifierDependencies(DependencyKind.Injection, currentInjections.toList())
+            }
+            is ResolvableDeclaration -> {
+                IdentifierDependencies(DependencyKind.Resolution, v.buildResolver().requirements)
+            }
+        }
     }
 
     override fun <T : Any> createInjector(identifier: Identifier<T>, onInjection: (T) -> Unit): Injector<T> {

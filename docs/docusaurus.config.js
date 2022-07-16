@@ -3,6 +3,7 @@
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const mdxMermaid = require('mdx-mermaid')
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -34,6 +35,7 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
+          remarkPlugins: [mdxMermaid],
           editUrl:
             'https://github.com/utybo/Tegral/tree/main/docs/',
         },

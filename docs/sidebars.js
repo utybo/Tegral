@@ -33,6 +33,8 @@ const sidebars = {
         'core/di/environment',
         'core/di/qualifiers',
         'core/di/modules',
+        'core/di/aliases',
+        'core/di/internals',
         {
           type: 'category',
           label: 'Testing',

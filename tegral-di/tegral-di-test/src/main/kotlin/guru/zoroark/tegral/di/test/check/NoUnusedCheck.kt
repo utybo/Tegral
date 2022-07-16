@@ -46,7 +46,9 @@ class NoUnusedCheck(private val ignoredValues: Set<Identifier<*>>) : TegralDiChe
             modules.forEach { put(it) }
         }
         val dependencies = env.dependencies
-        val usedInDependencies = dependencies.values.flatten().toSet()
+        // Note that in this case, it does not matter if a dependency is from an injection or a resolution: as long as
+        // it's there, it's considered used.
+        val usedInDependencies = dependencies.values.map { it.dependencies }.flatten().toSet()
         val deps = dependencies.keys.filter { it !in usedInDependencies && it !in ignoredValues }
         if (deps.isNotEmpty()) {
             val introLine =

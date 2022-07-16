@@ -22,12 +22,15 @@ import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.ScopedContext
 import guru.zoroark.tegral.di.environment.get
 import guru.zoroark.tegral.di.environment.named
+import guru.zoroark.tegral.di.extensions.AliasDeclaration
+import guru.zoroark.tegral.di.extensions.putAlias
 import org.junit.jupiter.api.assertThrows
 import kotlin.reflect.KFunction
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class DslTests {
     @Test
@@ -179,5 +182,77 @@ class DslTests {
         }
         val message = assertNotNull(ex.message)
         assertContains(message, "must take either no arguments")
+    }
+
+    interface Contract
+    class Impl : Contract
+
+    @Test
+    fun `Put alias with reified syntax`() {
+        val ctx = EnvironmentContextBuilderDsl().apply {
+            put(named("impl"), ::Impl)
+            putAlias<Contract, Impl>(aliasQualifier = named("contract"), targetQualifier = named("impl"))
+        }.build()
+        assertEquals(ctx.declarations.size, 2)
+        assertTrue(
+            ctx.declarations.any { (_, v) ->
+                v is AliasDeclaration<*, *> &&
+                    v.identifier == Identifier(Contract::class, named("contract")) &&
+                    v.targetIdentifier == Identifier(Impl::class, named("impl"))
+            }
+        )
+    }
+
+    @Test
+    fun `Put alias with reified syntax, using defaults`() {
+        val ctx = EnvironmentContextBuilderDsl().apply {
+            put(::Impl)
+            putAlias<Contract, Impl>()
+        }.build()
+        assertEquals(ctx.declarations.size, 2)
+        assertTrue(
+            ctx.declarations.any { (_, v) ->
+                v is AliasDeclaration<*, *> &&
+                    v.identifier == Identifier(Contract::class) &&
+                    v.targetIdentifier == Identifier(Impl::class)
+            }
+        )
+    }
+
+    @Test
+    fun `Put alias with kclass syntax`() {
+        val ctx = EnvironmentContextBuilderDsl().apply {
+            put(named("impl"), ::Impl)
+            putAlias(
+                aliasClass = Contract::class,
+                aliasQualifier = named("contract"),
+                targetClass = Impl::class,
+                targetQualifier = named("impl")
+            )
+        }.build()
+        assertEquals(ctx.declarations.size, 2)
+        assertTrue(
+            ctx.declarations.any { (_, v) ->
+                v is AliasDeclaration<*, *> &&
+                    v.identifier == Identifier(Contract::class, named("contract")) &&
+                    v.targetIdentifier == Identifier(Impl::class, named("impl"))
+            }
+        )
+    }
+
+    @Test
+    fun `Put alias with kclass syntax, using defaults`() {
+        val ctx = EnvironmentContextBuilderDsl().apply {
+            put(named("impl"), ::Impl)
+            putAlias(aliasClass = Contract::class, targetClass = Impl::class)
+        }.build()
+        assertEquals(ctx.declarations.size, 2)
+        assertTrue(
+            ctx.declarations.any { (_, v) ->
+                v is AliasDeclaration<*, *> &&
+                    v.identifier == Identifier(Contract::class) &&
+                    v.targetIdentifier == Identifier(Impl::class)
+            }
+        )
     }
 }

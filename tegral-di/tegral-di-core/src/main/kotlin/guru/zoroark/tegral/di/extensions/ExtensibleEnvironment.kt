@@ -15,11 +15,12 @@
 package guru.zoroark.tegral.di.extensions
 
 import guru.zoroark.tegral.di.InternalErrorException
-import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.environment.EnvironmentContext
 import guru.zoroark.tegral.di.environment.Identifier
 import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionEnvironmentKind
+import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
+import guru.zoroark.tegral.di.environment.resolvers.IdentifierResolver
 import kotlin.reflect.full.isSubclassOf
 
 /**
@@ -66,6 +67,11 @@ interface ExtensibleInjectionEnvironment : InjectionEnvironment {
      * Returns a sequence of all the known identifiers present in this environment.
      */
     fun getAllIdentifiers(): Sequence<Identifier<*>>
+
+    /**
+     * Returns the resolver associated with the given identifier.
+     */
+    fun <T : Any> getResolverOrNull(identifier: Identifier<T>): IdentifierResolver<T>?
 }
 
 /**
@@ -73,7 +79,7 @@ interface ExtensibleInjectionEnvironment : InjectionEnvironment {
  */
 abstract class DefaultExtensibleInjectionEnvironment(
     context: ExtensibleEnvironmentContext,
-    metaContextKind: InjectionEnvironmentKind<*> = EagerImmutableMetaEnvironment
+    metaContextKind: InjectionEnvironmentKind<*>
 ) : ExtensibleInjectionEnvironment {
     override val metaEnvironment = createMetaEnvironment(context, metaContextKind)
 }
@@ -90,7 +96,7 @@ fun <T : InjectionEnvironment> ExtensibleInjectionEnvironment.createMetaEnvironm
     val metaEnvironment = metaContextKind.build(
         context.metaContext.let {
             // Inject the EIE within the meta-environment
-            val declaration = Declaration(Identifier(ExtensibleInjectionEnvironment::class)) {
+            val declaration = ScopedSupplierDeclaration(Identifier(ExtensibleInjectionEnvironment::class)) {
                 this@createMetaEnvironment
             }
             val newDeclarations = it.declarations.toMutableMap()

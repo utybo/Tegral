@@ -25,6 +25,7 @@ import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionEnvironmentKind
 import guru.zoroark.tegral.di.environment.Injector
 import guru.zoroark.tegral.di.environment.ScopedContext
+import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
 import java.lang.reflect.InvocationTargetException
 import kotlin.reflect.KProperty
 
@@ -43,7 +44,7 @@ private class CrashOnUseEnvironment(context: EnvironmentContext) : InjectionEnvi
     init {
         context.declarations.forEach { (i, v) ->
             currentInstantiation = i
-            v.supplier(ScopedContext(EnvironmentBasedIgnoringMetaScope(this)))
+            if (v is ScopedSupplierDeclaration) v.supplier(ScopedContext(EnvironmentBasedIgnoringMetaScope(this)))
         }
     }
 

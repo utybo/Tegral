@@ -15,6 +15,9 @@
 package guru.zoroark.tegral.di.environment
 
 import guru.zoroark.tegral.di.ComponentNotFoundException
+import guru.zoroark.tegral.di.DynLazy
+import guru.zoroark.tegral.di.environment.resolvers.IdentifierResolver
+import guru.zoroark.tegral.di.environment.resolvers.SimpleIdentifierResolver
 import guru.zoroark.tegral.di.extensions.DefaultExtensibleInjectionEnvironment
 import guru.zoroark.tegral.di.extensions.EagerImmutableMetaEnvironment
 import guru.zoroark.tegral.di.extensions.ExtensibleEnvironmentContext
@@ -57,22 +60,36 @@ class MixedImmutableEnvironment(
         private val identifier: Identifier<T>,
         private val onInjection: (T) -> Unit
     ) : Injector<T> {
-        private val value by lazy {
-            val result = components[identifier] ?: throw ComponentNotFoundException(identifier)
+        private val value = DynLazy<T>()
+
+        override fun getValue(thisRef: Any?, property: KProperty<*>): T = value.getOrInitialize {
+            val resolver = components[identifier] ?: throw ComponentNotFoundException(identifier)
+            val result = resolver.resolve(thisRef, components)
             ensureInstance(identifier.kclass, result).also(onInjection)
         }
-
-        override fun getValue(thisRef: Any?, property: KProperty<*>): T = value
     }
 
-    private val components = context.declarations.mapValues { (_, decl) ->
-        decl.supplier(ScopedContext(EnvironmentBasedScope(this)))
+    private val components: EnvironmentComponents = context.declarations.mapValues { (_, decl) ->
+        when (decl) {
+            is ResolvableDeclaration<*> -> decl.buildResolver()
+            is ScopedSupplierDeclaration<*> ->
+                SimpleIdentifierResolver(decl.supplier(ScopedContext(EnvironmentBasedScope(this))))
+        }
     }
 
     override fun getAllIdentifiers(): Sequence<Identifier<*>> = components.keys.asSequence()
 
-    override fun <T : Any> getOrNull(identifier: Identifier<T>): T? =
-        components[identifier]?.let { ensureInstance(identifier.kclass, it) }
+    override fun <T : Any> getOrNull(identifier: Identifier<T>): T? {
+        val resolver = components[identifier] ?: return null
+        val instance = resolver.resolve(null, components)
+        return ensureInstance(identifier.kclass, instance)
+    }
+
+    override fun <T : Any> getResolverOrNull(identifier: Identifier<T>): IdentifierResolver<T>? {
+        val resolver = components[identifier] ?: return null
+        @Suppress("UNCHECKED_CAST")
+        return resolver as IdentifierResolver<T>
+    }
 
     override fun <T : Any> createInjector(
         identifier: Identifier<T>,

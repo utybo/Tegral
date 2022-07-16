@@ -27,25 +27,45 @@ private object CompleteCheck : TegralDiCheck {
         }
         val deps = env.dependencies
         val requirementToMissingDependency = deps
-            .mapValues { (_, v) -> v.filter { requirement -> !deps.containsKey(requirement) } }
-            .filterValues { it.isNotEmpty() }
-            .takeIf { it.isNotEmpty() }
-        if (requirementToMissingDependency != null) {
-            val message = requirementToMissingDependency.asSequence()
-                .flatMap { (requester, missingDependencies) -> missingDependencies.map { it to requester } }
-                .associateByMultiPair()
-                .entries.joinToString(
-                    prefix = "'complete' check failed.\n" +
-                        "Some dependencies were not found. Make sure they are present within your module " +
-                        "definitions.\n",
+            .mapValues { (_, v) ->
+                v.copy(
+                    dependencies = v.dependencies.filter { requirement -> !deps.containsKey(requirement) }
+                )
+            }
+            .filterValues { it.dependencies.isNotEmpty() }
+            .ifEmpty { return }
+
+        val missingDependencyToRequesters = requirementToMissingDependency.asSequence()
+            .flatMap { (requester, depsInfo) -> depsInfo.dependencies.map { it to (depsInfo.kind to requester) } }
+            .associateByMultiPair()
+        val suffix =
+            if (deps.values.any { it.kind == DependencyKind.Resolution }) {
+                "\n\n(--> Injection dependency, R-> Resolution dependency (e.g. alias))"
+            } else {
+                ""
+            }
+
+        val message = missingDependencyToRequesters.entries
+            .joinToString(
+                prefix = "'complete' check failed.\n" +
+                    "Some dependencies were not found. Make sure they are present within your module " +
+                    "definitions.\n",
+                separator = "\n",
+                postfix = suffix
+            ) { (k, v) ->
+                v.joinToString(
+                    prefix = "==> $k not found\n" +
+                        "    Requested by:\n",
                     separator = "\n"
-                ) { (k, v) ->
-                    v.joinToString(
-                        prefix = "--> $k not found\n    Requested by:\n", separator = "\n"
-                    ) { requester -> "    --> $requester" }
+                ) { (kind, requester) ->
+                    val arrow = when (kind) {
+                        DependencyKind.Injection -> "-->"
+                        DependencyKind.Resolution -> "R->"
+                    }
+                    "    $arrow $requester"
                 }
-            throw TegralDiCheckException(message)
-        }
+            }
+        throw TegralDiCheckException(message)
     }
 }
 
