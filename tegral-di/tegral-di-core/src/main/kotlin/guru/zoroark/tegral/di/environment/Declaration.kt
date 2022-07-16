@@ -15,6 +15,7 @@
 package guru.zoroark.tegral.di.environment
 
 import guru.zoroark.tegral.di.ComponentNotFoundException
+import guru.zoroark.tegral.di.environment.resolvers.IdentifierResolver
 import guru.zoroark.tegral.di.extensions.DeclarationTag
 
 /**

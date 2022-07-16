@@ -23,7 +23,7 @@ internal class DynLazy<T> {
     private var value: Any? = NotInitialized
 
     @Suppress("UNCHECKED_CAST")
-    inline fun getOrInitialize(initializer: () -> T): T {
+    fun getOrInitialize(initializer: () -> T): T {
         val value1 = value
         if (value1 != NotInitialized) {
             return value as T

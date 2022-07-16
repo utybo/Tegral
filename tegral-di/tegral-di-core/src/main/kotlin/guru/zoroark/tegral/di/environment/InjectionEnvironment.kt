@@ -15,6 +15,7 @@
 package guru.zoroark.tegral.di.environment
 
 import guru.zoroark.tegral.di.ComponentNotFoundException
+import guru.zoroark.tegral.di.environment.resolvers.IdentifierResolver
 
 /**
  * An injection environment is, in a nutshell, a container for injectable components. These injectable components can be

@@ -20,10 +20,10 @@ import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
 import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.environment.EnvironmentComponents
 import guru.zoroark.tegral.di.environment.Identifier
-import guru.zoroark.tegral.di.environment.IdentifierResolver
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.ResolvableDeclaration
 import guru.zoroark.tegral.di.environment.invoke
+import guru.zoroark.tegral.di.environment.resolvers.IdentifierResolver
 import guru.zoroark.tegral.di.environment.typed
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KClass

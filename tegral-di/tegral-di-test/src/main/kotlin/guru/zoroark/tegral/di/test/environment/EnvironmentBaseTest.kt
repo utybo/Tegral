@@ -18,7 +18,6 @@ import guru.zoroark.tegral.di.ComponentNotFoundException
 import guru.zoroark.tegral.di.environment.EnvironmentComponents
 import guru.zoroark.tegral.di.environment.EnvironmentContext
 import guru.zoroark.tegral.di.environment.Identifier
-import guru.zoroark.tegral.di.environment.IdentifierResolver
 import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.ResolvableDeclaration
@@ -26,6 +25,7 @@ import guru.zoroark.tegral.di.environment.get
 import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.di.environment.named
 import guru.zoroark.tegral.di.environment.optional
+import guru.zoroark.tegral.di.environment.resolvers.IdentifierResolver
 import guru.zoroark.tegral.di.extensions.AliasDeclaration
 import guru.zoroark.tegral.di.test.entryOf
 import kotlin.reflect.KClass

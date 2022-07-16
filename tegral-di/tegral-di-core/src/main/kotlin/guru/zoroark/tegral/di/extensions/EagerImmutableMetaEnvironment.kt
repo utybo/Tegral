@@ -22,15 +22,15 @@ import guru.zoroark.tegral.di.environment.EnvironmentBasedScope
 import guru.zoroark.tegral.di.environment.EnvironmentComponents
 import guru.zoroark.tegral.di.environment.EnvironmentContext
 import guru.zoroark.tegral.di.environment.Identifier
-import guru.zoroark.tegral.di.environment.IdentifierResolver
 import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionEnvironmentKind
 import guru.zoroark.tegral.di.environment.Injector
 import guru.zoroark.tegral.di.environment.ResolvableDeclaration
 import guru.zoroark.tegral.di.environment.ScopedContext
 import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
-import guru.zoroark.tegral.di.environment.SimpleIdentifierResolver
 import guru.zoroark.tegral.di.environment.ensureInstance
+import guru.zoroark.tegral.di.environment.resolvers.IdentifierResolver
+import guru.zoroark.tegral.di.environment.resolvers.SimpleIdentifierResolver
 import kotlin.reflect.KProperty
 
 private class StaticInjector<T : Any>(private val value: T) : Injector<T> {
@@ -86,9 +86,10 @@ class EagerImmutableMetaEnvironment(context: EnvironmentContext) : InjectionEnvi
         return componentsNow.toMap()
     }
 
-    @Suppress("UNCHECKED_CAST")
     override fun <T : Any> getOrNull(identifier: Identifier<T>): T? {
-        return components[identifier]?.resolve(null, components)?.also { ensureInstance(identifier.kclass, it) } as T?
+        val resolver = components[identifier] ?: return null
+        val instance = resolver.resolve(null, components)
+        return ensureInstance(identifier.kclass, instance)
     }
 
     private data class EIEBeingBuiltInformation(
@@ -150,7 +151,8 @@ class EagerImmutableMetaEnvironment(context: EnvironmentContext) : InjectionEnvi
     private fun <T : Any> initializeComponentResolver(
         declaration: Declaration<T>
     ): TwoPhaseInjector<T> {
-        val bi = buildingInformation ?: error("initializeComponentResolver called outside of building phase")
+        val bi = buildingInformation
+            ?: throw InternalErrorException("initializeComponentResolver called outside of building phase")
         // Initialize the component's resolver *or* grab it from the components map.
         // In case the resolver is for an actual instance, this is where the instantiation is done.
         val resolver = bi.componentsBeingBuilt.getOrPut(declaration.identifier) {

@@ -22,11 +22,13 @@ import guru.zoroark.tegral.di.environment.get
 import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.di.environment.named
 import guru.zoroark.tegral.di.environment.optional
+import guru.zoroark.tegral.di.environment.resolvers.SimpleIdentifierResolver
 import guru.zoroark.tegral.di.extensions.DeclarationsProcessor
 import guru.zoroark.tegral.di.extensions.ExtensibleEnvironmentContext
 import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironment
 import guru.zoroark.tegral.di.test.entryOf
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertSame
@@ -57,6 +59,10 @@ abstract class ExtensibleEnvironmentBaseTest(
                 this::`(Extension) Optional meta injection with present component should work`,
             "(Extension) Optional meta injection with absent component should work" to
                 this::`(Extension) Optional meta injection with absent component should work`,
+            "(Extension) Get resolver or null, resolver present" to
+                this::`(Extension) Get resolver or null, resolver present`,
+            "(Extension) Get resolver or null, resolver absent" to
+                this::`(Extension) Get resolver or null, resolver absent`,
         )
 
     private class B
@@ -145,5 +151,32 @@ abstract class ExtensibleEnvironmentBaseTest(
         val context = ExtensibleEnvironmentContext(mapOf(entryOf { OptionalB(scope) }), EnvironmentContext(mapOf()))
         val env = provider(context)
         assertNull(env.get<OptionalB>().a)
+    }
+
+    private fun `(Extension) Get resolver or null, resolver present`() {
+        val context = ExtensibleEnvironmentContext(
+            mapOf(
+                entryOf { B() }
+            ),
+            EnvironmentContext(emptyMap())
+        )
+        val env = provider(context)
+        val resolver = env.getResolverOrNull(Identifier(B::class))
+        assertNotNull(resolver)
+        assertIs<SimpleIdentifierResolver<B>>(resolver)
+        val b = resolver.resolve(null, emptyMap())
+        assertIs<B>(b)
+    }
+
+    private fun `(Extension) Get resolver or null, resolver absent`() {
+        val context = ExtensibleEnvironmentContext(
+            mapOf(
+                entryOf { B() }
+            ),
+            EnvironmentContext(emptyMap())
+        )
+        val env = provider(context)
+        val resolver = env.getResolverOrNull(Identifier(A::class))
+        assertNull(resolver)
     }
 }

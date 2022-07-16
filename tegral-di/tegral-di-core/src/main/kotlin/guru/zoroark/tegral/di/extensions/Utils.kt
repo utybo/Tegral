@@ -14,8 +14,8 @@
 
 package guru.zoroark.tegral.di.extensions
 
-import guru.zoroark.tegral.di.environment.CanonicalIdentifierResolver
 import guru.zoroark.tegral.di.environment.Identifier
+import guru.zoroark.tegral.di.environment.resolvers.CanonicalIdentifierResolver
 import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 

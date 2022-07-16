@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.di.extensions
 
+import guru.zoroark.tegral.di.InvalidDeclarationException
 import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.dsl.tegralDi
 import guru.zoroark.tegral.di.dsl.tegralDiModule
@@ -29,6 +30,8 @@ import org.junit.jupiter.api.Test
 import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotation
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
@@ -186,5 +189,16 @@ class FactoryExtensionTest {
             "Incorrect nb of calls to logger factory"
         )
         assertEquals(3, aFactoryCallCount, "Incorrect nb of calls to A factory")
+    }
+
+    @Test
+    fun `Cannot create a factory outside of a component`() {
+        val env = tegralDi {
+            putFactory { Logger("", "") }
+        }
+        val ex = assertFailsWith<InvalidDeclarationException> {
+            env.get<Logger>()
+        }
+        assertTrue(ex.message!!.startsWith("Cannot resolve a factory outside of a component"))
     }
 }

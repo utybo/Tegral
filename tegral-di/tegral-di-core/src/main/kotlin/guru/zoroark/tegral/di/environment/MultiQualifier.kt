@@ -44,7 +44,7 @@ class MultiQualifier(val qualifiers: Set<Qualifier>) : Qualifier {
 
     override fun toString(): String = qualifiers.joinToString(" + ")
 
-    override fun equals(other: Any?): Boolean = (other as? MultiQualifier)?.qualifiers == qualifiers
+    override fun equals(other: Any?): Boolean = other is MultiQualifier && other.qualifiers == qualifiers
 
     override fun hashCode(): Int = qualifiers.hashCode()
 }

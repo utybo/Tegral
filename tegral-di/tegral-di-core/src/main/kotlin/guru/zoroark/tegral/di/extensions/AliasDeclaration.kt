@@ -16,13 +16,13 @@ package guru.zoroark.tegral.di.extensions
 
 import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
-import guru.zoroark.tegral.di.environment.AliasIdentifierResolver
 import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.environment.EmptyQualifier
 import guru.zoroark.tegral.di.environment.Identifier
-import guru.zoroark.tegral.di.environment.IdentifierResolver
 import guru.zoroark.tegral.di.environment.Qualifier
 import guru.zoroark.tegral.di.environment.ResolvableDeclaration
+import guru.zoroark.tegral.di.environment.resolvers.AliasIdentifierResolver
+import guru.zoroark.tegral.di.environment.resolvers.IdentifierResolver
 import kotlin.reflect.KClass
 
 /**
@@ -30,10 +30,13 @@ import kotlin.reflect.KClass
  */
 class AliasDeclaration<TAlias : Any, TTarget : TAlias>(
     aliasIdentifier: Identifier<TAlias>,
-    private val targetQualifier: Identifier<TTarget>
+    /**
+     * The identifier for the target for this alias.
+     */
+    val targetIdentifier: Identifier<TTarget>
 ) : ResolvableDeclaration<TAlias>(aliasIdentifier) {
     override fun buildResolver(): IdentifierResolver<TAlias> =
-        AliasIdentifierResolver(targetQualifier)
+        AliasIdentifierResolver(targetIdentifier)
 }
 
 /**

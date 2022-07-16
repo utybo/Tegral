@@ -20,7 +20,6 @@ import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.environment.EnvironmentComponents
 import guru.zoroark.tegral.di.environment.EnvironmentContext
 import guru.zoroark.tegral.di.environment.Identifier
-import guru.zoroark.tegral.di.environment.IdentifierResolver
 import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionEnvironmentKind
 import guru.zoroark.tegral.di.environment.InjectionScope
@@ -30,8 +29,9 @@ import guru.zoroark.tegral.di.environment.ResolvableDeclaration
 import guru.zoroark.tegral.di.environment.ScopedContext
 import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
 import guru.zoroark.tegral.di.environment.SimpleEnvironmentBasedScope
-import guru.zoroark.tegral.di.environment.SimpleIdentifierResolver
 import guru.zoroark.tegral.di.environment.ensureInstance
+import guru.zoroark.tegral.di.environment.resolvers.IdentifierResolver
+import guru.zoroark.tegral.di.environment.resolvers.SimpleIdentifierResolver
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.ExtensibleEnvironmentContext
 import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironmentKind
