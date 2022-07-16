@@ -24,35 +24,52 @@ import java.util.Deque
 import java.util.LinkedList
 
 private object NoCycleCheck : TegralDiCheck {
+    private data class DfsEdge(val from: Identifier<*>, val to: Identifier<*>, val kind: DependencyKind)
+
     override fun check(modules: List<InjectableModule>) {
         val env = tegralDi(DependencyTrackingInjectionEnvironment) {
             modules.forEach { put(it) }
         }
         // Check for cycles with a simple DFS. Can be optimized to a better algorithm.
-        val trace: Deque<Identifier<*>> = LinkedList()
-        val visited = mutableSetOf<Pair<Identifier<*>, Identifier<*>>>()
+        val trace: Deque<Pair<Identifier<*>, DependencyKind?>> = LinkedList()
+        val visited = mutableSetOf<DfsEdge>()
 
-        fun dfs(from: Identifier<*>) {
-            if (from in trace) {
-                trace.push(from)
-                throw TegralDiCheckException(
-                    "'noCycle' check failed.\nCyclic dependency found:\n" +
-                        trace.reversed().dropWhile { it != from }
-                            .joinToString(prefix = "    ", separator = "\n--> ", postfix = "\n") +
-                        "Note: --> represents an injection (i.e. A --> B means 'A depends on B')."
-                )
+        fun dfs(from: Identifier<*>, fromEdgeKind: DependencyKind?) {
+            if (trace.any { it.first == from }) {
+                trace.push(from to fromEdgeKind)
+                val traceString = trace
+                    .reversed()
+                    .dropWhile { it.first != from }
+                    .joinToString(separator = "\n") { (id, kind) ->
+                        "${kind?.arrow ?: "   "} $id"
+                    }
+                val resolveKey =
+                    if (trace.any { it.second == DependencyKind.Resolution }) {
+                        "\n      R-> represents a resolution dependency (e.g. an alias being resolved)."
+                    } else {
+                        ""
+                    }
+                val message = "'noCycle' check failed.\nCyclic dependency found:\n" +
+                    "$traceString\n\n" +
+                    "Note: --> represents an injection (i.e. A --> B means 'A depends on B')." +
+                    resolveKey
+                throw TegralDiCheckException(message)
             }
-            trace.push(from)
-            env.dependencies.getValue(from).filter { (from to it) !in visited }.forEach {
-                visited.add(from to it)
-                dfs(it)
-            }
+            trace.push(from to fromEdgeKind)
+            val dependenciesInfo = env.dependencies.getValue(from)
+            dependenciesInfo.dependencies
+                .map { DfsEdge(from, it, dependenciesInfo.kind) }
+                .filter { it !in visited }
+                .forEach {
+                    visited.add(it)
+                    dfs(it.to, it.kind)
+                }
             trace.pop()
         }
 
         for ((identifier, _) in env.dependencies) {
             trace.clear()
-            dfs(identifier)
+            dfs(identifier, null)
         }
     }
 }
