@@ -33,12 +33,39 @@ private class FakeInjector<T : Any> : Injector<T> {
     }
 }
 
-enum class DependencyKind(val arrow: String) {
+/**
+ * A "kind" of dependency detected by [DependencyTrackingInjectionEnvironment].
+ */
+enum class DependencyKind(
+    /**
+     * The look of the 3-characters arrow used to represent such a dependency in check messages.
+     */
+    val arrow: String
+) {
+    /**
+     * An injection dependency, i.e. a component that requests another via a `by scope()` call.
+     */
     Injection("-->"),
+
+    /**
+     * A resolution dependency, i.e. a resolver that uses, as part of its resolution, another component.
+     */
     Resolution("R->")
 }
 
-data class IdentifierDependencies(val kind: DependencyKind, val dependencies: List<Identifier<*>>)
+/**
+ * The dependencies for an identifier, with the kind of dependency "towards" those dependencies.
+ */
+data class IdentifierDependencies(
+    /**
+     * The kind of dependency.
+     */
+    val kind: DependencyKind,
+    /**
+     * The identifiers of the dependencies.
+     */
+    val dependencies: List<Identifier<*>>
+)
 
 /**
  * Fake environment that tracks dependencies on the instantiation of components.

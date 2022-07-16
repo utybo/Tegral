@@ -130,7 +130,8 @@ class EagerImmutableMetaEnvironment(context: EnvironmentContext) : InjectionEnvi
         return if (info != null) {
             if (info.injectorsOfCurrentInstance == null) {
                 throw InternalErrorException(
-                    "createInjector called during build phase without an actual parent being created. Please report this."
+                    "createInjector called during build phase without an actual parent being created. " +
+                        "Please report this."
                 )
             }
             val injector = initializeComponentResolver(
