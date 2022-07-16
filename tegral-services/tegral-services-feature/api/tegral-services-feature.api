@@ -1,0 +1,9 @@
+public final class guru/zoroark/tegral/services/feature/ServicesFeature : guru/zoroark/tegral/featureful/Feature {
+	public static final field INSTANCE Lguru/zoroark/tegral/services/feature/ServicesFeature;
+	public fun getDependencies ()Ljava/util/Set;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getId ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
+}
+

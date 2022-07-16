@@ -1,0 +1,80 @@
+public class guru/zoroark/tegral/web/apptest/DefaultKtorTestApplication : guru/zoroark/tegral/web/apptest/KtorTestApplication {
+	public fun <init> (Lguru/zoroark/tegral/di/environment/InjectionScope;)V
+	public fun configureClient (Lio/ktor/client/HttpClientConfig;)V
+}
+
+public abstract interface class guru/zoroark/tegral/web/apptest/IntegrationTestFeature {
+	public abstract fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
+}
+
+public abstract class guru/zoroark/tegral/web/apptest/KtorTestApplication : guru/zoroark/tegral/services/api/TegralService, io/ktor/server/testing/ClientProvider {
+	public fun <init> (Lguru/zoroark/tegral/di/environment/InjectionScope;Ljava/lang/String;)V
+	public abstract fun configureClient (Lio/ktor/client/HttpClientConfig;)V
+	public fun createClient (Lkotlin/jvm/functions/Function1;)Lio/ktor/client/HttpClient;
+	public final fun getAppName ()Ljava/lang/String;
+	public fun getClient ()Lio/ktor/client/HttpClient;
+	public fun start (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/web/apptest/KtorTestApplicationFeature : guru/zoroark/tegral/web/apptest/IntegrationTestFeature {
+	public static final field INSTANCE Lguru/zoroark/tegral/web/apptest/KtorTestApplicationFeature;
+	public fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
+}
+
+public abstract interface class guru/zoroark/tegral/web/apptest/MultiClientProvider : io/ktor/server/testing/ClientProvider {
+	public abstract fun client (Ljava/lang/String;)Lio/ktor/client/HttpClient;
+	public abstract fun createClient (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lio/ktor/client/HttpClient;
+	public abstract fun createClient (Lkotlin/jvm/functions/Function1;)Lio/ktor/client/HttpClient;
+	public abstract fun getClient ()Lio/ktor/client/HttpClient;
+}
+
+public final class guru/zoroark/tegral/web/apptest/MultiClientProvider$DefaultImpls {
+	public static fun createClient (Lguru/zoroark/tegral/web/apptest/MultiClientProvider;Lkotlin/jvm/functions/Function1;)Lio/ktor/client/HttpClient;
+	public static fun getClient (Lguru/zoroark/tegral/web/apptest/MultiClientProvider;)Lio/ktor/client/HttpClient;
+}
+
+public final class guru/zoroark/tegral/web/apptest/TegralIntegrationTestException : guru/zoroark/tegral/core/TegralException {
+	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public abstract class guru/zoroark/tegral/web/apptest/TegralWebIntegrationTest : guru/zoroark/tegral/di/test/TegralDiBaseTest {
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public fun setupDefaults (Lguru/zoroark/tegral/web/apptest/WebIntegrationTestContextDsl;)V
+	protected fun test (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/web/apptest/TestServicesFeature : guru/zoroark/tegral/web/apptest/IntegrationTestFeature {
+	public static final field INSTANCE Lguru/zoroark/tegral/web/apptest/TestServicesFeature;
+	public fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
+}
+
+public final class guru/zoroark/tegral/web/apptest/WebIntegrationTestContext : guru/zoroark/tegral/di/test/TestMutableInjectionEnvironment, guru/zoroark/tegral/web/apptest/MultiClientProvider {
+	public fun <init> (Lguru/zoroark/tegral/di/test/UnsafeMutableEnvironment;)V
+	public fun client (Ljava/lang/String;)Lio/ktor/client/HttpClient;
+	public fun createClient (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lio/ktor/client/HttpClient;
+	public fun createClient (Lkotlin/jvm/functions/Function1;)Lio/ktor/client/HttpClient;
+	public fun createInjector (Lguru/zoroark/tegral/di/environment/Identifier;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/di/environment/Injector;
+	public fun get (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+	public fun getAllIdentifiers ()Lkotlin/sequences/Sequence;
+	public fun getClient ()Lio/ktor/client/HttpClient;
+	public fun getComponents ()Ljava/util/Map;
+	public fun getMetaEnvironment ()Lguru/zoroark/tegral/di/environment/InjectionEnvironment;
+	public fun getOrNull (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+	public fun getResolverOrNull (Lguru/zoroark/tegral/di/environment/Identifier;)Lguru/zoroark/tegral/di/environment/resolvers/IdentifierResolver;
+	public fun put (Lguru/zoroark/tegral/di/environment/Declaration;)V
+}
+
+public final class guru/zoroark/tegral/web/apptest/WebIntegrationTestContextBuilder : guru/zoroark/tegral/web/apptest/WebIntegrationTestContextDsl {
+	public fun <init> ()V
+	public final fun build ()Lguru/zoroark/tegral/web/apptest/WebIntegrationTestContext;
+	public fun install (Lguru/zoroark/tegral/web/apptest/IntegrationTestFeature;)V
+	public fun meta (Lkotlin/jvm/functions/Function1;)V
+	public fun put (Lguru/zoroark/tegral/di/environment/Declaration;)V
+}
+
+public abstract interface class guru/zoroark/tegral/web/apptest/WebIntegrationTestContextDsl : guru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl {
+	public abstract fun install (Lguru/zoroark/tegral/web/apptest/IntegrationTestFeature;)V
+}
+

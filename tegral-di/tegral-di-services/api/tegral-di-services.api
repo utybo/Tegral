@@ -1,0 +1,32 @@
+public final class guru/zoroark/tegral/di/services/IgnorePolicy : java/lang/Enum, guru/zoroark/tegral/di/extensions/DeclarationTag {
+	public static final field IgnoreAll Lguru/zoroark/tegral/di/services/IgnorePolicy;
+	public static final field IgnoreStart Lguru/zoroark/tegral/di/services/IgnorePolicy;
+	public static final field IgnoreStop Lguru/zoroark/tegral/di/services/IgnorePolicy;
+	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/di/services/IgnorePolicy;
+	public static fun values ()[Lguru/zoroark/tegral/di/services/IgnorePolicy;
+}
+
+public final class guru/zoroark/tegral/di/services/IgnorePolicyKt {
+	public static final fun getNoService ()Lguru/zoroark/tegral/di/services/IgnorePolicy;
+	public static final fun getNoServiceStart ()Lguru/zoroark/tegral/di/services/IgnorePolicy;
+	public static final fun getNoServiceStop ()Lguru/zoroark/tegral/di/services/IgnorePolicy;
+}
+
+public final class guru/zoroark/tegral/di/services/ServiceManager : guru/zoroark/tegral/di/extensions/DeclarationsProcessor {
+	public fun <init> (Lguru/zoroark/tegral/di/environment/InjectionScope;)V
+	public fun processDeclarations (Lkotlin/sequences/Sequence;)V
+	public final fun startAll (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun startAll$default (Lguru/zoroark/tegral/di/services/ServiceManager;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun stopAll (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun stopAll$default (Lguru/zoroark/tegral/di/services/ServiceManager;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/di/services/ServiceManagerKt {
+	public static final fun getServices (Lguru/zoroark/tegral/di/extensions/ExtensibleInjectionEnvironment;)Lguru/zoroark/tegral/di/services/ServiceManager;
+	public static final fun useServices (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
+}
+
+public final class guru/zoroark/tegral/di/services/TegralServiceException : guru/zoroark/tegral/di/TegralDiException {
+	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
+}
+

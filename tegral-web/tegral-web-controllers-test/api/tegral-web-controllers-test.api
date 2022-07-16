@@ -1,0 +1,43 @@
+public final class guru/zoroark/tegral/web/controllers/test/AssertUtilsKt {
+	public static final fun assert2xx (Lio/ktor/client/statement/HttpResponse;)V
+	public static final fun assert3xx (Lio/ktor/client/statement/HttpResponse;)V
+	public static final fun assert4xx (Lio/ktor/client/statement/HttpResponse;)V
+	public static final fun assert5xx (Lio/ktor/client/statement/HttpResponse;)V
+}
+
+public abstract interface class guru/zoroark/tegral/web/controllers/test/ControllerTestContext : guru/zoroark/tegral/di/test/TestMutableInjectionEnvironment, io/ktor/server/testing/ClientProvider {
+	public abstract fun applicationBuilder (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class guru/zoroark/tegral/web/controllers/test/ControllerTestContext$DefaultImpls {
+	public static fun get (Lguru/zoroark/tegral/web/controllers/test/ControllerTestContext;Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/web/controllers/test/DefaultControllerTestContext : guru/zoroark/tegral/di/test/TestMutableInjectionEnvironment, guru/zoroark/tegral/web/controllers/test/ControllerTestContext, io/ktor/server/testing/ClientProvider {
+	public fun <init> (Lio/ktor/server/testing/ApplicationTestBuilder;Lguru/zoroark/tegral/di/test/TestMutableInjectionEnvironment;Lkotlin/jvm/functions/Function1;)V
+	public fun applicationBuilder (Lkotlin/jvm/functions/Function1;)V
+	public fun createClient (Lkotlin/jvm/functions/Function1;)Lio/ktor/client/HttpClient;
+	public fun createInjector (Lguru/zoroark/tegral/di/environment/Identifier;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/di/environment/Injector;
+	public fun get (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+	public fun getAllIdentifiers ()Lkotlin/sequences/Sequence;
+	public fun getClient ()Lio/ktor/client/HttpClient;
+	public fun getComponents ()Ljava/util/Map;
+	public fun getMetaEnvironment ()Lguru/zoroark/tegral/di/environment/InjectionEnvironment;
+	public fun getOrNull (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+	public fun getResolverOrNull (Lguru/zoroark/tegral/di/environment/Identifier;)Lguru/zoroark/tegral/di/environment/resolvers/IdentifierResolver;
+	public fun put (Lguru/zoroark/tegral/di/environment/Declaration;)V
+}
+
+public final class guru/zoroark/tegral/web/controllers/test/KtorClientConfigKt {
+	public static final fun applyDefaultsModule (Lio/ktor/client/HttpClientConfig;)V
+}
+
+public abstract class guru/zoroark/tegral/web/controllers/test/TegralControllerTest : guru/zoroark/tegral/di/test/TegralAbstractSubjectTest {
+	public fun <init> (Lkotlin/reflect/KClass;Lguru/zoroark/tegral/di/environment/InjectableModule;)V
+	public fun <init> (Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function1;)V
+	public fun <init> (Lkotlin/reflect/KFunction;)V
+	protected fun applyDefaultsModule (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
+	protected fun configureClient (Lio/ktor/client/HttpClientConfig;)V
+	protected fun test (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
+}
+

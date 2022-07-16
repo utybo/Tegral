@@ -1,0 +1,20 @@
+public abstract interface class guru/zoroark/tegral/featureful/ConfigurableFeature : guru/zoroark/tegral/featureful/Feature {
+	public abstract fun getConfigurationSections ()Ljava/util/List;
+}
+
+public final class guru/zoroark/tegral/featureful/ConfigurableFeature$DefaultImpls {
+	public static fun getDependencies (Lguru/zoroark/tegral/featureful/ConfigurableFeature;)Ljava/util/Set;
+}
+
+public abstract interface class guru/zoroark/tegral/featureful/Feature {
+	public abstract fun getDependencies ()Ljava/util/Set;
+	public abstract fun getDescription ()Ljava/lang/String;
+	public abstract fun getId ()Ljava/lang/String;
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
+}
+
+public final class guru/zoroark/tegral/featureful/Feature$DefaultImpls {
+	public static fun getDependencies (Lguru/zoroark/tegral/featureful/Feature;)Ljava/util/Set;
+}
+
