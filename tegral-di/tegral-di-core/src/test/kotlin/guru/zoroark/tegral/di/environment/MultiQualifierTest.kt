@@ -21,6 +21,7 @@ import org.junit.jupiter.params.provider.ValueSource
 import kotlin.test.Test
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertSame
 
@@ -106,6 +107,19 @@ class MultiQualifierTest {
         assertEquals(
             MultiQualifier(setOf(named("a"), named("b"), named("c"), named("d"))),
             MultiQualifier(setOf(named("c"), named("d"))) + MultiQualifier(setOf(named("a"), named("b")))
+        )
+    }
+
+    @Test
+    fun `equals, wrong type`() {
+        assertNotEquals(MultiQualifier(setOf(named("a"), named("b"))), Any())
+    }
+
+    @Test
+    fun `equals, wrong qualifiers`() {
+        assertNotEquals(
+            MultiQualifier(setOf(named("a"), named("b"))),
+            MultiQualifier(setOf(named("a"), named("c")))
         )
     }
 }

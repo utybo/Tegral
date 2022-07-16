@@ -18,6 +18,7 @@ import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.dsl.tegralDiModule
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.invoke
+import guru.zoroark.tegral.di.extensions.putAlias
 import guru.zoroark.tegral.di.test.check.TegralDiCheckException
 import guru.zoroark.tegral.di.test.check.complete
 import guru.zoroark.tegral.di.test.check.modules
@@ -98,7 +99,7 @@ class CompleteCheckTest {
             """
             'complete' check failed.
             Some dependencies were not found. Make sure they are present within your module definitions.
-            --> guru.zoroark.tegral.di.test.CompleteCheckTest.Z (<no qualifier>) not found
+            ==> guru.zoroark.tegral.di.test.CompleteCheckTest.Z (<no qualifier>) not found
                 Requested by:
                 --> guru.zoroark.tegral.di.test.CompleteCheckTest.C (<no qualifier>)
             """.trimIndent()
@@ -126,12 +127,12 @@ class CompleteCheckTest {
             """
             'complete' check failed.
             Some dependencies were not found. Make sure they are present within your module definitions.
-            --> guru.zoroark.tegral.di.test.CompleteCheckTest.Z (<no qualifier>) not found
+            ==> guru.zoroark.tegral.di.test.CompleteCheckTest.Z (<no qualifier>) not found
                 Requested by:
                 --> guru.zoroark.tegral.di.test.CompleteCheckTest.C (<no qualifier>)
                 --> guru.zoroark.tegral.di.test.CompleteCheckTest.E (<no qualifier>)
                 --> guru.zoroark.tegral.di.test.CompleteCheckTest.F (<no qualifier>)
-            --> guru.zoroark.tegral.di.test.CompleteCheckTest.Y (<no qualifier>) not found
+            ==> guru.zoroark.tegral.di.test.CompleteCheckTest.Y (<no qualifier>) not found
                 Requested by:
                 --> guru.zoroark.tegral.di.test.CompleteCheckTest.F (<no qualifier>)
                 --> guru.zoroark.tegral.di.test.CompleteCheckTest.G (<no qualifier>)
@@ -152,5 +153,63 @@ class CompleteCheckTest {
                 complete()
             }
         }
+    }
+
+    // TODO add test for scope.optional()
+
+    class Foo(scope: InjectionScope) {
+        val other: OtherContract by scope()
+    }
+
+    class Bar(scope: InjectionScope) {
+        val otherImpl: OtherImpl by scope()
+    }
+
+    interface OtherContract
+
+    class OtherImpl : OtherContract
+
+    @Test
+    fun `Test aliases with target present is complete`() {
+        val module = tegralDiModule {
+            put(::Foo)
+            put(::Bar)
+            put(::OtherImpl)
+            putAlias<OtherContract, OtherImpl>()
+        }
+
+        assertDoesNotThrow {
+            tegralDiCheck {
+                modules(module)
+                complete()
+            }
+        }
+    }
+
+    @Test
+    fun `Test aliases with target absent is not complete`() {
+        val module = tegralDiModule {
+            put(::Foo)
+            put(::Bar)
+            putAlias<OtherContract, OtherImpl>()
+        }
+
+        assertThrows<TegralDiCheckException> {
+            tegralDiCheck {
+                modules(module)
+                complete()
+            }
+        }.assertMessage(
+            """
+            'complete' check failed.
+            Some dependencies were not found. Make sure they are present within your module definitions.
+            ==> guru.zoroark.tegral.di.test.CompleteCheckTest.OtherImpl (<no qualifier>) not found
+                Requested by:
+                --> guru.zoroark.tegral.di.test.CompleteCheckTest.Bar (<no qualifier>)
+                R-> guru.zoroark.tegral.di.test.CompleteCheckTest.OtherContract (<no qualifier>)
+
+            (--> Injection dependency, R-> Resolution dependency (e.g. alias))
+            """.trimIndent()
+        )
     }
 }

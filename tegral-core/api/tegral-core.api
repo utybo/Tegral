@@ -1,0 +1,17 @@
+public abstract interface class guru/zoroark/tegral/core/Buildable {
+	public static final field Companion Lguru/zoroark/tegral/core/Buildable$Companion;
+	public abstract fun build ()Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/core/Buildable$Companion {
+	public final fun of (Ljava/lang/Object;)Lguru/zoroark/tegral/core/Buildable;
+}
+
+public abstract interface annotation class guru/zoroark/tegral/core/TegralDsl : java/lang/annotation/Annotation {
+}
+
+public abstract class guru/zoroark/tegral/core/TegralException : java/lang/Exception {
+	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+

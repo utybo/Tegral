@@ -1,11 +1,5 @@
 # Factories
 
-:::caution
-
-This extension is experimental.
-
-:::
-
 *This is a pure extension that is compatible with all environments.*
 
 Many frameworks allow you to inject two kinds of components:
@@ -15,9 +9,7 @@ Many frameworks allow you to inject two kinds of components:
 
 Factories are very useful for objects like loggers or to get more advanced behavior depending on the requesting component.
 
-All injections made within Tegral DI are singletons -- there is no such thing as a transient injection. The factory extension provides a wrapper over Tegral DI's singleton mechanism to replicate the factory behavior found in other frameworks.
-
-Tegral DI factories are an extension of Tegral DI's system -- in fact, they are implemented entirely with public APIs from Tegral DI's core system!
+By default, components `put` in a Tegral DI environment are resolved as singletons. The Factories extension allows you to create factories in Tegral DI, which will create a new object each time the an object is requested.
 
 ## Usage
 
@@ -33,11 +25,11 @@ val myEnvironment = tegralDi {
 }
 ```
 
-Factories are injected using the `scope.factory()` syntax. For example, requesting the `Bar` factory will look like this:
+Factories are injected using the regular `scope()` syntax. For example, requesting the `Bar` factory will look like this:
 
 ```kotlin
 class INeedBar(scope: InjectionScope) {
-    val bar: Bar by scope.factory()
+    val bar: Bar by scope()
 }
 ```
 
@@ -50,7 +42,7 @@ class Logger {
 }
 
 class ServiceA(scope: InjectionScope) {
-    private val logger: Logger by scope.factory()
+    private val logger: Logger by scope()
 
     fun doSomething() {
         logger.logInfo("Doing something in A...")
@@ -58,7 +50,7 @@ class ServiceA(scope: InjectionScope) {
 }
 
 class ServiceB(scope: InjectionScope) {
-    private val logger: Logger by scope.factory()
+    private val logger: Logger by scope()
     private val a: ServiceA by scope()
 
     fun doSomething() {
@@ -78,13 +70,6 @@ environment.get<ServiceA>().doSomething()
 // INFO: Doing something in A...
 // INFO: Doing something in B...
 ```
-
-
-:::caution
-
-Make sure you do not use `by scope()` to retrieve an object that is supposed to be created by a factory!
-
-:::
 
 ### Requestor-dependent object creation
 
@@ -133,7 +118,7 @@ class Logger(private val name: String) {
 // Let's give ServiceA a custom name...
 @LoggerName("Custom logger name!")
 class ServiceA(scope: InjectionScope) {
-    private val logger by scope.factory()
+    private val logger by scope()
 
     fun doSomething() {
         logger.logInfo("Doing something in A...")
@@ -142,7 +127,7 @@ class ServiceA(scope: InjectionScope) {
 
 // ... but let's also leave ServiceB as is.
 class ServiceB(scope: InjectionScope) {
-    private val logger by scope.factory()
+    private val logger by scope()
     private val a by scope()
 
     fun doSomething() {
@@ -165,14 +150,56 @@ environment.get<ServiceA>().doSomething()
 // (org.example.ServiceB) INFO: Doing something in B...
 ```
 
-## Factories under the hood.
+## Factories under the hood
 
-In a nutshell, *factory objects* are injected in the environment, and this factory gets invoked when the object is requested. The factory object is injected in the environment as a regular singleton.
+It may help to first read a bit about [Tegral DI's internals](../internals.md) to better understand this part.
 
-Factories are objects which implement the functional interface `InjectableFactory<T>` (the Kotlin equivalent for SAMs in Java). Its `make(requester: Any): T` function is invoked when an object is requested.
+When you use `putFactory`, two declarations are created:
 
-Factories are injected with an additional qualifier. Because of its generic typing, only including the class would lead to components with the same identifier, which would be `InjectableFactory::class` without qualifiers. In order to avoid this, an `InjectableFactoryOutputTypeQualifer` is used as a qualifier to differentiate between factories. The `outputs` function can also be used as an alias for this qualifier.
+- A regular `put`-like declaration for an `InjectableFactory`. This object wraps the labmda you pass to `putFactory`.
+- A *resolvable* declaration mapped against the type of objects created by your factory. The associated resolver is a `FactoryResolver` which will, when resolved, retrieve the `InjectableFactory` and create an object from it, then return it.
 
-The `putFactory` method is in charge of the entire injection process: creating the factory with the correct qualifier and injecting it within a simple `put` call.
+If you were creating a factory of `Foo` objects:
 
-On the injection side, the only change is that a wrapper is put around the `scope()` call: instead of the actual type being requested, the corresponding factory is requested when using `scope.factory()`. It is then wrapped using the `WrappedReadOnlyProperty` class which executes the factory's `make` method and wrapped *again* within a `SynchronizedLazyPropertyWrapper`. As such, the factory's method is only called once and only when necessary.
+- The first declaration would be for the `InjectableFactory<Foo>` object (identifier with `InjectableFactory::class` and a [`typed<Foo>()`](../qualifiers.md#typed) qualifier).
+- The second declaration would be for the `Foo` object (identifier with `Foo::class` and no qualifier).
+
+Thus, when requesting a `Foo` object, you will hit the `FactoryResolver`, which will automatically grab the `InjectableFactory`, create an object from it and return it.
+
+Here's an overview of the process. Note that `Component A` and `Component B` will each get their own instance of `Foo`.
+
+```mermaid
+flowchart TD
+
+subgraph Component A
+byScopeA["private val foo: Foo by scope()"]
+injectorA[Injector&ltFoo&gt]
+end
+
+subgraph Component B
+byScopeB["private val foo: Foo by scope()"]
+
+injectorB[Injector&ltFoo&gt]
+end
+
+subgraph Environment
+subgraph Components
+fresolver[FactoryResolver&ltFoo&gt]
+sresolver[SimpleResolver&ltInjectableFactory&ltFoo&gt&gt]
+end
+end
+
+if[InjectableFactory&ltFoo&gt]
+foo[Foo]
+
+byScopeA --> injectorA
+byScopeB --> injectorB
+injectorA <-- resolve ---> fresolver
+injectorB <-- resolve ---> fresolver
+
+fresolver -- requests --> sresolver
+sresolver -- resolves --> if
+if -- creates --> foo
+foo --> fresolver
+
+```

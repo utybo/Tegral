@@ -1,0 +1,64 @@
+public abstract class guru/zoroark/tegral/web/controllers/KtorApplication : guru/zoroark/tegral/web/controllers/KtorModule, guru/zoroark/tegral/services/api/TegralService {
+	public fun <init> (Lguru/zoroark/tegral/di/environment/InjectionScope;Ljava/lang/String;)V
+	public synthetic fun <init> (Lguru/zoroark/tegral/di/environment/InjectionScope;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAppName ()Ljava/lang/String;
+	public abstract fun getSettings ()Lguru/zoroark/tegral/web/controllers/KtorApplicationSettings;
+	public fun install (Lio/ktor/server/application/Application;)V
+	public abstract fun setup (Lio/ktor/server/application/Application;)V
+	public fun start (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/web/controllers/KtorApplicationSettings {
+	public fun <init> (Lio/ktor/server/engine/ApplicationEngineFactory;ILjava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;)V
+	public synthetic fun <init> (Lio/ktor/server/engine/ApplicationEngineFactory;ILjava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun embeddedServerFromSettings (Lkotlin/jvm/functions/Function1;)Lio/ktor/server/engine/ApplicationEngine;
+	public final fun getEngine ()Lio/ktor/server/engine/ApplicationEngineFactory;
+	public final fun getHost ()Ljava/lang/String;
+	public final fun getPort ()I
+	public final fun getWatchPaths ()Ljava/util/List;
+}
+
+public abstract class guru/zoroark/tegral/web/controllers/KtorController : guru/zoroark/tegral/web/controllers/KtorModule {
+	public fun <init> ()V
+	public fun <init> (ILjava/lang/String;)V
+	public synthetic fun <init> (ILjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun install (Lio/ktor/server/application/Application;)V
+	public abstract fun install (Lio/ktor/server/routing/Routing;)V
+}
+
+public final class guru/zoroark/tegral/web/controllers/KtorExtension : guru/zoroark/tegral/di/extensions/DeclarationsProcessor {
+	public fun <init> (Lguru/zoroark/tegral/di/environment/InjectionScope;)V
+	public final fun getModulesForAppName (Ljava/lang/String;)Ljava/util/List;
+	public fun processDeclarations (Lkotlin/sequences/Sequence;)V
+}
+
+public final class guru/zoroark/tegral/web/controllers/KtorExtensionKt {
+	public static final fun getKtorModulesByPriority (Lguru/zoroark/tegral/di/environment/InjectionEnvironment;Ljava/util/List;Ljava/lang/String;)Ljava/util/List;
+}
+
+public abstract class guru/zoroark/tegral/web/controllers/KtorModule {
+	public static final field Companion Lguru/zoroark/tegral/web/controllers/KtorModule$Companion;
+	public static final field DEFAULT_APP_SETUP_MODULE_PRIORITY I
+	public static final field DEFAULT_CONTROLLER_PRIORITY I
+	public static final field DEFAULT_MODULE_PRIORITY I
+	public fun <init> ()V
+	public fun <init> (ILjava/lang/String;)V
+	public synthetic fun <init> (ILjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getModuleInstallationPriority ()I
+	public final fun getRestrictToAppName ()Ljava/lang/String;
+	public abstract fun install (Lio/ktor/server/application/Application;)V
+}
+
+public final class guru/zoroark/tegral/web/controllers/KtorModule$Companion {
+}
+
+public final class guru/zoroark/tegral/web/controllers/WebControllersFeature : guru/zoroark/tegral/featureful/Feature {
+	public static final field INSTANCE Lguru/zoroark/tegral/web/controllers/WebControllersFeature;
+	public fun getDependencies ()Ljava/util/Set;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getId ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
+}
+

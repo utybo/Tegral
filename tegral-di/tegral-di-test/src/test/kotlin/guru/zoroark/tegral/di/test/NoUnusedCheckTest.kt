@@ -21,6 +21,7 @@ import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.Qualifier
 import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.di.environment.named
+import guru.zoroark.tegral.di.extensions.putAlias
 import guru.zoroark.tegral.di.test.check.NoUnusedCheckDsl
 import guru.zoroark.tegral.di.test.check.TegralDiCheckException
 import guru.zoroark.tegral.di.test.check.exclude
@@ -255,6 +256,30 @@ class NoUnusedCheckTest {
     fun `Ok with exclusion via kclass, yet error somewhere else, kclass, name qualifier`() {
         checkFailureWithExclusion(named("buongiorno!")) {
             exclude(D::class, named("buongiorno!"))
+        }
+    }
+
+    class Foo(scope: InjectionScope) {
+        val bar: BarContract by scope()
+    }
+    interface BarContract
+    class BarImpl : BarContract
+
+    @Test
+    fun `Ok with alias`() {
+        val module = tegralDiModule {
+            put(::Foo)
+            put(::BarImpl)
+            putAlias<BarContract, BarImpl>()
+        }
+        assertDoesNotThrow {
+            tegralDiCheck {
+                modules(module)
+
+                noUnused {
+                    exclude<Foo>()
+                }
+            }
         }
     }
 }

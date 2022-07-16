@@ -14,17 +14,24 @@
 
 package guru.zoroark.tegral.di.extensions
 
+import guru.zoroark.tegral.di.InvalidDeclarationException
 import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.dsl.tegralDi
 import guru.zoroark.tegral.di.dsl.tegralDiModule
+import guru.zoroark.tegral.di.environment.InjectableModule
+import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionScope
+import guru.zoroark.tegral.di.environment.MixedImmutableEnvironment
 import guru.zoroark.tegral.di.environment.get
-import guru.zoroark.tegral.di.extensions.factory.factory
+import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.di.extensions.factory.putFactory
+import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotation
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
@@ -53,8 +60,8 @@ class FactoryExtensionTest {
     class B(scope: InjectionScope) : WhatIsYourA, WhatIsYourLogger {
         override val name = "B"
         override val loggerName = "log.B"
-        private val a: A by scope.factory()
-        private val logger: Logger by scope.factory()
+        private val a: A by scope()
+        private val logger: Logger by scope()
 
         override fun whatIsYourA(): String = "My A is ${a.identity}"
         override fun whatIsYourLogger(): String =
@@ -65,8 +72,8 @@ class FactoryExtensionTest {
     class C(scope: InjectionScope) : WhatIsYourA, WhatIsYourLogger {
         override val name = "C"
         override val loggerName = "log.C"
-        private val a: A by scope.factory()
-        private val logger: Logger by scope.factory()
+        private val a: A by scope()
+        private val logger: Logger by scope()
 
         override fun whatIsYourA(): String = "My A is ${a.identity}"
         override fun whatIsYourLogger(): String =
@@ -75,7 +82,7 @@ class FactoryExtensionTest {
 
     class D(scope: InjectionScope) : WhatIsYourA {
         override val name = "D"
-        private val a: A by scope.factory()
+        private val a: A by scope()
 
         override fun whatIsYourA(): String = "My A is ${a.identity}"
     }
@@ -83,27 +90,28 @@ class FactoryExtensionTest {
     @LoggerName("Markiplier") // Yeah, it's a dead meme, I know.
     class E(scope: InjectionScope) : WhatIsYourLogger {
         override val loggerName = "log.E"
-        private val logger: Logger by scope.factory()
+        private val logger: Logger by scope()
 
         override fun whatIsYourLogger(): String =
             "My Logger is ${logger.identity}"
     }
 
-    @Test
-    fun `Test factory system`() {
+    private fun fullFactoryTest(isLazy: Boolean, envBuilder: (InjectableModule) -> InjectionEnvironment) {
         var factoryCallCount = 0
         val module = tegralDiModule {
             putFactory { requester ->
                 factoryCallCount++
                 A((requester as WhatIsYourA).name)
             }
+            putFactory { requester -> mockk<Logger>() } // Required for the eager environment to work.
             put(::B)
             put(::C)
             put(::D)
         }
-        val env = tegralDi { put(module) }
+        val env = envBuilder(module)
 
-        assertEquals(0, factoryCallCount)
+        if (isLazy) assertEquals(0, factoryCallCount) // Eager envs will have created factories right away
+
         mapOf(
             env.get<B>() to "My A is I am B's A",
             env.get<C>() to "My A is I am C's A",
@@ -118,6 +126,16 @@ class FactoryExtensionTest {
             factoryCallCount,
             "Factory function must be called exactly three times"
         )
+    }
+
+    @Test
+    fun `Test factory system with MIE`() {
+        fullFactoryTest(true) { tegralDi(MixedImmutableEnvironment) { put(it) } }
+    }
+
+    @Test
+    fun `Test factory system with EIME`() {
+        fullFactoryTest(false) { tegralDi(EagerImmutableMetaEnvironment) { put(it) } }
     }
 
     private val KClass<*>.loggerName: String
@@ -171,5 +189,16 @@ class FactoryExtensionTest {
             "Incorrect nb of calls to logger factory"
         )
         assertEquals(3, aFactoryCallCount, "Incorrect nb of calls to A factory")
+    }
+
+    @Test
+    fun `Cannot create a factory outside of a component`() {
+        val env = tegralDi {
+            putFactory { Logger("", "") }
+        }
+        val ex = assertFailsWith<InvalidDeclarationException> {
+            env.get<Logger>()
+        }
+        assertTrue(ex.message!!.startsWith("Cannot resolve a factory outside of a component"))
     }
 }

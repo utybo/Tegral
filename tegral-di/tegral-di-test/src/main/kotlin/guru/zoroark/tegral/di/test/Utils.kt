@@ -19,12 +19,18 @@ import guru.zoroark.tegral.di.environment.EmptyQualifier
 import guru.zoroark.tegral.di.environment.Identifier
 import guru.zoroark.tegral.di.environment.Qualifier
 import guru.zoroark.tegral.di.environment.ScopedSupplier
+import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
 
 /**
  * Creates a [Declaration], automatically creating the identifier from [T] and [qualifier] and using the given
  * [supplier]. Returns a pair with the identifier and the declaration.
  */
 inline fun <reified T : Any> entryOf(qualifier: Qualifier = EmptyQualifier, noinline supplier: ScopedSupplier<T>) =
-    Declaration(Identifier(T::class, qualifier), supplier).let {
+    ScopedSupplierDeclaration(Identifier(T::class, qualifier), supplier).let {
         it.identifier to it
     }
+
+/**
+ * Creates an entry directly from a declaration instead of from a qualifier + supplier.
+ */
+fun <T : Any> entryOf(declaration: Declaration<T>) = declaration.identifier to declaration

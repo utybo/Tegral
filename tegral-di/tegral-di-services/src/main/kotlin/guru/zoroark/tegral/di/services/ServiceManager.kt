@@ -26,13 +26,14 @@ import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.di.extensions.DeclarationsProcessor
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironment
+import guru.zoroark.tegral.di.extensions.filterSubclassesOf
 import guru.zoroark.tegral.services.api.TegralService
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import java.util.Locale
-import kotlin.reflect.full.isSubclassOf
+import java.util.*
+import kotlin.collections.set
 import kotlin.system.measureTimeMillis
 
 private enum class OperationType(val confirmationWord: String, val ingWord: String) {
@@ -66,11 +67,10 @@ class ServiceManager(scope: InjectionScope) : DeclarationsProcessor {
 
     private fun getServices(operationType: OperationType): Sequence<Pair<Identifier<*>, TegralService>> =
         environment.getAllIdentifiers()
-            .filter { it.kclass.isSubclassOf(TegralService::class) }
             .filterNot { operationType.isBlockedByPolicy(ignorePolicies[it]) }
-            .map {
-                @Suppress("UNCHECKED_CAST")
-                it to environment.get(it as Identifier<TegralService>)
+            .filterSubclassesOf(environment, TegralService::class)
+            .map { identifier ->
+                identifier to environment.get(identifier)
             }
 
     /**
@@ -135,8 +135,9 @@ class ServiceManager(scope: InjectionScope) : DeclarationsProcessor {
     private inline fun <T> catching(operationType: OperationType, identifier: Identifier<*>, block: () -> T): T {
         try {
             return block()
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
-            if (e is CancellationException) throw e
             throw TegralServiceException(
                 "${operationType.ingWord.capitalize()} service $identifier failed", e
             )

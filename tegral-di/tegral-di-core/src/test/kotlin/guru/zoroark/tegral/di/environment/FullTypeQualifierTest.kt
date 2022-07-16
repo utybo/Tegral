@@ -20,6 +20,7 @@ import guru.zoroark.tegral.di.dsl.tegralDi
 import org.junit.jupiter.api.assertThrows
 import kotlin.reflect.typeOf
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertNotSame
 
 class FullTypeQualifierTest {
@@ -57,5 +58,12 @@ class FullTypeQualifierTest {
         val strListContainer = env.get<Container<List<String>>>(typed<Container<List<String>>>())
         val projectedListContainer = env.get<Container<List<*>>>(typed<Container<List<*>>>())
         assertNotSame<Container<*>>(strListContainer, projectedListContainer)
+    }
+
+    @Test
+    fun `typed DSL creates corresponding qualifier`() {
+        val type = typeOf<List<String>>()
+        val qualifier = typed(type)
+        assertEquals(type, qualifier.type)
     }
 }
