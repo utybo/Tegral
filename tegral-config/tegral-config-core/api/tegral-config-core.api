@@ -1,0 +1,52 @@
+public class guru/zoroark/tegral/config/core/ConfigurationSection {
+	public fun <init> (Ljava/lang/String;Lguru/zoroark/tegral/config/core/SectionOptionality;Lkotlin/reflect/KClass;)V
+	public final fun getKclass ()Lkotlin/reflect/KClass;
+	public final fun getName ()Ljava/lang/String;
+	public final fun isOptional ()Lguru/zoroark/tegral/config/core/SectionOptionality;
+}
+
+public abstract interface class guru/zoroark/tegral/config/core/RootConfig {
+	public abstract fun getTegral ()Lguru/zoroark/tegral/config/core/TegralConfig;
+}
+
+public abstract class guru/zoroark/tegral/config/core/SectionOptionality {
+}
+
+public final class guru/zoroark/tegral/config/core/SectionOptionality$Optional : guru/zoroark/tegral/config/core/SectionOptionality {
+	public fun <init> (Ljava/lang/Object;)V
+	public final fun component1 ()Ljava/lang/Object;
+	public final fun copy (Ljava/lang/Object;)Lguru/zoroark/tegral/config/core/SectionOptionality$Optional;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/config/core/SectionOptionality$Optional;Ljava/lang/Object;ILjava/lang/Object;)Lguru/zoroark/tegral/config/core/SectionOptionality$Optional;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDefaultValue ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/config/core/SectionOptionality$Required : guru/zoroark/tegral/config/core/SectionOptionality {
+	public static final field INSTANCE Lguru/zoroark/tegral/config/core/SectionOptionality$Required;
+}
+
+public class guru/zoroark/tegral/config/core/SectionedConfiguration {
+	public fun <init> (Ljava/util/Map;)V
+	public final fun get (Lguru/zoroark/tegral/config/core/ConfigurationSection;)Ljava/lang/Object;
+	public final fun getSections ()Ljava/util/Map;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/config/core/SectionedConfigurationDecoder : com/sksamuel/hoplite/decoder/NullHandlingDecoder {
+	public fun <init> (Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function1;Ljava/util/List;)V
+	public fun decode (Lcom/sksamuel/hoplite/Node;Lkotlin/reflect/KType;Lcom/sksamuel/hoplite/DecoderContext;)Lcom/sksamuel/hoplite/fp/Validated;
+	public fun priority ()I
+	public fun safeDecode (Lcom/sksamuel/hoplite/Node;Lkotlin/reflect/KType;Lcom/sksamuel/hoplite/DecoderContext;)Lcom/sksamuel/hoplite/fp/Validated;
+	public fun supports (Lkotlin/reflect/KType;)Z
+}
+
+public final class guru/zoroark/tegral/config/core/TegralConfig : guru/zoroark/tegral/config/core/SectionedConfiguration {
+	public fun <init> (Ljava/util/Map;)V
+}
+
+public final class guru/zoroark/tegral/config/core/UnknownSectionException : guru/zoroark/tegral/core/TegralException {
+	public fun <init> (Ljava/lang/String;)V
+}
+

@@ -65,8 +65,13 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - General
-  - Bumped Ktor version to version 2.0.2
+
+  - Bumped Ktor version to version 2.0.3
     ([#17](https://github/utybo/Tegral/pull/17))
+  
+  - Bumped Kotlin version to 1.7.10 ([#27](https://github.com/utybo/Tegral/pull/27))
+
+  - Bumped Gradle version to 7.5 ([#27](https://github.com/utybo/Tegral/pull/27))
 
 - `tegral-di-core`
 

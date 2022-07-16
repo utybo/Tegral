@@ -1,0 +1,17 @@
+public abstract interface annotation class guru/zoroark/tegral/logging/LoggerName : java/lang/annotation/Annotation {
+	public abstract fun name ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/logging/LoggerNameKt {
+	public static final fun getLoggerName (Lkotlin/reflect/KClass;)Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/logging/LoggingFeature : guru/zoroark/tegral/featureful/Feature {
+	public static final field INSTANCE Lguru/zoroark/tegral/logging/LoggingFeature;
+	public fun getDependencies ()Ljava/util/Set;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getId ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
+}
+

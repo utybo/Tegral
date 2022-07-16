@@ -1,0 +1,170 @@
+public final class guru/zoroark/tegral/di/test/NotAvailableInTestEnvironmentException : guru/zoroark/tegral/di/TegralDiException {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public abstract class guru/zoroark/tegral/di/test/TegralAbstractSubjectTest : guru/zoroark/tegral/di/test/TegralDiBaseTest {
+	public fun <init> (Lkotlin/reflect/KClass;)V
+	protected final fun getSubject (Lguru/zoroark/tegral/di/test/TestMutableInjectionEnvironment;)Ljava/lang/Object;
+	protected final fun getSubjectClass ()Lkotlin/reflect/KClass;
+}
+
+public abstract class guru/zoroark/tegral/di/test/TegralDiBaseTest {
+	public fun <init> ()V
+	protected abstract fun test (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
+	public static synthetic fun test$default (Lguru/zoroark/tegral/di/test/TegralDiBaseTest;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public abstract class guru/zoroark/tegral/di/test/TegralSubjectTest : guru/zoroark/tegral/di/test/TegralAbstractSubjectTest {
+	public fun <init> (Lkotlin/reflect/KClass;Lguru/zoroark/tegral/di/environment/InjectableModule;)V
+	public fun <init> (Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function1;)V
+	public fun <init> (Lkotlin/reflect/KFunction;)V
+	protected fun test (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;)Ljava/lang/Object;
+}
+
+public abstract interface class guru/zoroark/tegral/di/test/TestMutableInjectionEnvironment : guru/zoroark/tegral/di/dsl/ContextBuilderDsl, guru/zoroark/tegral/di/extensions/ExtensibleInjectionEnvironment {
+	public abstract fun getComponents ()Ljava/util/Map;
+}
+
+public final class guru/zoroark/tegral/di/test/TestMutableInjectionEnvironment$DefaultImpls {
+	public static fun get (Lguru/zoroark/tegral/di/test/TestMutableInjectionEnvironment;Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/di/test/UnsafeMutableEnvironment : guru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl, guru/zoroark/tegral/di/test/TestMutableInjectionEnvironment {
+	public static final field Companion Lguru/zoroark/tegral/di/test/UnsafeMutableEnvironment$Companion;
+	public fun <init> (Lguru/zoroark/tegral/di/extensions/ExtensibleEnvironmentContext;)V
+	public fun createInjector (Lguru/zoroark/tegral/di/environment/Identifier;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/di/environment/Injector;
+	public fun get (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+	public fun getAllIdentifiers ()Lkotlin/sequences/Sequence;
+	public fun getComponents ()Ljava/util/Map;
+	public synthetic fun getMetaEnvironment ()Lguru/zoroark/tegral/di/environment/InjectionEnvironment;
+	public fun getMetaEnvironment ()Lguru/zoroark/tegral/di/test/UnsafeMutableEnvironment$MutableEnvironment;
+	public fun getOrNull (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+	public fun getResolverOrNull (Lguru/zoroark/tegral/di/environment/Identifier;)Lguru/zoroark/tegral/di/environment/resolvers/IdentifierResolver;
+	public fun meta (Lkotlin/jvm/functions/Function1;)V
+	public fun put (Lguru/zoroark/tegral/di/environment/Declaration;)V
+}
+
+public final class guru/zoroark/tegral/di/test/UnsafeMutableEnvironment$Companion : guru/zoroark/tegral/di/extensions/ExtensibleInjectionEnvironmentKind {
+	public synthetic fun build (Lguru/zoroark/tegral/di/extensions/ExtensibleEnvironmentContext;Lguru/zoroark/tegral/di/environment/InjectionEnvironmentKind;)Lguru/zoroark/tegral/di/extensions/ExtensibleInjectionEnvironment;
+	public fun build (Lguru/zoroark/tegral/di/extensions/ExtensibleEnvironmentContext;Lguru/zoroark/tegral/di/environment/InjectionEnvironmentKind;)Lguru/zoroark/tegral/di/test/UnsafeMutableEnvironment;
+}
+
+public final class guru/zoroark/tegral/di/test/UnsafeMutableEnvironment$Meta : guru/zoroark/tegral/di/environment/InjectionEnvironmentKind {
+	public static final field INSTANCE Lguru/zoroark/tegral/di/test/UnsafeMutableEnvironment$Meta;
+	public synthetic fun build (Lguru/zoroark/tegral/di/environment/EnvironmentContext;)Lguru/zoroark/tegral/di/environment/InjectionEnvironment;
+	public fun build (Lguru/zoroark/tegral/di/environment/EnvironmentContext;)Ljava/lang/Void;
+}
+
+public final class guru/zoroark/tegral/di/test/UnsafeMutableEnvironment$MutableEnvironment : guru/zoroark/tegral/di/dsl/ContextBuilderDsl, guru/zoroark/tegral/di/environment/InjectionEnvironment {
+	public fun <init> (Lguru/zoroark/tegral/di/test/UnsafeMutableEnvironment$MutableEnvironment;Lguru/zoroark/tegral/di/environment/EnvironmentContext;)V
+	public fun createInjector (Lguru/zoroark/tegral/di/environment/Identifier;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/di/environment/Injector;
+	public fun get (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+	public fun getOrNull (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+	public fun put (Lguru/zoroark/tegral/di/environment/Declaration;)V
+}
+
+public final class guru/zoroark/tegral/di/test/UtilsKt {
+	public static final fun entryOf (Lguru/zoroark/tegral/di/environment/Declaration;)Lkotlin/Pair;
+}
+
+public final class guru/zoroark/tegral/di/test/check/CompleteCheckKt {
+	public static final fun complete (Lguru/zoroark/tegral/di/test/check/TegralDiCheckDsl;)V
+}
+
+public final class guru/zoroark/tegral/di/test/check/DependencyKind : java/lang/Enum {
+	public static final field Injection Lguru/zoroark/tegral/di/test/check/DependencyKind;
+	public static final field Resolution Lguru/zoroark/tegral/di/test/check/DependencyKind;
+	public final fun getArrow ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/di/test/check/DependencyKind;
+	public static fun values ()[Lguru/zoroark/tegral/di/test/check/DependencyKind;
+}
+
+public final class guru/zoroark/tegral/di/test/check/DependencyTrackingInjectionEnvironment : guru/zoroark/tegral/di/environment/InjectionEnvironment {
+	public static final field Companion Lguru/zoroark/tegral/di/test/check/DependencyTrackingInjectionEnvironment$Companion;
+	public fun <init> (Lguru/zoroark/tegral/di/environment/EnvironmentContext;)V
+	public fun createInjector (Lguru/zoroark/tegral/di/environment/Identifier;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/di/environment/Injector;
+	public fun get (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+	public final fun getDependencies ()Ljava/util/Map;
+	public fun getOrNull (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/di/test/check/DependencyTrackingInjectionEnvironment$Companion : guru/zoroark/tegral/di/environment/InjectionEnvironmentKind {
+	public synthetic fun build (Lguru/zoroark/tegral/di/environment/EnvironmentContext;)Lguru/zoroark/tegral/di/environment/InjectionEnvironment;
+	public fun build (Lguru/zoroark/tegral/di/environment/EnvironmentContext;)Lguru/zoroark/tegral/di/test/check/DependencyTrackingInjectionEnvironment;
+}
+
+public final class guru/zoroark/tegral/di/test/check/IdentifierDependencies {
+	public fun <init> (Lguru/zoroark/tegral/di/test/check/DependencyKind;Ljava/util/List;)V
+	public final fun component1 ()Lguru/zoroark/tegral/di/test/check/DependencyKind;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Lguru/zoroark/tegral/di/test/check/DependencyKind;Ljava/util/List;)Lguru/zoroark/tegral/di/test/check/IdentifierDependencies;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/di/test/check/IdentifierDependencies;Lguru/zoroark/tegral/di/test/check/DependencyKind;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/di/test/check/IdentifierDependencies;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDependencies ()Ljava/util/List;
+	public final fun getKind ()Lguru/zoroark/tegral/di/test/check/DependencyKind;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/di/test/check/NoCycleCheckKt {
+	public static final fun noCycle (Lguru/zoroark/tegral/di/test/check/TegralDiCheckDsl;)V
+}
+
+public final class guru/zoroark/tegral/di/test/check/NoUnusedCheck : guru/zoroark/tegral/di/test/check/TegralDiCheck {
+	public fun <init> (Ljava/util/Set;)V
+	public fun check (Ljava/util/List;)V
+}
+
+public final class guru/zoroark/tegral/di/test/check/NoUnusedCheckDsl {
+	public fun <init> ()V
+	public final fun build ()Lguru/zoroark/tegral/di/test/check/NoUnusedCheck;
+	public final fun exclude (Lguru/zoroark/tegral/di/environment/Identifier;)V
+}
+
+public final class guru/zoroark/tegral/di/test/check/NoUnusedCheckKt {
+	public static final fun exclude (Lguru/zoroark/tegral/di/test/check/NoUnusedCheckDsl;Lkotlin/reflect/KClass;Lguru/zoroark/tegral/di/environment/Qualifier;)V
+	public static synthetic fun exclude$default (Lguru/zoroark/tegral/di/test/check/NoUnusedCheckDsl;Lkotlin/reflect/KClass;Lguru/zoroark/tegral/di/environment/Qualifier;ILjava/lang/Object;)V
+	public static final fun noUnused (Lguru/zoroark/tegral/di/test/check/TegralDiCheckDsl;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun noUnused$default (Lguru/zoroark/tegral/di/test/check/TegralDiCheckDsl;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public final class guru/zoroark/tegral/di/test/check/SafeInjectionCheckKt {
+	public static final fun safeInjection (Lguru/zoroark/tegral/di/test/check/TegralDiCheckDsl;)V
+}
+
+public final class guru/zoroark/tegral/di/test/check/ShedinjaCheckKt {
+	public static final fun modules (Lguru/zoroark/tegral/di/test/check/TegralDiCheckDsl;[Lguru/zoroark/tegral/di/environment/InjectableModule;)V
+	public static final fun tegralDiCheck (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class guru/zoroark/tegral/di/test/check/TegralDiCheck {
+	public abstract fun check (Ljava/util/List;)V
+}
+
+public final class guru/zoroark/tegral/di/test/check/TegralDiCheckDsl {
+	public fun <init> ()V
+	public final fun getChecks ()Ljava/util/List;
+	public final fun getModules ()Ljava/util/List;
+}
+
+public final class guru/zoroark/tegral/di/test/check/TegralDiCheckException : guru/zoroark/tegral/di/TegralDiException {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public abstract class guru/zoroark/tegral/di/test/environment/EnvironmentBaseTest {
+	public synthetic fun <init> (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public abstract fun getAdditionalTests ()Ljava/util/List;
+	public final fun runTests ()V
+}
+
+public abstract class guru/zoroark/tegral/di/test/environment/ExtensibleEnvironmentBaseTest : guru/zoroark/tegral/di/test/environment/EnvironmentBaseTest {
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public final fun getAdditionalTests ()Ljava/util/List;
+}
+
+public abstract class guru/zoroark/tegral/di/test/environment/NotExtensibleEnvironmentBaseTest : guru/zoroark/tegral/di/test/environment/EnvironmentBaseTest {
+	protected final fun (Not extensible) Attempting meta injection should fail ()V
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public final fun getAdditionalTests ()Ljava/util/List;
+}
+

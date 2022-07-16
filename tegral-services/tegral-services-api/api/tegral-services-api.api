@@ -1,0 +1,5 @@
+public abstract interface class guru/zoroark/tegral/services/api/TegralService {
+	public abstract fun start (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+

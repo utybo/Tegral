@@ -463,7 +463,10 @@ sealed class EnvironmentBaseTest(
          * |          \-> G
          * +--------------^
          */
-        val (cResolver, eResolver, fResolver, gResolver) = List(4) { ParentTrackingResolver() }
+        val cResolver = ParentTrackingResolver()
+        val eResolver = ParentTrackingResolver()
+        val fResolver = ParentTrackingResolver()
+        val gResolver = ParentTrackingResolver()
         val context = EnvironmentContext(
             mapOf(
                 entryOf { Parent.B(scope) },
