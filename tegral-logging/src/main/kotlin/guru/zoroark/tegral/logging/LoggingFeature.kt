@@ -59,12 +59,12 @@ object LoggingFeature : ConfigurableFeature, LifecycleHookedFeature {
     }
 }
 
-private fun LogLevel.toLogbackLevel(): Level = when(this) {
-    LogLevel.ALL -> Level.ALL
-    LogLevel.TRACE -> Level.TRACE
-    LogLevel.DEBUG -> Level.DEBUG
-    LogLevel.INFO -> Level.INFO
-    LogLevel.WARN -> Level.WARN
-    LogLevel.ERROR -> Level.ERROR
-    LogLevel.OFF -> Level.OFF
+private fun LogLevel.toLogbackLevel(): Level = when (this) {
+    LogLevel.All -> Level.ALL
+    LogLevel.Trace -> Level.TRACE
+    LogLevel.Debug -> Level.DEBUG
+    LogLevel.Info -> Level.INFO
+    LogLevel.Warn -> Level.WARN
+    LogLevel.Error -> Level.ERROR
+    LogLevel.Off -> Level.OFF
 }

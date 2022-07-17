@@ -3,7 +3,7 @@ coroutines = "1.6.1"
 detekt = "1.21.0"
 dokka = "1.7.10"
 gradleTestLogger = "3.2.0"
-hoplite = "2.1.5"
+hoplite = "2.3.3"
 jackson = "2.13.1"
 jimfs = "1.2"
 junit = "5.8.2"
@@ -38,6 +38,7 @@ ktor-client-contentNegotiation = { module = "io.ktor:ktor-client-content-negotia
 ktor-serialization-jackson = { module = "io.ktor:ktor-serialization-jackson", version.ref = "ktor" }
 
 jackson-time = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
+jackson-dataformats-toml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-toml", version.ref = "jackson" }
 
 hoplite-json = { module = "com.sksamuel.hoplite:hoplite-json", version.ref = "hoplite" }
 hoplite-yaml = { module = "com.sksamuel.hoplite:hoplite-yaml", version.ref = "hoplite" }

@@ -35,12 +35,16 @@ private val logger = LoggerFactory.getLogger("tegral.web.appdsl.tegralblock")
  * configure Logback with sensible defaults.
  */
 @TegralDsl
-fun tegral(enableLoggingOverrides: Boolean = true, block: TegralApplicationDsl.() -> Unit): TegralApplication {
+fun tegral(
+    enableLoggingOverrides: Boolean = true,
+    enableDefaults: Boolean = true,
+    block: TegralApplicationDsl.() -> Unit
+): TegralApplication {
     if (enableLoggingOverrides) applyLoggingOverrides()
 
     logger.info("Configuring application from tegral block...")
     val builder = TegralApplicationBuilder()
-    builder.applyDefaults()
+    if (enableDefaults) builder.applyDefaults()
     block(builder)
 
     logger.info("Building application...")
