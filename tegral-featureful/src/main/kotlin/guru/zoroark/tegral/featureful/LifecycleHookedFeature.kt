@@ -25,5 +25,5 @@ interface LifecycleHookedFeature : Feature {
      *
      * Note that this should not be used if your code could instead be placed in the `start` function of a service.
      */
-    fun onConfigurationLoaded(configuration: RootConfig) {}
+    fun onConfigurationLoaded(configuration: RootConfig)
 }

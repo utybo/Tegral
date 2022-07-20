@@ -115,6 +115,68 @@ class TestApplicationWithCustomLoggers {
         assertFalse(output.contains("Informing LoggedThree"))
         assertContains(output, "Warning LoggedThree")
     }
+
+    class OutputToLogger(scope: InjectionScope) {
+        val logger: Logger by scope()
+    }
+
+    private fun logForLevel(logLevel: LogLevel, message: String): (Logger) -> Unit {
+        return when (logLevel) {
+            LogLevel.Trace -> { log: Logger -> log.trace(message) }
+            LogLevel.Debug -> { log: Logger -> log.debug(message) }
+            LogLevel.Info -> { log: Logger -> log.info(message) }
+            LogLevel.Warn -> { log: Logger -> log.warn(message) }
+            LogLevel.Error -> { log: Logger -> log.error(message) }
+            else -> error("$logLevel is not a valid message level and cannot be converted to a logger call")
+        }
+    }
+
+    @Test
+    fun `Test log levels`() {
+        val messageLevels = setOf(LogLevel.Trace, LogLevel.Debug, LogLevel.Info, LogLevel.Warn, LogLevel.Error)
+        val logMessages = messageLevels.map { logForLevel(it, "Test message for ${it.name}") }
+
+        data class LogLevelTestCase(val loggerLevel: LogLevel, val expectedOutputs: Set<LogLevel>)
+
+        val testCases = listOf(
+            LogLevelTestCase(LogLevel.All, messageLevels),
+            LogLevelTestCase(LogLevel.Trace, messageLevels),
+            LogLevelTestCase(LogLevel.Debug, messageLevels - LogLevel.Trace),
+            LogLevelTestCase(LogLevel.Info, messageLevels - LogLevel.Trace - LogLevel.Debug),
+            LogLevelTestCase(LogLevel.Warn, setOf(LogLevel.Warn, LogLevel.Error)),
+            LogLevelTestCase(LogLevel.Error, setOf(LogLevel.Error)),
+            LogLevelTestCase(LogLevel.Off, emptySet())
+        )
+
+        for (test in testCases) {
+            val config = """
+                [tegral.logging]
+                level = "${test.loggerLevel.name}"
+            """.trimIndent()
+            val output = captureStdout {
+                val app = tegral(enableDefaults = false) {
+                    install(LoggingFeature)
+                    install(ServicesFeature)
+
+                    useConfiguration(TestConfiguration::class) {
+                        addPropertySource(TomlPropertySource(config))
+                    }
+
+                    put(::OutputToLogger)
+                }
+
+                val out = app.environment.get<OutputToLogger>().logger
+                logMessages.forEach { it(out) }
+            }
+
+            for (shouldBePresent in test.expectedOutputs) {
+                assertContains(output, "Test message for ${shouldBePresent.name}")
+            }
+            for (shouldNotBePresent in messageLevels - test.expectedOutputs) {
+                assertFalse(output.contains("Test message for ${shouldNotBePresent.name}"))
+            }
+        }
+    }
 }
 
 private inline fun captureStdout(block: () -> Unit): String {

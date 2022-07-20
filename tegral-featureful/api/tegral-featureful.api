@@ -24,6 +24,5 @@ public abstract interface class guru/zoroark/tegral/featureful/LifecycleHookedFe
 
 public final class guru/zoroark/tegral/featureful/LifecycleHookedFeature$DefaultImpls {
 	public static fun getDependencies (Lguru/zoroark/tegral/featureful/LifecycleHookedFeature;)Ljava/util/Set;
-	public static fun onConfigurationLoaded (Lguru/zoroark/tegral/featureful/LifecycleHookedFeature;Lguru/zoroark/tegral/config/core/RootConfig;)V
 }
 
