@@ -14,6 +14,8 @@
 
 package guru.zoroark.tegral.logging
 
+import guru.zoroark.tegral.core.TegralDsl
+import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.factory.putFactory
 import guru.zoroark.tegral.featureful.Feature
@@ -31,6 +33,16 @@ object LoggingFeature : Feature {
     override val description = "Provides logging utilities for Tegral applications"
 
     override fun ExtensibleContextBuilderDsl.install() {
-        putFactory<Logger> { requester -> LoggerFactory.getLogger(requester::class.loggerName) }
+        putLoggerFactory()
     }
+}
+
+/**
+ * Adds Tegral Logging's `Logger` factory to this context builder. You do not need to call this if you are using the
+ * Tegral Logging feature. This is mostly useful for manually adding logging in test environments that do not support
+ * features (i.e. every Tegral test except integration tests).
+ */
+@TegralDsl
+fun ContextBuilderDsl.putLoggerFactory() {
+    putFactory<Logger> { requester -> LoggerFactory.getLogger(requester::class.loggerName) }
 }

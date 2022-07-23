@@ -15,3 +15,7 @@ public final class guru/zoroark/tegral/logging/LoggingFeature : guru/zoroark/teg
 	public fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
 }
 
+public final class guru/zoroark/tegral/logging/LoggingFeatureKt {
+	public static final fun putLoggerFactory (Lguru/zoroark/tegral/di/dsl/ContextBuilderDsl;)V
+}
+

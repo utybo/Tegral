@@ -35,6 +35,10 @@ fun <T : Any> Sequence<Identifier<*>>.filterSubclassesOf(
     kclass: KClass<T>
 ): Sequence<Identifier<T>> =
     filter {
+        // KClass' isSubclassOf seems to be broken when using proxies (e.g. mocks), so we use Java's Class equivalents
+        // instead.
         (environment.getResolverOrNull(it) as? CanonicalIdentifierResolver<*>)
-            ?.actualClass?.isSubclassOf(kclass) ?: false
+            ?.actualClass?.java?.isSubclassOf(kclass) ?: false
     } as Sequence<Identifier<T>>
+
+private fun Class<*>.isSubclassOf(other: KClass<*>): Boolean = other.java.isAssignableFrom(this)

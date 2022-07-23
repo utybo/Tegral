@@ -38,5 +38,7 @@ object AppDefaultsFeature : ConfigurableFeature {
         put(::DefaultKtorApplication)
         put(::DefaultAppDefaultsModule)
         put(::KeepAliveService)
+        put(::RuntimeProvider)
+        put(::ShutdownHookService)
     }
 }
