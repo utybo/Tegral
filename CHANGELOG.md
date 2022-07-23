@@ -26,6 +26,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   - Added `filterSubclassesOf` function, which is especially useful for
     writing extensions. ([#23](https://github.com/utybo/Tegral/pull/23))
 
+    - `filterSubclassesOf` also properly works with Proxies (e.g. MockK mocks)
+      ([#29](https://github.com/utybo/Tegral/pull/29))
+
 - `tegral-di-test`
 
   - `UnsafeMutableEnvironment` is now an extensible environment.
@@ -38,11 +41,21 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
     `ExtensibleEnvironmentBaseTest` and `NotExtensibleEnvironmentBaseTest`).
     ([#16](https://github/utybo/Tegral/pull/16))
 
+- `tegral-logging`
+
+  - Added a `putLoggerFactory` function to easily add factories to any
+    environment, especially ones that do not have features support.
+    ([#29](https://github.com/utybo/Tegral/pull/29))
+
 - `tegral-web-appdefaults`
 
   - Added `ObjectMapper.defaultTegralConfiguration()` function, which lets you
     apply Tegral's defaults to your own object mappers.
     ([#17](https://github.com/utybo/Tegral/pull/17))
+
+  - Tegral will now stop all services when receiving a shutdown hook from the
+    JVM (done via the `ShutdownHookService`).
+    ([#29](https://github.com/utybo/Tegral/pull/29))
 
 - `tegral-web-appdsl`
 
@@ -148,11 +161,22 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - `tegral-di-services`
+
   - The services extension now properly detects services where the "advertised"
     type is not a `TegralService`, but the type of the actual object is. For
     example, if you have a `put<Contract>(::Implementation)` declaration, the
     services extension will properly detect services even if only
-    `Implementation` implements `TegralService`. ([#23](https://github.com/utybo/Tegral/pull/23))
+    `Implementation` implements `TegralService`.
+    ([#23](https://github.com/utybo/Tegral/pull/23))
+
+  - The services extension now properly detects services that are actually
+    mocks. ([#29](https://github.com/utybo/Tegral/pull/29))
+
+- `tegral-di-test`
+
+  - Fixed the error message when not using any DI check in a DI block showing
+    the old Shedinja way of adding rules.
+    ([#29](https://github.com/utybo/Tegral/pull/29))
 
 ## [0.0.1] - 2022-06-02
 
