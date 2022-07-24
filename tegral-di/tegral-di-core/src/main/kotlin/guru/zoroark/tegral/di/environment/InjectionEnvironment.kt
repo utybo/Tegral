@@ -99,6 +99,11 @@ interface InjectionEnvironment {
      * performs an injection.
      */
     fun <T : Any> createInjector(identifier: Identifier<T>, onInjection: (T) -> Unit = {}): Injector<T>
+
+    /**
+     * Returns a sequence of all the known identifiers present in this environment.
+     */
+    fun getAllIdentifiers(): Sequence<Identifier<*>>
 }
 
 typealias EnvironmentComponents = Map<Identifier<*>, IdentifierResolver<*>>

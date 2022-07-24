@@ -64,11 +64,6 @@ interface ExtensibleInjectionEnvironment : InjectionEnvironment {
     val metaEnvironment: InjectionEnvironment
 
     /**
-     * Returns a sequence of all the known identifiers present in this environment.
-     */
-    fun getAllIdentifiers(): Sequence<Identifier<*>>
-
-    /**
      * Returns the resolver associated with the given identifier.
      */
     fun <T : Any> getResolverOrNull(identifier: Identifier<T>): IdentifierResolver<T>?

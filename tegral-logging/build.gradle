@@ -9,6 +9,9 @@ dependencies {
     api libs.slf4j
     api libs.logback
     implementation libs.kotlin.reflect
+
+    testImplementation libs.jimfs
+    testImplementation project(":tegral-web:tegral-web-appdsl")
 }
 
 ext.humanName = "Tegral Logging"

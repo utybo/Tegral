@@ -16,7 +16,10 @@ package guru.zoroark.tegral.web.appdsl
 
 import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironment
 import guru.zoroark.tegral.di.services.services
+import guru.zoroark.tegral.featureful.Feature
+import guru.zoroark.tegral.featureful.LifecycleHookedFeature
 import org.slf4j.LoggerFactory
+import kotlin.reflect.full.isSubclassOf
 
 /**
  * This object represents a built and possibly running Tegral application.
@@ -50,3 +53,18 @@ class TegralApplication(
         environment.services.stopAll(logger::info)
     }
 }
+
+/**
+ * Returns all the features that were installed in this application.
+ */
+val TegralApplication.features: Sequence<Feature> get() =
+    environment.metaEnvironment.getAllIdentifiers()
+        .filter { it.kclass.isSubclassOf(Feature::class) }
+        .map { environment.metaEnvironment.get(it) as Feature }
+
+/**
+ * Returns all the features that additionally implement [LifecycleHookedFeature] that were installed in this
+ * application.
+ */
+val TegralApplication.lifecycleFeatures: Sequence<LifecycleHookedFeature> get() =
+    features.filterIsInstance<LifecycleHookedFeature>()

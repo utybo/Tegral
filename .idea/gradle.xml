@@ -38,6 +38,7 @@
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-config" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers-test" />
+            <option value="$PROJECT_DIR$/tegral-web/tegral-web-greeter" />
             <option value="$PROJECT_DIR$/website" />
           </set>
         </option>

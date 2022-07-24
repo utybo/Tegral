@@ -187,6 +187,6 @@ class UnsafeMutableEnvironment(
             }
         }
 
-        internal fun getAllIdentifiers() = components.keys.asSequence()
+        override fun getAllIdentifiers() = components.keys.asSequence()
     }
 }

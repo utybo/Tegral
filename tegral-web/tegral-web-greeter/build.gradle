@@ -1,0 +1,12 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+}
+
+dependencies {
+    implementation project(":tegral-featureful")
+    implementation project(":tegral-logging")
+}
+
+ext.humanName = "Tegral Web Greeter"
+ext.description = "A simple feature that displays a message on startup."
+ext.url = "https://tegral.zoroark.guru/docs/web/greeter"

@@ -30,6 +30,7 @@ import guru.zoroark.tegral.di.environment.ScopedSupplier
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.featureful.ConfigurableFeature
 import guru.zoroark.tegral.featureful.Feature
+import guru.zoroark.tegral.featureful.LifecycleHookedFeature
 import guru.zoroark.tegral.web.appdefaults.AppDefaultsFeature
 import guru.zoroark.tegral.web.appdefaults.TegralConfigurationContainer
 import kotlin.reflect.KClass
@@ -140,6 +141,9 @@ class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplicati
 
         // Build and load configuration
         val appConfig = config.build().loadConfigOrThrow(configClass, configSources)
+
+        // Trigger lifecycle-hooked features' onConfigurationLoaded functions
+        toInstall.filterIsInstance<LifecycleHookedFeature>().forEach { it.onConfigurationLoaded(appConfig) }
 
         val environment = tegralDi {
             put { appConfig }
