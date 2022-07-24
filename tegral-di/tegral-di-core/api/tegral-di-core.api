@@ -132,6 +132,7 @@ public final class guru/zoroark/tegral/di/environment/InjectableModule {
 public abstract interface class guru/zoroark/tegral/di/environment/InjectionEnvironment {
 	public abstract fun createInjector (Lguru/zoroark/tegral/di/environment/Identifier;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/di/environment/Injector;
 	public abstract fun get (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+	public abstract fun getAllIdentifiers ()Lkotlin/sequences/Sequence;
 	public abstract fun getOrNull (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
 }
 
@@ -311,6 +312,7 @@ public final class guru/zoroark/tegral/di/extensions/EagerImmutableMetaEnvironme
 	public fun <init> (Lguru/zoroark/tegral/di/environment/EnvironmentContext;)V
 	public fun createInjector (Lguru/zoroark/tegral/di/environment/Identifier;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/di/environment/Injector;
 	public fun get (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+	public fun getAllIdentifiers ()Lkotlin/sequences/Sequence;
 	public fun getOrNull (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
 }
 
@@ -342,7 +344,6 @@ public final class guru/zoroark/tegral/di/extensions/ExtensibleEnvironmentKt {
 }
 
 public abstract interface class guru/zoroark/tegral/di/extensions/ExtensibleInjectionEnvironment : guru/zoroark/tegral/di/environment/InjectionEnvironment {
-	public abstract fun getAllIdentifiers ()Lkotlin/sequences/Sequence;
 	public abstract fun getMetaEnvironment ()Lguru/zoroark/tegral/di/environment/InjectionEnvironment;
 	public abstract fun getResolverOrNull (Lguru/zoroark/tegral/di/environment/Identifier;)Lguru/zoroark/tegral/di/environment/resolvers/IdentifierResolver;
 }

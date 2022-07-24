@@ -50,6 +50,7 @@ public final class guru/zoroark/tegral/logging/LoggingConfig$Companion : guru/zo
 
 public final class guru/zoroark/tegral/logging/LoggingFeature : guru/zoroark/tegral/featureful/ConfigurableFeature, guru/zoroark/tegral/featureful/LifecycleHookedFeature {
 	public static final field INSTANCE Lguru/zoroark/tegral/logging/LoggingFeature;
+	public fun beforeStart (Lguru/zoroark/tegral/di/extensions/ExtensibleInjectionEnvironment;)V
 	public fun getConfigurationSections ()Ljava/util/List;
 	public fun getDependencies ()Ljava/util/Set;
 	public fun getDescription ()Ljava/lang/String;

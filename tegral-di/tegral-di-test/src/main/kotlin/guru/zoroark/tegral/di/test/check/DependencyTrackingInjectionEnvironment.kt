@@ -110,6 +110,8 @@ class DependencyTrackingInjectionEnvironment(context: EnvironmentContext) : Inje
         currentInjections += identifier
         return FakeInjector()
     }
+
+    override fun getAllIdentifiers(): Sequence<Identifier<*>> = dependencies.keys.asSequence()
 }
 
 internal class EnvironmentBasedIgnoringMetaScope(

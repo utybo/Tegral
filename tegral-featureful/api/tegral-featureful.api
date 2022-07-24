@@ -19,10 +19,13 @@ public final class guru/zoroark/tegral/featureful/Feature$DefaultImpls {
 }
 
 public abstract interface class guru/zoroark/tegral/featureful/LifecycleHookedFeature : guru/zoroark/tegral/featureful/Feature {
+	public abstract fun beforeStart (Lguru/zoroark/tegral/di/extensions/ExtensibleInjectionEnvironment;)V
 	public abstract fun onConfigurationLoaded (Lguru/zoroark/tegral/config/core/RootConfig;)V
 }
 
 public final class guru/zoroark/tegral/featureful/LifecycleHookedFeature$DefaultImpls {
+	public static fun beforeStart (Lguru/zoroark/tegral/featureful/LifecycleHookedFeature;Lguru/zoroark/tegral/di/extensions/ExtensibleInjectionEnvironment;)V
 	public static fun getDependencies (Lguru/zoroark/tegral/featureful/LifecycleHookedFeature;)Ljava/util/Set;
+	public static fun onConfigurationLoaded (Lguru/zoroark/tegral/featureful/LifecycleHookedFeature;Lguru/zoroark/tegral/config/core/RootConfig;)V
 }
 
