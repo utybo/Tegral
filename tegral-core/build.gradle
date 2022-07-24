@@ -19,4 +19,4 @@ sourceSets {
 }
 
 compileKotlin.dependsOn generateKotlin
-licenseCheck.dependsOn generateKotlin
+checkLicenseMain.dependsOn generateKotlin
