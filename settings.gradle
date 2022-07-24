@@ -15,7 +15,8 @@ include 'tegral-catalog',
         'tegral-web:tegral-web-apptest',
         'tegral-web:tegral-web-config',
         'tegral-web:tegral-web-controllers',
-        'tegral-web:tegral-web-controllers-test'
+        'tegral-web:tegral-web-controllers-test',
+        'tegral-web:tegral-web-greeter'
 
 include 'examples:simple-json-api'
 
