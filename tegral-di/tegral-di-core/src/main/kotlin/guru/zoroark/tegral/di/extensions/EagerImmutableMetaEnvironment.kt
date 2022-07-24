@@ -62,6 +62,8 @@ class EagerImmutableMetaEnvironment(context: EnvironmentContext) : InjectionEnvi
     private val components = initializeComponents(context)
     private var buildingInformation: EIEBeingBuiltInformation? = null
 
+    override fun getAllIdentifiers(): Sequence<Identifier<*>> = components.keys.asSequence()
+
     private fun initializeComponents(context: EnvironmentContext): EnvironmentComponents {
         val componentsNow = mutableMapOf<Identifier<*>, IdentifierResolver<*>>()
         val bi = EIEBeingBuiltInformation(context.declarations, componentsNow)
