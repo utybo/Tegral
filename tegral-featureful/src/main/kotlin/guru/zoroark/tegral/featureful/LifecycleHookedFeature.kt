@@ -15,6 +15,7 @@
 package guru.zoroark.tegral.featureful
 
 import guru.zoroark.tegral.config.core.RootConfig
+import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironment
 
 /**
  * Features that require special hooking
@@ -25,5 +26,10 @@ interface LifecycleHookedFeature : Feature {
      *
      * Note that this should not be used if your code could instead be placed in the `start` function of a service.
      */
-    fun onConfigurationLoaded(configuration: RootConfig)
+    fun onConfigurationLoaded(configuration: RootConfig) {}
+
+    /**
+     * Called just before an application is started (after `onConfigurationLoaded`, before the `startAll` call).
+     */
+    fun beforeStart(env: ExtensibleInjectionEnvironment) {}
 }
