@@ -29,7 +29,8 @@ import org.slf4j.LoggerFactory
  */
 fun applyLoggingOverrides() {
     val ctx = (LoggerFactory.getILoggerFactory() as LoggerContext)
-    ctx.getLogger(Logger.ROOT_LOGGER_NAME).level = Level.INFO
+    val rootLogger = ctx.getLogger(Logger.ROOT_LOGGER_NAME)
+    rootLogger.level = Level.INFO
 
     val ple = PatternLayoutEncoder().apply {
         context = ctx
@@ -37,10 +38,11 @@ fun applyLoggingOverrides() {
     }
     ple.start()
 
-    val consoleAppender = ConsoleAppender<ILoggingEvent>().apply {
-        context = ctx
-        name = "console"
-        encoder = ple
+    for (appender in rootLogger.iteratorForAppenders())
+    {
+        if (appender is ConsoleAppender<*>)
+        {
+            appender.encoder = ple
+        }
     }
-    consoleAppender.start()
 }
