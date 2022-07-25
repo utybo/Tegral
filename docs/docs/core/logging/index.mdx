@@ -4,13 +4,13 @@ import PackageVersions from '@site/src/components/PackageVersions';
 
 Tegral Logging is a feature that makes it easy to add logging to a Tegral application.
 
-Tegral Logging uses SLF4J behind the scenes, which makes it compatible with any SLF4J-enabled logging system, such as [logback](https://logback.qos.ch).
+Tegral Logging exposes [SLF4J](https://slf4j.org) loggers and uses [Logback](https://logback.qos.ch) behind the scenes.
 
 <PackageVersions libraries={[
     { name: 'tegral-logging', catalog: 'logging' }
 ]}/>
 
-## Using Tegral Logging
+## Installation
 
 You will need to install the feature like so:
 
@@ -23,6 +23,8 @@ install(LoggingFeature)
 Tegral Logging is installed by default when using Tegral Web [AppDefaults](/web/appdefaults/index.mdx)/[AppDSL](/web/appdsl/index.mdx), requiring no additional action
 
 :::
+
+## Creating loggers
 
 Once installed, Tegral Logging will add a Logger factory within the DI environment. Here is an example of a class that uses Tegral Logging to get its logger:
 
@@ -50,3 +52,47 @@ class MyClass(scope: InjectionScope) {
     // ...
 }
 ```
+
+## Logger configuration
+
+Tegral Logging exposes configuration properties that can be used to directly configure logging within your application (without needing to use Logback's `logback.xml`).
+
+### Global logging level
+
+You can confiure the "global" logging level for the entire application like so:
+
+```toml title="/tegral.toml"
+[tegral.logging]
+level = "Debug"
+```
+
+Available values are (from most verbose to least verbose):
+
+- `All`
+- `Trace`
+- `Debug`
+- `Info` (default)
+- `Warn`
+- `Error`
+
+### Individual loggers
+
+You can also configure individual loggers.
+
+```toml title="/tegral.toml"
+[tegral.logging.loggers."org.example.hello"]
+level = "Debug"
+```
+
+This will configure the `org.example.hello` logger to use the Debug logging level. Make sure you do not forget the quotation marks!
+
+Available logging level values are the same as for the global logging levels.
+
+:::note
+
+Please note that the objective of this configuration section is to provide an easy way of configuring loggers. In case you need more advanced behavior, you should either:
+
+- Use a `logback.xml` file.
+- Create your own feature that programmatically configures loggers on the `onConfigurationLoaded` [lifecycle hook](../featureful/index.mdx#lifecycle-features)
+
+:::
