@@ -26,12 +26,15 @@ import guru.zoroark.tegral.di.environment.InjectionEnvironmentKind
 import guru.zoroark.tegral.di.environment.Injector
 import guru.zoroark.tegral.di.environment.ScopedContext
 import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
+import guru.zoroark.tegral.di.test.NotAvailableInTestEnvironmentException
 import java.lang.reflect.InvocationTargetException
 import kotlin.reflect.KProperty
 
 private class CrashOnUseEnvironment(context: EnvironmentContext) : InjectionEnvironment {
     override fun <T : Any> getOrNull(identifier: Identifier<T>): T? {
-        throw TegralDiCheckException("getOrNull is not implemented and cannot be used during 'safeInjection' checks.")
+        throw NotAvailableInTestEnvironmentException(
+            "getOrNull is not implemented and cannot be used during 'safeInjection' checks."
+        )
     }
 
     companion object : InjectionEnvironmentKind<CrashOnUseEnvironment> {
@@ -68,6 +71,10 @@ private class CrashOnUseEnvironment(context: EnvironmentContext) : InjectionEnvi
 
     override fun <T : Any> createInjector(identifier: Identifier<T>, onInjection: (T) -> Unit): Injector<T> {
         return TrapInjector(identifier)
+    }
+
+    override fun getAllIdentifiers(): Sequence<Identifier<*>> {
+        throw NotAvailableInTestEnvironmentException("getAllIdentifiers does not exist in CrashOnUseEnvironment")
     }
 }
 

@@ -59,6 +59,7 @@ public final class guru/zoroark/tegral/di/test/UnsafeMutableEnvironment$MutableE
 	public fun <init> (Lguru/zoroark/tegral/di/test/UnsafeMutableEnvironment$MutableEnvironment;Lguru/zoroark/tegral/di/environment/EnvironmentContext;)V
 	public fun createInjector (Lguru/zoroark/tegral/di/environment/Identifier;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/di/environment/Injector;
 	public fun get (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+	public fun getAllIdentifiers ()Lkotlin/sequences/Sequence;
 	public fun getOrNull (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
 	public fun put (Lguru/zoroark/tegral/di/environment/Declaration;)V
 }
@@ -84,6 +85,7 @@ public final class guru/zoroark/tegral/di/test/check/DependencyTrackingInjection
 	public fun <init> (Lguru/zoroark/tegral/di/environment/EnvironmentContext;)V
 	public fun createInjector (Lguru/zoroark/tegral/di/environment/Identifier;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/di/environment/Injector;
 	public fun get (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
+	public fun getAllIdentifiers ()Lkotlin/sequences/Sequence;
 	public final fun getDependencies ()Ljava/util/Map;
 	public fun getOrNull (Lguru/zoroark/tegral/di/environment/Identifier;)Ljava/lang/Object;
 }

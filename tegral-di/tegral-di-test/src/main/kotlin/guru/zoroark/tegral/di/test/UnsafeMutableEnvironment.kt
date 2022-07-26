@@ -106,7 +106,7 @@ class UnsafeMutableEnvironment(
             metaEnvironmentKind: InjectionEnvironmentKind<*>
         ): UnsafeMutableEnvironment {
             if (metaEnvironmentKind != Meta) {
-                error(
+                throw NotAvailableInTestEnvironmentException(
                     "Cannot create UnsafeMutableEnvironment with any meta environment other than " +
                         "UnsafeMutableEnvironment.Meta"
                 )
@@ -124,7 +124,9 @@ class UnsafeMutableEnvironment(
      */
     object Meta : InjectionEnvironmentKind<Nothing> {
         override fun build(context: EnvironmentContext): Nothing {
-            error("UnsafeMutableEnvironment.Meta environments cannot be created directly.")
+            throw NotAvailableInTestEnvironmentException(
+                "UnsafeMutableEnvironment.Meta environments cannot be created directly."
+            )
         }
     }
 
@@ -165,8 +167,11 @@ class UnsafeMutableEnvironment(
                 this@MutableEnvironment.createInjector(what)
         }
 
-        private fun <T : Any> getOrNull(parent: Any?, identifier: Identifier<T>): T? =
-            components[identifier]?.resolve(parent, components)?.let { ensureInstance(identifier.kclass, it) }
+        private fun <T : Any> getOrNull(parent: Any?, identifier: Identifier<T>): T? {
+            val resolver = components[identifier] ?: return null
+            val instance = resolver.resolve(parent, components)
+            return ensureInstance(identifier.kclass, instance)
+        }
 
         override fun <T : Any> getOrNull(identifier: Identifier<T>): T? = getOrNull(null, identifier)
 
@@ -187,6 +192,6 @@ class UnsafeMutableEnvironment(
             }
         }
 
-        internal fun getAllIdentifiers() = components.keys.asSequence()
+        override fun getAllIdentifiers() = components.keys.asSequence()
     }
 }

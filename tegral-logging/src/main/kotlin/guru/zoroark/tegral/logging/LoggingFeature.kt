@@ -14,23 +14,57 @@
 
 package guru.zoroark.tegral.logging
 
+import ch.qos.logback.classic.Level
+import ch.qos.logback.classic.LoggerContext
+import guru.zoroark.tegral.config.core.RootConfig
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.factory.putFactory
-import guru.zoroark.tegral.featureful.Feature
-import org.slf4j.Logger
+import guru.zoroark.tegral.featureful.ConfigurableFeature
+import guru.zoroark.tegral.featureful.LifecycleHookedFeature
 import org.slf4j.LoggerFactory
+import ch.qos.logback.classic.Logger as LogbackLogger
+import org.slf4j.Logger as Slf4jLogger
 
 /**
  * A feature that adds logging support to the application via the `by scope.factory()` syntax.
  *
  * I.e., adds a `Logger` factory to the application.
  */
-object LoggingFeature : Feature {
+object LoggingFeature : ConfigurableFeature, LifecycleHookedFeature {
     override val id = "tegral-logging"
     override val name = "Tegral Logging"
     override val description = "Provides logging utilities for Tegral applications"
+    override val configurationSections = listOf(LoggingConfig)
 
     override fun ExtensibleContextBuilderDsl.install() {
-        putFactory<Logger> { requester -> LoggerFactory.getLogger(requester::class.loggerName) }
+        putFactory<Slf4jLogger> { requester -> LoggerFactory.getLogger(requester::class.loggerName) }
     }
+
+    // Setup for the LoggingFeature is done right after the configuration is loaded and not during the regular "service
+    // start" phase because order during startup is not guaranteed (by design), yet services may want to log some
+    // output.
+    override fun onConfigurationLoaded(configuration: RootConfig) {
+        val loggingConfig = configuration.tegral[LoggingConfig]
+        val context = LoggerFactory.getILoggerFactory() as LoggerContext
+
+        // Configure root logger
+        val rootLogger = context.getLogger(LogbackLogger.ROOT_LOGGER_NAME)
+        rootLogger.level = loggingConfig.level.toLogbackLevel()
+
+        // Configure individual specified loggers
+        loggingConfig.loggers.forEach { (loggerName, loggerConfig) ->
+            val logger = context.getLogger(loggerName)
+            logger.level = loggerConfig.level.toLogbackLevel()
+        }
+    }
+}
+
+private fun LogLevel.toLogbackLevel(): Level = when (this) {
+    LogLevel.All -> Level.ALL
+    LogLevel.Trace -> Level.TRACE
+    LogLevel.Debug -> Level.DEBUG
+    LogLevel.Info -> Level.INFO
+    LogLevel.Warn -> Level.WARN
+    LogLevel.Error -> Level.ERROR
+    LogLevel.Off -> Level.OFF
 }

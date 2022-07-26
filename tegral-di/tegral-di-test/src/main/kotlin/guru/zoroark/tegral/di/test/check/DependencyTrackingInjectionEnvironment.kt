@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.di.test.check
 
+import guru.zoroark.tegral.di.InvalidDeclarationException
 import guru.zoroark.tegral.di.environment.EnvironmentContext
 import guru.zoroark.tegral.di.environment.Identifier
 import guru.zoroark.tegral.di.environment.InjectionEnvironment
@@ -25,11 +26,15 @@ import guru.zoroark.tegral.di.environment.ResolvableDeclaration
 import guru.zoroark.tegral.di.environment.ScopedContext
 import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
 import guru.zoroark.tegral.di.test.NotAvailableInTestEnvironmentException
+import java.lang.reflect.InvocationTargetException
 import kotlin.reflect.KProperty
 
 private class FakeInjector<T : Any> : Injector<T> {
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {
-        throw NotAvailableInTestEnvironmentException("Not available")
+        throw InvalidDeclarationException(
+            "An unsafe injection was performed while trying to resolve dependencies. Use the 'safeInjection' check " +
+                "for more information."
+        )
     }
 }
 
@@ -97,7 +102,12 @@ class DependencyTrackingInjectionEnvironment(context: EnvironmentContext) : Inje
         when (v) {
             is ScopedSupplierDeclaration -> {
                 currentInjections.clear()
-                v.supplier(ScopedContext(EnvironmentBasedIgnoringMetaScope(this)))
+                try {
+                    v.supplier(ScopedContext(EnvironmentBasedIgnoringMetaScope(this)))
+                } catch (e: InvocationTargetException) {
+                    // Skips InvocationTargetException that occurs during unsafe injections (from FakeInjector)
+                    throw e.cause ?: throw e
+                }
                 IdentifierDependencies(DependencyKind.Injection, currentInjections.toList())
             }
             is ResolvableDeclaration -> {
@@ -110,6 +120,8 @@ class DependencyTrackingInjectionEnvironment(context: EnvironmentContext) : Inje
         currentInjections += identifier
         return FakeInjector()
     }
+
+    override fun getAllIdentifiers(): Sequence<Identifier<*>> = dependencies.keys.asSequence()
 }
 
 internal class EnvironmentBasedIgnoringMetaScope(

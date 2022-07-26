@@ -14,9 +14,12 @@
 
 package guru.zoroark.tegral.di.test
 
+import guru.zoroark.tegral.di.dsl.tegralDi
+import guru.zoroark.tegral.di.extensions.EagerImmutableMetaEnvironment
 import guru.zoroark.tegral.di.test.environment.ExtensibleEnvironmentBaseTest
 import guru.zoroark.tegral.di.test.environment.NotExtensibleEnvironmentBaseTest
 import kotlin.test.Test
+import kotlin.test.assertFailsWith
 
 class TestUnsafeMutableEnvironment : ExtensibleEnvironmentBaseTest(::UnsafeMutableEnvironment) {
     @Test
@@ -30,5 +33,26 @@ class TestUnsafeMutableEnvironment : ExtensibleEnvironmentBaseTest(::UnsafeMutab
             UnsafeMutableEnvironment.MutableEnvironment(null, context)
         }) {}
         baseTest.runTests()
+    }
+
+    @Test
+    fun `Fails when using non-default meta environment`() {
+        assertFailsWith<NotAvailableInTestEnvironmentException>(
+            message = "Cannot create UnsafeMutableEnvironment with any meta environment other than " +
+                "UnsafeMutableEnvironment.Meta"
+        ) {
+            tegralDi(UnsafeMutableEnvironment, EagerImmutableMetaEnvironment) { }
+        }
+    }
+
+    @Test
+    fun `Cannot directly create meta env`() {
+        assertFailsWith<NotAvailableInTestEnvironmentException>(
+            message = "UnsafeMutableEnvironment.Meta environments cannot be created directly."
+        ) {
+            @Suppress("IMPLICIT_NOTHING_TYPE_ARGUMENT_IN_RETURN_POSITION") // That's normal
+            tegralDi(UnsafeMutableEnvironment.Meta) {
+            }
+        }
     }
 }

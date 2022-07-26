@@ -6,6 +6,7 @@ dependencies {
     api libs.hoplite.toml
     api libs.hoplite.yaml
     api libs.hoplite.json
+    implementation libs.jackson.dataformats.toml
 
     implementation project(":tegral-core")
 

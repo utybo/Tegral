@@ -33,6 +33,10 @@ public final class guru/zoroark/tegral/web/appdefaults/KeepAliveService : guru/z
 	public fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class guru/zoroark/tegral/web/appdefaults/LoggingOverridesKt {
+	public static final fun applyLoggingOverrides ()V
+}
+
 public final class guru/zoroark/tegral/web/appdefaults/TegralConfigurationContainer : guru/zoroark/tegral/config/core/RootConfig {
 	public fun <init> (Lguru/zoroark/tegral/config/core/TegralConfig;)V
 	public final fun component1 ()Lguru/zoroark/tegral/config/core/TegralConfig;

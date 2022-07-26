@@ -2,7 +2,7 @@ import PackageVersions from '@site/src/components/PackageVersions';
 
 # TW AppDSL
 
-Tegral Web AppDSL is the library that provides you wish an entrypoint to define your Tegral application as well as some routines for starting, stopping and maintaining Tegral Web applications.
+Tegral Web AppDSL is the library that provides an entrypoint to define your Tegral application as well as some routines for starting, stopping and maintaining Tegral Web applications.
 
 
 <PackageVersions libraries={[
@@ -113,7 +113,7 @@ AppDSL automatically creates a Tegral DI environment and adds the following comp
 
 - The application configuration (i.e. the class you pass to `useConfiguration` or `TegralConfigurationContainer` by default).
 - The `tegral` section of the application configuration (i.e. `TegralConfig`).
-- All of the installed features' `Feature` object.
+- All of the installed features' `Feature` object (added in the meta-environment).
 - Anything features do with the environment via their `install()` function.
 
 You will need to add your own components, modules, controllers and services to this environment using the [`put(...)` functions](/core/di/environment.md).
@@ -137,6 +137,21 @@ val app = tegral {
 }
 app.environment.get<MyComponent>().hello() // Hello!
 ```
+
+## Tegral block parameters
+
+There are a few parameters you can pass to the `tegral` block, like so:
+
+```kotlin
+tegral(/* parameters here! */) {
+    // ...
+}
+```
+
+These parameters are:
+
+- `enableLoggingOverrides` will call AppDefaults' default logging configuration (which configures logging levels and the default format). True by default.
+- `enableDefaults` will apply AppDefaults to this environment (outside of the logging, which is controlled by `enableLoggingOverrides`). True by default.
 
 ## Examples
 
