@@ -73,7 +73,8 @@ const sidebars = {
     'web/appdefaults/index',
     'web/controllers/index',
     'web/config/index',
-    'web/apptest/index'
+    'web/apptest/index',
+    'web/greeter/index'
   ],
   about: [
     'about/contributing',
