@@ -21,6 +21,8 @@ import guru.zoroark.tegral.di.services.services
 import guru.zoroark.tegral.logging.LoggerName
 import guru.zoroark.tegral.services.api.TegralService
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.slf4j.Logger
 
 // The Runtime object is exposed via DI like this to make testing easier.
@@ -37,6 +39,8 @@ class ShutdownHookService(scope: InjectionScope) : TegralService {
     private val logger: Logger by scope()
     private val env: ExtensibleInjectionEnvironment by scope.meta()
     private val runtimeProvider: RuntimeProvider by scope()
+    private val isStoppingMutex = Mutex()
+    private var isStopping = false
 
     private val shutdownHook = Thread {
         shutdownHookReceived()
@@ -49,11 +53,16 @@ class ShutdownHookService(scope: InjectionScope) : TegralService {
 
     internal fun shutdownHookReceived() {
         logger.info("Shutdown hook received, stopping application...")
-        runBlocking { env.services.stopAll { logger.info(it) } }
+        runBlocking {
+            isStoppingMutex.withLock { isStopping = true }
+            env.services.stopAll { logger.info(it) }
+        }
         logger.info("Application has been stopped.")
     }
 
     override suspend fun stop() {
-        // no-op
+        isStoppingMutex.withLock {
+            if (!isStopping) runtimeProvider.runtime.removeShutdownHook(shutdownHook)
+        }
     }
 }

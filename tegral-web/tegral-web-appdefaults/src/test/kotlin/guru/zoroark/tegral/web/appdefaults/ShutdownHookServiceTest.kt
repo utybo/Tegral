@@ -65,4 +65,26 @@ class ShutdownHookServiceTest : TegralSubjectTest<ShutdownHookService>(
 
         coVerify { mockService.stop() }
     }
+
+    @Test
+    fun `Hook is removed when stopping manually`(): Unit = test {
+        useServices()
+        val runtime = mockk<Runtime> {
+            every { addShutdownHook(any()) } just runs
+            every { removeShutdownHook(any()) } returns true
+        }
+        putMock<RuntimeProvider> {
+            every { this@putMock.runtime } returns runtime
+        }
+
+        subject.start()
+
+        coVerify(exactly = 1) { runtime.addShutdownHook(any()) }
+        coVerify(exactly = 0) { runtime.removeShutdownHook(any()) }
+
+        subject.stop()
+
+        coVerify(exactly = 1) { runtime.addShutdownHook(any()) }
+        coVerify(exactly = 1) { runtime.removeShutdownHook(any()) }
+    }
 }
