@@ -18,6 +18,7 @@ nodeGradle = "3.3.0"
 slf4j = "1.7.36"
 versions = "0.42.0"
 licenserPlugin = "0.6.1"
+swaggerCore = "2.2.1"
 
 [libraries]
 # Dependencies
@@ -49,6 +50,9 @@ jimfs = { module = "com.google.jimfs:jimfs", version.ref = "jimfs" }
 slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+
+swaggerCore-models = { module = "io.swagger.core.v3:swagger-models", version.ref = "swaggerCore" }
+swaggerCore-core = { module = "io.swagger.core.v3:swagger-core", version.ref = "swaggerCore" }
 
 # Test dependencies
 

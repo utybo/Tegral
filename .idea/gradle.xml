@@ -28,6 +28,8 @@
             <option value="$PROJECT_DIR$/tegral-di/tegral-di-test-mockk" />
             <option value="$PROJECT_DIR$/tegral-featureful" />
             <option value="$PROJECT_DIR$/tegral-logging" />
+            <option value="$PROJECT_DIR$/tegral-openapi" />
+            <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-dsl" />
             <option value="$PROJECT_DIR$/tegral-services" />
             <option value="$PROJECT_DIR$/tegral-services/tegral-services-api" />
             <option value="$PROJECT_DIR$/tegral-services/tegral-services-feature" />
@@ -65,6 +67,8 @@
                   <project path="$PROJECT_DIR$/tegral-di/tegral-di-test-mockk" />
                   <project path="$PROJECT_DIR$/tegral-featureful" />
                   <project path="$PROJECT_DIR$/tegral-logging" />
+                  <project path="$PROJECT_DIR$/tegral-openapi" />
+                  <project path="$PROJECT_DIR$/tegral-openapi/tegral-openapi-dsl" />
                   <project path="$PROJECT_DIR$/tegral-services" />
                   <project path="$PROJECT_DIR$/tegral-services/tegral-services-api" />
                   <project path="$PROJECT_DIR$/tegral-services/tegral-services-feature" />
@@ -75,6 +79,7 @@
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-config" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-controllers" />
                   <project path="$PROJECT_DIR$/tegral-web/tegral-web-controllers-test" />
+                  <project path="$PROJECT_DIR$/tegral-web/tegral-web-greeter" />
                   <project path="$PROJECT_DIR$/website" />
                 </projects>
               </build>
@@ -107,6 +112,8 @@
             <option value="$PROJECT_DIR$/tegral-di/tegral-di-test-mockk" />
             <option value="$PROJECT_DIR$/tegral-featureful" />
             <option value="$PROJECT_DIR$/tegral-logging" />
+            <option value="$PROJECT_DIR$/tegral-openapi" />
+            <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-dsl" />
             <option value="$PROJECT_DIR$/tegral-services" />
             <option value="$PROJECT_DIR$/tegral-services/tegral-services-api" />
             <option value="$PROJECT_DIR$/tegral-services/tegral-services-feature" />
@@ -117,6 +124,7 @@
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-config" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers" />
             <option value="$PROJECT_DIR$/tegral-web/tegral-web-controllers-test" />
+            <option value="$PROJECT_DIR$/tegral-web/tegral-web-greeter" />
             <option value="$PROJECT_DIR$/website" />
           </set>
         </option>
