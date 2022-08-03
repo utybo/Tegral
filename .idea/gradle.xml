@@ -29,7 +29,10 @@
             <option value="$PROJECT_DIR$/tegral-featureful" />
             <option value="$PROJECT_DIR$/tegral-logging" />
             <option value="$PROJECT_DIR$/tegral-openapi" />
+            <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-cli" />
             <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-dsl" />
+            <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-scriptdef" />
+            <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-scripthost" />
             <option value="$PROJECT_DIR$/tegral-services" />
             <option value="$PROJECT_DIR$/tegral-services/tegral-services-api" />
             <option value="$PROJECT_DIR$/tegral-services/tegral-services-feature" />
@@ -68,7 +71,10 @@
                   <project path="$PROJECT_DIR$/tegral-featureful" />
                   <project path="$PROJECT_DIR$/tegral-logging" />
                   <project path="$PROJECT_DIR$/tegral-openapi" />
+                  <project path="$PROJECT_DIR$/tegral-openapi/tegral-openapi-cli" />
                   <project path="$PROJECT_DIR$/tegral-openapi/tegral-openapi-dsl" />
+                  <project path="$PROJECT_DIR$/tegral-openapi/tegral-openapi-scriptdef" />
+                  <project path="$PROJECT_DIR$/tegral-openapi/tegral-openapi-scripthost" />
                   <project path="$PROJECT_DIR$/tegral-services" />
                   <project path="$PROJECT_DIR$/tegral-services/tegral-services-api" />
                   <project path="$PROJECT_DIR$/tegral-services/tegral-services-feature" />
@@ -113,7 +119,10 @@
             <option value="$PROJECT_DIR$/tegral-featureful" />
             <option value="$PROJECT_DIR$/tegral-logging" />
             <option value="$PROJECT_DIR$/tegral-openapi" />
+            <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-cli" />
             <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-dsl" />
+            <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-scriptdef" />
+            <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-scripthost" />
             <option value="$PROJECT_DIR$/tegral-services" />
             <option value="$PROJECT_DIR$/tegral-services/tegral-services-api" />
             <option value="$PROJECT_DIR$/tegral-services/tegral-services-feature" />

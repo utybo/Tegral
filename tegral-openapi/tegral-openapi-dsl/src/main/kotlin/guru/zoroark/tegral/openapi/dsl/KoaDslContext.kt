@@ -1,5 +1,6 @@
 package guru.zoroark.tegral.openapi.dsl
 
+import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.media.Schema
 import kotlin.reflect.KType
 
@@ -15,4 +16,6 @@ interface KoaDslContext {
      * The schema will be returned as a '$ref', while the actual components are stored inside the context.
      */
     fun computeAndRegisterSchema(type: KType): Schema<*>
+
+    fun persistTo(openApi: OpenAPI)
 }

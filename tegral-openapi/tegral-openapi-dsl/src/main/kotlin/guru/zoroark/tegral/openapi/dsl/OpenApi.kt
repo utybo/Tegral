@@ -6,6 +6,9 @@ import io.swagger.v3.core.converter.AnnotatedType
 import io.swagger.v3.core.converter.ModelConverterContextImpl
 import io.swagger.v3.core.converter.ModelConverters
 import io.swagger.v3.core.util.Json
+import io.swagger.v3.core.util.Json31
+import io.swagger.v3.core.util.Yaml
+import io.swagger.v3.core.util.Yaml31
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.media.Schema
@@ -19,7 +22,7 @@ private fun KType.toJacksonType(mapper: ObjectMapper): JavaType =
 private fun KType.toAnnotatedTypeAsRef(mapper: ObjectMapper): AnnotatedType {
     val type = toJacksonType(mapper)
     // We want to get a reference in the resulting type, so we'll set resolveAsRef (this also dodges a strange behavior
-    // from the model converter which returns null when encountering "top-level" collections)
+    // from the model converter which returns null when encountering "top-level" collections, e.g. List<Foo>)
     return AnnotatedType().type(type).resolveAsRef(true)
 }
 
@@ -38,6 +41,16 @@ class SimpleDslContext : KoaDslContext {
     fun getStoredSchemas(): Map<String, Schema<*>> {
         return context.definedModels
     }
+
+    override fun persistTo(openApi: OpenAPI) {
+        if (openApi.components == null) {
+            openApi.components = Components()
+        }
+
+        for ((name, schema) in context.definedModels.entries.sortedBy { it.key }) {
+            openApi.components.addSchemas(name, schema)
+        }
+    }
 }
 
 @KoaDsl
@@ -47,13 +60,21 @@ fun openApi(builder: RootBuilder.() -> Unit): OpenAPI {
     root.builder()
 
     val openApi = root.build()
-    if (openApi.components == null) {
-        openApi.components = Components()
-    }
-
-    for ((name, schema) in context.getStoredSchemas().entries.sortedBy { it.key }) {
-        openApi.components.addSchemas(name, schema)
-    }
-
+    context.persistTo(openApi)
     return openApi
+}
+
+enum class OpenApiVersion {
+    V3_0,
+    V3_1
+}
+
+fun OpenAPI.toJson(version: OpenApiVersion = OpenApiVersion.V3_0): String = when (version) {
+    OpenApiVersion.V3_0 -> Json.mapper().writeValueAsString(this)
+    OpenApiVersion.V3_1 -> Json31.mapper().writeValueAsString(this)
+}
+
+fun OpenAPI.toYaml(version: OpenApiVersion = OpenApiVersion.V3_0): String = when (version) {
+    OpenApiVersion.V3_0 -> Yaml.mapper().writeValueAsString(this)
+    OpenApiVersion.V3_1 -> Yaml31.mapper().writeValueAsString(this)
 }
