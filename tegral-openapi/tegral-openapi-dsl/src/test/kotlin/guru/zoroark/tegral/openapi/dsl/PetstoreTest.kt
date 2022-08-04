@@ -81,9 +81,7 @@ fun petstore() = openApi {
 
     //#region Metadata
 
-    servers {
-        "/v3" { }
-    }
+    "/v3" server { }
 
     description = """
         This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about
@@ -460,12 +458,6 @@ fun petstore() = openApi {
     //#endregion
 }
 
-data class TestBlah(
-    val list: List<Int>
-)
-
-data class Foo(val str: String)
-
 class PetstoreTest {
     private fun loadPetstoreFromResources(): OpenAPI {
         val petstoreJson =
@@ -494,6 +486,7 @@ class PetstoreTest {
         assertEquals(expected.paths, actual.paths)
         assertEquals(expected.components, actual.components)
 
-        return assertEquals(expected, actual)
+        // And also assert the entire thing (for real).
+        assertEquals(expected, actual)
     }
 }

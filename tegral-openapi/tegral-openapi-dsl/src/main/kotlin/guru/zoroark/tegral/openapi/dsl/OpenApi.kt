@@ -43,12 +43,12 @@ class SimpleDslContext : KoaDslContext {
     }
 
     override fun persistTo(openApi: OpenAPI) {
-        if (openApi.components == null) {
-            openApi.components = Components()
-        }
+        if (context.definedModels.isNotEmpty()) {
+            if (openApi.components == null) openApi.components = Components()
 
-        for ((name, schema) in context.definedModels.entries.sortedBy { it.key }) {
-            openApi.components.addSchemas(name, schema)
+            for ((name, schema) in context.definedModels.entries.sortedBy { it.key }) {
+                openApi.components.addSchemas(name, schema)
+            }
         }
     }
 }
