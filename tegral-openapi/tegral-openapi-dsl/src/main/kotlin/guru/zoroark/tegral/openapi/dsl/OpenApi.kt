@@ -64,9 +64,9 @@ fun openApi(builder: RootBuilder.() -> Unit): OpenAPI {
     return openApi
 }
 
-enum class OpenApiVersion {
-    V3_0,
-    V3_1
+enum class OpenApiVersion(val version: String) {
+    V3_0("3.0"),
+    V3_1("3.1")
 }
 
 fun OpenAPI.toJson(version: OpenApiVersion = OpenApiVersion.V3_0): String = when (version) {
@@ -75,6 +75,6 @@ fun OpenAPI.toJson(version: OpenApiVersion = OpenApiVersion.V3_0): String = when
 }
 
 fun OpenAPI.toYaml(version: OpenApiVersion = OpenApiVersion.V3_0): String = when (version) {
-    OpenApiVersion.V3_0 -> Yaml.mapper().writeValueAsString(this)
-    OpenApiVersion.V3_1 -> Yaml31.mapper().writeValueAsString(this)
+    OpenApiVersion.V3_0 -> Yaml.pretty(this)
+    OpenApiVersion.V3_1 -> Yaml31.pretty(this)
 }

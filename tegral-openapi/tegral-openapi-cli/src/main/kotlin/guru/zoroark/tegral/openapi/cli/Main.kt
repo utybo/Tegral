@@ -2,9 +2,17 @@ package guru.zoroark.tegral.openapi.cli
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.arguments.argument
+import com.github.ajalt.clikt.parameters.options.default
+import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
+import com.github.ajalt.clikt.parameters.types.enum
+import com.github.ajalt.clikt.parameters.types.file
+import com.github.ajalt.clikt.parameters.types.path
+import guru.zoroark.tegral.openapi.dsl.OpenApiVersion
 import guru.zoroark.tegral.openapi.dsl.toJson
+import guru.zoroark.tegral.openapi.dsl.toYaml
 import guru.zoroark.tegral.openapi.scripthost.OpenApiScriptHost
+import io.swagger.v3.oas.models.OpenAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -14,33 +22,51 @@ import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
-import kotlin.io.path.exists
 import kotlin.script.experimental.api.ResultWithDiagnostics
 import kotlin.script.experimental.api.ScriptDiagnostic
 
-class DumpJson : CliktCommand() {
-    val file by argument()
-    val output by option("--output", "-o", help = "Output file")
+enum class Format {
+    JSON,
+    YAML;
+
+    operator fun invoke(value: OpenAPI, version: OpenApiVersion): String =
+        when (this) {
+            JSON -> value.toJson(version)
+            YAML -> value.toYaml(version)
+        }
+}
+
+class TegralOpenApiCli : CliktCommand(name = "tegral-openapi-cli") {
+    private val file by argument().file(mustExist = true, canBeDir = false, mustBeReadable = true)
+    private val output by option("--output", "-o", help = "Output file").path(canBeDir = false)
+    private val quiet by option("--quiet", "-q").flag(default = false)
+    private val format by option("--format", "-f", help = "Output format")
+        .enum<Format> { it.name.lowercase() }
+        .default(Format.JSON)
+    private val version by option("--openapi-version", "-a", help = "OpenAPI version")
+        .enum<OpenApiVersion> { it.version }
+        .default(OpenApiVersion.V3_0)
 
     private val logger = LoggerFactory.getLogger("openapi.dump")
 
     override fun run(): Unit = runBlocking {
-        val fileObject = File(file)
-        val openapi = OpenApiScriptHost.compileScript(fileObject, logger::info)
+        applyMinimalistLoggingOverrides(quiet = quiet)
+        val openapi = OpenApiScriptHost.compileScript(file, logger::info)
+        val compileLogger = LoggerFactory.getLogger("compiler")
+        openapi.reports.forEach {
+            val actualMessage = it.toFullMessage(file)
+            compileLogger.logWithSeverity(it.severity, actualMessage)
+        }
         if (openapi is ResultWithDiagnostics.Success) {
+            val str = format(openapi.value, version)
             val outFile = output
             if (outFile == null) {
-                logger.info("Output:\n" + openapi.value.toJson())
+                println(str)
             } else {
                 withContext(Dispatchers.IO) {
-                    Files.writeString(Path.of(outFile), openapi.value.toJson(), StandardOpenOption.CREATE)
+                    Files.writeString(outFile, str, StandardOpenOption.CREATE)
                 }
-            }
-        } else {
-            val compileLogger = LoggerFactory.getLogger("compiler")
-            openapi.reports.forEach {
-                val actualMessage = it.toFullMessage(fileObject)
-                compileLogger.logWithSeverity(it.severity, actualMessage)
+                logger.info("Output written to ${outFile.toAbsolutePath()}")
             }
         }
     }
@@ -50,12 +76,16 @@ private fun Logger.logWithSeverity(severity: ScriptDiagnostic.Severity, actualMe
     when (severity) {
         ScriptDiagnostic.Severity.DEBUG ->
             debug(actualMessage)
+
         ScriptDiagnostic.Severity.INFO ->
             info(actualMessage)
+
         ScriptDiagnostic.Severity.WARNING ->
             warn(actualMessage)
+
         ScriptDiagnostic.Severity.ERROR ->
             error(actualMessage)
+
         ScriptDiagnostic.Severity.FATAL ->
             error(actualMessage)
     }
@@ -68,7 +98,4 @@ private fun ScriptDiagnostic.toFullMessage(fileObj: File): String =
         message
     }
 
-fun main(args: Array<String>) {
-    applyMinimalistLoggingOverrides()
-    DumpJson().main(args)
-}
+fun main(args: Array<String>) = TegralOpenApiCli().main(args)

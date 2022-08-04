@@ -9,6 +9,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.ConsoleAppender
 import ch.qos.logback.core.LayoutBase
 import ch.qos.logback.core.encoder.LayoutWrappingEncoder
+import ch.qos.logback.core.pattern.color.ANSIConstants
 import org.slf4j.LoggerFactory
 
 class MinimalistLogs : LayoutBase<ILoggingEvent>() {
@@ -19,18 +20,21 @@ class MinimalistLogs : LayoutBase<ILoggingEvent>() {
 
     override fun doLayout(event: ILoggingEvent): String =
         buildString {
+            appendPreLevelSymbol(event.level)
             append('[')
             append(event.level.asCharacter())
             append("] ")
+            appendPostLevelSymbol(event.level)
             append(event.loggerName.resize(20))
             append(" - ")
             append(event.formattedMessage.replace("\n", "\n    "))
             append("\n")
             val throwableProxy = event.throwableProxy
             if (throwableProxy != null) {
-                val rawMessage = throwableProxyConverter.convert(event).replace(System.lineSeparator(), "\n    ");
+                val rawMessage = throwableProxyConverter.convert(event).replace(System.lineSeparator(), "\n    ")
                 append("    $rawMessage")
             }
+            appendPostMessage(event.level)
         }
 
     private fun Level.asCharacter() = when (this) {
@@ -51,12 +55,42 @@ class MinimalistLogs : LayoutBase<ILoggingEvent>() {
             str
         }
     }
+
+    // https://en.wikipedia.org/wiki/ANSI_escape_code#SGR
+    private fun sgr(content: String) = 0x1B.toChar() + "[" + content + "m"
+    private val grayFg = "37"
+    private val redFg = "31"
+    private val yellowFg = "33"
+    private val blueFg = "94"
+    private val reset = "0"
+
+    private fun StringBuilder.appendPreLevelSymbol(level: Level) {
+        when(level) {
+            Level.TRACE -> append(sgr(grayFg))
+            Level.DEBUG -> append(sgr(grayFg))
+            Level.INFO -> append(sgr(blueFg))
+            Level.WARN -> append(sgr(yellowFg))
+            Level.ERROR -> append(sgr(redFg))
+        }
+    }
+
+    private fun StringBuilder.appendPostLevelSymbol(level: Level) {
+        if (level == Level.INFO) {
+            append(sgr(reset))
+        }
+    }
+
+    private fun StringBuilder.appendPostMessage(level: Level) {
+        if (level in setOf(Level.TRACE, Level.DEBUG, Level.WARN, Level.DEBUG)) {
+            append(sgr(reset))
+        }
+    }
 }
 
-fun applyMinimalistLoggingOverrides() {
+fun applyMinimalistLoggingOverrides(quiet: Boolean = false) {
     val ctx = (LoggerFactory.getILoggerFactory() as LoggerContext)
     val rootLogger = ctx.getLogger(Logger.ROOT_LOGGER_NAME)
-    rootLogger.level = Level.INFO
+    rootLogger.level = if (quiet) Level.ERROR else Level.INFO
 
     val le = LayoutWrappingEncoder<ILoggingEvent>().apply {
         context = ctx
