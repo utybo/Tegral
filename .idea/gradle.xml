@@ -8,7 +8,7 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="/usr/share/java/gradle" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -31,6 +31,7 @@
             <option value="$PROJECT_DIR$/tegral-openapi" />
             <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-cli" />
             <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-dsl" />
+            <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-ktor" />
             <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-scriptdef" />
             <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-scripthost" />
             <option value="$PROJECT_DIR$/tegral-services" />
@@ -73,6 +74,7 @@
                   <project path="$PROJECT_DIR$/tegral-openapi" />
                   <project path="$PROJECT_DIR$/tegral-openapi/tegral-openapi-cli" />
                   <project path="$PROJECT_DIR$/tegral-openapi/tegral-openapi-dsl" />
+                  <project path="$PROJECT_DIR$/tegral-openapi/tegral-openapi-ktor" />
                   <project path="$PROJECT_DIR$/tegral-openapi/tegral-openapi-scriptdef" />
                   <project path="$PROJECT_DIR$/tegral-openapi/tegral-openapi-scripthost" />
                   <project path="$PROJECT_DIR$/tegral-services" />
@@ -96,7 +98,6 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/samples/stage-1" />
-        <option name="gradleHome" value="/usr/share/java/gradle" />
         <option name="gradleJvm" value="17" />
         <option name="modules">
           <set>
@@ -121,6 +122,7 @@
             <option value="$PROJECT_DIR$/tegral-openapi" />
             <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-cli" />
             <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-dsl" />
+            <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-ktor" />
             <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-scriptdef" />
             <option value="$PROJECT_DIR$/tegral-openapi/tegral-openapi-scripthost" />
             <option value="$PROJECT_DIR$/tegral-services" />
