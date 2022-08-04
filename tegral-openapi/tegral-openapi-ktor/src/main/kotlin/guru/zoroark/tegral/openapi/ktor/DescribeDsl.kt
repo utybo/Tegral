@@ -31,14 +31,14 @@ infix fun Route.describe(description: OperationDsl.() -> Unit): Route {
     return this
 }
 
-data class EndpointMetadata(
-    val httpMethod: HttpMethod? = null,
-    val httpPath: List<String> = listOf()
+internal data class EndpointMetadata(
+    val httpMethod: HttpMethod?,
+    val httpPath: List<String>
 )
 
 internal data class MutableEndpointMetadata(
-    var httpMethod: HttpMethod? = null,
-    val httpPath: MutableList<String> = LinkedList()
+    var httpMethod: HttpMethod?,
+    val httpPath: MutableList<String>
 ) {
     fun freeze() = EndpointMetadata(httpMethod, httpPath.toList())
 }
@@ -60,5 +60,5 @@ internal tailrec fun parseMutableMetadataFromSelector(route: Route?, metadata: M
 }
 
 internal fun parseMetadataFromRoute(route: Route): EndpointMetadata {
-    return MutableEndpointMetadata().apply { parseMutableMetadataFromSelector(route, this) }.freeze()
+    return MutableEndpointMetadata(null, LinkedList()).apply { parseMutableMetadataFromSelector(route, this) }.freeze()
 }
