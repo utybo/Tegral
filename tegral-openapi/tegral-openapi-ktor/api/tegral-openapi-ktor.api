@@ -2,6 +2,10 @@ public final class guru/zoroark/tegral/openapi/ktor/DescribeDslKt {
 	public static final fun describe (Lio/ktor/server/routing/Route;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/routing/Route;
 }
 
+public final class guru/zoroark/tegral/openapi/ktor/OpenApiEndpointKt {
+	public static final fun openApiEndpoint (Lio/ktor/server/routing/Route;Ljava/lang/String;)Lio/ktor/server/routing/Route;
+}
+
 public final class guru/zoroark/tegral/openapi/ktor/TegralOpenApiKtor {
 	public static final field Plugin Lguru/zoroark/tegral/openapi/ktor/TegralOpenApiKtor$Plugin;
 	public fun <init> ()V

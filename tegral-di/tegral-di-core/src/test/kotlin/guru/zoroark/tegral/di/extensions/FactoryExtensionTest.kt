@@ -103,7 +103,7 @@ class FactoryExtensionTest {
                 factoryCallCount++
                 A((requester as WhatIsYourA).name)
             }
-            putFactory { requester -> mockk<Logger>() } // Required for the eager environment to work.
+            putFactory { mockk<Logger>() } // Required for the eager environment to work.
             put(::B)
             put(::C)
             put(::D)

@@ -149,6 +149,7 @@ public final class guru/zoroark/tegral/openapi/dsl/OpenApiKt {
 	public static final fun openApi (Lkotlin/jvm/functions/Function1;)Lio/swagger/v3/oas/models/OpenAPI;
 	public static final fun toJson (Lio/swagger/v3/oas/models/OpenAPI;Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;)Ljava/lang/String;
 	public static synthetic fun toJson$default (Lio/swagger/v3/oas/models/OpenAPI;Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun toOpenApi31 (Lio/swagger/v3/oas/models/OpenAPI;)Lio/swagger/v3/oas/models/OpenAPI;
 	public static final fun toYaml (Lio/swagger/v3/oas/models/OpenAPI;Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;)Ljava/lang/String;
 	public static synthetic fun toYaml$default (Lio/swagger/v3/oas/models/OpenAPI;Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;ILjava/lang/Object;)Ljava/lang/String;
 }

@@ -19,7 +19,7 @@ package guru.zoroark.tegral.openapi.dsl
  */
 enum class OpenApiVersion(
     /**
-     * The string that represents this version. This is only used in the CLI to provide a better "syntax choice".
+     * The string that represents this version, in x.y format.
      */
     val version: String
 ) {
