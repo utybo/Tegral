@@ -37,10 +37,9 @@ class ResponseBuilder(context: KoaDslContext) : BodyBuilder(context), ResponseDs
     override fun build(): ApiResponse = ApiResponse().apply {
         description(this@ResponseBuilder.description)
         if (this@ResponseBuilder.content.isNotEmpty()) {
-            content = Content().apply {
-                for ((typeString, typeBuilder) in this@ResponseBuilder.content) {
-                    addMediaType(typeString, typeBuilder.build())
-                }
+            content = Content()
+            for ((typeString, typeBuilder) in this@ResponseBuilder.content) {
+                content.addMediaType(typeString, typeBuilder.build())
             }
         }
     }

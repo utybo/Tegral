@@ -1,0 +1,540 @@
+public abstract class guru/zoroark/tegral/openapi/dsl/BodyBuilder : guru/zoroark/tegral/openapi/dsl/BodyDsl {
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;)V
+	public fun content (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun getContent ()Ljava/util/List;
+	protected final fun getContext ()Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;
+	public fun getForm-oRZ81Xs ()Ljava/lang/String;
+	public fun getJson-oRZ81Xs ()Ljava/lang/String;
+	public fun getPlainText-oRZ81Xs ()Ljava/lang/String;
+	public fun getXml-oRZ81Xs ()Ljava/lang/String;
+	public fun invoke-9fd8wws (Ljava/util/List;Lkotlin/jvm/functions/Function1;)V
+	public fun invoke-VTEgvPo (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/BodyDsl : guru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl {
+	public abstract fun content (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun getContent ()Ljava/util/List;
+	public abstract fun invoke-9fd8wws (Ljava/util/List;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun invoke-VTEgvPo (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/BodyDsl$DefaultImpls {
+	public static fun getForm-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;)Ljava/lang/String;
+	public static fun getJson-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;)Ljava/lang/String;
+	public static fun getPlainText-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;)Ljava/lang/String;
+	public static fun getXml-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;)Ljava/lang/String;
+	public static fun invoke-9fd8wws (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;Ljava/util/List;Lkotlin/jvm/functions/Function1;)V
+	public static fun invoke-VTEgvPo (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/Builder {
+	public abstract fun build ()Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/ContentType {
+	public static final synthetic fun box-impl (Ljava/lang/String;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun constructor-impl (Ljava/lang/String;)Ljava/lang/String;
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Ljava/lang/String;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Ljava/lang/String;Ljava/lang/String;)Z
+	public final fun getContentType ()Ljava/lang/String;
+	public fun hashCode ()I
+	public static fun hashCode-impl (Ljava/lang/String;)I
+	public static final fun or-fzrcP2w (Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Ljava/lang/String;)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/InfoBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/InfoDsl {
+	public fun <init> ()V
+	public fun build ()Lio/swagger/v3/oas/models/info/Info;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun getContactEmail ()Ljava/lang/String;
+	public fun getContactName ()Ljava/lang/String;
+	public fun getContactUrl ()Ljava/lang/String;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getLicenseIdentifier ()Ljava/lang/String;
+	public fun getLicenseName ()Ljava/lang/String;
+	public fun getLicenseUrl ()Ljava/lang/String;
+	public fun getSummary ()Ljava/lang/String;
+	public fun getTermsOfService ()Ljava/lang/String;
+	public fun getTitle ()Ljava/lang/String;
+	public fun getVersion ()Ljava/lang/String;
+	public fun setContactEmail (Ljava/lang/String;)V
+	public fun setContactName (Ljava/lang/String;)V
+	public fun setContactUrl (Ljava/lang/String;)V
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setLicenseIdentifier (Ljava/lang/String;)V
+	public fun setLicenseName (Ljava/lang/String;)V
+	public fun setLicenseUrl (Ljava/lang/String;)V
+	public fun setSummary (Ljava/lang/String;)V
+	public fun setTermsOfService (Ljava/lang/String;)V
+	public fun setTitle (Ljava/lang/String;)V
+	public fun setVersion (Ljava/lang/String;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/InfoDsl {
+	public abstract fun getContactEmail ()Ljava/lang/String;
+	public abstract fun getContactName ()Ljava/lang/String;
+	public abstract fun getContactUrl ()Ljava/lang/String;
+	public abstract fun getDescription ()Ljava/lang/String;
+	public abstract fun getLicenseIdentifier ()Ljava/lang/String;
+	public abstract fun getLicenseName ()Ljava/lang/String;
+	public abstract fun getLicenseUrl ()Ljava/lang/String;
+	public abstract fun getSummary ()Ljava/lang/String;
+	public abstract fun getTermsOfService ()Ljava/lang/String;
+	public abstract fun getTitle ()Ljava/lang/String;
+	public abstract fun getVersion ()Ljava/lang/String;
+	public abstract fun setContactEmail (Ljava/lang/String;)V
+	public abstract fun setContactName (Ljava/lang/String;)V
+	public abstract fun setContactUrl (Ljava/lang/String;)V
+	public abstract fun setDescription (Ljava/lang/String;)V
+	public abstract fun setLicenseIdentifier (Ljava/lang/String;)V
+	public abstract fun setLicenseName (Ljava/lang/String;)V
+	public abstract fun setLicenseUrl (Ljava/lang/String;)V
+	public abstract fun setSummary (Ljava/lang/String;)V
+	public abstract fun setTermsOfService (Ljava/lang/String;)V
+	public abstract fun setTitle (Ljava/lang/String;)V
+	public abstract fun setVersion (Ljava/lang/String;)V
+}
+
+public abstract interface annotation class guru/zoroark/tegral/openapi/dsl/KoaDsl : java/lang/annotation/Annotation {
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/KoaDslContext {
+	public abstract fun computeAndRegisterSchema (Lkotlin/reflect/KType;)Lio/swagger/v3/oas/models/media/Schema;
+	public abstract fun persistTo (Lio/swagger/v3/oas/models/OpenAPI;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/MediaTypeBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/MediaTypeDsl {
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;)V
+	public fun build ()Lio/swagger/v3/oas/models/media/MediaType;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun getExample ()Ljava/lang/Object;
+	public fun getSchema ()Lio/swagger/v3/oas/models/media/Schema;
+	public fun schema (Lkotlin/reflect/KType;)V
+	public fun setExample (Ljava/lang/Object;)V
+	public fun setSchema (Lio/swagger/v3/oas/models/media/Schema;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/MediaTypeDsl {
+	public abstract fun getExample ()Ljava/lang/Object;
+	public abstract fun getSchema ()Lio/swagger/v3/oas/models/media/Schema;
+	public abstract fun schema (Lkotlin/reflect/KType;)V
+	public abstract fun setExample (Ljava/lang/Object;)V
+	public abstract fun setSchema (Lio/swagger/v3/oas/models/media/Schema;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/MediaTypeDslKt {
+	public static final fun schema (Lguru/zoroark/tegral/openapi/dsl/MediaTypeDsl;Lkotlin/reflect/KType;Ljava/lang/Object;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/MultiContentType {
+	public static final synthetic fun box-impl (Ljava/util/List;)Lguru/zoroark/tegral/openapi/dsl/MultiContentType;
+	public static fun constructor-impl (Ljava/util/List;)Ljava/util/List;
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Ljava/util/List;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Ljava/util/List;Ljava/util/List;)Z
+	public final fun getTypes ()Ljava/util/List;
+	public fun hashCode ()I
+	public static fun hashCode-impl (Ljava/util/List;)I
+	public static final fun or-fzrcP2w (Ljava/util/List;Ljava/lang/String;)Ljava/util/List;
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Ljava/util/List;)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()Ljava/util/List;
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/OpenApiKt {
+	public static final fun openApi (Lkotlin/jvm/functions/Function1;)Lio/swagger/v3/oas/models/OpenAPI;
+	public static final fun toJson (Lio/swagger/v3/oas/models/OpenAPI;Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;)Ljava/lang/String;
+	public static synthetic fun toJson$default (Lio/swagger/v3/oas/models/OpenAPI;Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun toYaml (Lio/swagger/v3/oas/models/OpenAPI;Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;)Ljava/lang/String;
+	public static synthetic fun toYaml$default (Lio/swagger/v3/oas/models/OpenAPI;Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;ILjava/lang/Object;)Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/OpenApiVersion : java/lang/Enum {
+	public static final field V3_0 Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;
+	public static final field V3_1 Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;
+	public final fun getVersion ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;
+	public static fun values ()[Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/OperationBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/OperationDsl {
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;)V
+	public fun body (Lkotlin/jvm/functions/Function1;)V
+	public fun build ()Lio/swagger/v3/oas/models/Operation;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun cookieParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun getDeprecated ()Ljava/lang/Boolean;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getExternalDocsDescription ()Ljava/lang/String;
+	public fun getExternalDocsUrl ()Ljava/lang/String;
+	public fun getOperationId ()Ljava/lang/String;
+	public fun getParameters ()Ljava/util/List;
+	public fun getRequestBody ()Lguru/zoroark/tegral/openapi/dsl/RequestBodyBuilder;
+	public fun getResponses ()Ljava/util/Map;
+	public fun getSecurityRequirements ()Ljava/util/List;
+	public fun getSummary ()Ljava/lang/String;
+	public fun getTags ()Ljava/util/List;
+	public fun headerParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun pathParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun queryParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun response (ILkotlin/jvm/functions/Function1;)V
+	public fun security (Ljava/lang/String;)V
+	public fun security (Ljava/lang/String;[Ljava/lang/String;)V
+	public fun setDeprecated (Ljava/lang/Boolean;)V
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setExternalDocsDescription (Ljava/lang/String;)V
+	public fun setExternalDocsUrl (Ljava/lang/String;)V
+	public fun setOperationId (Ljava/lang/String;)V
+	public fun setRequestBody (Lguru/zoroark/tegral/openapi/dsl/RequestBodyBuilder;)V
+	public fun setSummary (Ljava/lang/String;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/OperationDsl {
+	public abstract fun body (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun cookieParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun getDeprecated ()Ljava/lang/Boolean;
+	public abstract fun getDescription ()Ljava/lang/String;
+	public abstract fun getExternalDocsDescription ()Ljava/lang/String;
+	public abstract fun getExternalDocsUrl ()Ljava/lang/String;
+	public abstract fun getOperationId ()Ljava/lang/String;
+	public abstract fun getParameters ()Ljava/util/List;
+	public abstract fun getRequestBody ()Lguru/zoroark/tegral/openapi/dsl/RequestBodyBuilder;
+	public abstract fun getResponses ()Ljava/util/Map;
+	public abstract fun getSecurityRequirements ()Ljava/util/List;
+	public abstract fun getSummary ()Ljava/lang/String;
+	public abstract fun getTags ()Ljava/util/List;
+	public abstract fun headerParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun pathParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun queryParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun response (ILkotlin/jvm/functions/Function1;)V
+	public abstract fun security (Ljava/lang/String;)V
+	public abstract fun security (Ljava/lang/String;[Ljava/lang/String;)V
+	public abstract fun setDeprecated (Ljava/lang/Boolean;)V
+	public abstract fun setDescription (Ljava/lang/String;)V
+	public abstract fun setExternalDocsDescription (Ljava/lang/String;)V
+	public abstract fun setExternalDocsUrl (Ljava/lang/String;)V
+	public abstract fun setOperationId (Ljava/lang/String;)V
+	public abstract fun setRequestBody (Lguru/zoroark/tegral/openapi/dsl/RequestBodyBuilder;)V
+	public abstract fun setSummary (Ljava/lang/String;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/ParameterBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/ParameterDsl {
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;Ljava/lang/String;Lguru/zoroark/tegral/openapi/dsl/ParameterKind;)V
+	public fun build ()Lio/swagger/v3/oas/models/parameters/Parameter;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun getAllowEmptyValue ()Ljava/lang/Boolean;
+	public fun getAllowReserved ()Ljava/lang/Boolean;
+	public fun getDeprecated ()Ljava/lang/Boolean;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getExample ()Ljava/lang/Object;
+	public fun getExplode ()Ljava/lang/Boolean;
+	public fun getKind ()Lguru/zoroark/tegral/openapi/dsl/ParameterKind;
+	public fun getName ()Ljava/lang/String;
+	public fun getRequired ()Ljava/lang/Boolean;
+	public fun getSchema ()Lio/swagger/v3/oas/models/media/Schema;
+	public fun getStyle ()Lio/swagger/v3/oas/models/parameters/Parameter$StyleEnum;
+	public fun required ()V
+	public fun schema (Lkotlin/reflect/KType;)V
+	public fun setAllowEmptyValue (Ljava/lang/Boolean;)V
+	public fun setAllowReserved (Ljava/lang/Boolean;)V
+	public fun setDeprecated (Ljava/lang/Boolean;)V
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setExample (Ljava/lang/Object;)V
+	public fun setExplode (Ljava/lang/Boolean;)V
+	public fun setRequired (Ljava/lang/Boolean;)V
+	public fun setSchema (Lio/swagger/v3/oas/models/media/Schema;)V
+	public fun setStyle (Lio/swagger/v3/oas/models/parameters/Parameter$StyleEnum;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/ParameterDsl : guru/zoroark/tegral/openapi/dsl/MediaTypeDsl {
+	public abstract fun getAllowEmptyValue ()Ljava/lang/Boolean;
+	public abstract fun getAllowReserved ()Ljava/lang/Boolean;
+	public abstract fun getDeprecated ()Ljava/lang/Boolean;
+	public abstract fun getDescription ()Ljava/lang/String;
+	public abstract fun getExplode ()Ljava/lang/Boolean;
+	public abstract fun getKind ()Lguru/zoroark/tegral/openapi/dsl/ParameterKind;
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun getRequired ()Ljava/lang/Boolean;
+	public abstract fun getStyle ()Lio/swagger/v3/oas/models/parameters/Parameter$StyleEnum;
+	public abstract fun required ()V
+	public abstract fun setAllowEmptyValue (Ljava/lang/Boolean;)V
+	public abstract fun setAllowReserved (Ljava/lang/Boolean;)V
+	public abstract fun setDeprecated (Ljava/lang/Boolean;)V
+	public abstract fun setDescription (Ljava/lang/String;)V
+	public abstract fun setExplode (Ljava/lang/Boolean;)V
+	public abstract fun setRequired (Ljava/lang/Boolean;)V
+	public abstract fun setStyle (Lio/swagger/v3/oas/models/parameters/Parameter$StyleEnum;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/ParameterDsl$DefaultImpls {
+	public static fun required (Lguru/zoroark/tegral/openapi/dsl/ParameterDsl;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/ParameterKind : java/lang/Enum {
+	public static final field Cookie Lguru/zoroark/tegral/openapi/dsl/ParameterKind;
+	public static final field Header Lguru/zoroark/tegral/openapi/dsl/ParameterKind;
+	public static final field Path Lguru/zoroark/tegral/openapi/dsl/ParameterKind;
+	public static final field Query Lguru/zoroark/tegral/openapi/dsl/ParameterKind;
+	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/openapi/dsl/ParameterKind;
+	public static fun values ()[Lguru/zoroark/tegral/openapi/dsl/ParameterKind;
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/PathBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/PathDsl {
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;)V
+	public fun build ()Lio/swagger/v3/oas/models/PathItem;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun delete (Lkotlin/jvm/functions/Function1;)V
+	public fun get (Lkotlin/jvm/functions/Function1;)V
+	public fun head (Lkotlin/jvm/functions/Function1;)V
+	public fun options (Lkotlin/jvm/functions/Function1;)V
+	public fun patch (Lkotlin/jvm/functions/Function1;)V
+	public fun post (Lkotlin/jvm/functions/Function1;)V
+	public fun put (Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/PathDsl {
+	public abstract fun delete (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun get (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun head (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun options (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun patch (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun post (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun put (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/PathsBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/PathsDsl {
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;)V
+	public fun build ()Lio/swagger/v3/oas/models/Paths;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun delete (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun get (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun head (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun invoke (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun options (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun patch (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun post (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun put (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/PathsDsl {
+	public abstract fun delete (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun get (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun head (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun invoke (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun options (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun patch (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun post (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun put (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl {
+	public abstract fun getForm-oRZ81Xs ()Ljava/lang/String;
+	public abstract fun getJson-oRZ81Xs ()Ljava/lang/String;
+	public abstract fun getPlainText-oRZ81Xs ()Ljava/lang/String;
+	public abstract fun getXml-oRZ81Xs ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl$DefaultImpls {
+	public static fun getForm-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl;)Ljava/lang/String;
+	public static fun getJson-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl;)Ljava/lang/String;
+	public static fun getPlainText-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl;)Ljava/lang/String;
+	public static fun getXml-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl;)Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/RequestBodyBuilder : guru/zoroark/tegral/openapi/dsl/BodyBuilder, guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/RequestBodyDsl {
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;)V
+	public fun build ()Lio/swagger/v3/oas/models/parameters/RequestBody;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getRequired ()Ljava/lang/Boolean;
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setRequired (Ljava/lang/Boolean;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/RequestBodyDsl : guru/zoroark/tegral/openapi/dsl/BodyDsl {
+	public abstract fun getDescription ()Ljava/lang/String;
+	public abstract fun getRequired ()Ljava/lang/Boolean;
+	public abstract fun setDescription (Ljava/lang/String;)V
+	public abstract fun setRequired (Ljava/lang/Boolean;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/RequestBodyDsl$DefaultImpls {
+	public static fun getForm-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;)Ljava/lang/String;
+	public static fun getJson-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;)Ljava/lang/String;
+	public static fun getPlainText-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;)Ljava/lang/String;
+	public static fun getXml-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;)Ljava/lang/String;
+	public static fun invoke-9fd8wws (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;Ljava/util/List;Lkotlin/jvm/functions/Function1;)V
+	public static fun invoke-VTEgvPo (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/ResponseBuilder : guru/zoroark/tegral/openapi/dsl/BodyBuilder, guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/ResponseDsl {
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;)V
+	public fun build ()Lio/swagger/v3/oas/models/responses/ApiResponse;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun getDescription ()Ljava/lang/String;
+	public fun setDescription (Ljava/lang/String;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/ResponseDsl : guru/zoroark/tegral/openapi/dsl/BodyDsl {
+	public abstract fun getDescription ()Ljava/lang/String;
+	public abstract fun setDescription (Ljava/lang/String;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/ResponseDsl$DefaultImpls {
+	public static fun getForm-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;)Ljava/lang/String;
+	public static fun getJson-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;)Ljava/lang/String;
+	public static fun getPlainText-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;)Ljava/lang/String;
+	public static fun getXml-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;)Ljava/lang/String;
+	public static fun invoke-9fd8wws (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;Ljava/util/List;Lkotlin/jvm/functions/Function1;)V
+	public static fun invoke-VTEgvPo (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/RootBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/InfoDsl, guru/zoroark/tegral/openapi/dsl/PathsDsl, guru/zoroark/tegral/openapi/dsl/RootDsl {
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;Lguru/zoroark/tegral/openapi/dsl/InfoBuilder;Lguru/zoroark/tegral/openapi/dsl/PathsBuilder;Ljava/util/Map;)V
+	public synthetic fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;Lguru/zoroark/tegral/openapi/dsl/InfoBuilder;Lguru/zoroark/tegral/openapi/dsl/PathsBuilder;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun build ()Lio/swagger/v3/oas/models/OpenAPI;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun delete (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun get (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun getContactEmail ()Ljava/lang/String;
+	public fun getContactName ()Ljava/lang/String;
+	public fun getContactUrl ()Ljava/lang/String;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getExternalDocsDescription ()Ljava/lang/String;
+	public fun getExternalDocsUrl ()Ljava/lang/String;
+	public fun getLicenseIdentifier ()Ljava/lang/String;
+	public fun getLicenseName ()Ljava/lang/String;
+	public fun getLicenseUrl ()Ljava/lang/String;
+	public fun getSummary ()Ljava/lang/String;
+	public fun getTermsOfService ()Ljava/lang/String;
+	public fun getTitle ()Ljava/lang/String;
+	public fun getVersion ()Ljava/lang/String;
+	public fun head (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun invoke (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun options (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun patch (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun post (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun put (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun securityScheme (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun server (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun setContactEmail (Ljava/lang/String;)V
+	public fun setContactName (Ljava/lang/String;)V
+	public fun setContactUrl (Ljava/lang/String;)V
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setExternalDocsDescription (Ljava/lang/String;)V
+	public fun setExternalDocsUrl (Ljava/lang/String;)V
+	public fun setLicenseIdentifier (Ljava/lang/String;)V
+	public fun setLicenseName (Ljava/lang/String;)V
+	public fun setLicenseUrl (Ljava/lang/String;)V
+	public fun setSummary (Ljava/lang/String;)V
+	public fun setTermsOfService (Ljava/lang/String;)V
+	public fun setTitle (Ljava/lang/String;)V
+	public fun setVersion (Ljava/lang/String;)V
+	public fun tag (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/RootDsl : guru/zoroark/tegral/openapi/dsl/InfoDsl, guru/zoroark/tegral/openapi/dsl/PathsDsl, guru/zoroark/tegral/openapi/dsl/TagsDsl {
+	public abstract fun getExternalDocsDescription ()Ljava/lang/String;
+	public abstract fun getExternalDocsUrl ()Ljava/lang/String;
+	public abstract fun securityScheme (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun server (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun setExternalDocsDescription (Ljava/lang/String;)V
+	public abstract fun setExternalDocsUrl (Ljava/lang/String;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/SecuritySchemeBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/SecuritySchemeDsl {
+	public fun <init> ()V
+	public fun build ()Lio/swagger/v3/oas/models/security/SecurityScheme;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun getBearerFormat ()Ljava/lang/String;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getFlows ()Lio/swagger/v3/oas/models/security/OAuthFlows;
+	public fun getInLocation ()Lio/swagger/v3/oas/models/security/SecurityScheme$In;
+	public fun getName ()Ljava/lang/String;
+	public fun getOpenIdConnectUrl ()Ljava/lang/String;
+	public fun getScheme ()Ljava/lang/String;
+	public fun getType ()Lio/swagger/v3/oas/models/security/SecurityScheme$Type;
+	public fun setBearerFormat (Ljava/lang/String;)V
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setFlows (Lio/swagger/v3/oas/models/security/OAuthFlows;)V
+	public fun setInLocation (Lio/swagger/v3/oas/models/security/SecurityScheme$In;)V
+	public fun setName (Ljava/lang/String;)V
+	public fun setOpenIdConnectUrl (Ljava/lang/String;)V
+	public fun setScheme (Ljava/lang/String;)V
+	public fun setType (Lio/swagger/v3/oas/models/security/SecurityScheme$Type;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/SecuritySchemeDsl {
+	public abstract fun getBearerFormat ()Ljava/lang/String;
+	public abstract fun getDescription ()Ljava/lang/String;
+	public abstract fun getFlows ()Lio/swagger/v3/oas/models/security/OAuthFlows;
+	public abstract fun getInLocation ()Lio/swagger/v3/oas/models/security/SecurityScheme$In;
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun getOpenIdConnectUrl ()Ljava/lang/String;
+	public abstract fun getScheme ()Ljava/lang/String;
+	public abstract fun getType ()Lio/swagger/v3/oas/models/security/SecurityScheme$Type;
+	public abstract fun setBearerFormat (Ljava/lang/String;)V
+	public abstract fun setDescription (Ljava/lang/String;)V
+	public abstract fun setFlows (Lio/swagger/v3/oas/models/security/OAuthFlows;)V
+	public abstract fun setInLocation (Lio/swagger/v3/oas/models/security/SecurityScheme$In;)V
+	public abstract fun setName (Ljava/lang/String;)V
+	public abstract fun setOpenIdConnectUrl (Ljava/lang/String;)V
+	public abstract fun setScheme (Ljava/lang/String;)V
+	public abstract fun setType (Lio/swagger/v3/oas/models/security/SecurityScheme$Type;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/SecuritySchemeDslKt {
+	public static final fun getApiKeyType (Lguru/zoroark/tegral/openapi/dsl/SecuritySchemeDsl;)Lkotlin/Unit;
+	public static final fun getHttpType (Lguru/zoroark/tegral/openapi/dsl/SecuritySchemeDsl;)Lkotlin/Unit;
+	public static final fun getInCookie (Lguru/zoroark/tegral/openapi/dsl/SecuritySchemeDsl;)Lkotlin/Unit;
+	public static final fun getInHeader (Lguru/zoroark/tegral/openapi/dsl/SecuritySchemeDsl;)Lkotlin/Unit;
+	public static final fun getInQuery (Lguru/zoroark/tegral/openapi/dsl/SecuritySchemeDsl;)Lkotlin/Unit;
+	public static final fun getMutualTlsType (Lguru/zoroark/tegral/openapi/dsl/SecuritySchemeDsl;)Lkotlin/Unit;
+	public static final fun getOauth2Type (Lguru/zoroark/tegral/openapi/dsl/SecuritySchemeDsl;)Lkotlin/Unit;
+	public static final fun getOpenIdConnectType (Lguru/zoroark/tegral/openapi/dsl/SecuritySchemeDsl;)Lkotlin/Unit;
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/ServerBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/ServerDsl {
+	public fun <init> (Ljava/lang/String;)V
+	public fun build ()Lio/swagger/v3/oas/models/servers/Server;
+	public synthetic fun build ()Ljava/lang/Object;
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/ServerDsl {
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/SimpleDslContext : guru/zoroark/tegral/openapi/dsl/KoaDslContext {
+	public fun <init> ()V
+	public fun computeAndRegisterSchema (Lkotlin/reflect/KType;)Lio/swagger/v3/oas/models/media/Schema;
+	public fun persistTo (Lio/swagger/v3/oas/models/OpenAPI;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/TagBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/TagDsl {
+	public fun <init> (Ljava/lang/String;)V
+	public fun build ()Lio/swagger/v3/oas/models/tags/Tag;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getExternalDocsDescription ()Ljava/lang/String;
+	public fun getExternalDocsUrl ()Ljava/lang/String;
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setExternalDocsDescription (Ljava/lang/String;)V
+	public fun setExternalDocsUrl (Ljava/lang/String;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/TagDsl {
+	public abstract fun getDescription ()Ljava/lang/String;
+	public abstract fun getExternalDocsDescription ()Ljava/lang/String;
+	public abstract fun getExternalDocsUrl ()Ljava/lang/String;
+	public abstract fun setDescription (Ljava/lang/String;)V
+	public abstract fun setExternalDocsDescription (Ljava/lang/String;)V
+	public abstract fun setExternalDocsUrl (Ljava/lang/String;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/TagsDsl {
+	public abstract fun tag (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+

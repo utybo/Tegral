@@ -77,7 +77,8 @@ class Ktor4239Workaround {
                                     ApiResponse().apply {
                                         description = "The return value"
                                         content = Content().addMediaType(
-                                            "text/plain", MediaType().apply {
+                                            "text/plain",
+                                            MediaType().apply {
                                                 schema = StringSchema()
                                                 example = "yes"
                                             }

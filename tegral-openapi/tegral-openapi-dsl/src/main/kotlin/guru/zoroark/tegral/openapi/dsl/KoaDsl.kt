@@ -14,6 +14,9 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+/**
+ * DSL marker for DSLs within Tegral OpenAPI.
+ */
 @DslMarker
 @Retention(AnnotationRetention.SOURCE)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)

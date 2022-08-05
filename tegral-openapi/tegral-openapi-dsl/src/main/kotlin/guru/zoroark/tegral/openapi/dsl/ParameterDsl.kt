@@ -86,10 +86,10 @@ interface ParameterDsl : MediaTypeDsl {
     /**
      * If true, the parameter value can be empty. Valid only for query parameters. Default is false.
      */
-     @Deprecated(
-         "From OpenAPI specifications: \"Use of this property is not recommended and it is likely to be " +
-             "removed in a later revision.\""
-     )
+    @Deprecated(
+        "From OpenAPI specifications: \"Use of this property is not recommended and it is likely to be " +
+            "removed in a later revision.\""
+    )
     var allowEmptyValue: Boolean?
 
     /**
@@ -124,6 +124,9 @@ interface ParameterDsl : MediaTypeDsl {
     // TODO content
 }
 
+/**
+ * Builder for [ParameterDsl]
+ */
 @KoaDsl
 class ParameterBuilder(
     private val context: KoaDslContext,
@@ -133,6 +136,7 @@ class ParameterBuilder(
     override var description: String? = null
     override var required: Boolean? = null
     override var deprecated: Boolean? = null
+
     @Deprecated(
         "From OpenAPI specifications: \"Use of this property is not recommended and it is likely to be " +
             "removed in a later revision.\""

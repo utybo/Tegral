@@ -44,12 +44,16 @@ class RequestBodyBuilderTest {
             description = "My request body description"
             required = true
             content = Content().apply {
-                addMediaType("application/json", MediaType().apply {
-                    // /!\ This is order sensitive. If the schema is set before the example, it will attempt to call an
-                    // unmocked 'cast' method on the schema. (can't be mocked either because it's set as protected)
-                    example = mockExample
-                    schema = mockSchema
-                })
+                addMediaType(
+                    "application/json",
+                    MediaType().apply {
+                        // /!\ This is order sensitive. If the schema is set before the example, it will attempt to call
+                        // an unmocked 'cast' method on the schema. (can't be mocked either because it's set as
+                        // protected)
+                        example = mockExample
+                        schema = mockSchema
+                    }
+                )
             }
         }
 

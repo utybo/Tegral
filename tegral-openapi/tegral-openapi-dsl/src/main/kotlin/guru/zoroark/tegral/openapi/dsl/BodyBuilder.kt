@@ -14,15 +14,13 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
-import io.swagger.v3.oas.models.media.Content
 import io.swagger.v3.oas.models.media.MediaType
-import io.swagger.v3.oas.models.parameters.RequestBody
 
 /**
  * DSL for body-like objects, i.e. objects that contain a "content" property.
  */
 interface BodyDsl : PredefinedContentTypesDsl {
-    /*
+    /**
      * A "map" containing descriptions of potential payloads. The key is a media type or media type range and teh value
      * describes it.
      *
@@ -44,7 +42,7 @@ interface BodyDsl : PredefinedContentTypesDsl {
         contentType content builder
     }
 
-    /*
+    /**
      * Creates content entries for each of the provided content types with the same body. See [MediaTypeDsl] for more
      * information on what you can do in the lambda.
      */

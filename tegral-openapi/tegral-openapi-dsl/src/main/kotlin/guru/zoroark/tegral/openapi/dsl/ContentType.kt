@@ -14,14 +14,22 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+/**
+ * A content type.
+ *
+ * This is not meant to be a full representation, but a handy shortcut for defining media types in various DSLs.
+ *
+ * Pre-defined values for very common content types are available in [PredefinedContentTypesDsl].
+ */
 @JvmInline
-value class ContentType(val contentType: String) {
+value class ContentType(
+    /**
+     * The actual value of the content type (in full string representation).
+     */
+    val contentType: String
+) {
+    /**
+     * Combines this content type with another to form a [MultiContentType].
+     */
     infix fun or(other: ContentType): MultiContentType = MultiContentType(listOf(this, other))
-}
-
-interface PredefinedContentTypesDsl {
-    val xml get() = ContentType("application/xml")
-    val json get() = ContentType("application/json")
-    val form get() = ContentType("application/x-www-form-urlencoded")
-    val plainText get() = ContentType("text/plain")
 }

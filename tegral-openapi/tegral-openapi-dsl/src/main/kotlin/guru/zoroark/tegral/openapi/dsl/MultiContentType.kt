@@ -14,7 +14,19 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+/**
+ * Represents multiple [content types][ContentType]. This is useful for functions that can be applied to multiple
+ * content types at a time (mostly for the sake of concision).
+ */
 @JvmInline
-value class MultiContentType(val types: List<ContentType>) {
+value class MultiContentType(
+    /**
+     * The content types that this represents.
+     */
+    val types: List<ContentType>
+) {
+    /**
+     * Combines this multi content type with an additional [content type][ContentType]
+     */
     infix fun or(other: ContentType): MultiContentType = MultiContentType(types + other)
 }

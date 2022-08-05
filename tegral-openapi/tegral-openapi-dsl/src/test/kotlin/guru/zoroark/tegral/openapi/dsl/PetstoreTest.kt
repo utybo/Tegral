@@ -12,29 +12,25 @@
  * limitations under the License.
  */
 
+@file:Suppress("CommentSpacing")
+
 package guru.zoroark.tegral.openapi.dsl
 
-import io.swagger.v3.core.converter.ModelConverters
-import io.swagger.v3.core.util.Json
 import io.swagger.v3.core.util.Yaml
-import io.swagger.v3.oas.annotations.media.ExampleObject
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.models.OpenAPI
-import io.swagger.v3.oas.models.media.ObjectSchema
 import io.swagger.v3.oas.models.media.StringSchema
 import io.swagger.v3.oas.models.security.OAuthFlow
 import io.swagger.v3.oas.models.security.OAuthFlows
 import io.swagger.v3.oas.models.security.Scopes
-import io.swagger.v3.oas.models.security.SecurityScheme
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 import javax.xml.bind.annotation.XmlElement
 import javax.xml.bind.annotation.XmlElementWrapper
 import javax.xml.bind.annotation.XmlRootElement
-import kotlin.reflect.typeOf
 import kotlin.test.assertEquals
-import kotlin.test.expect
 
+@Suppress("EnumNaming", "EnumEntryName")
 enum class OrderStatus {
     placed, approved, delivered
 }
@@ -69,6 +65,7 @@ data class Tag(val id: Long, val name: String)
 
 // TODO 'required' handling?
 @Schema(defaultValue = "available")
+@Suppress("EnumNaming", "EnumEntryName")
 enum class PetStatus { available, pending, sold }
 
 @XmlRootElement(name = "pet")
@@ -91,6 +88,7 @@ data class Pet(
 @XmlRootElement(name = "##default")
 data class ApiResponse(val code: Int, val type: String, val message: String)
 
+@Suppress("LongMethod")
 fun petstore() = openApi {
 
     //#region Metadata
@@ -99,14 +97,16 @@ fun petstore() = openApi {
 
     description = """
         This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about
-        Swagger at [http://swagger.io](http://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!
+        Swagger at [http://swagger.io](http://swagger.io). In the third iteration of the pet store, we've switched to ~
+        the design first approach!
         You can now help us improve the API whether it's by making changes to the definition itself or to the code.
         That way, with time, we can improve the API in general, and expose some of the new features in OAS3.
 
         Some useful links:
         - [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)
-        - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
-    """.trimIndent()
+        - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src~
+        /main/resources/openapi.yaml)
+    """.trimIndent().replace("~\n", "")
 
     version = "1.0.11"
     title = "Swagger Petstore - OpenAPI 3.0"
@@ -451,8 +451,8 @@ fun petstore() = openApi {
         delete {
             tags += "store"
             summary = "Delete purchase order by ID"
-            description =
-                "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors"
+            description = "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers " +
+                "will generate API errors"
             operationId = "deleteOrder"
 
             "orderId" pathParameter {

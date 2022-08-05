@@ -15,28 +15,40 @@
 package guru.zoroark.tegral.openapi.scripthost
 
 import guru.zoroark.tegral.openapi.dsl.RootBuilder
-import guru.zoroark.tegral.openapi.dsl.RootDsl
 import guru.zoroark.tegral.openapi.dsl.SimpleDslContext
-import guru.zoroark.tegral.openapi.dsl.openApi
 import guru.zoroark.tegral.openapi.scriptdef.OpenApiScript
 import io.swagger.v3.oas.models.OpenAPI
 import java.io.File
-import java.nio.file.Path
 import kotlin.script.experimental.api.ResultWithDiagnostics
 import kotlin.script.experimental.api.ScriptEvaluationConfiguration
-import kotlin.script.experimental.jvmhost.BasicJvmScriptingHost
 import kotlin.script.experimental.api.SourceCode
 import kotlin.script.experimental.api.implicitReceivers
 import kotlin.script.experimental.api.onSuccess
 import kotlin.script.experimental.host.toScriptSource
+import kotlin.script.experimental.jvmhost.BasicJvmScriptingHost
 import kotlin.script.experimental.jvmhost.createJvmCompilationConfigurationFromTemplate
 import kotlin.script.experimental.jvmhost.createJvmEvaluationConfigurationFromTemplate
 
+/**
+ * High-level utilities for compiling `.openapi.kts` scripts.
+ *
+ * This provides an easier interface over
+ * [Kotlin's scripting system](https://github.com/Kotlin/KEEP/blob/master/proposals/scripting-support.md).
+ */
 object OpenApiScriptHost {
+    /**
+     * Compiles a `.openapi.kts` script from a file into an [OpenAPI] object.
+     *
+     * The result is wrapped in a [ResultWithDiagnostics] object, which contains a list of warnings, errors, etc. as
+     * well as the object itself.
+     */
     suspend fun compileScript(file: File, messageHandler: (String) -> Unit): ResultWithDiagnostics<OpenAPI> =
         compileScript(file.toScriptSource(), messageHandler)
 
-    suspend fun compileScript(source: SourceCode, messageHandler: (String) -> Unit): ResultWithDiagnostics<OpenAPI> {
+    private suspend fun compileScript(
+        source: SourceCode,
+        messageHandler: (String) -> Unit
+    ): ResultWithDiagnostics<OpenAPI> {
         val host = BasicJvmScriptingHost()
         val compilationConfig = createJvmCompilationConfigurationFromTemplate<OpenApiScript>()
         messageHandler("Compiling script...")

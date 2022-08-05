@@ -16,11 +16,9 @@ package guru.zoroark.tegral.openapi.dsl
 
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.slot
 import io.swagger.v3.oas.models.media.Content
 import io.swagger.v3.oas.models.media.MediaType
 import io.swagger.v3.oas.models.media.Schema
-import io.swagger.v3.oas.models.media.StringSchema
 import io.swagger.v3.oas.models.responses.ApiResponse
 import kotlin.reflect.typeOf
 import kotlin.test.Test
@@ -44,12 +42,16 @@ class ResponseBuilderTest {
         val expected = ApiResponse().apply {
             description = "My response description"
             content = Content().apply {
-                addMediaType("application/json", MediaType().apply {
-                    // /!\ This is order sensitive. If the schema is set before the example, it will attempt to call an
-                    // unmocked 'cast' method on the schema. (can't be mocked either because it's set as protected)
-                    example = mockExample
-                    schema = mockSchema
-                })
+                addMediaType(
+                    "application/json",
+                    MediaType().apply {
+                        // /!\ This is order sensitive. If the schema is set before the example, it will attempt to call
+                        // an unmocked 'cast' method on the schema. (can't be mocked either because it's set as
+                        // protected)
+                        example = mockExample
+                        schema = mockSchema
+                    }
+                )
             }
         }
 

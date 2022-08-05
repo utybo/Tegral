@@ -10,3 +10,7 @@ dependencies {
 ext.humanName = "Tegral OpenAPI DSL"
 ext.description = "Provides a DSL for creating OpenAPI 3 documents."
 ext.url = "https://tegral.zoroark.guru" // TODO
+
+license {
+    exclude 'petstore-simple.openapi.yaml'
+}

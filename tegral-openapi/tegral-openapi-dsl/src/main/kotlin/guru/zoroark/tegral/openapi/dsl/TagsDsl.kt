@@ -14,6 +14,12 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+/**
+ * DSL for the objects that can contain tags listed by name.
+ */
 interface TagsDsl {
+    /**
+     * Add a tag with the given string with a lambda to further configure the tag.
+     */
     infix fun String.tag(tagBuilder: TagDsl.() -> Unit)
 }

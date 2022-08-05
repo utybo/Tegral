@@ -18,10 +18,9 @@ import io.ktor.server.application.MissingApplicationPluginException
 import io.ktor.server.testing.testApplication
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
-import kotlin.test.Test
 import org.junit.jupiter.api.assertDoesNotThrow
+import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFails
 import kotlin.test.assertFailsWith
 
 class PluginTest {

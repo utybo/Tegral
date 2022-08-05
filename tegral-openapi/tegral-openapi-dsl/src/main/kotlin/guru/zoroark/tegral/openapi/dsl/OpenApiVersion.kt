@@ -14,19 +14,22 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
-import io.swagger.v3.oas.models.servers.Server
-
 /**
- * DSL for the [server object](https://spec.openapis.org/oas/v3.1.0#server-object).
+ * A version of the OpenAPI standard. This only includes the `x.y` part of the `x.y.z` version scheme.
  */
-interface ServerDsl
+enum class OpenApiVersion(
+    /**
+     * The string that represents this version. This is only used in the CLI to provide a better "syntax choice".
+     */
+    val version: String
+) {
+    /**
+     * OpenAPI version 3.0.x
+     */
+    V3_0("3.0"),
 
-/**
- * Builder for [ServerDsl].
- */
-class ServerBuilder(private val url: String) : ServerDsl, Builder<Server> {
-    // TODO missing properties here
-    override fun build() = Server().apply {
-        url(this@ServerBuilder.url)
-    }
+    /**
+     * OpenAPI version 3.1.x
+     */
+    V3_1("3.1")
 }

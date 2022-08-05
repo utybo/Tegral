@@ -17,16 +17,49 @@ package guru.zoroark.tegral.openapi.dsl
 import io.swagger.v3.oas.models.Operation
 import io.swagger.v3.oas.models.PathItem
 
+/**
+ * DSL for the [path item object](https://spec.openapis.org/oas/v3.1.0#path-item-object).
+ */
 interface PathDsl {
+    /**
+     * A definition of a GET operation on this path.
+     */
     fun get(block: OperationDsl.() -> Unit)
+
+    /**
+     * A definition of a POST operation on this path.
+     */
     fun post(block: OperationDsl.() -> Unit)
+
+    /**
+     * A definition of a PUT operation on this path.
+     */
     fun put(block: OperationDsl.() -> Unit)
+
+    /**
+     * A definition of a DELETE operation on this path.
+     */
     fun delete(block: OperationDsl.() -> Unit)
+
+    /**
+     * A definition of a PATCH operation on this path.
+     */
     fun patch(block: OperationDsl.() -> Unit)
+
+    /**
+     * A definition of an OPTIONS operation on this path.
+     */
     fun options(block: OperationDsl.() -> Unit)
+
+    /**
+     * A definition of a HEAD operation on this path.
+     */
     fun head(block: OperationDsl.() -> Unit)
 }
 
+/**
+ * Builder for [PathDsl]
+ */
 class PathBuilder(private val context: KoaDslContext) : PathDsl, Builder<PathItem> {
     // TODO summary, description, ...
 

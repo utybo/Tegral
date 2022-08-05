@@ -123,7 +123,6 @@ class SecuritySchemeTest {
         assertEquals(expected, securityScheme.build())
     }
 
-
     @Test
     fun `OpenID security scheme`() {
         val securityScheme = SecuritySchemeBuilder().apply {

@@ -1,0 +1,5 @@
+public final class guru/zoroark/tegral/openapi/scripthost/OpenApiScriptHost {
+	public static final field INSTANCE Lguru/zoroark/tegral/openapi/scripthost/OpenApiScriptHost;
+	public final fun compileScript (Ljava/io/File;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+

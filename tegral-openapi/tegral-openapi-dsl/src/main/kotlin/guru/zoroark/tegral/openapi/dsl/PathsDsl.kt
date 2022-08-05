@@ -107,5 +107,4 @@ class PathsBuilder(private val context: KoaDslContext) : PathsDsl, Builder<Paths
         }
         return result
     }
-
 }

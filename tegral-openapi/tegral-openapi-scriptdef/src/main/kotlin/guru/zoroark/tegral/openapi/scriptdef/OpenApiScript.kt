@@ -21,15 +21,25 @@ import kotlin.script.experimental.api.defaultImports
 import kotlin.script.experimental.api.implicitReceivers
 import kotlin.script.experimental.jvm.dependenciesFromCurrentContext
 import kotlin.script.experimental.jvm.jvm
-import kotlin.script.experimental.jvm.util.classpathFromClass
 
+/**
+ * [Script definition](https://github.com/Kotlin/KEEP/blob/master/proposals/scripting-support.md#script-definition)
+ * for the OpenAPI script files (.openapi.kts).
+ *
+ * Note that this is just a script definition. Please refer to the `tegral-openapi-scripthost` module if you wish
+ * compile such files within your application.
+ */
 @KotlinScript(
     displayName = "Tegral OpenAPI definition script",
     fileExtension = "openapi.kts",
     compilationConfiguration = OpenApiScriptCompilationConfig::class
 )
+@Suppress("UnnecessaryAbstractClass") // required because this is a script definition
 abstract class OpenApiScript
 
+/**
+ * Default compilation configuration for [OpenApiScript].
+ */
 object OpenApiScriptCompilationConfig : ScriptCompilationConfiguration({
     jvm {
         dependenciesFromCurrentContext(wholeClasspath = true)

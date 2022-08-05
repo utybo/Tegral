@@ -16,8 +16,8 @@ package guru.zoroark.tegral.openapi.dsl
 
 import io.swagger.v3.oas.models.ExternalDocumentation
 import io.swagger.v3.oas.models.tags.Tag
-import kotlin.test.assertEquals
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class TagBuilderTest {
     @Test

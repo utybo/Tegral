@@ -20,15 +20,47 @@ import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.servers.Server
 
+/**
+ * This is the root DSL object for the Tegral OpenAPI DSL.
+ *
+ * As such, it contains many of the required properties for the OpenAPI object, including:
+ *
+ * - [Security schemes][securityScheme]
+ * - [Servers][server]
+ * - [Info][InfoDsl] (embedded)
+ * - [Tags][TagsDsl] (embedded)
+ * - [Paths][PathsDsl] (embedded)
+ * - External documentation ([description][externalDocsDescription] and [url][externalDocsUrl])
+ *
+ * (Items marked as embedded are separate DSL interfaces that are available in [RootDsl] and can be used directly).
+ */
 interface RootDsl : InfoDsl, TagsDsl, PathsDsl {
+    /**
+     * Adds a security scheme to this OpenAPI document with the given string as the name, using the lambda to configure
+     * further options.
+     */
     infix fun String.securityScheme(scheme: SecuritySchemeDsl.() -> Unit)
 
+    /**
+     * Adds a server to this OpenAPI document with the given string as the name, using the lambda to configure further
+     * options.
+     */
     infix fun String.server(server: ServerDsl.() -> Unit)
 
+    /**
+     * Description for additional external documentation for this API.
+     */
     var externalDocsDescription: String?
+
+    /**
+     * URL for additional external documentation for this API.
+     */
     var externalDocsUrl: String?
 }
 
+/**
+ * Builder for the [RootDsl].
+ */
 class RootBuilder(
     private val context: KoaDslContext,
     private val infoBuilder: InfoBuilder = InfoBuilder(),

@@ -17,17 +17,21 @@ package guru.zoroark.tegral.openapi.cli
 import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.LoggerContext
-import ch.qos.logback.classic.encoder.PatternLayoutEncoder
 import ch.qos.logback.classic.pattern.ThrowableProxyConverter
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.ConsoleAppender
 import ch.qos.logback.core.LayoutBase
 import ch.qos.logback.core.encoder.LayoutWrappingEncoder
-import ch.qos.logback.core.pattern.color.ANSIConstants
 import org.slf4j.LoggerFactory
 
+private const val MAX_LOGGER_SIZE = 20
+
+/**
+ * A layout for [logback](https://logback.ch) with a pleasant, colorful scheme, specifically intended for CLI tools.
+ */
 class MinimalistLogs : LayoutBase<ILoggingEvent>() {
     private val throwableProxyConverter = ThrowableProxyConverter()
+
     init {
         throwableProxyConverter.start()
     }
@@ -39,7 +43,7 @@ class MinimalistLogs : LayoutBase<ILoggingEvent>() {
             append(event.level.asCharacter())
             append("] ")
             appendPostLevelSymbol(event.level)
-            append(event.loggerName.resize(20))
+            append(event.loggerName.resize(MAX_LOGGER_SIZE))
             append(" - ")
             append(event.formattedMessage.replace("\n", "\n    "))
             append("\n")
@@ -79,7 +83,7 @@ class MinimalistLogs : LayoutBase<ILoggingEvent>() {
     private val reset = "0"
 
     private fun StringBuilder.appendPreLevelSymbol(level: Level) {
-        when(level) {
+        when (level) {
             Level.TRACE -> append(sgr(grayFg))
             Level.DEBUG -> append(sgr(grayFg))
             Level.INFO -> append(sgr(blueFg))
@@ -101,6 +105,9 @@ class MinimalistLogs : LayoutBase<ILoggingEvent>() {
     }
 }
 
+/**
+ * Applies the [MinimalistLogs] layout as well as basic layout settings to Logback.
+ */
 fun applyMinimalistLoggingOverrides(quiet: Boolean = false) {
     val ctx = (LoggerFactory.getILoggerFactory() as LoggerContext)
     val rootLogger = ctx.getLogger(Logger.ROOT_LOGGER_NAME)

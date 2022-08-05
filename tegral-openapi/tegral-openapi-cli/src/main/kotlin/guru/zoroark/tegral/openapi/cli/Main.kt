@@ -34,15 +34,27 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 import kotlin.script.experimental.api.ResultWithDiagnostics
 import kotlin.script.experimental.api.ScriptDiagnostic
 
+/**
+ * The format of the output OpenAPI file.
+ */
 enum class Format {
+    /**
+     * Use the JSON format. Will not be beautified.
+     */
     JSON,
+
+    /**
+     * Use the YAML format. Will be beautified.
+     */
     YAML;
 
+    /**
+     * Convert the given OpenAPI object into the desired format.
+     */
     operator fun invoke(value: OpenAPI, version: OpenApiVersion): String =
         when (this) {
             JSON -> value.toJson(version)
@@ -50,6 +62,9 @@ enum class Format {
         }
 }
 
+/**
+ * Tegral OpenAPI CLI object, which provides the "dump" command (managed by Clikt).
+ */
 class TegralOpenApiCli : CliktCommand(name = "tegral-openapi-cli") {
     private val file by argument().file(mustExist = true, canBeDir = false, mustBeReadable = true)
     private val output by option("--output", "-o", help = "Output file").path(canBeDir = false)
@@ -112,4 +127,7 @@ private fun ScriptDiagnostic.toFullMessage(fileObj: File): String =
         message
     }
 
+/**
+ * Main entrypoint for the CLI.
+ */
 fun main(args: Array<String>) = TegralOpenApiCli().main(args)

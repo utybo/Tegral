@@ -14,6 +14,14 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+/**
+ * Interface for anything that "builds" into [T].
+ *
+ * @param T The type of the object that is built.
+ */
 fun interface Builder<out T> {
+    /**
+     * Build the object.
+     */
     fun build(): T
 }

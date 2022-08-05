@@ -25,6 +25,11 @@ import io.ktor.server.routing.application
 import io.ktor.util.KtorDsl
 import java.util.*
 
+/**
+ * Adds an OpenAPI operation description to this route.
+ *
+ * The [TegralOpenApiKtor] plugin needs to be installed for this to work.
+ */
 @KoaDsl
 @KtorDsl
 infix fun Route.describe(description: OperationDsl.() -> Unit): Route {

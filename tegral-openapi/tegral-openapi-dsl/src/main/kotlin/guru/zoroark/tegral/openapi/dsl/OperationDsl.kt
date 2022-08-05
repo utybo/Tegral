@@ -141,6 +141,9 @@ interface OperationDsl {
     fun body(builder: RequestBodyBuilder.() -> Unit)
 }
 
+/**
+ * Builder for [OperationDsl]
+ */
 @KoaDsl
 @Suppress("TooManyFunctions")
 class OperationBuilder(private val context: KoaDslContext) : OperationDsl, Builder<Operation> {
@@ -201,11 +204,13 @@ class OperationBuilder(private val context: KoaDslContext) : OperationDsl, Build
     override fun build(): Operation = Operation().apply {
         summary = this@OperationBuilder.summary
         if (this@OperationBuilder.responses.isNotEmpty()) {
-            responses(ApiResponses().apply {
-                for ((returnCode, responseBuilder) in this@OperationBuilder.responses) {
-                    addApiResponse(returnCode.toString(), responseBuilder.build())
+            responses(
+                ApiResponses().apply {
+                    for ((returnCode, responseBuilder) in this@OperationBuilder.responses) {
+                        addApiResponse(returnCode.toString(), responseBuilder.build())
+                    }
                 }
-            })
+            )
         }
         if (this@OperationBuilder.tags.isNotEmpty()) {
             tags = this@OperationBuilder.tags

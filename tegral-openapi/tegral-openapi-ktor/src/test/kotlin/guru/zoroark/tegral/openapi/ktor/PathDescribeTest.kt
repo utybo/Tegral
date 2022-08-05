@@ -59,7 +59,8 @@ class PathDescribeTest {
                                 ApiResponse().apply {
                                     description = "Successfully greets the world"
                                     content = Content().addMediaType(
-                                        "text/plain", MediaType().apply {
+                                        "text/plain",
+                                        MediaType().apply {
                                             schema = StringSchema()
                                             example = "Hello, world!"
                                         }
@@ -102,7 +103,6 @@ class PathDescribeTest {
     fun `Test simple get endpoint`() {
         testSimpleEndpoint(Route::get, HttpMethod.GET)
     }
-
 
     @Test
     fun `Test simple post endpoint`() = testApplication {
@@ -191,7 +191,8 @@ class PathDescribeTest {
                                     ApiResponse().apply {
                                         description = "Foo was found"
                                         content = Content().addMediaType(
-                                            "text/plain", MediaType().apply {
+                                            "text/plain",
+                                            MediaType().apply {
                                                 schema = StringSchema()
                                                 example = "Foo!"
                                             }

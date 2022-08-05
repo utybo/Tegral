@@ -21,7 +21,15 @@ import io.swagger.v3.oas.models.parameters.RequestBody
  * DSL for the [request body object](https://spec.openapis.org/oas/v3.1.0#request-body-object).
  */
 interface RequestBodyDsl : BodyDsl {
+    /**
+     * A brief description of the request body. This could contain examples of use. CommonMark syntax may be used for
+     * rich text representation.
+     */
     var description: String?
+
+    /**
+     * Determines if the request body is required in the request. Defaults to false.
+     */
     var required: Boolean?
 }
 
@@ -35,10 +43,9 @@ class RequestBodyBuilder(context: KoaDslContext) : BodyBuilder(context), Request
         description = this@RequestBodyBuilder.description
         required = this@RequestBodyBuilder.required
         if (this@RequestBodyBuilder.content.isNotEmpty()) {
-            content = Content().apply {
-                for ((typeString, typeBuilder) in this@RequestBodyBuilder.content) {
-                    addMediaType(typeString, typeBuilder.build())
-                }
+            content = Content()
+            for ((typeString, typeBuilder) in this@RequestBodyBuilder.content) {
+                content.addMediaType(typeString, typeBuilder.build())
             }
         }
     }
