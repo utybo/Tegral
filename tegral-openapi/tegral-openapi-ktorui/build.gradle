@@ -1,0 +1,12 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+}
+
+dependencies {
+    implementation libs.swaggerUi
+    implementation libs.ktor.server.core
+}
+
+ext.humanName = "Tegral OpenAPI Ktor UI"
+ext.description = "Integrates Swagger UI with Ktor."
+ext.url = "https://tegral.zoroark.guru" // TODO

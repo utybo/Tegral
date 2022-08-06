@@ -41,6 +41,7 @@ import io.swagger.v3.oas.models.media.StringSchema
 import io.swagger.v3.oas.models.parameters.PathParameter
 import io.swagger.v3.oas.models.responses.ApiResponse
 import io.swagger.v3.oas.models.responses.ApiResponses
+import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -214,6 +215,18 @@ class PathDescribeTest {
             }
 
             assertEquals(expected, document)
+        }
+    }
+
+    @Test
+    fun `Does not fail if plugin is not installed`() = testApplication {
+        assertDoesNotThrow {
+            routing {
+                get("/foo/bar") {
+                } describe {
+                    summary = "Hello"
+                }
+            }
         }
     }
 }

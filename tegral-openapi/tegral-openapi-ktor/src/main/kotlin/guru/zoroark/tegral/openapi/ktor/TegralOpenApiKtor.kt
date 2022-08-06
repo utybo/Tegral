@@ -95,6 +95,16 @@ class TegralOpenApiKtor {
             else -> logger.warn("Ignoring unsupported HTTP method $method (while registering '$path')")
         }
     }
+
+    /**
+     * Runs the given lambda against the root OpenAPI builder, allowing to further customize the content of the OpenAPI
+     * document.
+     *
+     * See [Application.describe] for more information.
+     */
+    fun withRootBuilder(description: RootDsl.() -> Unit) {
+        builder.apply(description)
+    }
 }
 
 /**

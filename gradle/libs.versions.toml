@@ -19,6 +19,7 @@ slf4j = "1.7.36"
 versions = "0.42.0"
 licenserPlugin = "0.6.1"
 swaggerCore = "2.2.1"
+swaggerUi = "4.13.2"
 clikt = "3.5.0"
 
 [libraries]
@@ -58,6 +59,7 @@ logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
 swaggerCore-models = { module = "io.swagger.core.v3:swagger-models", version.ref = "swaggerCore" }
 swaggerCore-core = { module = "io.swagger.core.v3:swagger-core", version.ref = "swaggerCore" }
+swaggerUi = { module = "org.webjars:swagger-ui", version.ref = "swaggerUi" }
 
 clikt = { module = "com.github.ajalt.clikt:clikt", version.ref = "clikt" }
 

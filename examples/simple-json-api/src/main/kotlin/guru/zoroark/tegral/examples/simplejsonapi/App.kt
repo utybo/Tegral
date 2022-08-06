@@ -14,12 +14,20 @@
 
 package guru.zoroark.tegral.examples.simplejsonapi
 
+import guru.zoroark.tegral.core.tegralVersion
 import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.dsl.tegralDiModule
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.invoke
+import guru.zoroark.tegral.openapi.dsl.schema
+import guru.zoroark.tegral.openapi.feature.OpenApiFeature
+import guru.zoroark.tegral.openapi.ktor.describe
+import guru.zoroark.tegral.web.appdsl.install
 import guru.zoroark.tegral.web.appdsl.tegral
 import guru.zoroark.tegral.web.controllers.KtorController
+import guru.zoroark.tegral.web.controllers.KtorModule
+import io.ktor.http.HttpStatusCode.Companion.OK
+import io.ktor.server.application.Application
 import io.ktor.server.application.call
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
@@ -37,10 +45,36 @@ class GreetingController(scope: InjectionScope) : KtorController() {
     override fun Routing.install() {
         get("/greet") {
             call.respond(service.greet(null))
+        } describe {
+            description = "Greets the world"
+            OK.value response {
+                description = "A greeting for the world"
+                json { schema<Greeting>() }
+            }
         }
 
         get("/greet/{who}") {
             call.respond(service.greet(call.parameters["who"]!!))
+        } describe {
+            description = "Greets a specific person"
+            OK.value response {
+                description = "A greeting for a specific person"
+                json { schema<Greeting>() }
+            }
+            "who" pathParameter {
+                description = "The person to greet"
+                schema<String>()
+            }
+        }
+    }
+}
+
+class OpenApiModule : KtorModule() {
+    override fun Application.install() {
+        describe {
+            title = "Simpe JSON API"
+            description = "An example of a simple JSON API using Tegral."
+            version = tegralVersion
         }
     }
 }
@@ -48,10 +82,12 @@ class GreetingController(scope: InjectionScope) : KtorController() {
 val appModule = tegralDiModule {
     put(::GreetingService)
     put(::GreetingController)
+    put(::OpenApiModule)
 }
 
 fun main() {
     tegral {
+        install(OpenApiFeature)
         put(appModule)
     }
 }
