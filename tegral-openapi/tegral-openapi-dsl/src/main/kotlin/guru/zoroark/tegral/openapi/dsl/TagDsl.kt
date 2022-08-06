@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.ExternalDocumentation
 import io.swagger.v3.oas.models.tags.Tag
 
@@ -24,20 +25,24 @@ import io.swagger.v3.oas.models.tags.Tag
  *
  * The name of the tag is passed as a parameter to the builder.
  */
+@TegralDsl
 interface TagDsl {
     /**
      * A description for the tag. CommonMark syntax may be used for rich text representation.
      */
+    @TegralDsl
     var description: String?
 
     /**
      * Description for the external documentation for this tag.
      */
+    @TegralDsl
     var externalDocsDescription: String?
 
     /**
      * The URL for the external documentation for this tag. Must be in the form of a URL.
      */
+    @TegralDsl
     var externalDocsUrl: String?
 }
 

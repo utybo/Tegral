@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.info.Contact
 import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.info.License
@@ -23,7 +24,9 @@ import io.swagger.v3.oas.models.info.License
  *
  * Note that the `contact` and `license` fields are directly embedded in this object.
  */
+@TegralDsl
 interface InfoDsl {
+    @TegralDsl
     /**
      * The title of the API.
      */
@@ -32,37 +35,44 @@ interface InfoDsl {
     /**
      * A short summary of the API.
      */
+    @TegralDsl
     var summary: String?
 
     /**
      * A short summary of the API.
      */
+    @TegralDsl
     var description: String?
 
     /**
      * A URL to the Terms of Service for the API. This must be in the form of a URL.
      */
+    @TegralDsl
     var termsOfService: String?
 
     /**
      * The identifying name of the contact person/organization for the exposed API.
      */
+    @TegralDsl
     var contactName: String?
 
     /**
      * The URL pointing to the contact information for the exposed API. This must be in the form of a URL.
      */
+    @TegralDsl
     var contactUrl: String?
 
     /**
      * The email address of the contact person/organization for the exposed API. THis must be in the form of an email
      * address.
      */
+    @TegralDsl
     var contactEmail: String?
 
     /**
      * The license name used for the API.
      */
+    @TegralDsl
     var licenseName: String?
 
     /**
@@ -70,6 +80,7 @@ interface InfoDsl {
      *
      * The `licenseIdentifier` field is mutually exclusive of the [licenseUrl] field.
      */
+    @TegralDsl
     var licenseIdentifier: String?
 
     /**
@@ -77,19 +88,21 @@ interface InfoDsl {
      *
      * The `licenseUrl` field is mutually exclusive of the [licenseIdentifier] field.
      */
+    @TegralDsl
     var licenseUrl: String?
 
     /**
      * The version of the OpenAPI document. This is not the same as the version of the OpenAPI specification this
      * document follows.
      */
+    @TegralDsl
     var version: String?
 }
 
 /**
  * Builder object for the [info object](https://spec.openapis.org/oas/v3.1.0#info-object).
  */
-@KoaDsl
+@TegralDsl
 class InfoBuilder : Builder<Info>, InfoDsl {
     override var title: String? = null
     override var summary: String? = null

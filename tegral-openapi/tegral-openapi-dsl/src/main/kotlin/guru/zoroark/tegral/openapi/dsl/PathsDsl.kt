@@ -14,57 +14,67 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.Paths
 
 /**
  * DSL for the [paths object](https://spec.openapis.org/oas/v3.1.0#paths-object).
  */
+@TegralDsl
 interface PathsDsl {
     /**
      * Adds a path with the given string and registers any operations defined in the block.
      */
+    @TegralDsl
     operator fun String.invoke(path: PathDsl.() -> Unit)
 
     /**
      * Adds a path with the given string and creates a "GET" operation on it.
      */
+    @TegralDsl
     infix fun String.get(path: OperationDsl.() -> Unit)
 
     /**
      * Adds a path with the given string and creates a "POST" operation on it.
      */
+    @TegralDsl
     infix fun String.post(path: OperationDsl.() -> Unit)
 
     /**
      * Adds a path with the given string and creates a "PUT" operation on it.
      */
+    @TegralDsl
     infix fun String.put(path: OperationDsl.() -> Unit)
 
     /**
      * Adds a path with the given string and creates a "DELETE" operation on it.
      */
+    @TegralDsl
     infix fun String.delete(path: OperationDsl.() -> Unit)
 
     /**
      * Adds a path with the given string and creates a "PATCH" operation on it.
      */
+    @TegralDsl
     infix fun String.patch(path: OperationDsl.() -> Unit)
 
     /**
      * Adds a path with the given string and creates a "OPTIONS" operation on it.
      */
+    @TegralDsl
     infix fun String.options(path: OperationDsl.() -> Unit)
 
     /**
      * Adds a path with the given string and creates a "HEAD" operation on it.
      */
+    @TegralDsl
     infix fun String.head(path: OperationDsl.() -> Unit)
 }
 
 /**
  * Builder for [PathsDsl].
  */
-class PathsBuilder(private val context: KoaDslContext) : PathsDsl, Builder<Paths> {
+class PathsBuilder(private val context: OpenApiDslContext) : PathsDsl, Builder<Paths> {
     private val pathBuilders = mutableMapOf<String, PathBuilder>()
 
     override fun String.invoke(path: PathDsl.() -> Unit) {

@@ -14,16 +14,19 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.media.Content
 import io.swagger.v3.oas.models.responses.ApiResponse
 
 /**
  * DSL for [response objects][https://spec.openapis.org/oas/v3.1.0#response-object].
  */
+@TegralDsl
 interface ResponseDsl : BodyDsl {
     /**
      * A description of the response. CommonMark syntax may be used for rich text representation.
      */
+    @TegralDsl
     var description: String?
     // TODO headers, links
 }
@@ -31,8 +34,7 @@ interface ResponseDsl : BodyDsl {
 /**
  * Builder for Response objects, implementing the [ResponseDsl].
  */
-@KoaDsl
-class ResponseBuilder(context: KoaDslContext) : BodyBuilder(context), ResponseDsl, Builder<ApiResponse> {
+class ResponseBuilder(context: OpenApiDslContext) : BodyBuilder(context), ResponseDsl, Builder<ApiResponse> {
     override var description: String? = null
     override fun build(): ApiResponse = ApiResponse().apply {
         description(this@ResponseBuilder.description)

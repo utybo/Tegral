@@ -14,6 +14,8 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
+
 /**
  * A content type.
  *
@@ -31,5 +33,6 @@ value class ContentType(
     /**
      * Combines this content type with another to form a [MultiContentType].
      */
+    @TegralDsl
     infix fun or(other: ContentType): MultiContentType = MultiContentType(listOf(this, other))
 }

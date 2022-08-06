@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.ExternalDocumentation
 import io.swagger.v3.oas.models.Operation
 import io.swagger.v3.oas.models.parameters.Parameter
@@ -26,41 +27,49 @@ import io.swagger.v3.oas.models.security.SecurityRequirement
  *
  * Note that the `externalDocs` object is embedded in this DSL.
  */
+@TegralDsl
 interface OperationDsl {
     /**
      * A short summary of what the operation does.
      */
+    @TegralDsl
     var summary: String?
 
     /**
      * A verbose explanation of the operation behavior. CommonMark syntax may be used for rich text representation.
      */
+    @TegralDsl
     var description: String?
 
     /**
      * A description of the additional external documentation for this operation. CommonMark syntax may be used for rich
      * text representation.
      */
+    @TegralDsl
     var externalDocsDescription: String?
 
     /**
      * A URL that points to additional external documentation for this operation. Must be a valid URL.
      */
+    @TegralDsl
     var externalDocsUrl: String?
 
     /**
      * The request body applicable for this operation.
      */
+    @TegralDsl
     var requestBody: RequestBodyBuilder?
 
     /**
      * If true, declares this operation to be deprecated (false by default).
      */
+    @TegralDsl
     var deprecated: Boolean?
 
     /**
      * A string used to identify the operation, unique among all operations described in the API.
      */
+    @TegralDsl
     var operationId: String?
 
     /**
@@ -73,6 +82,7 @@ interface OperationDsl {
      * - [cookieParameter]
      * - [queryParameter]
      */
+    @TegralDsl
     val parameters: MutableList<Builder<Parameter>>
 
     /**
@@ -82,71 +92,77 @@ interface OperationDsl {
      * - Requirements defined in the individual `SecurityRequirement` objects behave like an "AND", and all of them need
      * to be fulfilled.
      */
+    @TegralDsl
     val securityRequirements: MutableList<SecurityRequirement>
 
     /**
      * The list of possible responses as they are returned from executing this operation.
      */
+    @TegralDsl
     val responses: MutableMap<Int, Builder<ApiResponse>>
 
     /**
      * A list of tags for API documentation control. Tags can be used for logical grouping of operations by resources or
      * any other qualifier.
      */
+    @TegralDsl
     val tags: MutableList<String>
 
     /**
      * Adds a security requirement object to this operation with the given key.
      */
+    @TegralDsl
     fun security(key: String)
 
     /**
      * Adds a security requirement object to this operation with the given key and scopes.
      */
+    @TegralDsl
     fun security(key: String, vararg scopes: String)
 
     /**
      * Creates a response for the given response code (passed as an integer value).
      */
-    @KoaDsl
-    infix fun Int.response(builder: ResponseBuilder.() -> Unit)
+    @TegralDsl
+    infix fun Int.response(builder: ResponseDsl.() -> Unit)
 
     /**
      * Creates a path parameter, with the given string as the name of the corresponding path segment.
      */
-    @KoaDsl
-    infix fun String.pathParameter(builder: ParameterBuilder.() -> Unit)
+    @TegralDsl
+    infix fun String.pathParameter(builder: ParameterDsl.() -> Unit)
 
     /**
      * Creates a header parameter, with the given string as the name of the header.
      */
-    @KoaDsl
-    infix fun String.headerParameter(builder: ParameterBuilder.() -> Unit)
+    @TegralDsl
+    infix fun String.headerParameter(builder: ParameterDsl.() -> Unit)
 
     /**
      * Creates a cookie parameter, with the given string as the name of the cookie.
      */
-    @KoaDsl
-    infix fun String.cookieParameter(builder: ParameterBuilder.() -> Unit)
+    @TegralDsl
+    infix fun String.cookieParameter(builder: ParameterDsl.() -> Unit)
 
     /**
      * Creates a query parameter, with the given string as the name of the query parameter key.
      */
-    @KoaDsl
-    infix fun String.queryParameter(builder: ParameterBuilder.() -> Unit)
+    @TegralDsl
+    infix fun String.queryParameter(builder: ParameterDsl.() -> Unit)
 
     /**
      * Defines the request body for this operation.
      */
-    fun body(builder: RequestBodyBuilder.() -> Unit)
+    @TegralDsl
+    fun body(builder: RequestBodyDsl.() -> Unit)
 }
 
 /**
  * Builder for [OperationDsl]
  */
-@KoaDsl
+@TegralDsl
 @Suppress("TooManyFunctions")
-class OperationBuilder(private val context: KoaDslContext) : OperationDsl, Builder<Operation> {
+class OperationBuilder(private val context: OpenApiDslContext) : OperationDsl, Builder<Operation> {
     override var summary: String? = null
     override val responses = mutableMapOf<Int, Builder<ApiResponse>>()
     override var description: String? = null
@@ -172,32 +188,27 @@ class OperationBuilder(private val context: KoaDslContext) : OperationDsl, Build
         securityRequirements.add(SecurityRequirement().addList(key, scopes.toList()))
     }
 
-    @KoaDsl
-    override infix fun Int.response(builder: ResponseBuilder.() -> Unit) {
+    override infix fun Int.response(builder: ResponseDsl.() -> Unit) {
         responses[this] = ResponseBuilder(context).apply(builder)
     }
 
-    override fun body(builder: RequestBodyBuilder.() -> Unit) {
+    override fun body(builder: RequestBodyDsl.() -> Unit) {
         requestBody = RequestBodyBuilder(context).apply(builder)
     }
 
-    @KoaDsl
-    override infix fun String.pathParameter(builder: ParameterBuilder.() -> Unit) {
+    override infix fun String.pathParameter(builder: ParameterDsl.() -> Unit) {
         parameters += ParameterBuilder(context, this, ParameterKind.Path).apply(builder)
     }
 
-    @KoaDsl
-    override infix fun String.headerParameter(builder: ParameterBuilder.() -> Unit) {
+    override infix fun String.headerParameter(builder: ParameterDsl.() -> Unit) {
         parameters += ParameterBuilder(context, this, ParameterKind.Header).apply(builder)
     }
 
-    @KoaDsl
-    override infix fun String.cookieParameter(builder: ParameterBuilder.() -> Unit) {
+    override infix fun String.cookieParameter(builder: ParameterDsl.() -> Unit) {
         parameters += ParameterBuilder(context, this, ParameterKind.Cookie).apply(builder)
     }
 
-    @KoaDsl
-    override infix fun String.queryParameter(builder: ParameterBuilder.() -> Unit) {
+    override infix fun String.queryParameter(builder: ParameterDsl.() -> Unit) {
         parameters += ParameterBuilder(context, this, ParameterKind.Query).apply(builder)
     }
 

@@ -14,6 +14,8 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
+
 /**
  * Represents multiple [content types][ContentType]. This is useful for functions that can be applied to multiple
  * content types at a time (mostly for the sake of concision).
@@ -28,5 +30,6 @@ value class MultiContentType(
     /**
      * Combines this multi content type with an additional [content type][ContentType]
      */
+    @TegralDsl
     infix fun or(other: ContentType): MultiContentType = MultiContentType(types + other)
 }

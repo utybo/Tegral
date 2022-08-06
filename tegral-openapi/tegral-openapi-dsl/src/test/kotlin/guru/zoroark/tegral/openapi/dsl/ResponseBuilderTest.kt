@@ -31,7 +31,7 @@ class ResponseBuilderTest {
     fun `Test with content`() {
         val mockSchema = mockk<Schema<*>>()
         val mockExample = mockk<TestSchema>()
-        val context = mockk<KoaDslContext> {
+        val context = mockk<OpenApiDslContext> {
             every { computeAndRegisterSchema(typeOf<TestSchema>()) } returns mockSchema
         }
         val response = ResponseBuilder(context).apply {
@@ -60,7 +60,7 @@ class ResponseBuilderTest {
 
     @Test
     fun `Test without content`() {
-        val context = mockk<KoaDslContext>()
+        val context = mockk<OpenApiDslContext>()
         val response = ResponseBuilder(context).apply {
             description = "My response description"
         }.build()

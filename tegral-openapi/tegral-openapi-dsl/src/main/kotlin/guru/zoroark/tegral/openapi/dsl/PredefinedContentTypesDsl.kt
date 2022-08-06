@@ -14,30 +14,37 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
+
 /**
  * Interface that contains standard content types.
  *
  * This interface is "implemented" (although nothing in it is abstract) by other DSL interfaces when they wish for users
  * to have directly access to utilities like `xml`, `json`...
  */
+@TegralDsl
 interface PredefinedContentTypesDsl {
     /**
      * [ContentType] object for `application/xml`
      */
+    @TegralDsl
     val xml get() = ContentType("application/xml")
 
     /**
      * [ContentType] object for `application/json`
      */
+    @TegralDsl
     val json get() = ContentType("application/json")
 
     /**
      * [ContentType] object for `application/x-www-form-urlencoded`
      */
+    @TegralDsl
     val form get() = ContentType("application/x-www-form-urlencoded")
 
     /**
      * [ContentType] object for `text/plain`
      */
+    @TegralDsl
     val plainText get() = ContentType("text/plain")
 }

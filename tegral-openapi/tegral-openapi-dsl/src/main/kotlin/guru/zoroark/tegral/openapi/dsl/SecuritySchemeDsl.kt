@@ -14,12 +14,14 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.security.OAuthFlows
 import io.swagger.v3.oas.models.security.SecurityScheme
 
 /**
  * DSL for the [security scheme object](https://spec.openapis.org/oas/v3.1.0#security-scheme-object).
  */
+@TegralDsl
 interface SecuritySchemeDsl {
     /**
      * The type of the security scheme.
@@ -32,11 +34,13 @@ interface SecuritySchemeDsl {
      * - [openIdConnectType]
      * - [mutualTlsType]
      */
+    @TegralDsl
     var type: SecurityScheme.Type?
 
     /**
      * A description for security scheme. CommonMark syntax may be used for rich text representation.
      */
+    @TegralDsl
     var description: String?
 
     /**
@@ -44,6 +48,7 @@ interface SecuritySchemeDsl {
      *
      * Only applies to API keys.
      */
+    @TegralDsl
     var name: String?
 
     /**
@@ -57,6 +62,7 @@ interface SecuritySchemeDsl {
      * - [inHeader]
      * - [inCookie]
      */
+    @TegralDsl
     var inLocation: SecurityScheme.In?
 
     /**
@@ -65,24 +71,28 @@ interface SecuritySchemeDsl {
      *
      * Only applies to HTTP (berare) type schemes.
      */
+    @TegralDsl
     var bearerFormat: String?
 
     /**
      * The name of the HTTP Authorization scheme to bbe used in the Authorization header as defined in RFC 7235. The
      * values used should be registered in the IANA Authentication Scheme registry.
      */
+    @TegralDsl
     var scheme: String?
 
     /**
      * OpenID Connect URL to discover OAuth2 configuration values. This must be in the form of a URL. The OpenID Connect
      * standard requires the use of TLS.
      */
+    @TegralDsl
     var openIdConnectUrl: String?
 
     /**
      * An object containing configuration information for the flow types supported.
      */
     // TODO proper dsl for oauth flows
+    @TegralDsl
     var flows: OAuthFlows?
 }
 

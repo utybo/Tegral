@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.media.Schema
 import io.swagger.v3.oas.models.parameters.CookieParameter
 import io.swagger.v3.oas.models.parameters.HeaderParameter
@@ -52,6 +53,7 @@ enum class ParameterKind {
 /**
  * DSL for [parameter objects][https://spec.openapis.org/oas/v3.1.0#parameter-object]
  */
+@TegralDsl
 interface ParameterDsl : MediaTypeDsl {
     /**
      * The name of the parameter.
@@ -59,28 +61,33 @@ interface ParameterDsl : MediaTypeDsl {
      * - If this is a path parameter, it must correspond to a template expression in the path.
      * - If this is a header parameter, its name cannot be `Accept`, `Content-Type` or `Authorization`.
      */
+    @TegralDsl
     val name: String
 
     /**
      * The kind of parameter. See [ParameterKind] for more information.
      */
+    @TegralDsl
     val kind: ParameterKind
 
     /**
      * A brief description of the parameter. This could contain examples of use. CommonMark syntax may be used for
      * rich text representation.
      */
+    @TegralDsl
     var description: String?
 
     /**
      * Determines whether this parameter is mandatory. If the parameter is a path parameter, this value will always be
      * set to true, otherwise it is false by default.
      */
+    @TegralDsl
     var required: Boolean?
 
     /**
      * Specifies that a parameter is deprecated and should be transitioned out of usage. False by default.
      */
+    @TegralDsl
     var deprecated: Boolean?
 
     /**
@@ -90,6 +97,7 @@ interface ParameterDsl : MediaTypeDsl {
         "From OpenAPI specifications: \"Use of this property is not recommended and it is likely to be " +
             "removed in a later revision.\""
     )
+    @TegralDsl
     var allowEmptyValue: Boolean?
 
     /**
@@ -97,6 +105,7 @@ interface ParameterDsl : MediaTypeDsl {
      *
      * See [here](https://spec.openapis.org/oas/v3.1.0#style-values) for more information.
      */
+    @TegralDsl
     var style: Parameter.StyleEnum?
 
     /**
@@ -104,6 +113,7 @@ interface ParameterDsl : MediaTypeDsl {
      * the array or key-value pair of the map. Has no effect for other types of parameters. Default value is `true` if
      * `style` is set to `form`, `false` otherwise.
      */
+    @TegralDsl
     var explode: Boolean?
 
     /**
@@ -112,11 +122,13 @@ interface ParameterDsl : MediaTypeDsl {
      *
      * Only applies to query parameters.
      */
+    @TegralDsl
     var allowReserved: Boolean?
 
     /**
      * Sets `required = true` when called.
      */
+    @TegralDsl
     fun required() {
         required = true
     }
@@ -127,9 +139,8 @@ interface ParameterDsl : MediaTypeDsl {
 /**
  * Builder for [ParameterDsl]
  */
-@KoaDsl
 class ParameterBuilder(
-    private val context: KoaDslContext,
+    private val context: OpenApiDslContext,
     override val name: String,
     override val kind: ParameterKind
 ) : Builder<Parameter>, ParameterDsl {

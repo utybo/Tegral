@@ -14,11 +14,13 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.servers.Server
 
 /**
  * DSL for the [server object](https://spec.openapis.org/oas/v3.1.0#server-object).
  */
+@TegralDsl
 interface ServerDsl
 
 /**

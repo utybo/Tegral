@@ -14,7 +14,6 @@
 
 package guru.zoroark.tegral.openapi.ktor
 
-import guru.zoroark.tegral.openapi.dsl.KoaDsl
 import guru.zoroark.tegral.openapi.dsl.OperationDsl
 import guru.zoroark.tegral.openapi.dsl.RootDsl
 import io.ktor.http.HttpMethod

@@ -30,7 +30,7 @@ import kotlin.test.assertEquals
 class RootBuilderTest {
     @Test
     fun `Test with everything`() {
-        val context = mockk<KoaDslContext>()
+        val context = mockk<OpenApiDslContext>()
         val openApi = RootBuilder(context).apply {
             // InfoDsl
             title = "Test document"
@@ -82,7 +82,7 @@ class RootBuilderTest {
 
     @Test
     fun `Test with nothing should output a bunch of null`() {
-        val context = mockk<KoaDslContext>()
+        val context = mockk<OpenApiDslContext>()
         val openApi = RootBuilder(context).build()
 
         val expected = OpenAPI()

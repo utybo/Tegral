@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.core.util.Json
 import io.swagger.v3.core.util.Json31
 import io.swagger.v3.core.util.OpenAPI30To31
@@ -25,10 +26,10 @@ import io.swagger.v3.oas.models.OpenAPI
  * Entrypoint for the Tegral OpenAPI DSL.
  *
  * This takes a lambda with the [RootDsl], from which you can do everything offered by the DSL. This function creates a
- * [DSL contxt][KoaDslContext] calls the lambda, builds the OpenAPI object and persists the context.
+ * [DSL contxt][OpenApiDslContext] calls the lambda, builds the OpenAPI object and persists the context.
  */
-@KoaDsl
-fun openApi(builder: RootBuilder.() -> Unit): OpenAPI {
+@TegralDsl
+fun openApi(builder: RootDsl.() -> Unit): OpenAPI {
     val context = SimpleDslContext()
     val root = RootBuilder(context)
     root.builder()

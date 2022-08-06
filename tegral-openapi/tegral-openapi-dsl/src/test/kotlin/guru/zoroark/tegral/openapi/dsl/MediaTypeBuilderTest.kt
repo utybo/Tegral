@@ -25,7 +25,7 @@ import kotlin.test.assertEquals
 class MediaTypeBuilderTest {
     @Test
     fun `Schema and example via reified inline`() {
-        val context = mockk<KoaDslContext> {
+        val context = mockk<OpenApiDslContext> {
             every { computeAndRegisterSchema(typeOf<String>()) } returns StringSchema()
         }
         val mediaType = MediaTypeBuilder(context).apply {
@@ -42,7 +42,7 @@ class MediaTypeBuilderTest {
 
     @Test
     fun `Schema via reified inline`() {
-        val context = mockk<KoaDslContext> {
+        val context = mockk<OpenApiDslContext> {
             every { computeAndRegisterSchema(typeOf<String>()) } returns StringSchema()
         }
         val mediaType = MediaTypeBuilder(context).apply {
@@ -58,7 +58,7 @@ class MediaTypeBuilderTest {
 
     @Test
     fun `Manually set example and schema`() {
-        val context = mockk<KoaDslContext>()
+        val context = mockk<OpenApiDslContext>()
         val mediaType = MediaTypeBuilder(context).apply {
             schema = StringSchema()
             example = "Test"
@@ -74,7 +74,7 @@ class MediaTypeBuilderTest {
 
     @Test
     fun `Schema and example via ktype`() {
-        val context = mockk<KoaDslContext> {
+        val context = mockk<OpenApiDslContext> {
             every { computeAndRegisterSchema(typeOf<String>()) } returns StringSchema()
         }
         val mediaType = MediaTypeBuilder(context).apply {
@@ -91,7 +91,7 @@ class MediaTypeBuilderTest {
 
     @Test
     fun `Schema via ktype`() {
-        val context = mockk<KoaDslContext> {
+        val context = mockk<OpenApiDslContext> {
             every { computeAndRegisterSchema(typeOf<String>()) } returns StringSchema()
         }
         val mediaType = MediaTypeBuilder(context).apply {

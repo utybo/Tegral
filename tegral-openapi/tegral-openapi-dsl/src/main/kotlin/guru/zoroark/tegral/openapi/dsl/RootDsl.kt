@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.ExternalDocumentation
 import io.swagger.v3.oas.models.OpenAPI
@@ -34,27 +35,32 @@ import io.swagger.v3.oas.models.servers.Server
  *
  * (Items marked as embedded are separate DSL interfaces that are available in [RootDsl] and can be used directly).
  */
+@TegralDsl
 interface RootDsl : InfoDsl, TagsDsl, PathsDsl {
     /**
      * Adds a security scheme to this OpenAPI document with the given string as the name, using the lambda to configure
      * further options.
      */
+    @TegralDsl
     infix fun String.securityScheme(scheme: SecuritySchemeDsl.() -> Unit)
 
     /**
      * Adds a server to this OpenAPI document with the given string as the name, using the lambda to configure further
      * options.
      */
+    @TegralDsl
     infix fun String.server(server: ServerDsl.() -> Unit)
 
     /**
      * Description for additional external documentation for this API.
      */
+    @TegralDsl
     var externalDocsDescription: String?
 
     /**
      * URL for additional external documentation for this API.
      */
+    @TegralDsl
     var externalDocsUrl: String?
 }
 
@@ -62,7 +68,7 @@ interface RootDsl : InfoDsl, TagsDsl, PathsDsl {
  * Builder for the [RootDsl].
  */
 class RootBuilder(
-    private val context: KoaDslContext,
+    private val context: OpenApiDslContext,
     private val infoBuilder: InfoBuilder = InfoBuilder(),
     private val paths: PathsBuilder = PathsBuilder(context),
     private val securitySchemes: MutableMap<String, SecuritySchemeBuilder> = mutableMapOf()

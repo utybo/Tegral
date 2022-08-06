@@ -14,29 +14,33 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.media.Content
 import io.swagger.v3.oas.models.parameters.RequestBody
 
 /**
  * DSL for the [request body object](https://spec.openapis.org/oas/v3.1.0#request-body-object).
  */
+@TegralDsl
 interface RequestBodyDsl : BodyDsl {
     /**
      * A brief description of the request body. This could contain examples of use. CommonMark syntax may be used for
      * rich text representation.
      */
+    @TegralDsl
     var description: String?
 
     /**
      * Determines if the request body is required in the request. Defaults to false.
      */
+    @TegralDsl
     var required: Boolean?
 }
 
 /**
  * Builder for the [request body DSL][RequestBodyDsl]
  */
-class RequestBodyBuilder(context: KoaDslContext) : BodyBuilder(context), RequestBodyDsl, Builder<RequestBody> {
+class RequestBodyBuilder(context: OpenApiDslContext) : BodyBuilder(context), RequestBodyDsl, Builder<RequestBody> {
     override var description: String? = null
     override var required: Boolean? = null
     override fun build(): RequestBody = RequestBody().apply {

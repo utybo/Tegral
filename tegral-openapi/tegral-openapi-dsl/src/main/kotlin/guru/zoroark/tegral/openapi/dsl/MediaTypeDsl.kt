@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.media.MediaType
 import io.swagger.v3.oas.models.media.Schema
 import kotlin.reflect.KType
@@ -25,24 +26,27 @@ import kotlin.reflect.typeOf
  * This DSL has extensions that allow to easily define schemas from `KType` objects (including types of arbitrary
  * classes).
  */
-@KoaDsl
+@TegralDsl
 interface MediaTypeDsl {
     /**
      * Sets the schema of this object to be of the given `KType`. The type will be converted to a schema.
      *
-     * DSLs implementing `MediaTypeDsl` must properly register any non-standard schema using the [KoaDslContext], which
+     * DSLs implementing `MediaTypeDsl` must properly register any non-standard schema using the [OpenApiDslContext], which
      * will provide a proper schema with a `$ref`.
      */
+    @TegralDsl
     fun schema(ktype: KType)
 
     /**
      * The schema for this object.
      */
+    @TegralDsl
     var schema: Schema<*>?
 
     /**
      * The example for this object. Should match the given schema.
      */
+    @TegralDsl
     var example: Any?
     // TODO examples, encoding
 }
@@ -52,7 +56,7 @@ interface MediaTypeDsl {
  *
  * The type `T` will be converted to a schema.
  */
-@KoaDsl
+@TegralDsl
 inline fun <reified T : Any> MediaTypeDsl.schema() = schema(typeOf<T>())
 
 /**
@@ -60,7 +64,7 @@ inline fun <reified T : Any> MediaTypeDsl.schema() = schema(typeOf<T>())
  *
  * The type `T` will be converted to a schema.
  */
-@KoaDsl
+@TegralDsl
 inline fun <reified T : Any> MediaTypeDsl.schema(example: T) {
     this.example = example
     schema(typeOf<T>())
@@ -69,7 +73,7 @@ inline fun <reified T : Any> MediaTypeDsl.schema(example: T) {
 /**
  * Set the schema to be of type [ktype], with the given object set as the example.
  */
-@KoaDsl
+@TegralDsl
 fun <T> MediaTypeDsl.schema(ktype: KType, example: T) {
     this.example = example
     schema(ktype)
@@ -78,7 +82,7 @@ fun <T> MediaTypeDsl.schema(ktype: KType, example: T) {
 /**
  * A builder for [MediaTypeDsl].
  */
-class MediaTypeBuilder(private val context: KoaDslContext) : MediaTypeDsl, Builder<MediaType> {
+class MediaTypeBuilder(private val context: OpenApiDslContext) : MediaTypeDsl, Builder<MediaType> {
     override var schema: Schema<*>? = null
     override var example: Any? = null
 

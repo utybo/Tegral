@@ -31,7 +31,7 @@ class RequestBodyBuilderTest {
     fun `Test with content`() {
         val mockSchema = mockk<Schema<*>>()
         val mockExample = mockk<TestSchema>()
-        val context = mockk<KoaDslContext> {
+        val context = mockk<OpenApiDslContext> {
             every { computeAndRegisterSchema(typeOf<TestSchema>()) } returns mockSchema
         }
         val response = RequestBodyBuilder(context).apply {
@@ -62,7 +62,7 @@ class RequestBodyBuilderTest {
 
     @Test
     fun `Test without content`() {
-        val context = mockk<KoaDslContext>()
+        val context = mockk<OpenApiDslContext>()
         val response = RequestBodyBuilder(context).apply {
             required = false
             description = "My response description"

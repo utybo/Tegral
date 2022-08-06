@@ -5,6 +5,7 @@ plugins {
 dependencies {
     api libs.swaggerCore.models
     api libs.swaggerCore.core
+    implementation project(":tegral-core")
 }
 
 ext.humanName = "Tegral OpenAPI DSL"

@@ -30,7 +30,7 @@ import kotlin.reflect.javaType
  * This interface is passed to most of the builder classes and provides utilities that need to be present through the
  * "DSL tree".
  */
-interface KoaDslContext {
+interface OpenApiDslContext {
     /**
      * Computes (or gets) the schema associated with the given KType. You can get a KType using the `typeOf<>()`
      * function.
@@ -46,9 +46,9 @@ interface KoaDslContext {
 }
 
 /**
- * An implementation of [KoaDslContext] that keeps context information for Swagger Core.
+ * An implementation of [OpenApiDslContext] that keeps context information for Swagger Core.
  */
-class SimpleDslContext : KoaDslContext {
+class SimpleDslContext : OpenApiDslContext {
     private val context = ModelConverterContextImpl(ModelConverters.getInstance().converters)
 
     override fun computeAndRegisterSchema(type: KType): Schema<*> {

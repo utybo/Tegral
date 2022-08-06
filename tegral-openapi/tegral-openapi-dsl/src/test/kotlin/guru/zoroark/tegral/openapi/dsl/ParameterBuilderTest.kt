@@ -31,7 +31,7 @@ class ParameterBuilderTest {
         items = StringSchema()
     }
 
-    private val contextMock = mockk<KoaDslContext> {
+    private val contextMock = mockk<OpenApiDslContext> {
         every { computeAndRegisterSchema(any()) } returns stringListSchema
     }
 

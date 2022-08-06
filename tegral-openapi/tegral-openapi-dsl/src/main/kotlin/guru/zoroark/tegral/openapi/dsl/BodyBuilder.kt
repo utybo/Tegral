@@ -14,11 +14,13 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.media.MediaType
 
 /**
  * DSL for body-like objects, i.e. objects that contain a "content" property.
  */
+@TegralDsl
 interface BodyDsl : PredefinedContentTypesDsl {
     /**
      * A "map" containing descriptions of potential payloads. The key is a media type or media type range and teh value
@@ -26,18 +28,21 @@ interface BodyDsl : PredefinedContentTypesDsl {
      *
      * Note: this is provided as a MutableList in order to maintain the order content types were defined in.
      */
+    @TegralDsl
     val content: MutableList<Pair<String, Builder<MediaType>>>
 
     /**
      * Creates a content entry for this content type (the string receiver) and body (the builder configured by the
      * lambda). See [MediaTypeDsl] for more information on what you can do in the lambda.
      */
+    @TegralDsl
     infix fun String.content(builder: MediaTypeBuilder.() -> Unit)
 
     /**
      * Creates a content entry for this content type and body. See [MediaTypeDsl] for more information on what you can
      * do in the lambda.
      */
+    @TegralDsl
     operator fun ContentType.invoke(builder: MediaTypeBuilder.() -> Unit) {
         contentType content builder
     }
@@ -46,6 +51,7 @@ interface BodyDsl : PredefinedContentTypesDsl {
      * Creates content entries for each of the provided content types with the same body. See [MediaTypeDsl] for more
      * information on what you can do in the lambda.
      */
+    @TegralDsl
     operator fun MultiContentType.invoke(builder: MediaTypeBuilder.() -> Unit) {
         types.forEach { it(builder) }
     }
@@ -56,11 +62,11 @@ interface BodyDsl : PredefinedContentTypesDsl {
  *
  * Should not be used as is and should be subclassed by builders that also wish to include a [body DSL][BodyDsl].
  */
-@KoaDsl
-abstract class BodyBuilder(protected val context: KoaDslContext) : BodyDsl {
+@TegralDsl
+abstract class BodyBuilder(protected val context: OpenApiDslContext) : BodyDsl {
     override val content = mutableListOf<Pair<String, Builder<MediaType>>>()
 
-    @KoaDsl
+    @TegralDsl
     override infix fun String.content(builder: MediaTypeBuilder.() -> Unit) {
         content.add(this to MediaTypeBuilder(context).apply(builder))
     }
