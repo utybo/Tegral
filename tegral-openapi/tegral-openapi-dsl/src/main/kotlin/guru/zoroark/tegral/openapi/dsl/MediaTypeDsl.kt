@@ -31,8 +31,8 @@ interface MediaTypeDsl {
     /**
      * Sets the schema of this object to be of the given `KType`. The type will be converted to a schema.
      *
-     * DSLs implementing `MediaTypeDsl` must properly register any non-standard schema using the [OpenApiDslContext], which
-     * will provide a proper schema with a `$ref`.
+     * DSLs implementing `MediaTypeDsl` must properly register any non-standard schema using the [OpenApiDslContext],
+     * which will provide a proper schema with a `$ref`.
      */
     @TegralDsl
     fun schema(ktype: KType)

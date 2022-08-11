@@ -36,6 +36,7 @@ class PluginTest {
     @Test
     fun `Plugin installation and retrieval`() {
         testApplication {
+            environment { developmentMode = false } // HACK see KTOR-4729
             install(TegralOpenApiKtor) {
             }
 
@@ -48,6 +49,7 @@ class PluginTest {
     @Test
     fun `Create OpenAPI document with only basic info`() {
         testApplication {
+            environment { developmentMode = false } // HACK see KTOR-4729
             install(TegralOpenApiKtor) {
                 title = "My API"
                 version = "0.0.0"

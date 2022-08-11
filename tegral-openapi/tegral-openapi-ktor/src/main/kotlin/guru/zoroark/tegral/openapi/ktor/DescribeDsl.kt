@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.ktor
 
+import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.openapi.dsl.OperationDsl
 import guru.zoroark.tegral.openapi.dsl.RootDsl
 import io.ktor.http.HttpMethod
@@ -26,7 +27,7 @@ import io.ktor.server.routing.Route
 import io.ktor.server.routing.application
 import io.ktor.util.KtorDsl
 import org.slf4j.LoggerFactory
-import java.util.*
+import java.util.LinkedList
 import java.util.concurrent.atomic.AtomicBoolean
 
 private val logger = LoggerFactory.getLogger("tegral.openapi.ktor.describe")
@@ -65,7 +66,7 @@ fun Application.describe(description: RootDsl.() -> Unit) {
  *
  * The [TegralOpenApiKtor] plugin needs to be installed for this to work.
  */
-@KoaDsl
+@TegralDsl
 @KtorDsl
 infix fun Route.describe(description: OperationDsl.() -> Unit): Route {
     val openApi = application.pluginOrNull(TegralOpenApiKtor)

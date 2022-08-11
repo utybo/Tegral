@@ -44,6 +44,7 @@ data class FooBar(val example: String)
 class Ktor4239Workaround {
     @Test
     fun `Test KTOR-4239 workaround`() = testApplication {
+        environment { developmentMode = false } // HACK see KTOR-4729
         install(TegralOpenApiKtor)
         install(Locations)
         routing {

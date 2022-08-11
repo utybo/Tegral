@@ -137,6 +137,7 @@ class PathDescribeTest {
 
     @Test
     fun `Test unknown method is ignored`() = testApplication {
+        environment { developmentMode = false } // HACK see KTOR-4729
         install(TegralOpenApiKtor)
         routing {
             route("/foo", io.ktor.http.HttpMethod("BLABLA")) {
@@ -159,6 +160,7 @@ class PathDescribeTest {
 
     @Test
     fun `Describe a path with path parameter`() = testApplication {
+        environment { developmentMode = false } // HACK see KTOR-4729
         install(TegralOpenApiKtor)
 
         routing {

@@ -1,8 +1,8 @@
 public abstract class guru/zoroark/tegral/openapi/dsl/BodyBuilder : guru/zoroark/tegral/openapi/dsl/BodyDsl {
-	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;)V
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/OpenApiDslContext;)V
 	public fun content (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public fun getContent ()Ljava/util/List;
-	protected final fun getContext ()Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;
+	protected final fun getContext ()Lguru/zoroark/tegral/openapi/dsl/OpenApiDslContext;
 	public fun getForm-oRZ81Xs ()Ljava/lang/String;
 	public fun getJson-oRZ81Xs ()Ljava/lang/String;
 	public fun getPlainText-oRZ81Xs ()Ljava/lang/String;
@@ -99,16 +99,8 @@ public abstract interface class guru/zoroark/tegral/openapi/dsl/InfoDsl {
 	public abstract fun setVersion (Ljava/lang/String;)V
 }
 
-public abstract interface annotation class guru/zoroark/tegral/openapi/dsl/KoaDsl : java/lang/annotation/Annotation {
-}
-
-public abstract interface class guru/zoroark/tegral/openapi/dsl/KoaDslContext {
-	public abstract fun computeAndRegisterSchema (Lkotlin/reflect/KType;)Lio/swagger/v3/oas/models/media/Schema;
-	public abstract fun persistTo (Lio/swagger/v3/oas/models/OpenAPI;)V
-}
-
 public final class guru/zoroark/tegral/openapi/dsl/MediaTypeBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/MediaTypeDsl {
-	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;)V
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/OpenApiDslContext;)V
 	public fun build ()Lio/swagger/v3/oas/models/media/MediaType;
 	public synthetic fun build ()Ljava/lang/Object;
 	public fun getExample ()Ljava/lang/Object;
@@ -145,6 +137,11 @@ public final class guru/zoroark/tegral/openapi/dsl/MultiContentType {
 	public final synthetic fun unbox-impl ()Ljava/util/List;
 }
 
+public abstract interface class guru/zoroark/tegral/openapi/dsl/OpenApiDslContext {
+	public abstract fun computeAndRegisterSchema (Lkotlin/reflect/KType;)Lio/swagger/v3/oas/models/media/Schema;
+	public abstract fun persistTo (Lio/swagger/v3/oas/models/OpenAPI;)V
+}
+
 public final class guru/zoroark/tegral/openapi/dsl/OpenApiKt {
 	public static final fun openApi (Lkotlin/jvm/functions/Function1;)Lio/swagger/v3/oas/models/OpenAPI;
 	public static final fun toJson (Lio/swagger/v3/oas/models/OpenAPI;Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;)Ljava/lang/String;
@@ -163,7 +160,7 @@ public final class guru/zoroark/tegral/openapi/dsl/OpenApiVersion : java/lang/En
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/OperationBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/OperationDsl {
-	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;)V
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/OpenApiDslContext;)V
 	public fun body (Lkotlin/jvm/functions/Function1;)V
 	public fun build ()Lio/swagger/v3/oas/models/Operation;
 	public synthetic fun build ()Ljava/lang/Object;
@@ -224,7 +221,7 @@ public abstract interface class guru/zoroark/tegral/openapi/dsl/OperationDsl {
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/ParameterBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/ParameterDsl {
-	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;Ljava/lang/String;Lguru/zoroark/tegral/openapi/dsl/ParameterKind;)V
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/OpenApiDslContext;Ljava/lang/String;Lguru/zoroark/tegral/openapi/dsl/ParameterKind;)V
 	public fun build ()Lio/swagger/v3/oas/models/parameters/Parameter;
 	public synthetic fun build ()Ljava/lang/Object;
 	public fun getAllowEmptyValue ()Ljava/lang/Boolean;
@@ -285,7 +282,7 @@ public final class guru/zoroark/tegral/openapi/dsl/ParameterKind : java/lang/Enu
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/PathBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/PathDsl {
-	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;)V
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/OpenApiDslContext;)V
 	public fun build ()Lio/swagger/v3/oas/models/PathItem;
 	public synthetic fun build ()Ljava/lang/Object;
 	public fun delete (Lkotlin/jvm/functions/Function1;)V
@@ -308,7 +305,7 @@ public abstract interface class guru/zoroark/tegral/openapi/dsl/PathDsl {
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/PathsBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/PathsDsl {
-	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;)V
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/OpenApiDslContext;)V
 	public fun build ()Lio/swagger/v3/oas/models/Paths;
 	public synthetic fun build ()Ljava/lang/Object;
 	public fun delete (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
@@ -347,7 +344,7 @@ public final class guru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl$Def
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/RequestBodyBuilder : guru/zoroark/tegral/openapi/dsl/BodyBuilder, guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/RequestBodyDsl {
-	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;)V
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/OpenApiDslContext;)V
 	public fun build ()Lio/swagger/v3/oas/models/parameters/RequestBody;
 	public synthetic fun build ()Ljava/lang/Object;
 	public fun getDescription ()Ljava/lang/String;
@@ -373,7 +370,7 @@ public final class guru/zoroark/tegral/openapi/dsl/RequestBodyDsl$DefaultImpls {
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/ResponseBuilder : guru/zoroark/tegral/openapi/dsl/BodyBuilder, guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/ResponseDsl {
-	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;)V
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/OpenApiDslContext;)V
 	public fun build ()Lio/swagger/v3/oas/models/responses/ApiResponse;
 	public synthetic fun build ()Ljava/lang/Object;
 	public fun getDescription ()Ljava/lang/String;
@@ -395,8 +392,8 @@ public final class guru/zoroark/tegral/openapi/dsl/ResponseDsl$DefaultImpls {
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/RootBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/InfoDsl, guru/zoroark/tegral/openapi/dsl/PathsDsl, guru/zoroark/tegral/openapi/dsl/RootDsl {
-	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;Lguru/zoroark/tegral/openapi/dsl/InfoBuilder;Lguru/zoroark/tegral/openapi/dsl/PathsBuilder;Ljava/util/Map;)V
-	public synthetic fun <init> (Lguru/zoroark/tegral/openapi/dsl/KoaDslContext;Lguru/zoroark/tegral/openapi/dsl/InfoBuilder;Lguru/zoroark/tegral/openapi/dsl/PathsBuilder;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/OpenApiDslContext;Lguru/zoroark/tegral/openapi/dsl/InfoBuilder;Lguru/zoroark/tegral/openapi/dsl/PathsBuilder;Ljava/util/Map;)V
+	public synthetic fun <init> (Lguru/zoroark/tegral/openapi/dsl/OpenApiDslContext;Lguru/zoroark/tegral/openapi/dsl/InfoBuilder;Lguru/zoroark/tegral/openapi/dsl/PathsBuilder;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun build ()Lio/swagger/v3/oas/models/OpenAPI;
 	public synthetic fun build ()Ljava/lang/Object;
 	public fun delete (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
@@ -508,7 +505,7 @@ public final class guru/zoroark/tegral/openapi/dsl/ServerBuilder : guru/zoroark/
 public abstract interface class guru/zoroark/tegral/openapi/dsl/ServerDsl {
 }
 
-public final class guru/zoroark/tegral/openapi/dsl/SimpleDslContext : guru/zoroark/tegral/openapi/dsl/KoaDslContext {
+public final class guru/zoroark/tegral/openapi/dsl/SimpleDslContext : guru/zoroark/tegral/openapi/dsl/OpenApiDslContext {
 	public fun <init> ()V
 	public fun computeAndRegisterSchema (Lkotlin/reflect/KType;)Lio/swagger/v3/oas/models/media/Schema;
 	public fun persistTo (Lio/swagger/v3/oas/models/OpenAPI;)V
