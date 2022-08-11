@@ -35,7 +35,7 @@ class AuthService(scope: InjectionScope) {
 
 :::note
 
-Meta-environment injections require being in an extensible environment. See [here](./extensions/introduction.md#meta-environment) for more information.
+Meta-environment injections require being in an extensible environment. See [here](./extensions/index.md#meta-environment) for more information.
 
 :::
 

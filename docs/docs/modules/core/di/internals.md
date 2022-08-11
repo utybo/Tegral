@@ -8,7 +8,7 @@ Here is a general overview of Tegral DI. Note that, right away, there are two "w
 
 Note that the following graph is simplified:
 
-- Extensible injection environments embed another environment for storing meta-components, see [here](./extensions/introduction.md#extensions-behind-the-scenes) for details.
+- Extensible injection environments embed another environment for storing meta-components, see [here](./extensions/index.md#extensions-behind-the-scenes) for details.
 
 ```mermaid
 flowchart TB

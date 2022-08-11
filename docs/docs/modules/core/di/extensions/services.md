@@ -105,7 +105,7 @@ env.services.stopAll(::println)
 
 ### Excluding services
 
-You may exclude services from being started/stopped by [tagging](./introduction.md#tags) their `put` statement with `noService`, `noServiceStart` or `noServiceStop`.
+You may exclude services from being started/stopped by [tagging](./index.md#tags) their `put` statement with `noService`, `noServiceStart` or `noServiceStop`.
 
 ```kotlin
 val env = tegralDi {
