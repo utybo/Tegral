@@ -70,7 +70,7 @@ When creating or designing Tegral-based content, the following should be kept in
     - Core business value-adding functions, classes and utilities
     - Ktor plugins
     - Actual Tegral feature
-- **A feature that is not documented does not exist.** This documentation website (tries to) use [diàtaxis](https://diataxis.fr). Features offered by the various modules should be described in:
+- **A feature that is not documented does not exist.** This documentation website tries to use [diàtaxis](https://diataxis.fr). Features offered by the various modules should be described in:
   - KDoc documentation (MUST). This mostly consists in simple and concise explanations of the exact functions.
   - Usage reference in the docs (MUST).
   - How-to in case this contributes to a larger "user goal" (SHOULD).
