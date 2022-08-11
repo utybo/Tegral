@@ -9,3 +9,7 @@
 
 # Irrelevant config files
 uiDesigner.xml
+
+# Things that depend on device behaviors
+gradle.xml
+misc.xml
