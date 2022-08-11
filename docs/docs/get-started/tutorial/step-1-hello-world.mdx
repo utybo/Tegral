@@ -55,7 +55,7 @@ Some of the next steps will depend on whether you chose Kotlin or Groovy for the
 
 ### Setting up Tegral Catalog
 
-[Tegral Catalog](/core/catalog/index.md) is a plugin that allows you to easily import Tegral libraries into your project.
+[Tegral Catalog](/modules/core/catalog/index.md) is a plugin that allows you to easily import Tegral libraries into your project.
 
 <Tabs groupId="gradle-dsl">
 <TabItem value="groovy" label="Groovy DSL">
@@ -165,7 +165,7 @@ class HelloController {
 }
 ```
 
-Let's first make this class extend [`KtorController`](/web/controllers/index.mdx#ktorcontroller):
+Let's first make this class extend [`KtorController`](/modules/web/controllers/index.mdx#ktorcontroller):
 
 ```kotlin title="HelloController.kt"
 // highlight-start
@@ -209,7 +209,7 @@ class HelloController : KtorController() {
 
 ### Writing a `main` function
 
-Go in the `App.kt` file and remove everything in the `main` function. Then, add a [`tegral` block](/web/appdsl/index.mdx#the-tegral-block):
+Go in the `App.kt` file and remove everything in the `main` function. Then, add a [`tegral` block](/modules/web/appdsl/index.mdx#the-tegral-block):
 
 ```kotlin title="App.kt"
 fun main() {

@@ -123,7 +123,7 @@ println(config)
 You can get sectioned configuration objects in a few ways:
 
 - either by parsing a configuration file as described [in the section above](#creating-sectioned-configurations)
-- via your environment providing you with, e.g. when using [Tegral Web AppDSL](/web/appdsl/index.mdx)
+- via your environment providing you with, e.g. when using [Tegral Web AppDSL](/modules/web/appdsl/index.mdx)
 - by instantiating a `SectionedConfiguration` object yourself (but where's the fun in that?)
 
 Once you have such an object, you can access the sections either by using the `sections` property, or by using the `get` operator directly:

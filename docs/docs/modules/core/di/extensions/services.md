@@ -28,7 +28,7 @@ val env = tegralDi {
 }
 ```
 
-If you are building a full Tegral application where [features](/core/featureful/index.mdx) can be installed, consider installing the [Tegral Services feature](/core/featureful/index.mdx) instead.
+If you are building a full Tegral application where [features](/modules/core/featureful/index.mdx) can be installed, consider installing the [Tegral Services feature](/modules/core/featureful/index.mdx) instead.
 
 ### Creating services
 

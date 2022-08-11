@@ -41,7 +41,7 @@ This class is responsible for:
 
 :::info
 
-You do not need to add this class yourself when using AppDSL/AppDefaults. A [default application class](/web/appdefaults/index.mdx) is created for you with sane defaults and uses the [web configuration](/web/config/index.mdx) to configure the port and host.
+You do not need to add this class yourself when using AppDSL/AppDefaults. A [default application class](/modules/web/appdefaults/index.mdx) is created for you with sane defaults and uses the [web configuration](/modules/web/config/index.mdx) to configure the port and host.
 
 :::
 
@@ -61,13 +61,13 @@ class MyApplication(scope: InjectionScope) : KtorApplication(scope) {
 
 :::caution
 
-Do not forget the `get()` after `val settings`, otherwise you will be performing an [unsafe injection](/core/di/testing/checks.md#safe-injection-only) if you use DI components when building your settings object.
+Do not forget the `get()` after `val settings`, otherwise you will be performing an [unsafe injection](/modules/core/di/testing/checks.md#safe-injection-only) if you use DI components when building your settings object.
 
 :::
 
 ### KtorModule
 
-A Ktor module (not to be confused with a [Tegral DI module](/core/di/modules.md)) is a class that inherits from `KtorModule`. This is a module in the Ktor sense: an extension function on top of `Application` that adds features, routes, etc.
+A Ktor module (not to be confused with a [Tegral DI module](/modules/core/di/modules.md)) is a class that inherits from `KtorModule`. This is a module in the Ktor sense: an extension function on top of `Application` that adds features, routes, etc.
 
 ```kotlin
 // As with any regular Tegral DI component, the 'scope: InjectionScope' parameter

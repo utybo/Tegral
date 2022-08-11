@@ -15,7 +15,7 @@ Note that Tegral Featureful in itself is not an "application engine". It only al
 Features are simply objects that act upon the dependency injection environment of an application. This generally means that:
 
 - Simpler features will simply `put()` things in the environment that applications will then be able to request and consume.
-- More complex features will also add [DI extensions](/core/di/extensions/introduction.md) that will automatically discover and interact with other elements within the dependency injection environment.
+- More complex features will also add [DI extensions](/modules/core/di/extensions/introduction.md) that will automatically discover and interact with other elements within the dependency injection environment.
 
 ## Creating a feature
 
@@ -80,11 +80,11 @@ Currently, only configuration via configuration files (e.g. `tegral.toml`) is su
 
 :::
 
-Configurable features use [configuration sections](/core/config/sections.md), which are passed to a standard location in Tegral applications. For example, configurable features installed in a Tegral Web application have their sections under the `[tegral.*]` category.
+Configurable features use [configuration sections](/modules/core/config/sections.md), which are passed to a standard location in Tegral applications. For example, configurable features installed in a Tegral Web application have their sections under the `[tegral.*]` category.
 
 Let's extend our previous example. Instead of "Bar!", our Foo feature will use a configurable string, or "Bar!" if no such configuration is present.
 
-We'll first create a [configuration section](/core/config/sections.md#defining-the-sections)...
+We'll first create a [configuration section](/modules/core/config/sections.md#defining-the-sections)...
 
 ```kotlin
 data class FooConfig(
@@ -118,7 +118,7 @@ object FooFeature : ConfigurableFeature {
 }
 ```
 
-Finally, let's modify our `Foo` class so that it uses our configuration section instead of the hardcoded value. This also means actually using [dependency injection](/core/di/injection.md) here, as we will be retrieving the configuration class from the DI environment.
+Finally, let's modify our `Foo` class so that it uses our configuration section instead of the hardcoded value. This also means actually using [dependency injection](/modules/core/di/injection.md) here, as we will be retrieving the configuration class from the DI environment.
 
 ```kotlin
 class Foo(scope: InjectionScope) {

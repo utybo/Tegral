@@ -25,7 +25,7 @@ The `tegral` block allows you to build a Tegral Web application, install feature
 
 By default, quite a few things happen in the `tegral` block without you having to specify anything.
 
-- [Tegral Web AppDefaults](/web/appdefaults/index.mdx) gets installed, along with its dependencies (i.e. [Tegral Web Controllers](/web/controllers/index.mdx), [Tegral Services](/core/services/index.mdx), [Tegral Logging](/core/logging/index.mdx)) and what it brings to the environment.
+- [Tegral Web AppDefaults](/modules/web/appdefaults/index.mdx) gets installed, along with its dependencies (i.e. [Tegral Web Controllers](/modules/web/controllers/index.mdx), [Tegral Services](/modules/core/services/index.mdx), [Tegral Logging](/modules/core/logging/index.mdx)) and what it brings to the environment.
 - A default configuration class that only contains a `tegral` property gets installed. This means that, unless you want to customize what is available in your configuration, you do not need to do anything to use `[tegral.*]` configuration sections
 - Sets up loading the following files from your `resources`:
     - `/tegral.toml` using TOML. This is the recommended way you should configure your applications.
@@ -36,7 +36,7 @@ By default, quite a few things happen in the `tegral` block without you having t
 
 ## Configuring your app
 
-Configuration in AppDSL is powered by [Hoplite](https://github.com/sksamuel/hoplite), with additional features from [Tegral Config](/core/config/index.mdx).
+Configuration in AppDSL is powered by [Hoplite](https://github.com/sksamuel/hoplite), with additional features from [Tegral Config](/modules/core/config/index.mdx).
 
 ### Configuration sources
 
@@ -116,14 +116,14 @@ AppDSL automatically creates a Tegral DI environment and adds the following comp
 - All of the installed features' `Feature` object (added in the meta-environment).
 - Anything features do with the environment via their `install()` function.
 
-You will need to add your own components, modules, controllers and services to this environment using the [`put(...)` functions](/core/di/environment.md).
+You will need to add your own components, modules, controllers and services to this environment using the [`put(...)` functions](/modules/core/di/environment.md).
 
 ## `TegralApplication`
 
 The `tegral` block returns an object of type `TegralApplication`. You can use this object to act upon the environment in a few ways:
 
 - Stop the application using the `stop()` function. Note that a `start()` function is also present but is automatically called by the `tegral` function, so you should not call it yourself.
-- Access the [DI environment](/core/di/environment.md) of the application, which you can then use to `get` DI components. For example:
+- Access the [DI environment](/modules/core/di/environment.md) of the application, which you can then use to `get` DI components. For example:
 
 ```kotlin
 class MyComponent {
@@ -182,7 +182,7 @@ port = 8080
 
 ### Hello World (with DI)
 
-Here's another example that uses simple [dependency injection](/core/di/injection.md).
+Here's another example that uses simple [dependency injection](/modules/core/di/injection.md).
 
 ```kotlin title="App.kt"
 class Controller(scope: InjectionScope) : KtorController() {

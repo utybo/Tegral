@@ -15,7 +15,7 @@ In case you need it, the code you should get by the end of this tutorial is avai
 
 Assuming that you completed [step 1](./step-1-hello-world.mdx), you should have a pretty basic `App.kt` file. Open it.
 
-We'll need to split our module declaration from our `tegral` block. This is required because, when testing, we're testing *parts* of our application and not the entire application (e.g. we're not actually launching a web server when running tests). Right now, we've added the parts *inside* the `tegral` block: we'll split them into a separate [dependency injection module](/core/di/modules.md) to allow our tests to grab just these parts.
+We'll need to split our module declaration from our `tegral` block. This is required because, when testing, we're testing *parts* of our application and not the entire application (e.g. we're not actually launching a web server when running tests). Right now, we've added the parts *inside* the `tegral` block: we'll split them into a separate [dependency injection module](/modules/core/di/modules.md) to allow our tests to grab just these parts.
 
 In a nutshell, this means adapting our `App.kt` file to look like this:
 
@@ -54,7 +54,7 @@ We'll now adapt our controller so that it:
 - Gets an instance of `HelloService` from the Tegral app's environment.
 - Uses this instance to get the greeting string.
 
-First, we'll need to add a constructor to our `HelloController` class and add an [`InjectionScope`](/core/di/injection.md) argument. This argument is automatically added by Tegral when constructing your controller, and is the primary way to get other components from the app's environment (i.e., to do *dependency injection*).
+First, we'll need to add a constructor to our `HelloController` class and add an [`InjectionScope`](/modules/core/di/injection.md) argument. This argument is automatically added by Tegral when constructing your controller, and is the primary way to get other components from the app's environment (i.e., to do *dependency injection*).
 
 ```kotlin title="HelloController.kt"
 // highlight-start
