@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Injection Environment
 
 An environment is a manager for multiple components that can inject one another. They are created using the `tegralDi` DSL function, onto which you can call `put` functions to add components:

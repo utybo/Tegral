@@ -1,4 +1,8 @@
-# Testing Tegral DI code
+---
+sidebar_position: 8
+---
+
+# Testing
 
 Tegral DI provides easy-to-use testing facilities for applications that use it as a dependency injection framework. This comes in two parts:
 

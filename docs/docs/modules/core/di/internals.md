@@ -1,3 +1,7 @@
+---
+sidebar_position: 10
+---
+
 # DI Internals
 
 Tegral DI is a fairly complex piece of software. This page documents some of the internals of Tegral DI so that you can better understand what is happening and where.

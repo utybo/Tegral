@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # DI Checks
 
 Tegral DI provides a check system for your modules that allow you to verify some of its properties.

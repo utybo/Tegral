@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Writing tests
 
 Tegral DI provides many patterns that can be used for writing tests.

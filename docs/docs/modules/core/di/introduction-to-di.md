@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Introduction to Dependency Injection
 
 This page is a general introduction to what dependency injection aims to solve. Feel free to skip ahead to the next page if you already know what you're in for.

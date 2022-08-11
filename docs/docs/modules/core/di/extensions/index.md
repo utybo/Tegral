@@ -1,3 +1,7 @@
+---
+sidebar_position: 9
+---
+
 # Extensions
 
 Tegral DI's core APIs are designed to be quite simple yet flexible. However, due to their simple nature, they do not necessarily allow you to do everything you want.

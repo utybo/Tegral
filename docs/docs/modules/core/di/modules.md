@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # Modules
 
 Tegral DI provides a module system that allows you to define your environment in multiple, smaller bits. For example:

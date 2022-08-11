@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # Injection
 
 Injections are performed via an `InjectionScope` object, which provides a delegation mechanism for properties. This is the main recommended way of getting your dependencies:

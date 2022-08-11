@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # Aliases
 
 It is possible to add *aliases* to your environment.

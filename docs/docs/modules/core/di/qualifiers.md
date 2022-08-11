@@ -1,3 +1,7 @@
+---
+sidebar_position: 6
+---
+
 # Qualifiers
 
 Components must be uniquely identified. By default, components are identified by their type. However, you can add qualifiers to your components to distinguish them if they have the same type.
