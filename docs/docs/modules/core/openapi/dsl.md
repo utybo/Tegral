@@ -28,7 +28,13 @@ Your code will use DSL interfaces, which are implemented by builders, which will
 
 ## Entrypoints
 
-The DSL provides a single entrypoint: the `openApi` function, within which you will have access to the [root DSL](#rootdsl).
+The DSL provides a single entrypoint: the `openApi` function, within which you will have access to the [root DSL](#rootdsl). The `openApi` function returns an `OpenApi` object that contains everything you specified in the DSL. You can then use `.toJson()` or `.toYaml()` on the object to convert it to the desired string format.
+
+```kotlin
+val api = openApi {
+    // see RootDsl
+}
+```
 
 ## DSL reference
 
