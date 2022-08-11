@@ -34,8 +34,8 @@ import org.slf4j.LoggerFactory
  *
  * - Support for providing basic OpenAPI information right from the `install(...) { ... }` call.
  * - Support for [describing][describe] endpoints and [registering][registerOperation] operations.
- * - Producing an OpenAPI document [as an object][buildOpenApiDocument] or as a string TODO
- * - Support for serving OpenAPI documents from an endpoint TODO
+ * - Producing an OpenAPI document [as an object][buildOpenApiDocument]
+ * - Support for serving OpenAPI documents from an endpoint
  */
 class TegralOpenApiKtor {
     private val context = SimpleDslContext()

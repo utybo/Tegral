@@ -1,4 +1,8 @@
-# OpenAPI DSL
+---
+sidebar_position: 1
+---
+
+# DSL
 
 `tegral-openapi-dsl` provides a Kotlin DSL, a "mini-language" within a language.
 
