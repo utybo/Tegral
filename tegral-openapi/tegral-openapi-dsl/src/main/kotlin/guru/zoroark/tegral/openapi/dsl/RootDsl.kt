@@ -45,7 +45,7 @@ interface RootDsl : InfoDsl, TagsDsl, PathsDsl {
     infix fun String.securityScheme(scheme: SecuritySchemeDsl.() -> Unit)
 
     /**
-     * Adds a server to this OpenAPI document with the given string as the name, using the lambda to configure further
+     * Adds a server to this OpenAPI document with the given string as the URL, using the lambda to configure further
      * options.
      */
     @TegralDsl

@@ -56,21 +56,6 @@ enum class ParameterKind {
 @TegralDsl
 interface ParameterDsl : MediaTypeDsl {
     /**
-     * The name of the parameter.
-     *
-     * - If this is a path parameter, it must correspond to a template expression in the path.
-     * - If this is a header parameter, its name cannot be `Accept`, `Content-Type` or `Authorization`.
-     */
-    @TegralDsl
-    val name: String
-
-    /**
-     * The kind of parameter. See [ParameterKind] for more information.
-     */
-    @TegralDsl
-    val kind: ParameterKind
-
-    /**
      * A brief description of the parameter. This could contain examples of use. CommonMark syntax may be used for
      * rich text representation.
      */
@@ -141,7 +126,16 @@ interface ParameterDsl : MediaTypeDsl {
  */
 class ParameterBuilder(
     private val context: OpenApiDslContext,
+    /**
+     * The name of the parameter.
+     *
+     * - If this is a path parameter, it must correspond to a template expression in the path.
+     * - If this is a header parameter, its name cannot be `Accept`, `Content-Type` or `Authorization`.
+     */
     override val name: String,
+    /**
+     * The kind of parameter. See [ParameterKind] for more information.
+     */
     override val kind: ParameterKind
 ) : Builder<Parameter>, ParameterDsl {
     override var description: String? = null

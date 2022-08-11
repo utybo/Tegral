@@ -21,6 +21,7 @@ import kotlin.script.experimental.api.defaultImports
 import kotlin.script.experimental.api.implicitReceivers
 import kotlin.script.experimental.jvm.dependenciesFromCurrentContext
 import kotlin.script.experimental.jvm.jvm
+import kotlin.script.experimental.jvm.jvmTarget
 
 /**
  * [Script definition](https://github.com/Kotlin/KEEP/blob/master/proposals/scripting-support.md#script-definition)
@@ -43,6 +44,7 @@ abstract class OpenApiScript
 object OpenApiScriptCompilationConfig : ScriptCompilationConfiguration({
     jvm {
         dependenciesFromCurrentContext(wholeClasspath = true)
+        jvmTarget("11")
     }
     defaultImports("guru.zoroark.tegral.openapi.dsl.*")
     implicitReceivers(RootDsl::class)

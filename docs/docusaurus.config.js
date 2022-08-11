@@ -160,7 +160,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ['kotlin', 'groovy', 'toml'],
+        additionalLanguages: ['kotlin', 'groovy', 'toml', 'yaml'],
       },
       announcementBar: {
         id: 'not-released-yet',
