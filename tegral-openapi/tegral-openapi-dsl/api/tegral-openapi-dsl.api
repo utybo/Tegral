@@ -230,8 +230,6 @@ public final class guru/zoroark/tegral/openapi/dsl/ParameterBuilder : guru/zoroa
 	public fun getDescription ()Ljava/lang/String;
 	public fun getExample ()Ljava/lang/Object;
 	public fun getExplode ()Ljava/lang/Boolean;
-	public fun getKind ()Lguru/zoroark/tegral/openapi/dsl/ParameterKind;
-	public fun getName ()Ljava/lang/String;
 	public fun getRequired ()Ljava/lang/Boolean;
 	public fun getSchema ()Lio/swagger/v3/oas/models/media/Schema;
 	public fun getStyle ()Lio/swagger/v3/oas/models/parameters/Parameter$StyleEnum;
@@ -254,8 +252,6 @@ public abstract interface class guru/zoroark/tegral/openapi/dsl/ParameterDsl : g
 	public abstract fun getDeprecated ()Ljava/lang/Boolean;
 	public abstract fun getDescription ()Ljava/lang/String;
 	public abstract fun getExplode ()Ljava/lang/Boolean;
-	public abstract fun getKind ()Lguru/zoroark/tegral/openapi/dsl/ParameterKind;
-	public abstract fun getName ()Ljava/lang/String;
 	public abstract fun getRequired ()Ljava/lang/Boolean;
 	public abstract fun getStyle ()Lio/swagger/v3/oas/models/parameters/Parameter$StyleEnum;
 	public abstract fun required ()V

@@ -132,11 +132,11 @@ class ParameterBuilder(
      * - If this is a path parameter, it must correspond to a template expression in the path.
      * - If this is a header parameter, its name cannot be `Accept`, `Content-Type` or `Authorization`.
      */
-    override val name: String,
+    private val name: String,
     /**
      * The kind of parameter. See [ParameterKind] for more information.
      */
-    override val kind: ParameterKind
+    private val kind: ParameterKind
 ) : Builder<Parameter>, ParameterDsl {
     override var description: String? = null
     override var required: Boolean? = null
