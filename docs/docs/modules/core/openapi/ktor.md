@@ -103,7 +103,7 @@ routing {
 }
 ```
 
-## `tegral-openapi-ktor-ui`
+## `tegral-openapi-ktorui`
 
 The `TegralSwaggerUiKtor` plugin allows you to serve Swagger UI right from your Ktor application.
 
