@@ -63,6 +63,34 @@ routing {
 
 You get access to everything in [`OperationDsl`](./dsl.md#operationdsl).
 
+### Describe subroutes
+
+It may happen that some DSL is repeated for many endpoints, for example if you want to add a tag to all of the subroutes of a route. You can do this more easily by calling `describeSubroutes`:
+
+```kotlin
+routing {
+    route("/numbers") {
+        describeSubroutes {
+            // OperationDsl available here
+            // This block will be applied to all subsequent described endpoints in this route
+            tags += "counting"
+        }
+
+        get("/one") {
+            // ...
+        } describe {
+            // ...
+        }
+
+        get("/two") {
+            // ...
+        } describe {
+            // ...
+        }
+    }
+}
+```
+
 ### Serving the OpenAPI file
 
 You can setup an OpenAPI endpoint using the `openApiEndpoint(...)` function, passing the path from which the OpenAPI file will be served:

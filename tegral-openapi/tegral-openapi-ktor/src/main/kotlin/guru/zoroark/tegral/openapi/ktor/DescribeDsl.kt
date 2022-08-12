@@ -46,6 +46,15 @@ private fun printNotInstalledWarning(application: Application) {
     }
 }
 
+internal fun Application.getOpenApiOrNullWithMessage(): TegralOpenApiKtor? {
+    val plugin = pluginOrNull(TegralOpenApiKtor)
+    return if (plugin != null) plugin
+    else {
+        printNotInstalledWarning(this)
+        null
+    }
+}
+
 /**
  * Specify additional information about the API via the `RootDsl`.
  *
@@ -56,9 +65,7 @@ private fun printNotInstalledWarning(application: Application) {
  * You must install the [TegralOpenApiKtor] plugin before running this function.
  */
 fun Application.describe(description: RootDsl.() -> Unit) {
-    val openApi = pluginOrNull(TegralOpenApiKtor)
-    if (openApi != null) openApi.withRootBuilder(description)
-    else printNotInstalledWarning(this)
+    getOpenApiOrNullWithMessage()?.withRootBuilder(description)
 }
 
 /**
@@ -69,11 +76,7 @@ fun Application.describe(description: RootDsl.() -> Unit) {
 @TegralDsl
 @KtorDsl
 infix fun Route.describe(description: OperationDsl.() -> Unit): Route {
-    val openApi = application.pluginOrNull(TegralOpenApiKtor)
-    if (openApi == null) {
-        printNotInstalledWarning(application)
-        return this
-    }
+    val openApi = application.getOpenApiOrNullWithMessage() ?: return this
 
     var metadata = parseMetadataFromRoute(this)
 
@@ -84,11 +87,15 @@ infix fun Route.describe(description: OperationDsl.() -> Unit): Route {
         )
     }
 
+    val hooks = openApi.getHooksForRoute(this)
+
     openApi.registerOperation(
         "/" + metadata.httpPath.asReversed().joinToString("/"),
-        metadata.httpMethod!!,
-        description
-    )
+        metadata.httpMethod!!
+    ) {
+        hooks.forEach { it() }
+        description()
+    }
     return this
 }
 
@@ -110,8 +117,8 @@ internal tailrec fun parseMutableMetadataFromSelector(route: Route?, metadata: M
     when (val selector = route.selector) {
         is HttpMethodRouteSelector -> metadata.httpMethod = selector.method
         is PathSegmentConstantRouteSelector -> metadata.httpPath += selector.value
-        is PathSegmentParameterRouteSelector -> metadata.httpPath += selector.prefix.orEmpty() + "{${selector.name}}" +
-            selector.suffix.orEmpty()
+        is PathSegmentParameterRouteSelector ->
+            metadata.httpPath += selector.prefix.orEmpty() + "{${selector.name}}" + selector.suffix.orEmpty()
         else -> {
             /* TODO avoid ignoring silently */
         }

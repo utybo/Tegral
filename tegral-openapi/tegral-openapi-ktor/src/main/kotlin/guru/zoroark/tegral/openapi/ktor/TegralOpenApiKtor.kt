@@ -24,10 +24,13 @@ import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationCallPipeline
 import io.ktor.server.application.BaseApplicationPlugin
 import io.ktor.server.application.plugin
+import io.ktor.server.routing.Route
 import io.ktor.util.AttributeKey
 import io.swagger.v3.oas.models.OpenAPI
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+
+typealias EndpointDescriptionHook = OperationDsl.() -> Unit
 
 /**
  * A Ktor plugin that adds a Tegral OpenAPI DSL integration to the Ktor application, including:
@@ -41,6 +44,7 @@ class TegralOpenApiKtor {
     private val context = SimpleDslContext()
     private val builder: RootBuilder = RootBuilder(context)
     private val logger: Logger = LoggerFactory.getLogger("tegral.openapi.ktor.plugin")
+    private val hooks: MutableMap<Route, MutableList<OperationDsl.() -> Unit>> = mutableMapOf()
 
     /**
      * Configuration block for the plugin, allows you to directly add information to the OpenAPI document.
@@ -75,6 +79,9 @@ class TegralOpenApiKtor {
     /**
      * Register an OpenAPI operation from a path, HTTP method and operation builder.
      *
+     * This function will *not* apply hooks, you should apply hooks yourself by calling [getHooksForRoute] and applying
+     * them.
+     *
      * You should use [describe] instead of this function.
      */
     fun registerOperation(path: String, method: HttpMethod, operation: OperationDsl.() -> Unit) {
@@ -105,6 +112,36 @@ class TegralOpenApiKtor {
     fun withRootBuilder(description: RootDsl.() -> Unit) {
         builder.apply(description)
     }
+
+    /**
+     * Register a hook for the given route's children.
+     */
+    fun registerSubrouteHook(route: Route, hook: OperationDsl.() -> Unit) {
+        hooks.compute(route) { _, existing ->
+            if (existing == null) {
+                mutableListOf(hook)
+            } else {
+                existing.add(hook)
+                existing
+            }
+        }
+    }
+
+    private fun Route.parentsExcludingSelf(): Sequence<Route> {
+        val result = mutableListOf<Route>()
+        var current: Route? = this.parent
+        while (current != null) {
+            result.add(current)
+            current = current.parent
+        }
+        return result.asReversed().asSequence()
+    }
+
+    /**
+     * Retrieve all registered hooks for the parents of the given route.
+     */
+    fun getHooksForRoute(route: Route): Sequence<EndpointDescriptionHook> =
+        route.parentsExcludingSelf().flatMap { hooks[it]?.asSequence() ?: emptySequence() }
 }
 
 /**
