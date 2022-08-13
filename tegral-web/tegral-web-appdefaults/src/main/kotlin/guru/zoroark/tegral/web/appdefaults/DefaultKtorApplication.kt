@@ -20,7 +20,6 @@ import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.web.config.WebConfiguration
 import guru.zoroark.tegral.web.controllers.KtorApplication
 import guru.zoroark.tegral.web.controllers.KtorApplicationSettings
-import io.ktor.server.application.Application
 import io.ktor.server.netty.Netty
 
 /**
