@@ -36,7 +36,7 @@ class NoRulesCheckTest {
         }.assertMessage(
             """
             tegralDiCheck called without any rule, which checks nothing.
-            --> Add rules using +ruleName (for example '+complete', do not forget the +)
+            --> Add rules using ruleName() (for example 'complete()')
             --> If you do not want to run any checks, remove the tegralDiCheck block entirely.
             For more information, visit https://tegral.zoroark.guru/docs/modules/core/di/testing/checks
             """.trimIndent()

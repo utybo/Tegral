@@ -18,6 +18,8 @@ It provides sane defaults for Web applications. Most notably:
 
 - It automatically configures the default loggers for a better out-of-the-box experience. For logger configuration, see the [Tegral Logging feature](/modules/core/logging/index.mdx).
 
+- It sets up a service that will stop the application in case a JVM shutdown hook is received (e.g. when `Ctrl+C`-ing the application).
+
 The AppDefaults feature also has a dependency on the Tegral Services feature and on [Tegral Web Controllers](/modules/web/controllers/index.mdx) and sets up the `[tegral.web]` configuration section (i.e. `WebConfiguration`)
 
 [AppDSL](/modules/web/appdsl/index.mdx) automatically installs AppDefaults, meaning that you do not need to install AppDefaults yourself if you use AppDSL.
