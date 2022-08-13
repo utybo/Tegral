@@ -11,4 +11,4 @@ dependencies {
 
 ext.humanName = "Tegral DI Test MockK"
 ext.description = "Provides integration between Tegral DI and MockK for test code."
-ext.url = "https://tegral.zoroark.guru/docs/core/di/testing"
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/di/testing"

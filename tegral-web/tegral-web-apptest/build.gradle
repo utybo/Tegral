@@ -12,4 +12,4 @@ dependencies {
 
 ext.humanName = "Tegral Web AppTest"
 ext.description = "Integration testing utilities for Tegral applications."
-ext.url = "https://tegral.zoroark.guru/docs/web/apptest"
+ext.url = "https://tegral.zoroark.guru/docs/modules/web/apptest"

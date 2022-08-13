@@ -13,4 +13,4 @@ dependencies {
 
 ext.humanName = "Tegral OpenAPI Feature"
 ext.description = "Tegral Web feature for OpenAPI integration into your Tegral applications"
-ext.url = "https://tegral.zoroark.guru" // TODO
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/openapi/tegral-web"

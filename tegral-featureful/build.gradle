@@ -9,4 +9,4 @@ dependencies {
 
 ext.humanName = "Tegral Featureful"
 ext.description = "Contains common classes for writing Tegral features that will get integrated in main applications."
-ext.url = "https://tegral.zoroark.guru/docs/core/featureful"
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/featureful"

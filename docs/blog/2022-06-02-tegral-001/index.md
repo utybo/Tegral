@@ -22,7 +22,7 @@ Tegral is a collection of Kotlin libraries, DSLs and frameworks that aim to give
 
 I had the idea of building a full framework like this while I was building yet another back-end in Kotlin. While all of the libraries in the ecosystem are really nice, I was really missing a solution that would just combine everything into a single ready-to-build package. While building your own stack is a fun experience, it's not exactly productive.
 
-This journey first started with the creation of [Shedinja](https://github.com/utybo/Shedinja) (which has been integrated in Tegral as [Tegral DI](pathname:///docs/core/di)), a super flexible dependency injection framework. After developing it for a while, I realized that I didn't need much else to get started building my own framework.
+This journey first started with the creation of [Shedinja](https://github.com/utybo/Shedinja) (which has been integrated in Tegral as [Tegral DI](pathname:///docs/modules/core/di)), a super flexible dependency injection framework. After developing it for a while, I realized that I didn't need much else to get started building my own framework.
 
 ## Here comes Tegral
 
@@ -57,14 +57,14 @@ Currently, Tegral has quite a few elements:
   - The [API](pathname:///dokka) documentation, made available using Dokka.
 - Libraries!
   - And quite a lot of them! Just dig into the documentation to find out what the different components can all do for you.
-  - Most notably, Tegral includes a [powerful DI framework called Tegral DI](pathname:///docs/core/di) that is the successor to [Shedinja](https://shedinja.zoroark.guru).
+  - Most notably, Tegral includes a [powerful DI framework called Tegral DI](pathname:///docs/modules/core/di) that is the successor to [Shedinja](https://shedinja.zoroark.guru).
 
 ## What's next?
 
 There are a few things planned for Tegral:
 
 - Write tutorials and record videos showcasing the current features of Tegral.
-  - If you're curious about how to write Tegral applications right now, have a look at [AppDSL's documentation](pathname:///docs/web/appdsl)
+  - If you're curious about how to write Tegral applications right now, have a look at [AppDSL's documentation](pathname:///docs/modules/web/appdsl)
 - Migrate other libraries I've made in the past to Tegral, namely:
   - [Ktor Rate Limit](https://github.com/utybo/ktor-rate-limit)
   - [Koa, an OpenAPI DSL and library for Kotlin/Ktor](https://github.com/utybo/Koa)

@@ -25,7 +25,6 @@ import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
-import io.ktor.server.application.Application
 import io.ktor.server.application.call
 import io.ktor.server.netty.Netty
 import io.ktor.server.response.respondText
@@ -50,10 +49,6 @@ class ControllerOne : KtorController(restrictToAppName = "one") {
 
 class AppOne(scope: InjectionScope) : KtorApplication(scope, "one") {
     override val settings get() = KtorApplicationSettings(Netty, MULTI_APP_TEST_PORT_1)
-
-    override fun Application.setup() {
-        // no-op
-    }
 }
 
 class ControllerTwo : KtorController(restrictToAppName = "two") {
@@ -66,10 +61,6 @@ class ControllerTwo : KtorController(restrictToAppName = "two") {
 
 class AppTwo(scope: InjectionScope) : KtorApplication(scope, "two") {
     override val settings get() = KtorApplicationSettings(Netty, MULTI_APP_TEST_PORT_2)
-
-    override fun Application.setup() {
-        // no-op
-    }
 }
 
 class ControllerThree : KtorController(restrictToAppName = "three") {
@@ -82,10 +73,6 @@ class ControllerThree : KtorController(restrictToAppName = "three") {
 
 class AppThree(scope: InjectionScope) : KtorApplication(scope, "three") {
     override val settings get() = KtorApplicationSettings(Netty, MULTI_APP_TEST_PORT_3)
-
-    override fun Application.setup() {
-        // no-op
-    }
 }
 
 class MultiAppTest {

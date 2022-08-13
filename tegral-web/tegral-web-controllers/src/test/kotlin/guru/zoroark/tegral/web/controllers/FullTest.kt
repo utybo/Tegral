@@ -59,12 +59,14 @@ class FullTest {
         }
     }
 
-    class App(scope: InjectionScope) : KtorApplication(scope, TEST_NAME) {
-        override val settings get() = KtorApplicationSettings(Netty, port = FULL_TEST_PORT)
-
-        override fun Application.setup() {
+    class ContentModule : KtorModule(restrictToAppName = TEST_NAME) {
+        override fun Application.install() {
             this.install(ServerContentNegotiation) { jackson() }
         }
+    }
+
+    class App(scope: InjectionScope) : KtorApplication(scope, TEST_NAME) {
+        override val settings get() = KtorApplicationSettings(Netty, port = FULL_TEST_PORT)
     }
 
     @Test
@@ -74,6 +76,7 @@ class FullTest {
             meta { put(::KtorExtension) }
 
             put(::App)
+            put(::ContentModule)
             put(::FirstController)
             put(::SecondController)
         }

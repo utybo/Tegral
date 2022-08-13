@@ -37,7 +37,7 @@ class InitOrderTest {
 
         override fun Application.install() {
             synchronized(state) {
-                assertEquals(4, state.state)
+                assertEquals(3, state.state)
                 state.state++
             }
         }
@@ -48,7 +48,7 @@ class InitOrderTest {
 
         override fun Application.install() {
             synchronized(state) {
-                assertEquals(3, state.state)
+                assertEquals(2, state.state)
                 state.state++
             }
         }
@@ -59,7 +59,7 @@ class InitOrderTest {
 
         override fun Application.install() {
             synchronized(state) {
-                assertEquals(2, state.state)
+                assertEquals(1, state.state)
                 state.state++
             }
         }
@@ -69,13 +69,6 @@ class InitOrderTest {
         private val state: StateChecker by scope()
 
         override val settings get() = KtorApplicationSettings(Netty, 28830)
-
-        override fun Application.setup() {
-            synchronized(state) {
-                assertEquals(1, state.state)
-                state.state++
-            }
-        }
     }
 
     @Test
@@ -96,7 +89,7 @@ class InitOrderTest {
         runBlocking {
             env.services.startAll()
             synchronized(state) {
-                assertEquals(5, state.state)
+                assertEquals(4, state.state)
             }
             env.services.stopAll()
         }

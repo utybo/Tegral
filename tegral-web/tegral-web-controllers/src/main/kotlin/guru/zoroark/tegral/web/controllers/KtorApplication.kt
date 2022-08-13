@@ -17,7 +17,6 @@ package guru.zoroark.tegral.web.controllers
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.services.api.TegralService
-import io.ktor.server.application.Application
 import io.ktor.server.engine.ApplicationEngine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -36,7 +35,7 @@ abstract class KtorApplication(
      * default value and does not have any specific meaning (it does NOT mean "put this module everywhere").
      */
     val appName: String? = null
-) : TegralService, KtorModule(DEFAULT_APP_SETUP_MODULE_PRIORITY, appName) {
+) : TegralService {
     private val ktorExtension: KtorExtension by scope.meta()
 
     /**
@@ -46,14 +45,6 @@ abstract class KtorApplication(
     abstract val settings: KtorApplicationSettings<*, *>
 
     private var application: ApplicationEngine? = null
-
-    /**
-     * Function that is called after the Ktor application is created but before any module or controller is called. You
-     * can use this function to set up required basic features.
-     */
-    abstract fun Application.setup()
-
-    override fun Application.install() { setup() }
 
     override suspend fun start() {
         val app = settings.embeddedServerFromSettings {

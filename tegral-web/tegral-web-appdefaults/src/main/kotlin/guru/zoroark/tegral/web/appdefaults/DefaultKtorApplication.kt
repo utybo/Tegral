@@ -20,7 +20,6 @@ import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.web.config.WebConfiguration
 import guru.zoroark.tegral.web.controllers.KtorApplication
 import guru.zoroark.tegral.web.controllers.KtorApplicationSettings
-import io.ktor.server.application.Application
 import io.ktor.server.netty.Netty
 
 /**
@@ -41,8 +40,4 @@ open class DefaultKtorApplication(scope: InjectionScope) : KtorApplication(scope
             port = tegralConfig[WebConfiguration].port,
             host = tegralConfig[WebConfiguration].host
         )
-
-    @Suppress("EmptyFunctionBlock") // Cannot be removed as setup() is abstract in KtorApplication
-    override fun Application.setup() {
-    }
 }

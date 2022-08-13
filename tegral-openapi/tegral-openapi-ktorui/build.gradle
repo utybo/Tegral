@@ -11,4 +11,4 @@ dependencies {
 
 ext.humanName = "Tegral OpenAPI Ktor UI"
 ext.description = "Integrates Swagger UI with Ktor."
-ext.url = "https://tegral.zoroark.guru" // TODO
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/openapi/ktor"
