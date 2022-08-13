@@ -1,7 +1,7 @@
 ---
 title: Introducing Tegral 0.0.2
 description: OpenAPI support, integration testing and much more!
-slug: welcome-to-tegral-v0-0-2
+slug: introducing-tegral-0-0-2
 authors:
   - name: utybo
     title: Maintainer
@@ -10,7 +10,6 @@ authors:
 tags: [release]
 image: john-towner-p-rN-n6Miag-unsplash.jpg
 hide_table_of_contents: false
-draft: true
 ---
 
 Tegral 0.0.2 is a massive update, with over 40 bullet points in our [changelog](https://github.com/utybo/Tegral/tree/main/CHANGELOG.md)! Let's go through the biggest changes, including new OpenAPI support, integration testing support, and more robust dependency injection internals!
