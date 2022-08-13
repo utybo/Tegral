@@ -34,7 +34,7 @@ task rewriteDokkaLinks(type: Copy) {
         }
 
         filesMatching(["scripts/pages.json"]) {
-            filter { line -> line.replaceAll("\"location\":\"", "\"location\":\"api/") }
+            filter { line -> line.replaceAll("\"location\":\"", "\"location\":\"/") }
         }
 
         filesMatching(["scripts/navigation-loader.js"]) {
