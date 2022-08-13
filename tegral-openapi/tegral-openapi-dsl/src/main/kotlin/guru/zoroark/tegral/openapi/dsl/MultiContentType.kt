@@ -20,8 +20,7 @@ import guru.zoroark.tegral.core.TegralDsl
  * Represents multiple [content types][ContentType]. This is useful for functions that can be applied to multiple
  * content types at a time (mostly for the sake of concision).
  */
-@JvmInline
-value class MultiContentType(
+data class MultiContentType(
     /**
      * The content types that this represents.
      */

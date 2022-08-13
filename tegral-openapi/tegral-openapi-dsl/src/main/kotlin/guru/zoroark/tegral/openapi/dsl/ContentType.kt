@@ -23,8 +23,7 @@ import guru.zoroark.tegral.core.TegralDsl
  *
  * Pre-defined values for very common content types are available in [PredefinedContentTypesDsl].
  */
-@JvmInline
-value class ContentType(
+data class ContentType(
     /**
      * The actual value of the content type (in full string representation).
      */

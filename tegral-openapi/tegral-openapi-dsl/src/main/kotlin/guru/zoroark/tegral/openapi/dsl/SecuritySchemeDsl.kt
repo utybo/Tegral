@@ -99,7 +99,7 @@ interface SecuritySchemeDsl {
 /**
  * Sets the type of this security scheme to HTTP.
  */
-inline val SecuritySchemeDsl.httpType: Unit
+val SecuritySchemeDsl.httpType: Unit
     get() {
         type = SecurityScheme.Type.HTTP
     }
@@ -107,7 +107,7 @@ inline val SecuritySchemeDsl.httpType: Unit
 /**
  * Sets the type of this security scheme to API key.
  */
-inline val SecuritySchemeDsl.apiKeyType: Unit
+val SecuritySchemeDsl.apiKeyType: Unit
     get() {
         type = SecurityScheme.Type.APIKEY
     }
@@ -115,7 +115,7 @@ inline val SecuritySchemeDsl.apiKeyType: Unit
 /**
  * Sets the type of this security scheme to OAuth 2.
  */
-inline val SecuritySchemeDsl.oauth2Type: Unit
+val SecuritySchemeDsl.oauth2Type: Unit
     get() {
         type = SecurityScheme.Type.OAUTH2
     }
@@ -123,7 +123,7 @@ inline val SecuritySchemeDsl.oauth2Type: Unit
 /**
  * Sets the type of this security scheme to OpenID Connect.
  */
-inline val SecuritySchemeDsl.openIdConnectType: Unit
+val SecuritySchemeDsl.openIdConnectType: Unit
     get() {
         type = SecurityScheme.Type.OPENIDCONNECT
     }
@@ -131,7 +131,7 @@ inline val SecuritySchemeDsl.openIdConnectType: Unit
 /**
  * Sets the type of this security scheme to Mutual TLS.
  */
-inline val SecuritySchemeDsl.mutualTlsType: Unit
+val SecuritySchemeDsl.mutualTlsType: Unit
     get() {
         type = SecurityScheme.Type.MUTUALTLS
     }
@@ -139,7 +139,7 @@ inline val SecuritySchemeDsl.mutualTlsType: Unit
 /**
  * Sets the location of this security scheme to be in a cookie.
  */
-inline val SecuritySchemeDsl.inCookie: Unit
+val SecuritySchemeDsl.inCookie: Unit
     get() {
         inLocation = SecurityScheme.In.COOKIE
     }
@@ -147,7 +147,7 @@ inline val SecuritySchemeDsl.inCookie: Unit
 /**
  * Sets the location of this security scheme to be in a header.
  */
-inline val SecuritySchemeDsl.inHeader: Unit
+val SecuritySchemeDsl.inHeader: Unit
     get() {
         inLocation = SecurityScheme.In.HEADER
     }
@@ -155,7 +155,7 @@ inline val SecuritySchemeDsl.inHeader: Unit
 /**
  * Sets the location of this security scheme to be in a query parameter.
  */
-inline val SecuritySchemeDsl.inQuery: Unit
+val SecuritySchemeDsl.inQuery: Unit
     get() {
         inLocation = SecurityScheme.In.QUERY
     }
