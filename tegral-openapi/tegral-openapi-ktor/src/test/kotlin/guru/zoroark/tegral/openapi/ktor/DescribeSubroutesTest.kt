@@ -22,6 +22,7 @@ import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.Operation
 import io.swagger.v3.oas.models.PathItem
 import io.swagger.v3.oas.models.Paths
+import org.junit.jupiter.api.assertDoesNotThrow
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -205,6 +206,15 @@ class DescribeSubroutesTest {
                 }
             }
             assertEquals(expected, document)
+        }
+    }
+
+    @Test
+    fun `Describe subroutes without plugin installed does nothing`() = testApplication {
+        routing {
+            assertDoesNotThrow {
+                describeSubroutes {}
+            }
         }
     }
 }

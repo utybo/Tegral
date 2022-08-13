@@ -7,6 +7,9 @@ dependencies {
     api libs.kotlin.scripting.common
     api libs.kotlin.scripting.jvm
     api libs.kotlin.scripting.jvmHost
+
+    testImplementation libs.jimfs
+    testImplementation libs.kotlin.coroutines
 }
 
 ext.humanName = "Tegral OpenAPI Script (host)"

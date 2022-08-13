@@ -3,28 +3,28 @@ public abstract class guru/zoroark/tegral/openapi/dsl/BodyBuilder : guru/zoroark
 	public fun content (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public fun getContent ()Ljava/util/List;
 	protected final fun getContext ()Lguru/zoroark/tegral/openapi/dsl/OpenApiDslContext;
-	public fun getForm-oRZ81Xs ()Ljava/lang/String;
-	public fun getJson-oRZ81Xs ()Ljava/lang/String;
-	public fun getPlainText-oRZ81Xs ()Ljava/lang/String;
-	public fun getXml-oRZ81Xs ()Ljava/lang/String;
-	public fun invoke-9fd8wws (Ljava/util/List;Lkotlin/jvm/functions/Function1;)V
-	public fun invoke-VTEgvPo (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun getForm ()Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public fun getJson ()Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public fun getPlainText ()Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public fun getXml ()Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public fun invoke (Lguru/zoroark/tegral/openapi/dsl/ContentType;Lkotlin/jvm/functions/Function1;)V
+	public fun invoke (Lguru/zoroark/tegral/openapi/dsl/MultiContentType;Lkotlin/jvm/functions/Function1;)V
 }
 
 public abstract interface class guru/zoroark/tegral/openapi/dsl/BodyDsl : guru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl {
 	public abstract fun content (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun getContent ()Ljava/util/List;
-	public abstract fun invoke-9fd8wws (Ljava/util/List;Lkotlin/jvm/functions/Function1;)V
-	public abstract fun invoke-VTEgvPo (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun invoke (Lguru/zoroark/tegral/openapi/dsl/ContentType;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun invoke (Lguru/zoroark/tegral/openapi/dsl/MultiContentType;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/BodyDsl$DefaultImpls {
-	public static fun getForm-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;)Ljava/lang/String;
-	public static fun getJson-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;)Ljava/lang/String;
-	public static fun getPlainText-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;)Ljava/lang/String;
-	public static fun getXml-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;)Ljava/lang/String;
-	public static fun invoke-9fd8wws (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;Ljava/util/List;Lkotlin/jvm/functions/Function1;)V
-	public static fun invoke-VTEgvPo (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static fun getForm (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun getJson (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun getPlainText (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun getXml (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun invoke (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;Lguru/zoroark/tegral/openapi/dsl/ContentType;Lkotlin/jvm/functions/Function1;)V
+	public static fun invoke (Lguru/zoroark/tegral/openapi/dsl/BodyDsl;Lguru/zoroark/tegral/openapi/dsl/MultiContentType;Lkotlin/jvm/functions/Function1;)V
 }
 
 public abstract interface class guru/zoroark/tegral/openapi/dsl/Builder {
@@ -32,18 +32,15 @@ public abstract interface class guru/zoroark/tegral/openapi/dsl/Builder {
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/ContentType {
-	public static final synthetic fun box-impl (Ljava/lang/String;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
-	public static fun constructor-impl (Ljava/lang/String;)Ljava/lang/String;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/openapi/dsl/ContentType;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
 	public fun equals (Ljava/lang/Object;)Z
-	public static fun equals-impl (Ljava/lang/String;Ljava/lang/Object;)Z
-	public static final fun equals-impl0 (Ljava/lang/String;Ljava/lang/String;)Z
 	public final fun getContentType ()Ljava/lang/String;
 	public fun hashCode ()I
-	public static fun hashCode-impl (Ljava/lang/String;)I
-	public static final fun or-fzrcP2w (Ljava/lang/String;Ljava/lang/String;)Ljava/util/List;
+	public final fun or (Lguru/zoroark/tegral/openapi/dsl/ContentType;)Lguru/zoroark/tegral/openapi/dsl/MultiContentType;
 	public fun toString ()Ljava/lang/String;
-	public static fun toString-impl (Ljava/lang/String;)Ljava/lang/String;
-	public final synthetic fun unbox-impl ()Ljava/lang/String;
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/InfoBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/InfoDsl {
@@ -123,18 +120,15 @@ public final class guru/zoroark/tegral/openapi/dsl/MediaTypeDslKt {
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/MultiContentType {
-	public static final synthetic fun box-impl (Ljava/util/List;)Lguru/zoroark/tegral/openapi/dsl/MultiContentType;
-	public static fun constructor-impl (Ljava/util/List;)Ljava/util/List;
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lguru/zoroark/tegral/openapi/dsl/MultiContentType;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/openapi/dsl/MultiContentType;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/openapi/dsl/MultiContentType;
 	public fun equals (Ljava/lang/Object;)Z
-	public static fun equals-impl (Ljava/util/List;Ljava/lang/Object;)Z
-	public static final fun equals-impl0 (Ljava/util/List;Ljava/util/List;)Z
 	public final fun getTypes ()Ljava/util/List;
 	public fun hashCode ()I
-	public static fun hashCode-impl (Ljava/util/List;)I
-	public static final fun or-fzrcP2w (Ljava/util/List;Ljava/lang/String;)Ljava/util/List;
+	public final fun or (Lguru/zoroark/tegral/openapi/dsl/ContentType;)Lguru/zoroark/tegral/openapi/dsl/MultiContentType;
 	public fun toString ()Ljava/lang/String;
-	public static fun toString-impl (Ljava/util/List;)Ljava/lang/String;
-	public final synthetic fun unbox-impl ()Ljava/util/List;
 }
 
 public abstract interface class guru/zoroark/tegral/openapi/dsl/OpenApiDslContext {
@@ -326,17 +320,17 @@ public abstract interface class guru/zoroark/tegral/openapi/dsl/PathsDsl {
 }
 
 public abstract interface class guru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl {
-	public abstract fun getForm-oRZ81Xs ()Ljava/lang/String;
-	public abstract fun getJson-oRZ81Xs ()Ljava/lang/String;
-	public abstract fun getPlainText-oRZ81Xs ()Ljava/lang/String;
-	public abstract fun getXml-oRZ81Xs ()Ljava/lang/String;
+	public abstract fun getForm ()Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public abstract fun getJson ()Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public abstract fun getPlainText ()Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public abstract fun getXml ()Lguru/zoroark/tegral/openapi/dsl/ContentType;
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl$DefaultImpls {
-	public static fun getForm-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl;)Ljava/lang/String;
-	public static fun getJson-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl;)Ljava/lang/String;
-	public static fun getPlainText-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl;)Ljava/lang/String;
-	public static fun getXml-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl;)Ljava/lang/String;
+	public static fun getForm (Lguru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun getJson (Lguru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun getPlainText (Lguru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun getXml (Lguru/zoroark/tegral/openapi/dsl/PredefinedContentTypesDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/RequestBodyBuilder : guru/zoroark/tegral/openapi/dsl/BodyBuilder, guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/RequestBodyDsl {
@@ -357,12 +351,12 @@ public abstract interface class guru/zoroark/tegral/openapi/dsl/RequestBodyDsl :
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/RequestBodyDsl$DefaultImpls {
-	public static fun getForm-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;)Ljava/lang/String;
-	public static fun getJson-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;)Ljava/lang/String;
-	public static fun getPlainText-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;)Ljava/lang/String;
-	public static fun getXml-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;)Ljava/lang/String;
-	public static fun invoke-9fd8wws (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;Ljava/util/List;Lkotlin/jvm/functions/Function1;)V
-	public static fun invoke-VTEgvPo (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static fun getForm (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun getJson (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun getPlainText (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun getXml (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun invoke (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;Lguru/zoroark/tegral/openapi/dsl/ContentType;Lkotlin/jvm/functions/Function1;)V
+	public static fun invoke (Lguru/zoroark/tegral/openapi/dsl/RequestBodyDsl;Lguru/zoroark/tegral/openapi/dsl/MultiContentType;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/ResponseBuilder : guru/zoroark/tegral/openapi/dsl/BodyBuilder, guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/ResponseDsl {
@@ -379,12 +373,12 @@ public abstract interface class guru/zoroark/tegral/openapi/dsl/ResponseDsl : gu
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/ResponseDsl$DefaultImpls {
-	public static fun getForm-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;)Ljava/lang/String;
-	public static fun getJson-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;)Ljava/lang/String;
-	public static fun getPlainText-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;)Ljava/lang/String;
-	public static fun getXml-oRZ81Xs (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;)Ljava/lang/String;
-	public static fun invoke-9fd8wws (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;Ljava/util/List;Lkotlin/jvm/functions/Function1;)V
-	public static fun invoke-VTEgvPo (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static fun getForm (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun getJson (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun getPlainText (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun getXml (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;)Lguru/zoroark/tegral/openapi/dsl/ContentType;
+	public static fun invoke (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;Lguru/zoroark/tegral/openapi/dsl/ContentType;Lkotlin/jvm/functions/Function1;)V
+	public static fun invoke (Lguru/zoroark/tegral/openapi/dsl/ResponseDsl;Lguru/zoroark/tegral/openapi/dsl/MultiContentType;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/RootBuilder : guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/InfoDsl, guru/zoroark/tegral/openapi/dsl/PathsDsl, guru/zoroark/tegral/openapi/dsl/RootDsl {

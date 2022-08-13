@@ -19,6 +19,11 @@ import guru.zoroark.tegral.openapi.dsl.SimpleDslContext
 import guru.zoroark.tegral.openapi.scriptdef.OpenApiScript
 import io.swagger.v3.oas.models.OpenAPI
 import java.io.File
+import java.net.URL
+import java.nio.file.Path
+import kotlin.io.path.name
+import kotlin.io.path.readText
+import kotlin.script.experimental.api.ExternalSourceCode
 import kotlin.script.experimental.api.ResultWithDiagnostics
 import kotlin.script.experimental.api.ScriptEvaluationConfiguration
 import kotlin.script.experimental.api.SourceCode
@@ -45,6 +50,15 @@ object OpenApiScriptHost {
     suspend fun compileScript(file: File, messageHandler: (String) -> Unit): ResultWithDiagnostics<OpenAPI> =
         compileScript(file.toScriptSource(), messageHandler)
 
+    /**
+     * Compiles a `.openapi.kts` script from a path into an [OpenAPI] object.
+     *
+     * The result is wrapped in a [ResultWithDiagnostics] object, which contains a list of warnings, errors, etc. as
+     * well as the object itself.
+     */
+    suspend fun compileScript(path: Path, messageHandler: (String) -> Unit): ResultWithDiagnostics<OpenAPI> =
+        compileScript(path.toScriptSource(), messageHandler)
+
     private suspend fun compileScript(
         source: SourceCode,
         messageHandler: (String) -> Unit
@@ -70,3 +84,18 @@ object OpenApiScriptHost {
             implicitReceivers(builder)
         }
 }
+
+/**
+ * A `SourceCode` implementation that retrieves the code information and content from a Path object.
+ */
+class PathSourceCode(private val path: Path) : ExternalSourceCode {
+    override val externalLocation: URL get() = path.toUri().toURL()
+    override val locationId: String get() = path.toAbsolutePath().toString()
+    override val name: String get() = path.name
+    override val text: String by lazy { path.readText() }
+}
+
+/**
+ * Turns this path object into a [PathSourceCode] object.
+ */
+fun Path.toScriptSource() = PathSourceCode(this)

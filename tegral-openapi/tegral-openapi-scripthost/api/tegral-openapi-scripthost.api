@@ -1,5 +1,18 @@
 public final class guru/zoroark/tegral/openapi/scripthost/OpenApiScriptHost {
 	public static final field INSTANCE Lguru/zoroark/tegral/openapi/scripthost/OpenApiScriptHost;
 	public final fun compileScript (Ljava/io/File;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun compileScript (Ljava/nio/file/Path;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/openapi/scripthost/OpenApiScriptHostKt {
+	public static final fun toScriptSource (Ljava/nio/file/Path;)Lguru/zoroark/tegral/openapi/scripthost/PathSourceCode;
+}
+
+public final class guru/zoroark/tegral/openapi/scripthost/PathSourceCode : kotlin/script/experimental/api/ExternalSourceCode {
+	public fun <init> (Ljava/nio/file/Path;)V
+	public fun getExternalLocation ()Ljava/net/URL;
+	public fun getLocationId ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun getText ()Ljava/lang/String;
 }
 
