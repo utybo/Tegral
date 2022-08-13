@@ -15,4 +15,4 @@ dependencies {
 
 ext.humanName = "Tegral Config Core"
 ext.description = "Provides core configuration mechanisms with Hoplite"
-ext.url = "https://tegral.zoroark.guru/docs/core/config"
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/config"

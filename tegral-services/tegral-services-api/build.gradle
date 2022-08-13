@@ -4,4 +4,4 @@ plugins {
 
 ext.humanName = "Tegral Services API"
 ext.description = "API interfaces you can subclass to create services that will be handled by Tegral."
-ext.url = "https://tegral.zoroark.guru/docs/core/services/"
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/services/"

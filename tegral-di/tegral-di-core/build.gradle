@@ -11,4 +11,4 @@ dependencies {
 
 ext.humanName = "Tegral DI Core"
 ext.description = "Main Tegral DI module for use in main source code -- dependency injection framework for Kotlin."
-ext.url = "https://tegral.zoroark.guru/docs/core/di"
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/di"

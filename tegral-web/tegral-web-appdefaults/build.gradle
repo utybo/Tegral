@@ -17,4 +17,4 @@ dependencies {
 
 ext.humanName = "Tegral Web AppDefaults"
 ext.description = "Provides basic versions of all necessary classes in a Tegral Web environment."
-ext.url = "https://tegral.zoroark.guru/docs/web/appdefaults"
+ext.url = "https://tegral.zoroark.guru/docs/modules/web/appdefaults"

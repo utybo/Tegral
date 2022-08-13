@@ -67,4 +67,4 @@ publishing {
 
 ext.humanName = "Tegral Catalog"
 ext.description = "Gradle Versions Catalog that makes it easy to get dependencies from the Tegral project"
-ext.url = "https://tegral.zoroark.guru/docs/core/catalog/"
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/catalog/"

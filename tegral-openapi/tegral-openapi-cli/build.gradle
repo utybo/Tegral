@@ -18,7 +18,7 @@ application {
 
 ext.humanName = "Tegral OpenAPI CLI"
 ext.description = "A handy companion for working with .openapi.kts files."
-ext.url = "https://tegral.zoroark.guru" // TODO
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/openapi/cli"
 
 jar {
     manifest {

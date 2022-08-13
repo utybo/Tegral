@@ -9,4 +9,4 @@ dependencies {
 
 ext.humanName = "Tegral Services Feature"
 ext.description = "Tegral feature used to load, start and manage Tegral services."
-ext.url = "https://tegral.zoroark.guru/docs/core/services/"
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/services/"

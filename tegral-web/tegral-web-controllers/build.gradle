@@ -19,4 +19,4 @@ dependencies {
 
 ext.humanName = "Tegral Web Controllers"
 ext.description = "Provides necessary classes to integrate the Ktor framework into a Tegral Web application."
-ext.url = "https://tegral.zoroark.guru/docs/web/controllers"
+ext.url = "https://tegral.zoroark.guru/docs/modules/web/controllers"

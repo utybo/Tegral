@@ -14,4 +14,4 @@ dependencies {
 
 ext.humanName = "Tegral OpenAPI Script (host)"
 ext.description = "Host for Tegral OpenAPI scripts. Allows you to compilet .openapi.kts files right from your application."
-ext.url = "https://tegral.zoroark.guru" // TODO
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/openapi/scripting"

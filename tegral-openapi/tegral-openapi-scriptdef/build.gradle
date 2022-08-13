@@ -10,4 +10,4 @@ dependencies {
 
 ext.humanName = "Tegral OpenAPI Script (definitions)"
 ext.description = "Kotlin Scripting definitions for Tegral OpenAPI files (.openapi.kts)."
-ext.url = "https://tegral.zoroark.guru" // TODO
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/openapi/scripting"
