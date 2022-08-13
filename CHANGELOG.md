@@ -50,6 +50,48 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
   - Added logging configuration. You can now configure loggers directly in your `tegral.toml` -- Logback will be configured accordingly. ([#10](https://github.com/utybo/Tegral/pull/10))
 
+- `tegral-openapi-cli`
+
+  - Initial release ([#32](https://github.com/utybo/Tegral/pull/32))
+
+    - Provides a command line interface for converting `*.openapi.kts` scripts into OpenAPI JSON and YAML files.
+
+- `tegral-openapi-dsl`
+
+  - Initial release ([#32](https://github.com/utybo/Tegral/pull/32))
+
+    - Provides a Kotlin DSL for writing OpenAPI documents
+
+- `tegral-openapi-feature`
+
+  - Initial release ([#32](https://github.com/utybo/Tegral/pull/32))
+
+    - Tegral feature that integrates the Ktor plugins into Tegral Web applications
+
+- `tegral-openapi-ktor`
+
+  - Initial release ([#32](https://github.com/utybo/Tegral/pull/32))
+
+    - Ktor plugin for describing endpoints and serving OpenAPI documents from a Ktor application.
+
+- `tegral-openapi-ktorui`
+
+  - Initial release ([#32](https://github.com/utybo/Tegral/pull/32))
+
+    - Ktor plugin that serves Swagger UI from a Ktor application.
+
+- `tegral-openapi-scriptdef`
+
+  - Initial release ([#32](https://github.com/utybo/Tegral/pull/32))
+
+    - Kotlin scripting definitions for `*.openapi.kts` scripts.
+
+- `tegral-openapi-scripthost`
+
+  - Initial release ([#32](https://github.com/utybo/Tegral/pull/32))
+
+    - Allows you to evaluate `*.openapi.kts` scripts.
+
 - `tegral-web-appdefaults`
 
   - Added `ObjectMapper.defaultTegralConfiguration()` function, which lets you

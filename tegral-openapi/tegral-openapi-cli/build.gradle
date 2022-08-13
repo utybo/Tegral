@@ -1,0 +1,21 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+    id 'application'
+}
+
+dependencies {
+    implementation project(":tegral-openapi:tegral-openapi-scripthost")
+    implementation libs.clikt
+    implementation libs.kotlin.coroutines
+    implementation libs.logback
+
+    testImplementation libs.jimfs
+}
+
+application {
+    mainClass = "guru.zoroark.tegral.openapi.cli.MainKt"
+}
+
+ext.humanName = "Tegral OpenAPI CLI"
+ext.description = "A handy companion for working with .openapi.kts files."
+ext.url = "https://tegral.zoroark.guru" // TODO

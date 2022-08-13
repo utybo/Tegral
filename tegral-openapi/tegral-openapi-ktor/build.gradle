@@ -1,0 +1,17 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+}
+
+dependencies {
+    api project(":tegral-openapi:tegral-openapi-dsl")
+    implementation project(":tegral-core")
+
+    api libs.ktor.server.core
+
+    testImplementation libs.ktor.server.test
+    testImplementation libs.ktor.server.locations
+}
+
+ext.humanName = "Tegral OpenAPI Ktor"
+ext.description = "Easily create OpenAPI documentation for your Ktor application using Tegral OpenApi Ktor!"
+ext.url = "https://tegral.zoroark.guru" // TODO

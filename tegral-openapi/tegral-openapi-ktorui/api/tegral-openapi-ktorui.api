@@ -1,0 +1,19 @@
+public final class guru/zoroark/tegral/openapi/ktorui/TegralSwaggerUiKtor {
+	public static final field Plugin Lguru/zoroark/tegral/openapi/ktorui/TegralSwaggerUiKtor$Plugin;
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class guru/zoroark/tegral/openapi/ktorui/TegralSwaggerUiKtor$Configuration {
+	public fun <init> ()V
+}
+
+public final class guru/zoroark/tegral/openapi/ktorui/TegralSwaggerUiKtor$Plugin : io/ktor/server/application/BaseApplicationPlugin {
+	public fun getKey ()Lio/ktor/util/AttributeKey;
+	public fun install (Lio/ktor/server/application/ApplicationCallPipeline;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/openapi/ktorui/TegralSwaggerUiKtor;
+	public synthetic fun install (Lio/ktor/util/pipeline/Pipeline;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/openapi/ktorui/TegralSwaggerUiKtorKt {
+	public static final fun swaggerUiEndpoint (Lio/ktor/server/routing/Route;Ljava/lang/String;Ljava/lang/String;)V
+}
+

@@ -1,0 +1,74 @@
+public final class guru/zoroark/tegral/openapi/ktor/DescribeDslKt {
+	public static final fun describe (Lio/ktor/server/application/Application;Lkotlin/jvm/functions/Function1;)V
+	public static final fun describe (Lio/ktor/server/routing/Route;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/routing/Route;
+}
+
+public final class guru/zoroark/tegral/openapi/ktor/DescribeSubroutesKt {
+	public static final fun describeSubroutes (Lio/ktor/server/routing/Route;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class guru/zoroark/tegral/openapi/ktor/OpenApiEndpointKt {
+	public static final fun openApiEndpoint (Lio/ktor/server/routing/Route;Ljava/lang/String;)Lio/ktor/server/routing/Route;
+}
+
+public final class guru/zoroark/tegral/openapi/ktor/TegralOpenApiKtor {
+	public static final field Plugin Lguru/zoroark/tegral/openapi/ktor/TegralOpenApiKtor$Plugin;
+	public fun <init> ()V
+	public final fun buildOpenApiDocument ()Lio/swagger/v3/oas/models/OpenAPI;
+	public final fun getHooksForRoute (Lio/ktor/server/routing/Route;)Lkotlin/sequences/Sequence;
+	public final fun registerOperation (Ljava/lang/String;Lio/ktor/http/HttpMethod;Lkotlin/jvm/functions/Function1;)V
+	public final fun registerSubrouteHook (Lio/ktor/server/routing/Route;Lkotlin/jvm/functions/Function1;)V
+	public final fun withRootBuilder (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class guru/zoroark/tegral/openapi/ktor/TegralOpenApiKtor$Configuration : guru/zoroark/tegral/openapi/dsl/RootDsl {
+	public fun <init> (Lguru/zoroark/tegral/openapi/ktor/TegralOpenApiKtor;)V
+	public fun delete (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun get (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun getContactEmail ()Ljava/lang/String;
+	public fun getContactName ()Ljava/lang/String;
+	public fun getContactUrl ()Ljava/lang/String;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getExternalDocsDescription ()Ljava/lang/String;
+	public fun getExternalDocsUrl ()Ljava/lang/String;
+	public fun getLicenseIdentifier ()Ljava/lang/String;
+	public fun getLicenseName ()Ljava/lang/String;
+	public fun getLicenseUrl ()Ljava/lang/String;
+	public fun getSummary ()Ljava/lang/String;
+	public fun getTermsOfService ()Ljava/lang/String;
+	public fun getTitle ()Ljava/lang/String;
+	public fun getVersion ()Ljava/lang/String;
+	public fun head (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun invoke (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun options (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun patch (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun post (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun put (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun securityScheme (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun server (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun setContactEmail (Ljava/lang/String;)V
+	public fun setContactName (Ljava/lang/String;)V
+	public fun setContactUrl (Ljava/lang/String;)V
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setExternalDocsDescription (Ljava/lang/String;)V
+	public fun setExternalDocsUrl (Ljava/lang/String;)V
+	public fun setLicenseIdentifier (Ljava/lang/String;)V
+	public fun setLicenseName (Ljava/lang/String;)V
+	public fun setLicenseUrl (Ljava/lang/String;)V
+	public fun setSummary (Ljava/lang/String;)V
+	public fun setTermsOfService (Ljava/lang/String;)V
+	public fun setTitle (Ljava/lang/String;)V
+	public fun setVersion (Ljava/lang/String;)V
+	public fun tag (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class guru/zoroark/tegral/openapi/ktor/TegralOpenApiKtor$Plugin : io/ktor/server/application/BaseApplicationPlugin {
+	public fun getKey ()Lio/ktor/util/AttributeKey;
+	public fun install (Lio/ktor/server/application/ApplicationCallPipeline;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/openapi/ktor/TegralOpenApiKtor;
+	public synthetic fun install (Lio/ktor/util/pipeline/Pipeline;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/openapi/ktor/TegralOpenApiKtorKt {
+	public static final fun getOpenApi (Lio/ktor/server/application/Application;)Lguru/zoroark/tegral/openapi/ktor/TegralOpenApiKtor;
+}
+

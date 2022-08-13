@@ -1,6 +1,0 @@
-[tegral.web]
-port = 8080
-
-[tegral.db]
-host = "localhost"
-port = 5432

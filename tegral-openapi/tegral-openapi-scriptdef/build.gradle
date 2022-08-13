@@ -1,0 +1,13 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+}
+
+dependencies {
+    api project(":tegral-openapi:tegral-openapi-dsl")
+    implementation libs.kotlin.scripting.common
+    implementation libs.kotlin.scripting.jvm
+}
+
+ext.humanName = "Tegral OpenAPI Script (definitions)"
+ext.description = "Kotlin Scripting definitions for Tegral OpenAPI files (.openapi.kts)."
+ext.url = "https://tegral.zoroark.guru" // TODO

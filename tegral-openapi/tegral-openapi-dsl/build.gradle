@@ -1,0 +1,17 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+}
+
+dependencies {
+    api libs.swaggerCore.models
+    api libs.swaggerCore.core
+    implementation project(":tegral-core")
+}
+
+ext.humanName = "Tegral OpenAPI DSL"
+ext.description = "Provides a DSL for creating OpenAPI 3 documents."
+ext.url = "https://tegral.zoroark.guru" // TODO
+
+license {
+    exclude 'petstore-simple.openapi.yaml'
+}

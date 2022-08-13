@@ -20,3 +20,4 @@ sourceSets {
 
 compileKotlin.dependsOn generateKotlin
 checkLicenseMain.dependsOn generateKotlin
+dokkaHtmlPartial.dependsOn generateKotlin

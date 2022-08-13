@@ -18,6 +18,9 @@ nodeGradle = "3.3.0"
 slf4j = "1.7.36"
 versions = "0.42.0"
 licenserPlugin = "0.6.1"
+swaggerCore = "2.2.1"
+swaggerUi = "4.13.2"
+clikt = "3.5.0"
 
 [libraries]
 # Dependencies
@@ -25,10 +28,14 @@ licenserPlugin = "0.6.1"
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlin-scripting-common = { module = "org.jetbrains.kotlin:kotlin-scripting-common", version.ref = "kotlin" }
+kotlin-scripting-jvm = { module = "org.jetbrains.kotlin:kotlin-scripting-jvm", version.ref = "kotlin" }
+kotlin-scripting-jvmHost = { module = "org.jetbrains.kotlin:kotlin-scripting-jvm-host", version.ref = "kotlin" }
 
 ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
 ktor-server-host = { module = "io.ktor:ktor-server-host-common", version.ref = "ktor" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+ktor-server-locations = { module = "io.ktor:ktor-server-locations", version.ref = "ktor" }
 ktor-server-contentNegotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
 ktor-server-test = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
 
@@ -49,6 +56,12 @@ jimfs = { module = "com.google.jimfs:jimfs", version.ref = "jimfs" }
 slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+
+swaggerCore-models = { module = "io.swagger.core.v3:swagger-models", version.ref = "swaggerCore" }
+swaggerCore-core = { module = "io.swagger.core.v3:swagger-core", version.ref = "swaggerCore" }
+swaggerUi = { module = "org.webjars:swagger-ui", version.ref = "swaggerUi" }
+
+clikt = { module = "com.github.ajalt.clikt:clikt", version.ref = "clikt" }
 
 # Test dependencies
 

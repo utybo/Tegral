@@ -71,15 +71,9 @@ const config = {
           },
           {
             type: 'doc',
-            docId: 'core/index',
+            docId: 'modules/index',
             position: 'left',
-            label: 'Core',
-          },
-          {
-            type: 'doc',
-            docId: 'web/index',
-            position: 'left',
-            label: 'Web'
+            label: 'Modules',
           },
           {
             type: 'doc',
@@ -116,12 +110,8 @@ const config = {
                 to: '/docs/get-started'
               },
               {
-                label: 'Tegral Core',
-                to: '/docs/core'
-              },
-              {
-                label: 'Tegral Web',
-                to: '/docs/web'
+                label: 'Modules',
+                to: '/docs/modules'
               },
               {
                 label: 'API documentation (Dokka)',
@@ -170,7 +160,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ['kotlin', 'groovy', 'toml'],
+        additionalLanguages: ['kotlin', 'groovy', 'toml', 'yaml'],
       },
       announcementBar: {
         id: 'not-released-yet',

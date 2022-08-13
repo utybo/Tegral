@@ -1,0 +1,158 @@
+import PackageVersions from '@site/src/components/PackageVersions'
+
+# Tegral Featureful
+
+Tegral Featureful is a framework for defining lightweight modules (called "features") that can be installed in full applications. It is the base building block for Tegral applications.
+
+Note that Tegral Featureful in itself is not an "application engine". It only allows you to define you own features, but not actually run full applications. This task is delegated to [Tegral Web AppDSL](../../web/appdsl) in the case of web applications.
+
+<PackageVersions libraries={[
+    { name: 'tegral-featureful', catalog: 'featureful' }
+]}/>
+
+## What are features?
+
+Features are simply objects that act upon the dependency injection environment of an application. This generally means that:
+
+- Simpler features will simply `put()` things in the environment that applications will then be able to request and consume.
+- More complex features will also add [DI extensions](/modules/core/di/extensions/index.md) that will automatically discover and interact with other elements within the dependency injection environment.
+
+## Creating a feature
+
+Let's create a feature that just injects a dummy "Foo" object in the dependency injection environment. Features are defined by creating a feature object that implements the `Feature` interface.
+
+```kotlin
+class Foo {
+    fun bar(): String = "Bar!"
+}
+
+object FooFeature : Feature {
+    override val id = "acme-foo"
+    override val name = "ACME Foo"
+    override val description = "Provides a Foo instance in the DI environment"
+
+    override fun ExtensibleContextBuilderDsl.install() {
+        put(::Foo)
+    }
+}
+```
+
+### Metadata
+
+All features have an ID, a name and a description.
+
+- The ID of a feature should be unique across all features. The `tegral-` prefix is reserved for first-party features (i.e. features created by the Tegral team that are part of the Tegral repository).
+- The name of a feature is the human-readable name of the feature.
+- The description of a feature should be a short (approx. 1 sentence) description of what the feature does.
+
+A feature may also define a set of dependencies, which are features that will be installed together with the current feature. Defining dependencies is done by overriding the `dependencies` property:
+
+```kotlin
+override val dependencies = setOf(MyOtherFeature)
+```
+
+### Installation
+
+When using Tegral Web AppDSL, features can be installed using the `install(...)` syntax, i.e.:
+
+```kotlin
+fun main() {
+    tegral {
+        // highlight-start
+        install(FooFeature)
+        // highlight-end
+
+        // ...
+    }
+}
+```
+
+## Configurable features
+
+Features can consume *configuration* if they need additional information to act upon the environment.
+
+:::caution
+
+Currently, only configuration via configuration files (e.g. `tegral.toml`) is supported with Tegral Web AppDSL. Later on, proper DSLs for configuring features in-code will be provided (similar to the way [Ktor plugins](https://ktor.io/docs/custom-plugins-base-api.html) work). Rule of thumb will be:
+
+- If it is something that users are likely to change in production, it should be in the configuration file (if a simple value) or togglable via a configuration field.
+- If it is something that developers are likely to always keep the same, whether in production or in code, it should be in code.
+
+:::
+
+Configurable features use [configuration sections](/modules/core/config/sections.md), which are passed to a standard location in Tegral applications. For example, configurable features installed in a Tegral Web application have their sections under the `[tegral.*]` category.
+
+Let's extend our previous example. Instead of "Bar!", our Foo feature will use a configurable string, or "Bar!" if no such configuration is present.
+
+We'll first create a [configuration section](/modules/core/config/sections.md#defining-the-sections)...
+
+```kotlin
+data class FooConfig(
+    val bar: String = "Bar!"
+) {
+    companion object : ConfigurationSection<FooConfig>(
+        "foo",
+        // Section can be omitted entirely, in which case we'll use the default
+        SectionOptionality.Optional(FooConfig()),
+        FooConfig::class
+    )
+}
+```
+
+Let's make our feature implement `ConfigurableFeature` instead of just `Feature`, and register the section there:
+
+```kotlin
+// highlight-start
+object FooFeature : ConfigurableFeature {
+// highlight-end
+    override val id = "acme-foo"
+    override val name = "ACME Foo"
+    override val description = "Provides a Foo instance in the DI environment"
+    // highlight-start
+    override val configurationSections = listOf(FooConfig)
+    // highlight-end
+
+    override fun ExtensibleContextBuilderDsl.install() {
+        put(::Foo)
+    }
+}
+```
+
+Finally, let's modify our `Foo` class so that it uses our configuration section instead of the hardcoded value. This also means actually using [dependency injection](/modules/core/di/injection.md) here, as we will be retrieving the configuration class from the DI environment.
+
+```kotlin
+class Foo(scope: InjectionScope) {
+    private val config: TegralConfig by scope()
+
+    fun bar(): String = config[FooConfig].bar
+}
+```
+
+Optionally, you can use the `wrapIn` pattern to avoid calling `config[...]` all the time:
+
+```kotlin
+class Foo(scope: InjectionScope) {
+    // highlight-start
+    private val config: TegralConfig by scope<TegralConfig>() wrapIn { it[FooConfig] }
+    // highlight-end
+
+    fun bar(): String = config.bar
+}
+```
+
+:::info
+
+When defining features, you only need to define configuration sections. The application framework (e.g. Tegral Web AppDSL) will take care of defining the necessary root classes and instantiating the decoder.
+
+:::
+
+### Lifecycle features
+
+Features can `put` [services](../services/index.mdx) into the environment, which will be started like any other service. However, you sometimes need more control over the application's lifecycle, and need to be called back at specific points.
+
+The `LifecycleHookedFeature` interface provides a few functions that can help with that, including:
+
+- A callback for when the configuration is successfully loaded.
+- A callback just before starting all other services.
+
+You should almost always use services instead of lifecycle hooks, but it may be impossible to do otherwise sometimes.

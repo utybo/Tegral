@@ -15,8 +15,9 @@
     "preinstall": "npx -y only-allow pnpm"
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-beta.21",
-    "@docusaurus/preset-classic": "2.0.0-beta.21",
+    "@algolia/client-search": "^4.9.1",
+    "@docusaurus/core": "2.0.1",
+    "@docusaurus/preset-classic": "2.0.1",
     "@mdx-js/react": "^1.6.22",
     "clsx": "^1.1.1",
     "docusaurus-plugin-ackee": "^0.0.0",
@@ -29,7 +30,7 @@
     "unist-util-visit": "^2.0.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "2.0.0-beta.21",
+    "@docusaurus/module-type-aliases": "2.0.1",
     "@types/react": "^18.0.9"
   },
   "browserslist": {

@@ -1,0 +1,16 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+}
+
+dependencies {
+    api project(":tegral-openapi:tegral-openapi-dsl")
+    api project(":tegral-openapi:tegral-openapi-ktor")
+    api project(":tegral-openapi:tegral-openapi-ktorui")
+    implementation project(":tegral-logging")
+    implementation project(":tegral-web:tegral-web-controllers")
+    implementation project(":tegral-featureful")
+}
+
+ext.humanName = "Tegral OpenAPI Feature"
+ext.description = "Tegral Web feature for OpenAPI integration into your Tegral applications"
+ext.url = "https://tegral.zoroark.guru" // TODO

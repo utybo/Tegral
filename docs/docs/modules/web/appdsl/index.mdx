@@ -1,0 +1,215 @@
+import PackageVersions from '@site/src/components/PackageVersions';
+
+# TW AppDSL
+
+Tegral Web AppDSL is the library that provides an entrypoint to define your Tegral application as well as some routines for starting, stopping and maintaining Tegral Web applications.
+
+
+<PackageVersions libraries={[
+    { name: 'tegral-web-appdsl', catalog: 'web.appdsl' }
+]} />
+
+## The `tegral` block
+
+Most of the ways you will be interacting with AppDSL is via (surprise!) the `tegral` DSL.
+
+```kotlin
+tegral {
+    // ...
+}
+```
+
+The `tegral` block allows you to build a Tegral Web application, install features, add components. This is the main entrypoint for a full Tegral application.
+
+### Included in the box
+
+By default, quite a few things happen in the `tegral` block without you having to specify anything.
+
+- [Tegral Web AppDefaults](/modules/web/appdefaults/index.mdx) gets installed, along with its dependencies (i.e. [Tegral Web Controllers](/modules/web/controllers/index.mdx), [Tegral Services](/modules/core/services/index.mdx), [Tegral Logging](/modules/core/logging/index.mdx)) and what it brings to the environment.
+- A default configuration class that only contains a `tegral` property gets installed. This means that, unless you want to customize what is available in your configuration, you do not need to do anything to use `[tegral.*]` configuration sections
+- Sets up loading the following files from your `resources`:
+    - `/tegral.toml` using TOML. This is the recommended way you should configure your applications.
+    - `/tegral.yaml` using YAML.
+    - `/tegral.json` using JSON.
+- A decoder for the `tegral` section of the configuration gets configured
+- A Tegral DI environment is created.
+
+## Configuring your app
+
+Configuration in AppDSL is powered by [Hoplite](https://github.com/sksamuel/hoplite), with additional features from [Tegral Config](/modules/core/config/index.mdx).
+
+### Configuration sources
+
+Applications ran with AppDSL can be configured using a number of ways (in a descending order of priority):
+
+- Using the default Hoplite configuration sources.
+    - [System properties](https://github.com/sksamuel/hoplite#systempropertiespropertysource)
+    - [`~/.userconfig.<ext>` file](https://github.com/sksamuel/hoplite#usersettingspropertysource). Formats available out of the box when using AppDSL are Properties, JSON, YAML and TOML, with TOML being the recommended format.
+- Using the `/tegral.toml`, `/tegral.yaml` and/or `/tegral.json` files (in that order).
+    - These files must be placed within the root of your JAR file, i.e. in your `src/main/resources` folder.
+
+### Custom configuration class
+
+Your application's configuration is parsed into a data class that implements `RootConfig`. By default, said data class only contains a `tegral` field (as this field is used by all Tegral features for configuration), but you can also define your own class by:
+
+- Having it implement `RootConfig` (this is once again to ensure that there is a `tegral` field present)
+- Using `useConfiguration<...>()` within the `tegral { }` block to specify the class.
+
+```kotlin
+class MyConfig(
+    override val tegral: TegralConfig,
+    val hello: String,
+    val foo: FooConfig
+) : RootConfig
+
+data class FooConfig(val bar: String)
+
+// Example usage in a regular class:
+
+class FoobarService(scope: InjectionScope) {
+    private val config: MyConfig by scope()
+
+    fun printInfo() {
+        println("foo.bar = " + config.foo.bar)
+    }
+}
+
+fun main() {
+    val app = tegral {
+        useConfiguration<MyConfig>()
+
+        put(::FoobarService)
+    }
+}
+```
+
+### Configuring Hoplite
+
+You can also further configure Hoplite by passing a lambda to `useConfiguration()`:
+
+```kotlin
+fun main() {
+    tegral {
+        // highlight-start
+        useConfiguration<MyConfig> { // this: ConfigLoaderBuilder
+            // You can use any ConfigLoaderBuilder function here
+        }
+        // highlight-end
+
+        // highlight-start
+        // If you only want to modify the config loader without changing the
+        // type of the configuration, you can also just not specify the <T>
+        useConfiguration { // this: ConfigLoaderBuilder
+            // ...
+        }
+        // highlight-end
+    }
+}
+```
+
+## Tegral DI environment
+
+AppDSL automatically creates a Tegral DI environment and adds the following components:
+
+- The application configuration (i.e. the class you pass to `useConfiguration` or `TegralConfigurationContainer` by default).
+- The `tegral` section of the application configuration (i.e. `TegralConfig`).
+- All of the installed features' `Feature` object (added in the meta-environment).
+- Anything features do with the environment via their `install()` function.
+
+You will need to add your own components, modules, controllers and services to this environment using the [`put(...)` functions](/modules/core/di/environment.md).
+
+## `TegralApplication`
+
+The `tegral` block returns an object of type `TegralApplication`. You can use this object to act upon the environment in a few ways:
+
+- Stop the application using the `stop()` function. Note that a `start()` function is also present but is automatically called by the `tegral` function, so you should not call it yourself.
+- Access the [DI environment](/modules/core/di/environment.md) of the application, which you can then use to `get` DI components. For example:
+
+```kotlin
+class MyComponent {
+    fun hello() {
+        println("Hello!")
+    }
+}
+
+val app = tegral {
+    put(::MyComponent)
+}
+app.environment.get<MyComponent>().hello() // Hello!
+```
+
+## Tegral block parameters
+
+There are a few parameters you can pass to the `tegral` block, like so:
+
+```kotlin
+tegral(/* parameters here! */) {
+    // ...
+}
+```
+
+These parameters are:
+
+- `enableLoggingOverrides` will call AppDefaults' default logging configuration (which configures logging levels and the default format). True by default.
+- `enableDefaults` will apply AppDefaults to this environment (outside of the logging, which is controlled by `enableLoggingOverrides`). True by default.
+
+## Examples
+
+### Hello World
+
+Here's an example of a simple "hello world" app using Tegral Web AppDSL:
+
+```kotlin title="App.kt"
+class Controller : KtorController() {
+    fun Routing.install() {
+        get("/") {
+            call.respondText("Hello World!")
+        }
+    }
+}
+
+fun main() {
+    tegral {
+        put(::Controller)
+    }
+}
+```
+
+```toml title="/tegral.toml"
+[tegral.web]
+port = 8080
+```
+
+### Hello World (with DI)
+
+Here's another example that uses simple [dependency injection](/modules/core/di/injection.md).
+
+```kotlin title="App.kt"
+class Controller(scope: InjectionScope) : KtorController() {
+    private val service: GreeterService by scope()
+
+    fun Routing.install() {
+        get("/") {
+            call.respondText(service.greet())
+        }
+    }
+}
+
+class GreeterService(scope: InjectionScope) {
+    fun greet() {
+        return "Hello World!"
+    }
+}
+
+fun main() {
+    tegral {
+        put(::Controller)
+        put(::GreeterService)
+    }
+}
+```
+
+```toml title="/tegral.toml"
+[tegral.web]
+port = 8080
+```
