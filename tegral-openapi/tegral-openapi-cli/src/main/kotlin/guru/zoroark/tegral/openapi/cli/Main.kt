@@ -27,9 +27,7 @@ import guru.zoroark.tegral.openapi.dsl.toJson
 import guru.zoroark.tegral.openapi.dsl.toYaml
 import guru.zoroark.tegral.openapi.scripthost.OpenApiScriptHost
 import io.swagger.v3.oas.models.OpenAPI
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.nio.file.FileSystem
