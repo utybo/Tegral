@@ -8,6 +8,8 @@ dependencies {
     implementation libs.clikt
     implementation libs.kotlin.coroutines
     implementation libs.logback
+
+    testImplementation libs.jimfs
 }
 
 application {

@@ -15,12 +15,12 @@
 package guru.zoroark.tegral.openapi.cli
 
 import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.core.ProgramResult
 import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.enum
-import com.github.ajalt.clikt.parameters.types.file
 import com.github.ajalt.clikt.parameters.types.path
 import guru.zoroark.tegral.openapi.dsl.OpenApiVersion
 import guru.zoroark.tegral.openapi.dsl.toJson
@@ -32,8 +32,10 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.io.File
+import java.nio.file.FileSystem
+import java.nio.file.FileSystems
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 import kotlin.script.experimental.api.ResultWithDiagnostics
 import kotlin.script.experimental.api.ScriptDiagnostic
@@ -65,9 +67,11 @@ enum class Format {
 /**
  * Tegral OpenAPI CLI object, which provides the "dump" command (managed by Clikt).
  */
-class TegralOpenApiCli : CliktCommand(name = "tegral-openapi-cli") {
-    private val file by argument().file(mustExist = true, canBeDir = false, mustBeReadable = true)
-    private val output by option("--output", "-o", help = "Output file").path(canBeDir = false)
+class TegralOpenApiCli(fileSystem: FileSystem = FileSystems.getDefault()) : CliktCommand(name = "tegral-openapi-cli") {
+    private val file by argument()
+        .path(mustExist = true, canBeDir = false, mustBeReadable = true, fileSystem = fileSystem)
+    private val output by option("--output", "-o", help = "Output file")
+        .path(canBeDir = false, fileSystem = fileSystem)
     private val quiet by option("--quiet", "-q").flag(default = false)
     private val format by option("--format", "-f", help = "Output format")
         .enum<Format> { it.name.lowercase() }
@@ -78,9 +82,9 @@ class TegralOpenApiCli : CliktCommand(name = "tegral-openapi-cli") {
 
     private val logger = LoggerFactory.getLogger("openapi.dump")
 
-    override fun run(): Unit = runBlocking {
+    override fun run() {
         applyMinimalistLoggingOverrides(quiet = quiet)
-        val openapi = OpenApiScriptHost.compileScript(file, logger::info)
+        val openapi = runBlocking { OpenApiScriptHost.compileScript(file, logger::info) }
         val compileLogger = LoggerFactory.getLogger("compiler")
         openapi.reports.forEach {
             val actualMessage = it.toFullMessage(file)
@@ -92,11 +96,11 @@ class TegralOpenApiCli : CliktCommand(name = "tegral-openapi-cli") {
             if (outFile == null) {
                 println(str)
             } else {
-                withContext(Dispatchers.IO) {
-                    Files.writeString(outFile, str, StandardOpenOption.CREATE)
-                }
+                Files.writeString(outFile, str, StandardOpenOption.CREATE)
                 logger.info("Output written to ${outFile.toAbsolutePath()}")
             }
+        } else {
+            throw ProgramResult(1)
         }
     }
 }
@@ -120,9 +124,9 @@ private fun Logger.logWithSeverity(severity: ScriptDiagnostic.Severity, actualMe
     }
 }
 
-private fun ScriptDiagnostic.toFullMessage(fileObj: File): String =
+private fun ScriptDiagnostic.toFullMessage(path: Path): String =
     if (location != null) {
-        "${message}\nat ${fileObj.absolutePath}:${location!!.start.line}:${location!!.start.col}"
+        "${message}\nat ${path.toAbsolutePath()}:${location!!.start.line}:${location!!.start.col}"
     } else {
         message
     }

@@ -77,8 +77,9 @@ class TegralSwaggerUiKtor(private val classpathPath: String) {
     @OptIn(InternalAPI::class)
     internal fun getContentFor(fileName: String): OutgoingContent? {
         val path = getPathFor(fileName)
+        val resource = TegralSwaggerUiKtor::class.java.classLoader.getResource(path) ?: return null
         return resourceClasspathResource(
-            TegralSwaggerUiKtor::class.java.classLoader.getResource(path)!!,
+            resource,
             path
         ) { ContentType.defaultForFileExtension(it) }
     }
