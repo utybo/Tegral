@@ -15,7 +15,6 @@ public final class guru/zoroark/tegral/web/appdefaults/DefaultAppDefaultsModule 
 public class guru/zoroark/tegral/web/appdefaults/DefaultKtorApplication : guru/zoroark/tegral/web/controllers/KtorApplication {
 	public fun <init> (Lguru/zoroark/tegral/di/environment/InjectionScope;)V
 	public fun getSettings ()Lguru/zoroark/tegral/web/controllers/KtorApplicationSettings;
-	public fun setup (Lio/ktor/server/application/Application;)V
 }
 
 public abstract class guru/zoroark/tegral/web/appdefaults/DefaultsModule : guru/zoroark/tegral/web/controllers/KtorModule {

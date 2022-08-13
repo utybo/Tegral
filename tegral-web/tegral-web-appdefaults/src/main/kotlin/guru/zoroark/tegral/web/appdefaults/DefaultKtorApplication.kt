@@ -41,8 +41,4 @@ open class DefaultKtorApplication(scope: InjectionScope) : KtorApplication(scope
             port = tegralConfig[WebConfiguration].port,
             host = tegralConfig[WebConfiguration].host
         )
-
-    @Suppress("EmptyFunctionBlock") // Cannot be removed as setup() is abstract in KtorApplication
-    override fun Application.setup() {
-    }
 }

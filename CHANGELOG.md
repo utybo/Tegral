@@ -223,6 +223,15 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   - Made some `KtorApplicationSettings` properties public: `engine`, `port`,
     `host`, `watchPaths` ([#19](https://github/utybo/Tegral/pull/19))
 
+### Removed
+
+- `tegral-web-controllers`
+
+  - **Breaking change:** `KtorApplication.setup()` has been removed due to
+    incompatibility with integration testing. Use a regular module instead,
+    making it high-priority if necessary.
+    ([#36](https://github.com/utybo/Tegral/pull/36))
+
 ### Fixed
 
 - `tegral-di-services`

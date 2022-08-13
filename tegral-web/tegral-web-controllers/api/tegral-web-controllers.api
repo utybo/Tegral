@@ -1,10 +1,8 @@
-public abstract class guru/zoroark/tegral/web/controllers/KtorApplication : guru/zoroark/tegral/web/controllers/KtorModule, guru/zoroark/tegral/services/api/TegralService {
+public abstract class guru/zoroark/tegral/web/controllers/KtorApplication : guru/zoroark/tegral/services/api/TegralService {
 	public fun <init> (Lguru/zoroark/tegral/di/environment/InjectionScope;Ljava/lang/String;)V
 	public synthetic fun <init> (Lguru/zoroark/tegral/di/environment/InjectionScope;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getAppName ()Ljava/lang/String;
 	public abstract fun getSettings ()Lguru/zoroark/tegral/web/controllers/KtorApplicationSettings;
-	public fun install (Lio/ktor/server/application/Application;)V
-	public abstract fun setup (Lio/ktor/server/application/Application;)V
 	public fun start (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

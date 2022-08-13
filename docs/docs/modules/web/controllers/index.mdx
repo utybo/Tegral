@@ -34,10 +34,9 @@ Note that you will still need to register your components using the usual `put()
 
 The primary class that will host the actual Ktor application needs to inherit from `KtorApplication`.
 
-This class is responsible for:
+This class is responsible for providing the core configuration of the application. This is done by overriding the `settings` property.
 
-- Providing the very basic configuration of the application. This is done by overriding the `settings` property.
-- Installing essential Ktor features required by your Ktor modules. This is done by overriding the `Application.setup()` function.
+Behind the scenes, this is the class that "holds" the Ktor application instance and is responsible for startup and stopping. All of this is done in `KtorApplication`.
 
 :::info
 
@@ -50,12 +49,6 @@ Here is an example:
 ```kotlin
 class MyApplication(scope: InjectionScope) : KtorApplication(scope) {
     override val settings get() = KtorApplicationSettings(Netty, port = 8080)
-
-    override fun Application.setup() {
-        install(ContentNegotiation) {
-            jackson()
-        }
-    }
 }
 ``` 
 
