@@ -37,6 +37,12 @@ public final class guru/zoroark/tegral/web/appdefaults/LoggingOverridesKt {
 	public static final fun applyLoggingOverrides ()V
 }
 
+public final class guru/zoroark/tegral/web/appdefaults/ShutdownHookService : guru/zoroark/tegral/services/api/TegralService {
+	public fun <init> (Lguru/zoroark/tegral/di/environment/InjectionScope;)V
+	public fun start (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class guru/zoroark/tegral/web/appdefaults/TegralConfigurationContainer : guru/zoroark/tegral/config/core/RootConfig {
 	public fun <init> (Lguru/zoroark/tegral/config/core/TegralConfig;)V
 	public final fun component1 ()Lguru/zoroark/tegral/config/core/TegralConfig;

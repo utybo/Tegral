@@ -60,3 +60,7 @@ public final class guru/zoroark/tegral/logging/LoggingFeature : guru/zoroark/teg
 	public fun onConfigurationLoaded (Lguru/zoroark/tegral/config/core/RootConfig;)V
 }
 
+public final class guru/zoroark/tegral/logging/LoggingFeatureKt {
+	public static final fun putLoggerFactory (Lguru/zoroark/tegral/di/dsl/ContextBuilderDsl;)V
+}
+

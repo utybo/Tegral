@@ -17,6 +17,8 @@ package guru.zoroark.tegral.logging
 import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.LoggerContext
 import guru.zoroark.tegral.config.core.RootConfig
+import guru.zoroark.tegral.core.TegralDsl
+import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.factory.putFactory
 import guru.zoroark.tegral.featureful.ConfigurableFeature
@@ -37,7 +39,7 @@ object LoggingFeature : ConfigurableFeature, LifecycleHookedFeature {
     override val configurationSections = listOf(LoggingConfig)
 
     override fun ExtensibleContextBuilderDsl.install() {
-        putFactory<Slf4jLogger> { requester -> LoggerFactory.getLogger(requester::class.loggerName) }
+        putLoggerFactory()
     }
 
     // Setup for the LoggingFeature is done right after the configuration is loaded and not during the regular "service
@@ -67,4 +69,14 @@ private fun LogLevel.toLogbackLevel(): Level = when (this) {
     LogLevel.Warn -> Level.WARN
     LogLevel.Error -> Level.ERROR
     LogLevel.Off -> Level.OFF
+}
+
+/**
+ * Adds Tegral Logging's `Logger` factory to this context builder. You do not need to call this if you are using the
+ * Tegral Logging feature. This is mostly useful for manually adding logging in test environments that do not support
+ * features (i.e. every Tegral test except integration tests).
+ */
+@TegralDsl
+fun ContextBuilderDsl.putLoggerFactory() {
+    putFactory<Slf4jLogger> { requester -> LoggerFactory.getLogger(requester::class.loggerName) }
 }
