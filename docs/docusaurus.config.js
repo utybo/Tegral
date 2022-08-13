@@ -41,6 +41,7 @@ const config = {
         },
         blog: {
           showReadingTime: true,
+          remarkPlugins: [mdxMermaid],
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           //editUrl:
