@@ -407,6 +407,8 @@ Logs will look a bit nicer by default in your Tegral Web applications (with colo
 
 - Tegral Web Controllers: `KtorApplication`'s `setup` function was removed, as it broke a few design patterns and ended up becoming a problem when developing integration tests. If you were directly implementing your own `KtorApplication`, you will need to move code that was in `setup` to a high-priority `KtorModule` instead.
 
+- Tegral Web AppDefaults: All services will be cleanly stopped when the application is shut down (via Ctrl+C-ing for example).
+
 - A few versions were bumped along the way, including Ktor, Kotlin, Gradle and Hoplite.
 
 ## Plans for the future
