@@ -19,3 +19,9 @@ application {
 ext.humanName = "Tegral OpenAPI CLI"
 ext.description = "A handy companion for working with .openapi.kts files."
 ext.url = "https://tegral.zoroark.guru" // TODO
+
+jar {
+    manifest {
+        attributes.put("Main-Class", "guru.zoroark.tegral.openapi.cli.MainKt")
+    }
+}
