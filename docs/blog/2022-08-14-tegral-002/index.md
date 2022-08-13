@@ -1,7 +1,7 @@
 ---
 title: Introducing Tegral 0.0.2
 description: OpenAPI support, integration testing and much more!
-slug: welcome-to-tegral-v0-0-2
+slug: introducing-tegral-0-0-2
 authors:
   - name: utybo
     title: Maintainer

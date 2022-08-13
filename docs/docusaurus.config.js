@@ -165,7 +165,7 @@ const config = {
       },
       announcementBar: {
         id: 'not-released-yet',
-        content: '<strong>Welcome to Tegral!</strong> Check out the 0.0.1 <a href="/blog/welcome-to-tegral-v0-0-1">announcement</a>!',
+        content: 'Tegral version 0.0.2 <a href="/blog/introducing-tegral-0-0-2">has been released</a>!',
         backgroundColor: '#834cff',
         textColor: '#ffffff',
         isCloseable: false
