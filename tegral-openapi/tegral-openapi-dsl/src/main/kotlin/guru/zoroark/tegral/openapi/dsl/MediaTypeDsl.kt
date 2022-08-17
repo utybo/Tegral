@@ -57,7 +57,7 @@ interface MediaTypeDsl {
  * The type `T` will be converted to a schema.
  */
 @TegralDsl
-inline fun <reified T : Any> MediaTypeDsl.schema() = schema(typeOf<T>())
+inline fun <reified T> MediaTypeDsl.schema() = schema(typeOf<T>())
 
 /**
  * Set the schema to be of type `T`, with the given object set as the example.
@@ -65,7 +65,7 @@ inline fun <reified T : Any> MediaTypeDsl.schema() = schema(typeOf<T>())
  * The type `T` will be converted to a schema.
  */
 @TegralDsl
-inline fun <reified T : Any> MediaTypeDsl.schema(example: T) {
+inline fun <reified T> MediaTypeDsl.schema(example: T) {
     this.example = example
     schema(typeOf<T>())
 }
@@ -84,10 +84,17 @@ fun <T> MediaTypeDsl.schema(ktype: KType, example: T) {
  */
 class MediaTypeBuilder(private val context: OpenApiDslContext) : MediaTypeDsl, Builder<MediaType> {
     override var schema: Schema<*>? = null
-    override var example: Any? = null
+    private var _example: Any? = null
+    private var _exampleWasSet: Boolean = false
+    override var example: Any?
+        get() = _example
+        set(value) {
+            _example = value
+            _exampleWasSet = true
+        }
 
     override fun build(): MediaType = MediaType().apply {
-        example = this@MediaTypeBuilder.example
+        if (_exampleWasSet) example = this@MediaTypeBuilder.example
         schema = this@MediaTypeBuilder.schema
     }
 

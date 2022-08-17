@@ -38,6 +38,9 @@ class MediaTypeBuilderTest {
         }
 
         assertEquals(expected, mediaType)
+        // The MediaType.equals() function does not take the exampleSetFlag into account, so we have to check it
+        // separately
+        assertEquals(expected.exampleSetFlag, mediaType.exampleSetFlag)
     }
 
     @Test
@@ -51,9 +54,34 @@ class MediaTypeBuilderTest {
 
         val expected = MediaType().apply {
             schema = StringSchema()
+            exampleSetFlag = false // See https://github.com/utybo/Tegral/issues/40
         }
 
         assertEquals(expected, mediaType)
+        // The MediaType.equals() function does not take the exampleSetFlag into account, so we have to check it
+        // separately
+        assertEquals(expected.exampleSetFlag, mediaType.exampleSetFlag)
+    }
+
+    @Test
+    fun `Schema via reified inline with null example`() {
+        val context = mockk<OpenApiDslContext> {
+            every { computeAndRegisterSchema(typeOf<String?>()) } returns StringSchema()
+        }
+        val mediaType = MediaTypeBuilder(context).apply {
+            schema<String?>(example = null)
+        }.build()
+
+        val expected = MediaType().apply {
+            schema = StringSchema()
+            example = null
+            exampleSetFlag = true // See https://github.com/utybo/Tegral/issues/40
+        }
+
+        assertEquals(expected, mediaType)
+        // The MediaType.equals() function does not take the exampleSetFlag into account, so we have to check it
+        // separately
+        assertEquals(expected.exampleSetFlag, mediaType.exampleSetFlag)
     }
 
     @Test
@@ -70,6 +98,9 @@ class MediaTypeBuilderTest {
         }
 
         assertEquals(expected, mediaType)
+        // The MediaType.equals() function does not take the exampleSetFlag into account, so we have to check it
+        // separately
+        assertEquals(expected.exampleSetFlag, mediaType.exampleSetFlag)
     }
 
     @Test
@@ -84,9 +115,13 @@ class MediaTypeBuilderTest {
         val expected = MediaType().apply {
             schema = StringSchema()
             example = "Test"
+            exampleSetFlag = true
         }
 
         assertEquals(expected, mediaType)
+        // The MediaType.equals() function does not take the exampleSetFlag into account, so we have to check it
+        // separately
+        assertEquals(expected.exampleSetFlag, mediaType.exampleSetFlag)
     }
 
     @Test
@@ -100,8 +135,33 @@ class MediaTypeBuilderTest {
 
         val expected = MediaType().apply {
             schema = StringSchema()
+            exampleSetFlag = false
         }
 
         assertEquals(expected, mediaType)
+        // The MediaType.equals() function does not take the exampleSetFlag into account, so we have to check it
+        // separately
+        assertEquals(expected.exampleSetFlag, mediaType.exampleSetFlag)
+    }
+
+    @Test
+    fun `Schema via ktype with null example`() {
+        val context = mockk<OpenApiDslContext> {
+            every { computeAndRegisterSchema(typeOf<String>()) } returns StringSchema()
+        }
+        val mediaType = MediaTypeBuilder(context).apply {
+            schema(typeOf<String>(), null)
+        }.build()
+
+        val expected = MediaType().apply {
+            schema = StringSchema()
+            example = null
+            exampleSetFlag = true
+        }
+
+        assertEquals(expected, mediaType)
+        // The MediaType.equals() function does not take the exampleSetFlag into account, so we have to check it
+        // separately
+        assertEquals(expected.exampleSetFlag, mediaType.exampleSetFlag)
     }
 }

@@ -8,6 +8,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased] (0.0.3)
 
+### Fixed
+
+- `tegral-openapi-core`
+  - Fixed the way media type examples are handled (specifically, properly handle cases where it is null vs when it is unset). ([#41](https://github.com/utybo/Tegral/pull/41))
+
 ## [0.0.2] - 2022-08-14
 
 ### Added
