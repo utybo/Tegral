@@ -1,0 +1,11 @@
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+
+    versionCatalogs {
+        tegralLibs {
+            from "guru.zoroark.tegral:tegral-catalog:%VERSION%"
+        }
+    }
+}

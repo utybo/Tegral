@@ -26,11 +26,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
 }
 
 .heroBanner .container h1 img {
   height: 3rem;
+  padding-right: 1rem;
+}
+
+.heroBanner .container small {
+  font-size: .3em;
+  vertical-align: bottom;
+  align-self: flex-start;
 }
 
 @media screen and (max-width: 996px) {
