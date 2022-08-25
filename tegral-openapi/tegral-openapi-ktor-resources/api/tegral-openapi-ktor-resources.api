@@ -1,0 +1,4 @@
+public abstract interface class guru/zoroark/tegral/openapi/ktor/resources/OpenApiDescription {
+	public abstract fun getOpenApi ()Lkotlin/jvm/functions/Function1;
+}
+
