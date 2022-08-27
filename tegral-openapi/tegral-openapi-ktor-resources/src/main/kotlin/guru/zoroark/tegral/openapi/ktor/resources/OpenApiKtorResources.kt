@@ -12,6 +12,8 @@
  * limitations under the License.
  */
 
+@file:Suppress("MatchingDeclarationName")
+
 package guru.zoroark.tegral.openapi.ktor.resources
 
 import guru.zoroark.tegral.core.TegralDsl
@@ -77,7 +79,6 @@ fun describeResource(description: OperationDsl.() -> Unit): ResourceDescription 
 inline fun <reified T : Any> descriptionFromCompanionObject(): OperationDsl.() -> Unit =
     (T::class.companionObjectInstance as? ResourceDescription)?.openApi
         ?: { }
-
 
 /**
  * Defines a `get` route handler for the given resource, additionally registering its

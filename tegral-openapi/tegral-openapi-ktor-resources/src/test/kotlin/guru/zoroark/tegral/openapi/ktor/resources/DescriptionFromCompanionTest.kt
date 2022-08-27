@@ -6,6 +6,7 @@ import io.mockk.mockk
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+@Suppress("UtilityClassWithPublicConstructor")
 class DescriptionFromCompanionTest {
     class UsingManualImplementation {
         companion object : ResourceDescription {
@@ -36,9 +37,7 @@ class DescriptionFromCompanionTest {
     }
 
     class CompanionObjectWithoutInterface {
-        companion object {
-            val foo = "bar"
-        }
+        companion object
     }
 
     @Test
