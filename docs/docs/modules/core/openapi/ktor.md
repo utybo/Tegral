@@ -134,13 +134,28 @@ routing {
 
 ### Integration with `Resources`
 
-The `tegral-openapi-ktor-resources` package supplements `TegralOpenApiKtor` with support for Ktor's `@Resource` annotation. In this case the description isn't part of the `routing` block, but appears in the `companion object` of the class annotated with `@Resource`. This object must extend `OpenApiDescription`, and thus implement `openApi`.
+The `tegral-openapi-ktor-resources` package supplements `TegralOpenApiKtor` with support for Ktor's `@Resource` annotation. In this case the description isn't part of the `routing` block, but appears in the `companion object` of the class annotated with `@Resource`. This object must extend `OpenApiDescription`, which can be done in two ways:
+
+- Delegating by the `describeResource` function:
 
 ```kotlin
 @Resource("/hello/{name}")
+@Serializable
 class Hello(val name: String) {
-    companion object: OpenApiDescription {
-        override val openApi = { 
+    companion object : OpenApiDescription by describeResource({
+        description = "Returns a greeting"
+    })
+}
+```
+
+- Manually implement the `openApi` property:
+
+```kotlin
+@Resource("/hello/{name}")
+@Serializable
+class Hello(val name: String) {
+    companion object : OpenApiDescription {
+        override val openApi: OperationDsl.() -> Unit = { 
             description = "Returns a greeting"
         }
     }
@@ -162,7 +177,6 @@ routing {
     }
 }
 ```
-
 
 ## `tegral-openapi-ktorui`
 
