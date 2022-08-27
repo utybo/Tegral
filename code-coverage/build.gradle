@@ -20,6 +20,7 @@ dependencies {
     jacocoAggregation project(':tegral-openapi:tegral-openapi-dsl')
     jacocoAggregation project(':tegral-openapi:tegral-openapi-feature')
     jacocoAggregation project(':tegral-openapi:tegral-openapi-ktor')
+    jacocoAggregation project(':tegral-openapi:tegral-openapi-ktor-resources')
     jacocoAggregation project(':tegral-openapi:tegral-openapi-ktorui')
     jacocoAggregation project(':tegral-openapi:tegral-openapi-scriptdef')
     jacocoAggregation project(':tegral-openapi:tegral-openapi-scripthost')
