@@ -1,5 +1,7 @@
 plugins {
     id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 dependencies {
@@ -8,6 +10,8 @@ dependencies {
     implementation project(":tegral-core")
 
     api libs.ktor.server.resources
+
+    testImplementation libs.ktor.server.test
 }
 
 ext.humanName = "Tegral OpenAPI Ktor Resources"

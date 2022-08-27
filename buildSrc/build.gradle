@@ -9,6 +9,7 @@ repositories {
 dependencies {
     def pluginsDef = [
         libs.plugins.kotlin,
+        libs.plugins.kotlinSerialization,
         libs.plugins.dokka,
         libs.plugins.detekt,
         libs.plugins.versions,
