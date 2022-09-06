@@ -38,3 +38,9 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
         jvmTarget = "11"
     }
 }
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
