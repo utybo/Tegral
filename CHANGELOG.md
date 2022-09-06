@@ -156,6 +156,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - General
 
+  - All packages can now be used with Java 11
+    ([#45](https://github.com/utybo/Tegral/pull/45))
+
   - Bumped Ktor version to version 2.0.3
     ([#17](https://github/utybo/Tegral/pull/17))
   
