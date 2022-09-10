@@ -7,6 +7,7 @@ sidebar_position: 4
 Tegral OpenAPI provides two plugins for Ktor:
 
 - A plugin for describing endpoints and serving OpenAPI JSON and YAML files.
+  - If you are using Ktor's `Resources` plugin, those descriptions may be part of each resource class.
 - A plugin for serving [Swagger UI](https://swagger.io/tools/swagger-ui/) from your Ktor application.
 
 ## `tegral-openapi-ktor`
@@ -127,6 +128,52 @@ routing {
     get("/title") {
         val openapi = application.openApi.buildOpenApiDocument()
         call.respondText(openapi.info.title)
+    }
+}
+```
+
+### Integration with `Resources`
+
+The `tegral-openapi-ktor-resources` package supplements `TegralOpenApiKtor` with support for Ktor's `@Resource` annotation. In this case the description isn't part of the `routing` block, but appears in the `companion object` of the class annotated with `@Resource`. This object must extend `OpenApiDescription`, which can be done in two ways:
+
+- Delegating by the `describeResource` function:
+
+```kotlin
+@Resource("/hello/{name}")
+@Serializable
+class Hello(val name: String) {
+    companion object : OpenApiDescription by describeResource({
+        description = "Returns a greeting"
+    })
+}
+```
+
+- Manually implement the `openApi` property:
+
+```kotlin
+@Resource("/hello/{name}")
+@Serializable
+class Hello(val name: String) {
+    companion object : OpenApiDescription {
+        override val openApi: OperationDsl.() -> Unit = { 
+            description = "Returns a greeting"
+        }
+    }
+}
+```
+
+:::warning
+
+Due to limitations in the type system, `openApi` is defined as a field with a functional type instead of a proper function. The only consequence, in practical terms, is that you need an equals sign after the name of the field.
+
+:::
+
+In your `routing` block, use the variants finished in `D` (from **d**escription) instead of the ones provided by the `Resources` plug-in. These variants use the `openApi` from the route `companion object` as description for the endpoint.
+
+```kotlin
+routing {
+    getD<Hello> { request ->
+        call.respondText("Hello, ${request.name}!")
     }
 }
 ```
