@@ -28,6 +28,7 @@ import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.environment.EmptyQualifier
 import guru.zoroark.tegral.di.environment.ScopedSupplier
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
+import guru.zoroark.tegral.di.extensions.putAlias
 import guru.zoroark.tegral.featureful.ConfigurableFeature
 import guru.zoroark.tegral.featureful.Feature
 import guru.zoroark.tegral.featureful.LifecycleHookedFeature
@@ -146,7 +147,11 @@ class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplicati
         toInstall.filterIsInstance<LifecycleHookedFeature>().forEach { it.onConfigurationLoaded(appConfig) }
 
         val environment = tegralDi {
-            put { appConfig }
+            // Register the root config class under both its own class type and under RootConfig.
+            @Suppress("UNCHECKED_CAST")
+            put(this@TegralApplicationBuilder.configClass as KClass<RootConfig>) { appConfig }
+            putAlias(aliasClass = RootConfig::class, targetClass = this@TegralApplicationBuilder.configClass)
+
             put { appConfig.tegral }
 
             toInstall.forEach {
