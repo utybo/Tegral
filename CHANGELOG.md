@@ -8,6 +8,18 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased] (0.0.3)
 
+### Added
+
+- `tegral-openapi-ktor-resources`
+
+  - Initial release ([#43](https://github.com/utybo/Tegral/pull/43))
+
+    - Provides a way of describing
+      [Ktor resource classes](https://ktor.io/docs/type-safe-routing.html#resource_classes).
+
+    - Contributed by [@serras](https://github.com/serras), thank you!
+
+
 ### Fixed
 
 - `tegral-openapi-core`
