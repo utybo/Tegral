@@ -36,7 +36,8 @@
 .heroBanner .container small {
   font-size: .3em;
   vertical-align: bottom;
-  align-self: flex-start;
+  align-self: flex-end;
+  margin-left: .5em;
 }
 
 @media screen and (max-width: 996px) {
