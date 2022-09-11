@@ -23,7 +23,15 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - `tegral-openapi-core`
-  - Fixed the way media type examples are handled (specifically, properly handle cases where it is null vs when it is unset). ([#41](https://github.com/utybo/Tegral/pull/41))
+
+  - Fixed the way media type examples are handled (specifically,
+    properly handle cases where it is null vs when it is unset).
+    ([#41](https://github.com/utybo/Tegral/pull/41))
+
+- `tegral-web-appdsl`
+
+  - Properly expose both `RootConfig` and the custom configuration class (if
+    any) ([#41](https://github.com/utybo/Tegral/pull/49))
 
 ## [0.0.2] - 2022-08-14
 
@@ -31,7 +39,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - `tegral-core`
 
-  - Added `tegralVersion` property that provides the current version of Tegral ([#10](https://github.com/utybo/Tegral/pull/10))
+  - Added `tegralVersion` property that provides the current version of
+    Tegral ([#10](https://github.com/utybo/Tegral/pull/10))
 
 - `tegral-di-core`
 

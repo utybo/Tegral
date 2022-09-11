@@ -56,7 +56,7 @@ Your application's configuration is parsed into a data class that implements `Ro
 - Using `useConfiguration<...>()` within the `tegral { }` block to specify the class.
 
 ```kotlin
-class MyConfig(
+data class MyConfig(
     override val tegral: TegralConfig,
     val hello: String,
     val foo: FooConfig
@@ -111,7 +111,7 @@ fun main() {
 
 AppDSL automatically creates a Tegral DI environment and adds the following components:
 
-- The application configuration (i.e. the class you pass to `useConfiguration` or `TegralConfigurationContainer` by default).
+- The application configuration (i.e. the class you pass to `useConfiguration` or `TegralConfigurationContainer` by default) under both its actual class and `RootConfig`.
 - The `tegral` section of the application configuration (i.e. `TegralConfig`).
 - All of the installed features' `Feature` object (added in the meta-environment).
 - Anything features do with the environment via their `install()` function.
