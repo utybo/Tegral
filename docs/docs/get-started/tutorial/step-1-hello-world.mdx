@@ -1,5 +1,9 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+import step1HelloWorld from '!!raw-loader!./step-1-settings.gradle';
+import step1HelloWorldKts from '!!raw-loader!./step-1-settings-kt.gradle.kts';
+import version from '@site/src/version.js';
 
 # Step 1: Hello World!
 
@@ -62,38 +66,14 @@ Some of the next steps will depend on whether you chose Kotlin or Groovy for the
 
 Copy and paste this snippet at the bottom of the `settings.gradle` file:
 
-```groovy title="settings.gradle"
-dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
-    }
-
-    versionCatalogs {
-        tegralLibs {
-            from "guru.zoroark.tegral:tegral-catalog:0.0.1"
-        }
-    }
-}
-```
+<CodeBlock language="groovy">{step1HelloWorld.replace("%VERSION%", version())}</CodeBlock>
 
 </TabItem>
 <TabItem value="kotlin" label="Kotlin DSL">
 
 Copy and paste this snippet at the bottom of the `settings.gradle.kts` file:
 
-```kotlin title="settings.gradle.kts"
-dependencyResolutionManagement {
-    repositories {
-        mavenCentral()
-    }
-
-    versionCatalogs {
-        create("tegralLibs") {
-            from("guru.zoroark.tegral:tegral-catalog:0.0.1")
-        }
-    }
-}
-```
+<CodeBlock language="groovy">{step1HelloWorldKts.replace("%VERSION%", version())}</CodeBlock>
 
 </TabItem>
 </Tabs>

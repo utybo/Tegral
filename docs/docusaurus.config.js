@@ -163,13 +163,6 @@ const config = {
         darkTheme: darkCodeTheme,
         additionalLanguages: ['kotlin', 'groovy', 'toml', 'yaml'],
       },
-      announcementBar: {
-        id: 'not-released-yet',
-        content: 'Tegral version 0.0.2 <a href="/blog/introducing-tegral-0-0-2">has been released</a>!',
-        backgroundColor: '#834cff',
-        textColor: '#ffffff',
-        isCloseable: false
-      },
       algolia: {
         appId: 'XKS5FWH0DJ',
         apiKey: '6f8c788df7af2f39272bb5497cc19a8b',

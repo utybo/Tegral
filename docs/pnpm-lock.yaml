@@ -12,6 +12,7 @@ specifiers:
   mdx-mermaid: ^1.2.3
   mermaid: '9.1'
   prism-react-renderer: ^1.3.1
+  raw-loader: ^4.0.2
   react: ^17.0.2
   react-dom: ^17.0.2
   typescript: ^4.6.4
@@ -27,6 +28,7 @@ dependencies:
   mdx-mermaid: 1.2.3_dpgnnslf64ckfrrakg5lqver6u
   mermaid: 9.1.3
   prism-react-renderer: 1.3.3_react@17.0.2
+  raw-loader: 4.0.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   typescript: 4.6.4
@@ -7280,6 +7282,16 @@ packages:
       http-errors: 2.0.0
       iconv-lite: 0.4.24
       unpipe: 1.0.0
+    dev: false
+
+  /raw-loader/4.0.2:
+    resolution: {integrity: sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      webpack: ^4.0.0 || ^5.0.0
+    dependencies:
+      loader-utils: 2.0.2
+      schema-utils: 3.1.1
     dev: false
 
   /rc/1.2.8:
