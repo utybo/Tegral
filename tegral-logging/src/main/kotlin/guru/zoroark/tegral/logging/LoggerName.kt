@@ -23,7 +23,7 @@ import kotlin.reflect.full.findAnnotation
  * Note that this only affects loggers retrieved by using:
  *
  * ```kotlin
- * private val logger: Logger by scope.factory()
+ * private val logger: Logger by scope()
  * ```
  *
  * It has no effect when using SLF4J's `LoggerFactory.getLogger(...)`.

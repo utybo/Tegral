@@ -19,6 +19,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
     - Contributed by [@serras](https://github.com/serras), thank you!
 
+### Deprecated
+
+- `tegral-di-core`
+
+  - Deprecate the old `scope.factory()` syntax. Use `scope()` directly instead.
 
 ### Fixed
 

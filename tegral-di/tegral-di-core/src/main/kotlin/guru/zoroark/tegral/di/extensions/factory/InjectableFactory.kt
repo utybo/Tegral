@@ -104,6 +104,8 @@ inline fun <reified T : Any> ContextBuilderDsl.putFactory(noinline block: (Any) 
  * DSL for injecting factory-made objects. Usage is `factory from scope`.
  */
 @TegralDsl
+@Suppress("DEPRECATION")
+@Deprecated("scope.factory() is no longer necessary, just use scope() instead.", ReplaceWith("this()"))
 inline fun <R : Any, reified T : Any> InjectionScope.factory(): ReadOnlyProperty<R, T> =
     this<InjectableFactory<T>>(typed<T>()) wrapInWithThisRef { thisRef, value -> value.make(thisRef as Any) }
 
@@ -115,6 +117,8 @@ inline fun <R : Any, reified T : Any> InjectionScope.factory(): ReadOnlyProperty
  *
  * This caches the result -- the `mapper` is executed lazily the first time the property is `get`ed.
  */
+@Deprecated("wrapIn is no longer necessary, use the IdentifierResolver mechanism for advanced injection behavior")
+@Suppress("DEPRECATION")
 inline infix fun <T, V, R : Any> ReadOnlyProperty<T, V>.wrapIn(
     crossinline mapper: (V) -> R
 ): SynchronizedLazyPropertyWrapper<T, R> =
@@ -123,6 +127,10 @@ inline infix fun <T, V, R : Any> ReadOnlyProperty<T, V>.wrapIn(
 /**
  * Identical to [wrapIn], but also gives you access to the object the property is owned by in the [mapper] lambda.
  */
+@Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
+@Deprecated(
+    "wrapInWithThisRef is no longer necessary, use the IdentifierResolver mechanism for advanced injection behavior"
+)
 inline infix fun <T, V, R : Any> ReadOnlyProperty<T, V>.wrapInWithThisRef(
     crossinline mapper: (T, V) -> R
 ): SynchronizedLazyPropertyWrapper<T, R> =
@@ -132,6 +140,7 @@ inline infix fun <T, V, R : Any> ReadOnlyProperty<T, V>.wrapInWithThisRef(
  * Wraps a property and maps its result using the given mapper.
  */
 @Suppress("FunctionName")
+@Deprecated("WrappedReadOnlyProperty is a support class for the wrapIn(WithThisRef) mechanism which is deprecated.")
 inline fun <T, V, R> WrappedReadOnlyProperty(
     original: ReadOnlyProperty<T, V>,
     crossinline mapper: (T, V) -> R
@@ -144,6 +153,9 @@ inline fun <T, V, R> WrappedReadOnlyProperty(
  * Similar to `lazy { }` but uses a property instead of a lambda for building. Inspired by the `SYNCHRONIZED` lazy
  * implementation.
  */
+@Deprecated(
+    "SynchronizedLazyPropertyWrapper is a support class for the wrapIn(WithThisRef) mechanism which is deprecated."
+)
 class SynchronizedLazyPropertyWrapper<T, V : Any>(private val wrappedProperty: ReadOnlyProperty<T, V>) :
     ReadOnlyProperty<T, V> {
     @Volatile
