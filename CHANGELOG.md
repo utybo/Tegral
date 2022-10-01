@@ -6,9 +6,16 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] (0.0.3)
+## [Unreleased] (0.0.4)
+
+## [0.0.3] - 2022-10-01
 
 ### Added
+
+- General
+
+  - All packages can now be used with Java 11
+    ([#45](https://github.com/utybo/Tegral/pull/45))
 
 - `tegral-openapi-ktor-resources`
 
@@ -205,9 +212,6 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - General
 
-  - All packages can now be used with Java 11
-    ([#45](https://github.com/utybo/Tegral/pull/45))
-
   - Bumped Ktor version to version 2.0.3
     ([#17](https://github/utybo/Tegral/pull/17))
   
@@ -366,6 +370,7 @@ Initial release of Tegral.
 - `tegral-web-controllers-test`
   - Initial release
 
-[Unreleased]: https://github.com/utybo/Tegral/compare/v0.0.2..main
+[Unreleased]: https://github.com/utybo/Tegral/compare/v0.0.3..main
+[0.0.3]: https://github.com/utybo/Tegral/compare/v0.0.2..v0.0.3
 [0.0.2]: https://github.com/utybo/Tegral/compare/v0.0.1..v0.0.2
 [0.0.1]: https://github.com/utybo/Tegral/compare/v0.0.1
