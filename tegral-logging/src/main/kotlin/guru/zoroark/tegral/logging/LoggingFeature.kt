@@ -28,7 +28,7 @@ import ch.qos.logback.classic.Logger as LogbackLogger
 import org.slf4j.Logger as Slf4jLogger
 
 /**
- * A feature that adds logging support to the application via the `by scope.factory()` syntax.
+ * A feature that adds logging support to the application via the `by scope()` syntax.
  *
  * I.e., adds a `Logger` factory to the application.
  */

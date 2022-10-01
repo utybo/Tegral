@@ -31,7 +31,7 @@ Once installed, Tegral Logging will add a Logger factory within the DI environme
 ```kotlin
 class MyClass(scope: InjectionScope) {
     // highlight-start
-    private val logger: Logger by scope.factory()
+    private val logger: Logger by scope()
     // highlight-end
 
     fun printSomething() {
@@ -47,7 +47,7 @@ The name of the logger is automatically determined for the fully qualified name 
 @LoggerName("my.class")
 // highlight-end
 class MyClass(scope: InjectionScope) {
-    private val logger: Logger by scope.factory()
+    private val logger: Logger by scope()
 
     // ...
 }
