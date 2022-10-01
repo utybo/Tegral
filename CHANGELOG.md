@@ -24,6 +24,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `tegral-di-core`
 
   - Deprecate the old `scope.factory()` syntax. Use `scope()` directly instead.
+    ([#52](https://github.com/utybo/Tegral/pull/52))
 
 ### Fixed
 
@@ -80,11 +81,17 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - `tegral-featureful`
 
-  - Added `LifecycleHookedFeature`, which allows you to create features that listen to specific "hooks" outside of the regular start-stop cycle. This should be used carefully and are mostly intended for "low-level" operations. ([#10](https://github.com/utybo/Tegral/pull/10))
+  - Added `LifecycleHookedFeature`, which allows you to create features
+    that listen to specific "hooks" outside of the regular start-stop
+    cycle. This should be used carefully and are mostly intended for
+    "low-level" operations.
+    ([#10](https://github.com/utybo/Tegral/pull/10))
 
 - `tegral-logging`
 
-  - Added logging configuration. You can now configure loggers directly in your `tegral.toml` -- Logback will be configured accordingly. ([#10](https://github.com/utybo/Tegral/pull/10))
+  - Added logging configuration. You can now configure loggers directly
+    in your `tegral.toml` -- Logback will be configured accordingly.
+    ([#10](https://github.com/utybo/Tegral/pull/10))
 
   - Added a `putLoggerFactory` function to easily add factories to any
     environment, especially ones that do not have features support.
@@ -94,7 +101,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
   - Initial release ([#32](https://github.com/utybo/Tegral/pull/32))
 
-    - Provides a command line interface for converting `*.openapi.kts` scripts into OpenAPI JSON and YAML files.
+    - Provides a command line interface for converting `*.openapi.kts`
+      scripts into OpenAPI JSON and YAML files.
 
 - `tegral-openapi-dsl`
 
@@ -112,7 +120,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
   - Initial release ([#32](https://github.com/utybo/Tegral/pull/32))
 
-    - Ktor plugin for describing endpoints and serving OpenAPI documents from a Ktor application.
+    - Ktor plugin for describing endpoints and serving OpenAPI documents
+      from a Ktor application.
 
 - `tegral-openapi-ktorui`
 
@@ -138,7 +147,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
     apply Tegral's defaults to your own object mappers.
     ([#17](https://github.com/utybo/Tegral/pull/17))
 
-  - Added an automatic default configuration for logging. This creates a better logging experience out of the box than the Logback defaults. ([#10](https://github.com/utybo/Tegral/pull/10))
+  - Added an automatic default configuration for logging. This creates a
+    better logging experience out of the box than the Logback defaults.
+    ([#10](https://github.com/utybo/Tegral/pull/10))
 
   - Tegral will now stop all services when receiving a shutdown hook from the
     JVM (done via the `ShutdownHookService`).
@@ -148,15 +159,27 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
   - Added `TegralApplication.stop()` ([#19](https://github/utybo/Tegral/pull/19))
 
-  - Added bindings for the new automatic default configuration for logging. You can disable this custom logging by passing an argument in the `tegral` function. ([#10](https://github.com/utybo/Tegral/pull/10))
+  - Added bindings for the new automatic default configuration for
+    logging. You can disable this custom logging by passing an argument
+    in the `tegral` function.
+    ([#10](https://github.com/utybo/Tegral/pull/10))
 
-  - Added the ability to disable AppDefaults. Passing `enableDefaults = false` to the `tegral` will not call AppDefaults' `applyDefaults()` function and will not install the various default features and configurations. ([#10](https://github.com/utybo/Tegral/pull/10))
+  - Added the ability to disable AppDefaults. Passing
+    `enableDefaults = false` to the `tegral` will not call AppDefaults'
+    `applyDefaults()` function and will not install the various default
+    features and configurations.
+    ([#10](https://github.com/utybo/Tegral/pull/10))
 
-  - The `tegral` block will now print more useful information as well as statistics on startup. ([#10](https://github.com/utybo/Tegral/pull/10))
+  - The `tegral` block will now print more useful information as well as
+    statistics on startup.
+    ([#10](https://github.com/utybo/Tegral/pull/10))
 
-  - Added `features` and `lifecycleFeatures` extension properties to `TegralAPplication` ([#10](https://github.com/utybo/Tegral/pull/10))
+  - Added `features` and `lifecycleFeatures` extension properties to
+    `TegralAPplication`
+    ([#10](https://github.com/utybo/Tegral/pull/10))
 
-  - Added calls to the lifecycle hooked features where relevant ([#10](https://github.com/utybo/Tegral/pull/10))
+  - Added calls to the lifecycle hooked features where relevant
+    ([#10](https://github.com/utybo/Tegral/pull/10))
 
 - `tegral-web-apptest`
 
@@ -188,11 +211,14 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   - Bumped Ktor version to version 2.0.3
     ([#17](https://github/utybo/Tegral/pull/17))
   
-  - Bumped Kotlin version to 1.7.10 ([#27](https://github.com/utybo/Tegral/pull/27))
+  - Bumped Kotlin version to 1.7.10
+    ([#27](https://github.com/utybo/Tegral/pull/27))
 
-  - Bumped Gradle version to 7.5 ([#27](https://github.com/utybo/Tegral/pull/27))
+  - Bumped Gradle version to 7.5
+    ([#27](https://github.com/utybo/Tegral/pull/27))
 
-  - Bumped Hoplite version to 2.3.3 ([#10](https://github.com/utybo/Tegral/pull/10))
+  - Bumped Hoplite version to 2.3.3
+    ([#10](https://github.com/utybo/Tegral/pull/10))
 
 - `tegral-di-core`
 
@@ -200,7 +226,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
     retrieve elements generated by a factory. You can just use `scope()`
     instead. ([#23](https://github.com/utybo/Tegral/pull/23))
 
-  - Regular, non-extensible injection environments are now also required to implement a `getAllIdentifiers` function. ([#10](https://github.com/utybo/Tegral/pull/10))
+  - Regular, non-extensible injection environments are now also required
+    to implement a `getAllIdentifiers` function.
+    ([#10](https://github.com/utybo/Tegral/pull/10))
 
     - `EagerImmutableMetaEnvironment` has been updated to implement this.
 
@@ -249,9 +277,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
     - `DependencyTrackingInjectionEnvironment` has been updated to provide
       insights on dependencies.
 
-  - Added more tests in `(Extensible)EnvironmentBaseTest` for new resolution behaviors,
-    including aliases and proper parent resolution.
-    ([#23](https://github.com/utybo/Tegral/pull/23))
+  - Added more tests in `(Extensible)EnvironmentBaseTest` for new
+    resolution behaviors, including aliases and proper parent
+    resolution. ([#23](https://github.com/utybo/Tegral/pull/23))
 
 - `tegral-web-appdefaults`
 
