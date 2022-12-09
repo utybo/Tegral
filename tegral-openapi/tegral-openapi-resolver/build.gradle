@@ -1,0 +1,11 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+}
+
+dependencies {
+    implementation libs.swaggerCore.core
+}
+
+ext.humanName = "Tegral OpenAPI Resolver"
+ext.description = "Provides an alternative schema resolving algorithm."
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/openapi"

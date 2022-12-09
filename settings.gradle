@@ -16,6 +16,7 @@ def projects = [
         'tegral-openapi:tegral-openapi-ktor',
         'tegral-openapi:tegral-openapi-ktor-resources',
         'tegral-openapi:tegral-openapi-ktorui',
+        'tegral-openapi:tegral-openapi-resolver',
         'tegral-openapi:tegral-openapi-scriptdef',
         'tegral-openapi:tegral-openapi-scripthost',
         'tegral-services:tegral-services-api',
