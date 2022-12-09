@@ -1,5 +1,7 @@
 // NOTE: When adding projects here, do not forget to also add them as dependencies in the 'code-coverage' project!
-include 'tegral-catalog',
+
+def projects = [
+        'tegral-catalog',
         'tegral-config:tegral-config-core',
         'tegral-core',
         'tegral-di:tegral-di-core',
@@ -25,8 +27,17 @@ include 'tegral-catalog',
         'tegral-web:tegral-web-controllers',
         'tegral-web:tegral-web-controllers-test',
         'tegral-web:tegral-web-greeter',
-        'e2e-tests:run-with-java-11',
+        'e2e-tests:run-with-java-11'
+]
+
+def nonJdk11Projects = [
         'e2e-tests:run-with-java-17'
+]
+
+include projects
+
+if (System.getenv('TEGRAL_ONLY_JDK11_PROJECTS') != "1")
+    include nonJdk11Projects
 
 include 'examples:simple-json-api'
 

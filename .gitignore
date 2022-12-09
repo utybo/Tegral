@@ -2,3 +2,4 @@
 build
 .pnpm-debug.log
 bin
+.direnv

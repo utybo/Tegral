@@ -8,6 +8,23 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased] (0.0.4)
 
+### Changed
+
+- Updated dependencies
+  
+  - Logback 1.2.11 -> 1.4.4 [(changelog)](https://logback.qos.ch/news.html)
+  - Hoplite 2.5.2 -> 2.6.5 [(changelog)](https://github.com/sksamuel/hoplite/blob/master/changelog.md)
+  - Jackson (changelogs: 2.13.1 -> 2.13.4 [.2](https://github.com/FasterXML/jackson/wiki/Jackson-Release-2.13.2) [.3](https://github.com/FasterXML/jackson/wiki/Jackson-Release-2.13.3) [.4](https://github.com/FasterXML/jackson/wiki/Jackson-Release-2.13.4))
+  - Kotlin 1.7.10 -> 1.7.20 [(changelog)](https://kotlinlang.org/docs/whatsnew1720.html#release-details)
+  - Ktor 2.1.0 -> 2.1.3 [(changelog)](https://github.com/ktorio/ktor/blob/main/CHANGELOG.md)
+  - MockK 1.12.5 -> 1.13.2 [(changelog)](https://github.com/mockk/mockk/releases)
+  - Swagger Core 2.2.2 -> 2.2.4 [(changelog)](https://github.com/swagger-api/swagger-core/releases)
+  - Swagger UI 4.13.2 -> 4.15.0 [(changelog)](https://github.com/swagger-api/swagger-ui/releases)
+  
+- Non-consumer facing dependencies updated:
+  - Dokka 1.7.10 -> 1.7.20 [(changelog)](https://github.com/Kotlin/dokka/releases/tag/v1.7.20)
+  - JUnit 5.9.0 -> 5.9.1 [(changelog)](https://junit.org/junit5/docs/5.9.1/release-notes/)
+
 ## [0.0.3] - 2022-10-01
 
 ### Added
