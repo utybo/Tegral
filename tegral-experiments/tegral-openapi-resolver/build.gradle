@@ -1,0 +1,11 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+}
+
+dependencies {
+    implementation libs.swaggerCore.core
+}
+
+ext.humanName = "Tegral OpenAPI Resolver [Experimental]"
+ext.description = "Alternative implementation of Swagger Core's resolver"
+ext.url = "https://github.com/utybo/Tegral" // TODO
