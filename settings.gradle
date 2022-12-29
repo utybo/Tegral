@@ -38,7 +38,7 @@ def cacheUrl = System.getenv('BUILD_CACHE_URL')
 def cacheUsername = System.getenv('BUILD_CACHE_USERNAME')
 def cachePassword = System.getenv('BUILD_CACHE_PASSWORD')
 
-if (cacheUrl != null && cacheUsernme != null && cachePassword != null) {
+if (cacheUrl != null && cacheUsername != null && cachePassword != null) {
     buildCache {
         remote(HttpBuildCache) {
             url = cacheUrl
