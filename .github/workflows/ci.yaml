@@ -7,6 +7,11 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+env:
+  BUILD_CACHE_URL: ${{ secrets.BUILD_CACHE_URL }}
+  BUILD_CACHE_USERNAME: ${{ secrets.BUILD_CACHE_USERNAME }}
+  BUILD_CACHE_PASSWORD: ${{ secrets.BUILD_CACHE_PASSWORD }}
+
 jobs:
   validate-wrapper:
     name: "Validate Gradle wrapper"
