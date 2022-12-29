@@ -30,13 +30,13 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: "11"
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
       - name: Run checks and tests
-        run: ./gradlew check
+        run: ./gradlew check --build-cache -I ci/build-cache.init.gradle
 
       - name: Upload code coverage to CodeCov
         uses: codecov/codecov-action@v2
@@ -56,16 +56,16 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: "11"
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
       - name: Publish catalog to local Maven repo
-        run: "./gradlew :tegral-catalog:publishToMavenLocal"
+        run: "./gradlew :tegral-catalog:publishToMavenLocal --build-cache -I ci/build-cache.init.gradle"
 
       - name: Run check on example
-        run: ./gradlew -p "examples/tutorial/${{ matrix.example }}" check --include-build ../../..
+        run: ./gradlew -p "examples/tutorial/${{ matrix.example }}" check --include-build ../../.. --build-cache -I ../../../ci/build-cache.init.gradle
 
   build-dokka:
     name: "Generate Dokka files"
@@ -77,13 +77,13 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: "11"
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
       - name: Generate Dokka documentation
-        run: ./gradlew :website:rewriteDokkaLinks
+        run: ./gradlew :website:rewriteDokkaLinks --build-cache -I ci/build-cache.init.gradle
 
       - uses: actions/upload-artifact@v3
         with:
@@ -123,7 +123,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: "11"
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
@@ -182,7 +182,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: "11"
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
@@ -193,7 +193,7 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralSnapshotsPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}
-        run: ./gradlew -PpublishSnapshot -Psign publish
+        run: ./gradlew -PpublishSnapshot -Psign publish --build-cache -I ci/build-cache.init.gradle
 
   publish-release:
     name: Publish release
@@ -205,7 +205,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: "11"
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
@@ -216,4 +216,5 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralReleasePassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}
+        # No build cache here to be 100% sure that cache weirdness cannot affect the final, definitive jars
         run: ./gradlew -PpublishRelease -Psign publish

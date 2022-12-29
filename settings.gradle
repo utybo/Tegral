@@ -33,19 +33,3 @@ include 'examples:simple-json-api'
 include 'code-coverage'
 include 'docs'
 include 'website'
-
-def cacheUrl = System.getenv('BUILD_CACHE_URL')
-def cacheUsername = System.getenv('BUILD_CACHE_USERNAME')
-def cachePassword = System.getenv('BUILD_CACHE_PASSWORD')
-
-if (cacheUrl != null && cacheUsername != null && cachePassword != null) {
-    buildCache {
-        remote(HttpBuildCache) {
-            url = cacheUrl
-            credentials {
-                username = cacheUsername
-                password = cachePassword
-            }
-        }
-    }
-}
