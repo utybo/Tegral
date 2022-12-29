@@ -34,9 +34,9 @@ include 'code-coverage'
 include 'docs'
 include 'website'
 
-cacheUrl = System.getenv('BUILD_CACHE_URL')
-cacheUsername = System.getenv('BUILD_CACHE_USERNAME')
-cachePassword = System.getenv('BUILD_CACHE_PASSWORD')
+def cacheUrl = System.getenv('BUILD_CACHE_URL')
+def cacheUsername = System.getenv('BUILD_CACHE_USERNAME')
+def cachePassword = System.getenv('BUILD_CACHE_PASSWORD')
 
 if (cacheUrl != null && cacheUsernme != null && cachePassword != null) {
     buildCache {
