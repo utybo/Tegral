@@ -97,21 +97,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
 
-      - run: npm i -g pnpm
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
-      - run: pnpm install
-        working-directory: docs
-
-      - run: pnpm run build
-        working-directory: docs
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: docusaurus-output
-          path: docs/build
-          retention-days: 3
+      - name: Build documentation website
+        run: gradle :docs:docusaurusBuild
 
   build-deploy-website:
     name: Assemble and deploy website
@@ -131,21 +122,8 @@ jobs:
       # TODO maybe unnecessary
       - uses: actions/setup-node@v3
 
-      - name: Download Dokka build
-        uses: actions/download-artifact@v3
-        with:
-          name: dokka-output
-          path: website/build/dokkaHtml
-
-      - name: Download Docusaurus build
-        uses: actions/download-artifact@v3
-        with:
-          name: docusaurus-output
-          path: docs/build
-
-      # -x parameters ensure that we use output from previous builds and that we do not re-run the builds here
       - name: Assemble website files
-        run: ./gradlew :website:assembleFiles -x :website:rewriteDokkaLinks -x :docs:docusaurusBuild
+        run: ./gradlew :website:assembleFiles --build-cache -I ci/build-cache.init.gradle
 
       - name: Deploy to Vercel
         uses: BetaHuhn/deploy-to-vercel-action@v1.9.1

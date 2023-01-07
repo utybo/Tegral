@@ -23,19 +23,7 @@ def docsInputDirs = [
     'static'
 ]
 
-task pnpmInstall(type: NpxTask) {
-    command = 'pnpm'
-    args = [ 'install' ]
-
-    inputs.file('package.json')
-    inputs.file('pnpm-lock.yaml')
-
-    outputs.file('node_modules/.modules.yaml')
-    outputs.file('node_modules/.package-lock.json')
-}
-
-task docusaurusStart(type: NpxTask) {
-    command = 'pnpm'
+task docusaurusStart(type: PnpmTask) {
     args = [ 'start' ]
 
     for (input in docsInputFiles) {
@@ -48,10 +36,8 @@ task docusaurusStart(type: NpxTask) {
     dependsOn pnpmInstall
 }
 
-task docusaurusBuild(type: NpxTask) {
-    command = 'pnpm'
+task docusaurusBuild(type: PnpmTask) {
     args = [
-        'run',
         'build'
     ]
 
