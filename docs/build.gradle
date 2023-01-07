@@ -23,6 +23,21 @@ def docsInputDirs = [
     'static'
 ]
 
+task pnpmInstallFrozen(type: PnpmTask) {
+    args = [ 'install', '--frozen-lockfile' ]
+    inputs.file('package.json')
+    inputs.file('pnpm-lock.yaml')
+    outputs.dir('node_modules')
+
+    outputs.cacheIf { true }
+}
+
+task cleanNodeModules {
+    doLast {
+        delete 'node_modules'
+    }
+}
+
 task docusaurusStart(type: PnpmTask) {
     args = [ 'start' ]
 
@@ -33,7 +48,7 @@ task docusaurusStart(type: PnpmTask) {
         inputs.files(input)
     }
 
-    dependsOn pnpmInstall
+    dependsOn pnpmInstallFrozen
 }
 
 task docusaurusBuild(type: PnpmTask) {
@@ -56,7 +71,7 @@ task docusaurusBuild(type: PnpmTask) {
     outputs.dir(layout.buildDirectory.dir('docusaurus'))
         .withPropertyName("result")
 
-    dependsOn pnpmInstall
+    dependsOn pnpmInstallFrozen
 }
 
 artifacts {
