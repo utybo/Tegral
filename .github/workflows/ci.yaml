@@ -103,7 +103,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Build documentation website
-        run: gradle :docs:docusaurusBuild
+        run: ./gradlew :docs:docusaurusBuild --build-cache -I ci/build-cache.init.gradle
 
   build-deploy-website:
     name: Assemble and deploy website
