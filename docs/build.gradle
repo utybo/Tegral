@@ -26,7 +26,11 @@ def docsInputDirs = [
 task pnpmInstallFrozen(type: PnpmTask) {
     args = [ 'install', '--frozen-lockfile' ]
     inputs.file('package.json')
+        .withPropertyName("pkgjson-" + input)
+        .withPathSensitivity(PathSensitivity.RELATIVE)
     inputs.file('pnpm-lock.yaml')
+        .withPropertyName("lockfile-" + input)
+        .withPathSensitivity(PathSensitivity.RELATIVE)
     outputs.dir('node_modules')
 
     outputs.cacheIf { true }
