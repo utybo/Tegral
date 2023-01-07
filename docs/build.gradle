@@ -49,6 +49,8 @@ task docusaurusBuild(type: PnpmTask) {
     }
 
     outputs.files(fileTree(layout.buildDirectory.dir('docusaurus')))
+
+    dependsOn pnpmInstall
 }
 
 artifacts {
