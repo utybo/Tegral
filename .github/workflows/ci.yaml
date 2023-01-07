@@ -106,7 +106,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Build documentation website
-        run: ./gradlew :docs:docusaurusBuild --build-cache -I ci/build-cache.init.gradle
+        run: ./gradlew :docs:docusaurusBuild --build-cache -I ci/build-cache.init.gradle -Dorg.gradle.caching.debug=true
 
   build-deploy-website:
     name: Assemble and deploy website
@@ -127,7 +127,7 @@ jobs:
       - uses: actions/setup-node@v3
 
       - name: Assemble website files
-        run: ./gradlew :website:assembleFiles --build-cache -I ci/build-cache.init.gradle
+        run: ./gradlew :website:assembleFiles --build-cache -I ci/build-cache.init.gradle -Dorg.gradle.caching.debug=true
 
       - name: Deploy to Vercel
         uses: BetaHuhn/deploy-to-vercel-action@v1.9.1
