@@ -47,15 +47,15 @@ task docusaurusBuild(type: PnpmTask) {
             .withPathSensitivity(PathSensitivity.RELATIVE)
     }
     for (input in docsInputDirs) {
-        inputs.files(input)
+        inputs.dir(input)
             .withPropertyName("docsDir-" + input)
             .withPathSensitivity(PathSensitivity.RELATIVE)
     }
 
-    outputs.files(fileTree(layout.buildDirectory.dir('docusaurus')))
+    outputs.cacheIf { true }
+    outputs.dir(layout.buildDirectory.dir('docusaurus'))
         .withPropertyName("result")
 
-    outputs.cacheIf { true }
     dependsOn pnpmInstall
 }
 
