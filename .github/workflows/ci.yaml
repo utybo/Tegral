@@ -65,7 +65,7 @@ jobs:
         run: "./gradlew :tegral-catalog:publishToMavenLocal --build-cache -I ci/build-cache.init.gradle --scan"
 
       - name: Run check on example
-        run: ./gradlew -p "examples/tutorial/${{ matrix.example }}" check --include-build ../../.. --build-cache -I ../../../ci/build-cache.init.gradle --scan
+        run: ./gradlew -p "examples/tutorial/${{ matrix.example }}" check --include-build ../../.. --build-cache -I ../../../ci/build-cache.init.gradle
 
   build-dokka:
     name: "Generate Dokka files"
