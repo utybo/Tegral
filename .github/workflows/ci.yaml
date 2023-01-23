@@ -36,7 +36,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Run checks and tests
-        run: ./gradlew check --build-cache -I ci/build-cache.init.gradle
+        run: ./gradlew check --build-cache -I ci/build-cache.init.gradle --scan
 
       - name: Upload code coverage to CodeCov
         uses: codecov/codecov-action@v2
@@ -62,10 +62,10 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Publish catalog to local Maven repo
-        run: "./gradlew :tegral-catalog:publishToMavenLocal --build-cache -I ci/build-cache.init.gradle"
+        run: "./gradlew :tegral-catalog:publishToMavenLocal --build-cache -I ci/build-cache.init.gradle --scan"
 
       - name: Run check on example
-        run: ./gradlew -p "examples/tutorial/${{ matrix.example }}" check --include-build ../../.. --build-cache -I ../../../ci/build-cache.init.gradle
+        run: ./gradlew -p "examples/tutorial/${{ matrix.example }}" check --include-build ../../.. --build-cache -I ../../../ci/build-cache.init.gradle --scan
 
   build-dokka:
     name: "Generate Dokka files"
@@ -83,7 +83,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Generate Dokka documentation
-        run: ./gradlew :website:rewriteDokkaLinks --build-cache -I ci/build-cache.init.gradle
+        run: ./gradlew :website:rewriteDokkaLinks --build-cache -I ci/build-cache.init.gradle --scan
 
   build-docs:
     name: "Build Docusaurus"
@@ -100,7 +100,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Build documentation website
-        run: ./gradlew :docs:docusaurusBuild --build-cache -I ci/build-cache.init.gradle -Dorg.gradle.caching.debug=true
+        run: ./gradlew :docs:docusaurusBuild --build-cache -I ci/build-cache.init.gradle -Dorg.gradle.caching.debug=true --scan
 
   build-deploy-website:
     name: Assemble and deploy website
@@ -121,7 +121,7 @@ jobs:
       - uses: actions/setup-node@v3
 
       - name: Assemble website files
-        run: ./gradlew :website:assembleFiles --build-cache -I ci/build-cache.init.gradle -Dorg.gradle.caching.debug=true
+        run: ./gradlew :website:assembleFiles --build-cache -I ci/build-cache.init.gradle -Dorg.gradle.caching.debug=true --scan
 
       - name: Deploy to Vercel
         uses: BetaHuhn/deploy-to-vercel-action@v1.9.1
