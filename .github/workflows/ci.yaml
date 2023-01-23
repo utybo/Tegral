@@ -85,12 +85,6 @@ jobs:
       - name: Generate Dokka documentation
         run: ./gradlew :website:rewriteDokkaLinks --build-cache -I ci/build-cache.init.gradle
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: dokka-output
-          path: website/build/dokkaHtml
-          retention-days: 3
-
   build-docs:
     name: "Build Docusaurus"
     needs: [validate-wrapper]
