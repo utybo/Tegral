@@ -1,0 +1,17 @@
+def cacheUrl = System.getenv('BUILD_CACHE_URL')
+def cacheUsername = System.getenv('BUILD_CACHE_USERNAME')
+def cachePassword = System.getenv('BUILD_CACHE_PASSWORD')
+def isCi = System.getenv().containsKey('CI')
+
+gradle.settingsEvaluated { settings ->
+    settings.buildCache {
+        remote(HttpBuildCache) {
+            url = cacheUrl
+            credentials {
+                username = cacheUsername
+                password = cachePassword
+            }
+            push = isCi
+        }
+    }
+}
