@@ -23,19 +23,26 @@ def docsInputDirs = [
     'static'
 ]
 
-task pnpmInstall(type: NpxTask) {
-    command = 'pnpm'
-    args = [ 'install' ]
-
+task pnpmInstallFrozen(type: PnpmTask) {
+    args = [ 'install', '--frozen-lockfile' ]
     inputs.file('package.json')
+        .withPropertyName("pkgjson")
+        .withPathSensitivity(PathSensitivity.RELATIVE)
     inputs.file('pnpm-lock.yaml')
+        .withPropertyName("lockfile")
+        .withPathSensitivity(PathSensitivity.RELATIVE)
+    outputs.dir('node_modules')
 
-    outputs.file('node_modules/.modules.yaml')
-    outputs.file('node_modules/.package-lock.json')
+    outputs.cacheIf { true }
 }
 
-task docusaurusStart(type: NpxTask) {
-    command = 'pnpm'
+task cleanNodeModules {
+    doLast {
+        delete 'node_modules'
+    }
+}
+
+task docusaurusStart(type: PnpmTask) {
     args = [ 'start' ]
 
     for (input in docsInputFiles) {
@@ -45,24 +52,30 @@ task docusaurusStart(type: NpxTask) {
         inputs.files(input)
     }
 
-    dependsOn pnpmInstall
+    dependsOn pnpmInstallFrozen
 }
 
-task docusaurusBuild(type: NpxTask) {
-    command = 'pnpm'
+task docusaurusBuild(type: PnpmTask) {
     args = [
-        'run',
         'build'
     ]
 
     for (input in docsInputFiles) {
         inputs.file(input)
+            .withPropertyName("docsFile-" + input)
+            .withPathSensitivity(PathSensitivity.RELATIVE)
     }
     for (input in docsInputDirs) {
-        inputs.files(input)
+        inputs.dir(input)
+            .withPropertyName("docsDir-" + input)
+            .withPathSensitivity(PathSensitivity.RELATIVE)
     }
 
-    outputs.files(fileTree(layout.buildDirectory.dir('docusaurus')))
+    outputs.cacheIf { true }
+    outputs.dir(layout.buildDirectory.dir('docusaurus'))
+        .withPropertyName("result")
+
+    dependsOn pnpmInstallFrozen
 }
 
 artifacts {

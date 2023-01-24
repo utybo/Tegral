@@ -7,6 +7,11 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+env:
+  BUILD_CACHE_URL: ${{ secrets.BUILD_CACHE_URL }}
+  BUILD_CACHE_USERNAME: ${{ secrets.BUILD_CACHE_USERNAME }}
+  BUILD_CACHE_PASSWORD: ${{ secrets.BUILD_CACHE_PASSWORD }}
+
 jobs:
   validate-wrapper:
     name: "Validate Gradle wrapper"
@@ -25,13 +30,13 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: "11"
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
       - name: Run checks and tests
-        run: ./gradlew check
+        run: ./gradlew check --build-cache -I ci/build-cache.init.gradle --scan
 
       - name: Upload code coverage to CodeCov
         uses: codecov/codecov-action@v2
@@ -51,16 +56,16 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: "11"
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
       - name: Publish catalog to local Maven repo
-        run: "./gradlew :tegral-catalog:publishToMavenLocal"
+        run: "./gradlew :tegral-catalog:publishToMavenLocal --build-cache -I ci/build-cache.init.gradle --scan"
 
       - name: Run check on example
-        run: ./gradlew -p "examples/tutorial/${{ matrix.example }}" check --include-build ../../..
+        run: ./gradlew -p "examples/tutorial/${{ matrix.example }}" check --include-build ../../.. --build-cache -I ../../../ci/build-cache.init.gradle
 
   build-dokka:
     name: "Generate Dokka files"
@@ -72,19 +77,13 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: "11"
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
       - name: Generate Dokka documentation
-        run: ./gradlew :website:rewriteDokkaLinks
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: dokka-output
-          path: website/build/dokkaHtml
-          retention-days: 3
+        run: ./gradlew :website:rewriteDokkaLinks --build-cache -I ci/build-cache.init.gradle --scan
 
   build-docs:
     name: "Build Docusaurus"
@@ -94,19 +93,14 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
 
-      - run: npm i -g pnpm
+      - name: Install PNPM
+        run: npm i -g pnpm
 
-      - run: pnpm install
-        working-directory: docs
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
 
-      - run: pnpm run build
-        working-directory: docs
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: docusaurus-output
-          path: docs/build
-          retention-days: 3
+      - name: Build documentation website
+        run: ./gradlew :docs:docusaurusBuild --build-cache -I ci/build-cache.init.gradle -Dorg.gradle.caching.debug=true --scan --info
 
   build-deploy-website:
     name: Assemble and deploy website
@@ -118,7 +112,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: "11"
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
@@ -126,21 +120,8 @@ jobs:
       # TODO maybe unnecessary
       - uses: actions/setup-node@v3
 
-      - name: Download Dokka build
-        uses: actions/download-artifact@v3
-        with:
-          name: dokka-output
-          path: website/build/dokkaHtml
-
-      - name: Download Docusaurus build
-        uses: actions/download-artifact@v3
-        with:
-          name: docusaurus-output
-          path: docs/build
-
-      # -x parameters ensure that we use output from previous builds and that we do not re-run the builds here
       - name: Assemble website files
-        run: ./gradlew :website:assembleFiles -x :website:rewriteDokkaLinks -x :docs:docusaurusBuild
+        run: ./gradlew :website:assembleFiles --build-cache -I ci/build-cache.init.gradle -Dorg.gradle.caching.debug=true --scan
 
       - name: Deploy to Vercel
         uses: BetaHuhn/deploy-to-vercel-action@v1.9.1
@@ -154,7 +135,7 @@ jobs:
           PRODUCTION: "${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}"
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1.2
+        uses: nwtgck/actions-netlify@v2.0.0
         with:
           publish-dir: "website/build/output"
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -177,7 +158,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: "11"
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
@@ -188,7 +169,7 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralSnapshotsPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}
-        run: ./gradlew -PpublishSnapshot -Psign publish
+        run: ./gradlew -PpublishSnapshot -Psign publish --build-cache -I ci/build-cache.init.gradle
 
   publish-release:
     name: Publish release
@@ -200,7 +181,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: "11"
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
@@ -211,4 +192,5 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralReleasePassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}
+        # No build cache here to be 100% sure that cache weirdness cannot affect the final, definitive jars
         run: ./gradlew -PpublishRelease -Psign publish

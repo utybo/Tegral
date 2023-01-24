@@ -1,3 +1,7 @@
+plugins {
+    id "com.gradle.enterprise" version "3.12.2"
+}
+
 // NOTE: When adding projects here, do not forget to also add them as dependencies in the 'code-coverage' project!
 include 'tegral-catalog',
         'tegral-config:tegral-config-core',
@@ -33,3 +37,10 @@ include 'examples:simple-json-api'
 include 'code-coverage'
 include 'docs'
 include 'website'
+
+gradleEnterprise {
+    buildScan {
+        termsOfServiceUrl = "https://gradle.com/terms-of-service"
+        termsOfServiceAgree = "yes"
+    }
+}
