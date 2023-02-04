@@ -98,7 +98,7 @@ jobs:
         with:
           cache: 'pnpm'
           cache-dependency-path: '**/pnpm-lock.yaml'
-      - name: Install PNPM & dependencies
+      - name: Install dependencies
         run: |
           cd docs && pnpm i --frozen-lockfile
 
