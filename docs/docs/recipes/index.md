@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Recipes
 
 This section provides recipes that provide guidelines and how-tos for using Tegral modules.

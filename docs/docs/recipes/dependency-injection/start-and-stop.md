@@ -1,6 +1,6 @@
 # Add Start/Stop services
 
-Applies to [Tegral Web](../modules/web/index.md) and [Tegral DI Services](../modules/core/di/extensions/services.md).
+Applies to [Tegral Web](/modules/web/index.md) and [Tegral DI Services](/modules/core/di/extensions/services.md).
 
 Tegral DI Services has an internal mechanism for any component that needs to perform actions when started and/or stopped. This mechanism can be used by any component registered in Tegral DI (including anything you `put` in a Tegral Web application).
 
@@ -82,4 +82,4 @@ tegral {
 }
 ```
 
-For more information on what is available with Tegral DI Services, see [this page](../modules/core/di/extensions/services.md).
+For more information on what is available with Tegral DI Services, see [this page](/modules/core/di/extensions/services.md).

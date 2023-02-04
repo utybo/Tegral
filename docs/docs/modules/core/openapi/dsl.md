@@ -40,6 +40,12 @@ val api = openApi {
 }
 ```
 
+:::tip
+
+Using these entrypoints is only necessary if you plan on using the DSL "standalone". If you are using the DSL via another means, like the Ktor or Tegral Web integration, you should instead use the DSL via the integration and not use the `openApi` function directly.
+
+:::
+
 ## DSL reference
 
 ### RootDsl
