@@ -97,6 +97,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
       - name: Install PNPM & dependencies
         run: |
           cd docs && pnpm i --frozen-lockfile
