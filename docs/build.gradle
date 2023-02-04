@@ -36,6 +36,7 @@ task pnpmInstallFrozen(type: PnpmTask) {
         .withPathSensitivity(PathSensitivity.RELATIVE)
 
     outputs.dir('node_modules')
+    outputs.dir('.pnpm-store')
 
     outputs.cacheIf { true }
 }
@@ -75,7 +76,7 @@ task docusaurusBuild(type: PnpmTask) {
             .withPathSensitivity(PathSensitivity.RELATIVE)
     }
 
-    outputs.cacheIf { true }
+    // TODO outputs.cacheIf { true }
     outputs.dir(layout.buildDirectory.dir('docusaurus'))
         .withPropertyName("result")
 
