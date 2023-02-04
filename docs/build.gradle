@@ -31,6 +31,10 @@ task pnpmInstallFrozen(type: PnpmTask) {
     inputs.file('pnpm-lock.yaml')
         .withPropertyName("lockfile")
         .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file('.npmrc')
+        .withPropertyName("npmrc")
+        .withPathSensitivity(PathSensitivity.RELATIVE)
+
     outputs.dir('node_modules')
 
     outputs.cacheIf { true }
