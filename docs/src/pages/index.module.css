@@ -8,7 +8,7 @@
   position: relative;
   overflow: hidden;
   display: flex;
-  background-image: url('/img/paul-pastourmatzis-rSLLnn0snVM-unsplash.jpg');
+  background-image: url('/img/stefan-stefancik--g7axSVst6Y-unsplash.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -22,6 +22,7 @@
   align-self: stretch;
   padding: 2rem;
   color: black;
+  border-radius: 0.4rem;
 }
 
 .heroBanner .container h1 {
