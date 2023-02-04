@@ -23,22 +23,6 @@ def docsInputDirs = [
     'static'
 ]
 
-task pnpmInstallFrozen(type: PnpmTask) {
-    args = [ 'install', '--frozen-lockfile' ]
-    inputs.file('package.json')
-        .withPropertyName("pkgjson")
-        .withPathSensitivity(PathSensitivity.RELATIVE)
-    inputs.file('pnpm-lock.yaml')
-        .withPropertyName("lockfile")
-        .withPathSensitivity(PathSensitivity.RELATIVE)
-    inputs.file('.npmrc')
-        .withPropertyName("npmrc")
-        .withPathSensitivity(PathSensitivity.RELATIVE)
-
-    outputs.dir('node_modules')
-    outputs.dir('.pnpm-store')
-}
-
 task cleanNodeModules {
     doLast {
         delete 'node_modules'
@@ -48,20 +32,28 @@ task cleanNodeModules {
 task docusaurusStart(type: PnpmTask) {
     args = [ 'start' ]
 
+    inputs.file('package.json')
+    inputs.file('pnpm-lock.yaml')
+
     for (input in docsInputFiles) {
         inputs.file(input)
     }
     for (input in docsInputDirs) {
         inputs.files(input)
     }
-
-    dependsOn pnpmInstallFrozen
 }
 
 task docusaurusBuild(type: PnpmTask) {
     args = [
         'build'
     ]
+
+    inputs.file('package.json')
+        .withPropertyName("packageJson")
+        .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file('pnpm-lock.yaml')
+        .withPropertyName("pnpmLock")
+        .withPathSensitivity(PathSensitivity.RELATIVE)
 
     for (input in docsInputFiles) {
         inputs.file(input)
@@ -77,8 +69,6 @@ task docusaurusBuild(type: PnpmTask) {
     outputs.cacheIf { true }
     outputs.dir(layout.buildDirectory.dir('docusaurus'))
         .withPropertyName("result")
-
-    dependsOn pnpmInstallFrozen
 }
 
 artifacts {
