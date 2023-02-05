@@ -5,27 +5,34 @@
 
 .heroBanner {
   padding: 4rem 0;
-  text-align: center;
   position: relative;
   overflow: hidden;
   display: flex;
-  background-image: url('/img/paul-pastourmatzis-rSLLnn0snVM-unsplash.jpg');
+  background-image: url('/img/stefan-stefancik--g7axSVst6Y-unsplash.jpg');
   background-size: cover;
   background-position: center;
 }
 
-.heroBanner .container {
+.heroBanner .introContainer {
+  display: flex;
+  justify-items: center;
+  flex-direction: column;
   background-color: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(10px);
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  align-self: stretch;
+  padding: 2rem;
   color: black;
+  border-radius: 0.4rem;
 }
 
 .heroBanner .container h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.heroBanner .container p {
+  text-align: center;
 }
 
 .heroBanner .container h1 img {
@@ -50,4 +57,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.vertContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.codeBlockContainer {
+  flex-grow: 1;
+}
+
+.codeBlockContainer > div {
+  margin: 0;
+}
+
+.introContainer {
+  justify-content: center;
+  padding: 12px;
+  max-width: 50%;
 }

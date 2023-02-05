@@ -91,10 +91,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
       - uses: actions/setup-node@v3
-
-      - name: Install PNPM
-        run: npm i -g pnpm
+        with:
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - name: Install dependencies
+        run: |
+          cd docs && pnpm i --frozen-lockfile
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
