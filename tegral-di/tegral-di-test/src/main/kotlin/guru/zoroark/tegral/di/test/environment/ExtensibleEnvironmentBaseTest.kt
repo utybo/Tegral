@@ -106,10 +106,13 @@ abstract class ExtensibleEnvironmentBaseTest(
 
     private fun `(Extension) getAllIdentifiers`() {
         val ctx = ExtensibleEnvironmentContext(
-            mapOf(entryOf { D() }, entryOf(named("E")) { E() }, entryOf { F() }), EnvironmentContext(mapOf())
+            mapOf(entryOf { D() }, entryOf(named("E")) { E() }, entryOf { F() }),
+            EnvironmentContext(mapOf())
         )
         val expectedIdentifiers = setOf(
-            Identifier(D::class), Identifier(E::class, named("E")), Identifier(F::class)
+            Identifier(D::class),
+            Identifier(E::class, named("E")),
+            Identifier(F::class)
         )
         val env = provider(ctx)
         assertEquals(expectedIdentifiers, env.getAllIdentifiers().toSet())

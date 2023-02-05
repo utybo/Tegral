@@ -138,9 +138,7 @@ class ServiceManager(scope: InjectionScope) : DeclarationsProcessor {
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            throw TegralServiceException(
-                "${operationType.ingWord.capitalize()} service $identifier failed", e
-            )
+            throw TegralServiceException("${operationType.ingWord.capitalize()} service $identifier failed", e)
         }
     }
 

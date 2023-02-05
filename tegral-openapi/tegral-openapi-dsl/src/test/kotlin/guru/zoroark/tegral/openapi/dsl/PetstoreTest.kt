@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-@file:Suppress("CommentSpacing")
+@file:Suppress("CommentSpacing", "EnumEntryNameCase")
 
 package guru.zoroark.tegral.openapi.dsl
 
@@ -90,7 +90,6 @@ data class ApiResponse(val code: Int, val type: String, val message: String)
 
 @Suppress("LongMethod")
 fun petstore() = openApi {
-
     //#region Metadata
 
     "/v3" server { }
@@ -141,7 +140,7 @@ fun petstore() = openApi {
 
     //#endregion
 
-//#region Tags
+    //#region Tags
 
     "pet" tag {
         description = "Everything about your Pets"
@@ -159,9 +158,9 @@ fun petstore() = openApi {
         description = "Operations about user"
     }
 
-//#endregion
+    //#endregion
 
-//#region Pet endpoints
+    //#region Pet endpoints
 
     "/pet" {
         post {
@@ -382,9 +381,9 @@ fun petstore() = openApi {
         }
     }
 
-//#endregion
+    //#endregion
 
-//#region Store endpoints
+    //#region Store endpoints
 
     "/store/inventory" get {
         tags += "store"

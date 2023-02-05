@@ -52,8 +52,11 @@ class NoUnusedCheck(private val ignoredValues: Set<Identifier<*>>) : TegralDiChe
         val deps = dependencies.keys.filter { it !in usedInDependencies && it !in ignoredValues }
         if (deps.isNotEmpty()) {
             val introLine =
-                if (deps.size == 1) "The following component is not injected anywhere, making it unused."
-                else "The following components are not injected anywhere, making them unused."
+                if (deps.size == 1) {
+                    "The following component is not injected anywhere, making it unused."
+                } else {
+                    "The following components are not injected anywhere, making them unused."
+                }
             val message = "'noUnused' check failed.\n" +
                 "$introLine\n" +
                 deps.joinToString(separator = "\n") { "--> $it" } + "\n\n" +

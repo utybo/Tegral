@@ -21,6 +21,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 | Kotlin | 1.7.10 | 1.8.10 | [1.8 highlights](https://kotlinlang.org/docs/whatsnew18.html)
 | JUnit | 5.9.0 | 5.9.2 | [All](https://junit.org/junit5/docs/5.9.2/release-notes/) |
 | Swagger UI | 4.13.2 | 4.15.5 | [4.14.0](https://github.com/swagger-api/swagger-ui/releases/tag/v4.14.0) [4.14.1](https://github.com/swagger-api/swagger-ui/releases/tag/v4.14.1) [4.14.2](https://github.com/swagger-api/swagger-ui/releases/tag/v4.14.2) [4.14.3](https://github.com/swagger-api/swagger-ui/releases/tag/v4.14.3) [4.15.0](https://github.com/swagger-api/swagger-ui/releases/tag/v4.15.0) [4.15.1](https://github.com/swagger-api/swagger-ui/releases/tag/v4.15.1) [4.15.2](https://github.com/swagger-api/swagger-ui/releases/tag/v4.15.2) [4.15.3](https://github.com/swagger-api/swagger-ui/releases/tag/v4.15.3) |
+| Logback | 1.2.11 | 1.4.5 | |
 
 - Dependency updates (tooling)
 

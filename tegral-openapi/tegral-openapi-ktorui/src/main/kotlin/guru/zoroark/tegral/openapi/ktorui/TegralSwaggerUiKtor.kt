@@ -123,8 +123,11 @@ fun Route.swaggerUiEndpoint(path: String, openApiPath: String) {
     get("$path/{fileName?}") {
         val fileName = call.parameters["fileName"] ?: "index.html"
         val result = application.plugin(TegralSwaggerUiKtor).getContentFor(fileName)
-        if (result != null) call.respond(result)
-        else call.respond(HttpStatusCode.NotFound)
+        if (result != null) {
+            call.respond(result)
+        } else {
+            call.respond(HttpStatusCode.NotFound)
+        }
     }
 
     get(path) {

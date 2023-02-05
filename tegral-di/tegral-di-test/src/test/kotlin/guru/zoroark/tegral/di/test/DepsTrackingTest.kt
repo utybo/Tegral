@@ -62,6 +62,7 @@ class DepsTrackingTest {
 
     class A
     class B
+
     @Suppress("unused")
     class C(scope: InjectionScope) {
         private val a: A by scope()

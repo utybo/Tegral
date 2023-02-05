@@ -23,6 +23,7 @@ class IdentifierTest {
         val identifier = Identifier(String::class)
         assertEquals(EmptyQualifier, identifier.qualifier)
     }
+
     @Test
     fun `toString, non-anonymous object`() {
         val identifier = Identifier(IdentifierTest::class)

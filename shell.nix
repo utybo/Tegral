@@ -2,7 +2,7 @@
 
 let
   unstable = import (fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz) { };
-  toolchains = [ unstable.jdk11 unstable.jdk17 ];
+  toolchains = [ (unstable.jdk11 + "/lib/openjdk") (unstable.jdk17 + "/lib/openjdk") ];
   patchedGradle = unstable.gradle.overrideAttrs (curr: old: {
     fixupPhase = old.fixupPhase + ''
       cat > $out/lib/gradle/gradle.properties <<EOF

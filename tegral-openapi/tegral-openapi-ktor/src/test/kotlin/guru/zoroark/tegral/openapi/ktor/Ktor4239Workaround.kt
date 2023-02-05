@@ -39,8 +39,8 @@ import kotlin.test.assertEquals
 @Location("/foo")
 data class FooBar(val example: String)
 
-@OptIn(KtorExperimentalLocationsAPI::class)
 // See also https://github.com/utybo/Koa/issues/5 / KTOR-4239
+@OptIn(KtorExperimentalLocationsAPI::class)
 class Ktor4239Workaround {
     @Test
     fun `Test KTOR-4239 workaround`() = testApplication {

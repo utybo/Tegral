@@ -183,11 +183,15 @@ class UnsafeMutableEnvironment(
                 is ScopedSupplierDeclaration<*> -> SimpleIdentifierResolver(
                     declaration.supplier(
                         ScopedContext(
-                            if (metaEnvironment == null) SimpleEnvironmentBasedScope(this)
-                            else MutableEnvironmentRedirectedInjectionScope()
+                            if (metaEnvironment == null) {
+                                SimpleEnvironmentBasedScope(this)
+                            } else {
+                                MutableEnvironmentRedirectedInjectionScope()
+                            }
                         )
                     )
                 )
+
                 is ResolvableDeclaration -> declaration.buildResolver()
             }
         }

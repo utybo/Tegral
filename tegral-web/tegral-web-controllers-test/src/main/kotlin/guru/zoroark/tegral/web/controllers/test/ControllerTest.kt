@@ -54,7 +54,8 @@ abstract class TegralControllerTest<TSubject : Any>(
 ) : TegralAbstractSubjectTest<TSubject, ControllerTestContext>(subjectClass) {
 
     constructor(subjectClass: KClass<TSubject>, baseModuleBuilder: ContextBuilderDsl.() -> Unit) : this(
-        subjectClass, tegralDiModule("<base test module>", baseModuleBuilder)
+        subjectClass,
+        tegralDiModule("<base test module>", baseModuleBuilder)
     )
 
     @Suppress("UNCHECKED_CAST")
