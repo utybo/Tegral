@@ -1,25 +1,25 @@
 [versions]
 coroutines = "1.6.4"
-detekt = "1.21.0"
-dokka = "1.7.10"
+detekt = "1.22.0"
+dokka = "1.7.20"
 gradleTestLogger = "3.2.0"
-hoplite = "2.5.2"
+hoplite = "2.7.1"
 jackson = "2.13.1"
 jimfs = "1.2"
-junit = "5.9.0"
+junit = "5.9.2"
 koin2 = "2.2.3"
 koin3 = "3.1.5"
-kotlin = "1.7.10"
+kotlin = "1.8.10"
 kotlinBcv = "0.11.0"
-ktor = "2.1.0"
+ktor = "2.2.3"
 logback = "1.2.11"
-mockk = "1.12.5"
+mockk = "1.13.4"
 nodeGradle = "3.5.1"
 slf4j = "1.7.36"
 versions = "0.42.0"
 licenserPlugin = "0.6.1"
-swaggerCore = "2.2.2"
-swaggerUi = "4.13.2"
+swaggerCore = "2.2.8"
+swaggerUi = "4.15.5"
 clikt = "3.5.0"
 
 [libraries]
@@ -68,7 +68,7 @@ clikt = { module = "com.github.ajalt.clikt:clikt", version.ref = "clikt" }
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk = { module = "io.mockk:mockk-jvm", version.ref = "mockk" }
 
 junit-jupiterApi = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
 junit-jupiterEngine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }

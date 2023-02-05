@@ -8,6 +8,28 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased] (0.0.4)
 
+### Changed
+
+- Dependency updates (transient libraries)
+
+| Dependency | Old version | New version | Changelog(s) |
+| ---------- | ----------- | ----------- | ---------- |
+| Hoplite | 2.5.2 | 2.7.1 | [All](https://github.com/sksamuel/hoplite/blob/master/changelog.md) |
+| MockK | 1.12.5 | 1.13.4 | [1.12.6](https://github.com/mockk/mockk/releases/tag/1.12.6) [1.12.7](https://github.com/mockk/mockk/releases/tag/1.12.7) [1.12.8](https://github.com/mockk/mockk/releases/tag/v1.12.8) [1.13.1](https://github.com/mockk/mockk/releases/tag/1.13.1) [1.13.2](https://github.com/mockk/mockk/releases/tag/1.13.2) [1.13.3](https://github.com/mockk/mockk/releases/tag/1.13.3) [1.13.4](https://github.com/mockk/mockk/releases/tag/v1.13.4) |
+| Ktor | 2.1.0 | 2.2.3 | [2.1.x](https://ktor.io/changelog/2.1/) [2.2.x](https://ktor.io/changelog/2.2) |
+| Swagger Core | 2.2.2 | 2.2.8 | [2.2.3](https://github.com/swagger-api/swagger-core/releases/tag/v2.2.3) [2.2.4](https://github.com/swagger-api/swagger-core/releases/tag/v2.2.4) [2.2.5](https://github.com/swagger-api/swagger-core/releases/tag/v2.2.5) [2.2.6](https://github.com/swagger-api/swagger-core/releases/tag/v2.2.6) [2.2.7](https://github.com/swagger-api/swagger-core/releases/tag/v2.2.7) [2.2.8](https://github.com/swagger-api/swagger-core/releases/tag/v2.2.8)
+| Kotlin | 1.7.10 | 1.8.10 | [1.8 highlights](https://kotlinlang.org/docs/whatsnew18.html)
+| JUnit | 5.9.0 | 5.9.2 | [All](https://junit.org/junit5/docs/5.9.2/release-notes/) |
+| Swagger UI | 4.13.2 | 4.15.5 | [4.14.0](https://github.com/swagger-api/swagger-ui/releases/tag/v4.14.0) [4.14.1](https://github.com/swagger-api/swagger-ui/releases/tag/v4.14.1) [4.14.2](https://github.com/swagger-api/swagger-ui/releases/tag/v4.14.2) [4.14.3](https://github.com/swagger-api/swagger-ui/releases/tag/v4.14.3) [4.15.0](https://github.com/swagger-api/swagger-ui/releases/tag/v4.15.0) [4.15.1](https://github.com/swagger-api/swagger-ui/releases/tag/v4.15.1) [4.15.2](https://github.com/swagger-api/swagger-ui/releases/tag/v4.15.2) [4.15.3](https://github.com/swagger-api/swagger-ui/releases/tag/v4.15.3) |
+
+- Dependency updates (tooling)
+
+| Dependency | Old version | New version | Changelog(s) |
+| ---------- | ----------- | ----------- | ---------- |
+| Gradle | 7.5 | 7.6 | [7.6](https://docs.gradle.org/current/release-notes.html) ] |
+| Detekt | 1.21.0 | 1.22.0 | [1.22.0](https://github.com/detekt/detekt/releases/tag/v1.22.0) |
+| Dokka | 1.7.10 | 1.7.20 | [1.7.20](https://github.com/Kotlin/dokka/releases/tag/v1.7.20)|
+
 ## [0.0.3] - 2022-10-01
 
 ### Added
@@ -15,7 +37,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - General
 
   - All packages can now be used with Java 11
-    ([#45](https://github.com/utybo/Tegral/pull/45))
+    ([#45](https://github.com/utybo/Tegral/pull/45))g
 
 - `tegral-openapi-ktor-resources`
 
@@ -214,7 +236,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
   - Bumped Ktor version to version 2.0.3
     ([#17](https://github/utybo/Tegral/pull/17))
-  
+
   - Bumped Kotlin version to 1.7.10
     ([#27](https://github.com/utybo/Tegral/pull/27))
 
