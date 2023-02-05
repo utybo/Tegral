@@ -68,6 +68,12 @@ const config = {
           },
           {
             type: "doc",
+            docId: "recipes/index",
+            position: "left",
+            label: "Recipes",
+          },
+          {
+            type: "doc",
             docId: "modules/index",
             position: "left",
             label: "Modules",
