@@ -2,3 +2,7 @@
 build
 .pnpm-debug.log
 bin
+.direnv
+.idea
+!.idea/icon.png
+.sgp
