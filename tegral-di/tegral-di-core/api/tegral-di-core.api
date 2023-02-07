@@ -425,6 +425,11 @@ public final class guru/zoroark/tegral/di/extensions/fundef/FundefConfigureDslKt
 	public static final fun configureFundef (Lkotlin/reflect/KFunction;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/di/extensions/fundef/FundefConfigureDsl;
 }
 
+public final class guru/zoroark/tegral/di/extensions/fundef/FundefException : guru/zoroark/tegral/di/TegralDiException {
+	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
 public final class guru/zoroark/tegral/di/extensions/fundef/FundefFunctionWrapper {
 	public fun <init> (Lguru/zoroark/tegral/di/environment/InjectionScope;Lkotlin/reflect/KFunction;Ljava/util/Map;)V
 	public final fun checkCallable (Ljava/util/Map;Ljava/lang/Object;Ljava/lang/Object;)V

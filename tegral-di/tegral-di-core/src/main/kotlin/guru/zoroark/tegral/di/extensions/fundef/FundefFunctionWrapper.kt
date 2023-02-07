@@ -21,7 +21,6 @@ import guru.zoroark.tegral.di.environment.EmptyQualifier
 import guru.zoroark.tegral.di.environment.Identifier
 import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionScope
-import guru.zoroark.tegral.di.environment.Injector
 import guru.zoroark.tegral.di.environment.Qualifier
 import guru.zoroark.tegral.di.environment.get
 import kotlin.reflect.KClass

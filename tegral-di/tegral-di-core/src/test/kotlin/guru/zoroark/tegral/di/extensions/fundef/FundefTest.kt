@@ -16,15 +16,10 @@ package guru.zoroark.tegral.di.extensions.fundef
 
 import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.dsl.tegralDi
-import guru.zoroark.tegral.di.environment.get
 import guru.zoroark.tegral.di.environment.named
-import io.mockk.InternalPlatformDsl.toStr
 import org.junit.jupiter.api.assertDoesNotThrow
-import kotlin.reflect.jvm.reflect
 import kotlin.test.Test
-import kotlin.test.assertContains
 import kotlin.test.assertEquals
-import kotlin.test.assertFails
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -214,7 +209,6 @@ class FundefTest {
         assertTrue { exc.message!!.contains("special parameter") }
     }
 
-
     @Test
     fun `Check callable fails if cannot find injection`() {
         val env = tegralDi {
@@ -299,5 +293,4 @@ class FundefTest {
         val res = functionWrapper.invoke(instance = SomeDumbClass("HIHIHI"))
         assertEquals("Something HIHIHI", res)
     }
-
 }
