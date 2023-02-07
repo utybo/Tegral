@@ -160,7 +160,6 @@ class DslTests {
 
     @Test
     fun `Invalid put function reference (invalid single argument)`() {
-
         val ex = assertThrows<InvalidDeclarationException> {
             tegralDi {
                 put(String::class, ::oneArgNotScope)

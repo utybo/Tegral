@@ -56,5 +56,8 @@ class ExtensibleEnvironmentBasedScope(private val env: ExtensibleInjectionEnviro
  */
 @Suppress("FunctionNaming", "FunctionName")
 fun EnvironmentBasedScope(env: InjectionEnvironment): InjectionScope =
-    if (env is ExtensibleInjectionEnvironment) ExtensibleEnvironmentBasedScope(env)
-    else SimpleEnvironmentBasedScope(env)
+    if (env is ExtensibleInjectionEnvironment) {
+        ExtensibleEnvironmentBasedScope(env)
+    } else {
+        SimpleEnvironmentBasedScope(env)
+    }

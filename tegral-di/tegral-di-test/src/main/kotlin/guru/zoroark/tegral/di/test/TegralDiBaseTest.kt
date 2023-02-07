@@ -97,7 +97,8 @@ abstract class TegralSubjectTest<TSubject : Any>(
      * @param baseModuleBuilder The base module as a builder, just like the body of a [tegralDiModule] call.
      */
     constructor(subjectClass: KClass<TSubject>, baseModuleBuilder: ContextBuilderDsl.() -> Unit) : this(
-        subjectClass, tegralDiModule("<base test module>", baseModuleBuilder)
+        subjectClass,
+        tegralDiModule("<base test module>", baseModuleBuilder)
     )
 
     /**

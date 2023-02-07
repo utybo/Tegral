@@ -26,10 +26,10 @@ import io.swagger.v3.oas.models.info.License
  */
 @TegralDsl
 interface InfoDsl {
-    @TegralDsl
     /**
      * The title of the API.
      */
+    @TegralDsl
     var title: String?
 
     /**

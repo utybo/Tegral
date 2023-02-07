@@ -26,10 +26,12 @@ import io.ktor.server.routing.Route
 import io.ktor.server.routing.get
 import io.swagger.v3.oas.models.OpenAPI
 
-private fun parseVersion(version: String?): OpenApiVersion? {
-    return if (version == null) OpenApiVersion.V3_0
-    else OpenApiVersion.values().firstOrNull { it.version == version }
-}
+private fun parseVersion(version: String?): OpenApiVersion? =
+    if (version == null) {
+        OpenApiVersion.V3_0
+    } else {
+        OpenApiVersion.values().firstOrNull { it.version == version }
+    }
 
 private enum class Format(
     val value: String,
@@ -40,10 +42,12 @@ private enum class Format(
     YAML("yaml", ContentType("text", "yaml"), OpenAPI::toYaml)
 }
 
-private fun parseFormat(format: String?): Format? {
-    return if (format == null) Format.JSON
-    else Format.values().firstOrNull { it.value == format }
-}
+private fun parseFormat(format: String?): Format? =
+    if (format == null) {
+        Format.JSON
+    } else {
+        Format.values().firstOrNull { it.value == format }
+    }
 
 /**
  * Adds a `get(path)` endpoint that will return the OpenAPI document for this API.

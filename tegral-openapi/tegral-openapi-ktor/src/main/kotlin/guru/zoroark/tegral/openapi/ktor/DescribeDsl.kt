@@ -48,8 +48,9 @@ private fun printNotInstalledWarning(application: Application) {
 
 internal fun Application.getOpenApiOrNullWithMessage(): TegralOpenApiKtor? {
     val plugin = pluginOrNull(TegralOpenApiKtor)
-    return if (plugin != null) plugin
-    else {
+    return if (plugin != null) {
+        plugin
+    } else {
         printNotInstalledWarning(this)
         null
     }
@@ -119,6 +120,7 @@ internal tailrec fun parseMutableMetadataFromSelector(route: Route?, metadata: M
         is PathSegmentConstantRouteSelector -> metadata.httpPath += selector.value
         is PathSegmentParameterRouteSelector ->
             metadata.httpPath += selector.prefix.orEmpty() + "{${selector.name}}" + selector.suffix.orEmpty()
+
         else -> {
             /* TODO avoid ignoring silently */
         }
