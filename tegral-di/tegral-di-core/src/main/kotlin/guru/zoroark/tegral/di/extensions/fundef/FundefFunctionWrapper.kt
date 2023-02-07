@@ -10,29 +10,17 @@ import kotlin.reflect.full.extensionReceiverParameter
 import kotlin.reflect.full.instanceParameter
 import kotlin.reflect.full.isSupertypeOf
 
-@ExperimentalFundef()
-fun <R> signatureOf(function: KFunction<R>): FunctionSignature {
-    val regularParameters = function.parameters.filter { it.kind == KParameter.Kind.VALUE }
-        .associateBy({
-            it.name
-                ?: error("In function ${function.name}, a regular parameter does not have a name. Please report this to the Tegral maintainers.")
-        }) { ParameterSignature(it.type, it.isOptional) }
-    val extensionReceiverParam = function.parameters.find { it.kind == KParameter.Kind.EXTENSION_RECEIVER }
-    val extensionReceiverSignature = extensionReceiverParam?.let { ParameterSignature(it.type, it.isOptional) }
-    val instanceReceiverParam = function.parameters.find { it.kind == KParameter.Kind.INSTANCE }
-    val instanceReceiverSignature = instanceReceiverParam?.let { ParameterSignature(it.type, it.isOptional) }
-    return FunctionSignature(
-        regularParameters,
-        function.returnType,
-        extensionReceiverSignature,
-        instanceReceiverSignature
-    )
-}
-
 @ExperimentalFundef
 @TegralDsl
 fun <R> ContextBuilderDsl.putFundef(function: KFunction<R>) {
-    put(ofFunction(function)) { FundefFunctionWrapper(scope, function) }
+    put(ofFunction(function)) { FundefFunctionWrapper(scope, function, emptyMap()) }
+}
+
+
+@ExperimentalFundef
+@TegralDsl
+fun <R> ContextBuilderDsl.putFundef(configureDsl: FundefConfigureDsl<R>) {
+    put(ofFunction(configureDsl.function), configureDsl.build())
 }
 
 @ExperimentalFundef
@@ -68,15 +56,15 @@ private sealed class ParameterValue {
 }
 
 @ExperimentalFundef
-class FundefFunctionWrapper<R>(scope: InjectionScope, private val function: KFunction<R>) {
-    val signature = signatureOf(function)
-    private val parameterMapping = function.parameters.associateWith {
-        val kclass = it.type.classifier?.classOrNull()
+class FundefFunctionWrapper<R>(scope: InjectionScope, private val function: KFunction<R>, qualifiers: Map<String, Qualifier>) {
+    private val parameterMapping = function.parameters.associateWith { param ->
+        val kclass = param.type.classifier?.classOrNull()
         if (kclass == null) {
             // TODO log here
             Mapping.Unknown
         } else {
-            Mapping.Present(scope.optional(Identifier(kclass)))
+            val qualifier = param.name?.let { name -> qualifiers[name] } ?: EmptyQualifier
+            Mapping.Present(scope.optional(Identifier(kclass, qualifier)))
         }
     }
 

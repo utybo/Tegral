@@ -3,6 +3,7 @@ package guru.zoroark.tegral.di.extensions.fundef
 import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.dsl.tegralDi
 import guru.zoroark.tegral.di.environment.get
+import guru.zoroark.tegral.di.environment.named
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.fail
@@ -82,6 +83,22 @@ class FundefTest {
         }
         val functionWrapper = env.getFundefOf(::functionWithDependency)
         val result = functionWrapper.invoke(mapOf("greeter" to Greeter()))
+        assertEquals("Greeting Sam gives: Hello Sam!", result)
+    }
+
+    @Test
+    fun `Fundef with dependency that has qualifier`() {
+        val env = tegralDi {
+            putFundef(
+                ::functionWithDependency.configureFundef {
+                    "greeter" qualifyWith named("greeter")
+                }
+            )
+            put(named("greeter"), ::Greeter)
+        }
+
+        val functionWrapper = env.getFundefOf(::functionWithDependency)
+        val result = functionWrapper.invoke()
         assertEquals("Greeting Sam gives: Hello Sam!", result)
     }
 
