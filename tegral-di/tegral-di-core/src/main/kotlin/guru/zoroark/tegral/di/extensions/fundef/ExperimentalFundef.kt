@@ -14,21 +14,11 @@
 
 package guru.zoroark.tegral.di.extensions.fundef
 
-import guru.zoroark.tegral.di.environment.Qualifier
-import kotlin.reflect.KFunction
-
 /**
- * Qualifier for components that depend on a function. This is mainly for use with fundefs with components of type
- * [FundefFunctionWrapper]
+ * Marker annotation for the Fundef feature.
  *
- * @property function The function this qualifier depends on
- * @param R The return type of the underlying function
+ * You can follow the development of fundefs here: https://github.com/utybo/Tegral/issues/73
  */
-@ExperimentalFundef
-data class FunctionQualifier<R>(val function: KFunction<R>) : Qualifier
-
-/**
- * Creator DSL-ish function for [FunctionQualifier].
- */
-@ExperimentalFundef
-fun <R> ofFunction(function: KFunction<R>): Qualifier = FunctionQualifier(function)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPEALIAS)
+@RequiresOptIn
+annotation class ExperimentalFundef

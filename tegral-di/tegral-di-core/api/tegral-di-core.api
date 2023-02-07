@@ -399,7 +399,7 @@ public abstract interface annotation class guru/zoroark/tegral/di/extensions/fun
 }
 
 public final class guru/zoroark/tegral/di/extensions/fundef/FunctionQualifier : guru/zoroark/tegral/di/environment/Qualifier {
-	public fun <init> (Lkotlin/reflect/KFunction;)V 
+	public fun <init> (Lkotlin/reflect/KFunction;)V
 	public final fun component1 ()Lkotlin/reflect/KFunction;
 	public final fun copy (Lkotlin/reflect/KFunction;)Lguru/zoroark/tegral/di/extensions/fundef/FunctionQualifier;
 	public static synthetic fun copy$default (Lguru/zoroark/tegral/di/extensions/fundef/FunctionQualifier;Lkotlin/reflect/KFunction;ILjava/lang/Object;)Lguru/zoroark/tegral/di/extensions/fundef/FunctionQualifier;
@@ -437,20 +437,5 @@ public final class guru/zoroark/tegral/di/extensions/fundef/FundefFunctionWrappe
 	public static final fun getFundefOf (Lguru/zoroark/tegral/di/environment/InjectionEnvironment;Lkotlin/reflect/KFunction;)Lguru/zoroark/tegral/di/extensions/fundef/FundefFunctionWrapper;
 	public static final fun putFundef (Lguru/zoroark/tegral/di/dsl/ContextBuilderDsl;Lguru/zoroark/tegral/di/extensions/fundef/FundefConfigureDsl;)V
 	public static final fun putFundef (Lguru/zoroark/tegral/di/dsl/ContextBuilderDsl;Lkotlin/reflect/KFunction;)V
-}
-
-public abstract class guru/zoroark/tegral/di/extensions/fundef/Mapping {
-}
-
-public final class guru/zoroark/tegral/di/extensions/fundef/Mapping$Present : guru/zoroark/tegral/di/extensions/fundef/Mapping {
-	public fun <init> (Lguru/zoroark/tegral/di/environment/Injector;)V
-	public final fun getInjector ()Lguru/zoroark/tegral/di/environment/Injector;
-}
-
-public final class guru/zoroark/tegral/di/extensions/fundef/Mapping$Unknown : guru/zoroark/tegral/di/extensions/fundef/Mapping {
-	public static final field INSTANCE Lguru/zoroark/tegral/di/extensions/fundef/Mapping$Unknown;
-}
-
-public abstract interface annotation class guru/zoroark/tegral/di/extensions/fundef/TegralDiFundef : java/lang/annotation/Annotation {
 }
 
