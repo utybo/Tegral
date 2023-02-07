@@ -60,21 +60,12 @@ fun <R> InjectionEnvironment.getFundefOf(function: KFunction<R>): FundefFunction
     return get(ofFunction(function))
 }
 
-private sealed class Mapping<T> {
-    object Unknown : Mapping<Nothing>()
-    class Present<T>(val injector: Injector<T>) : Mapping<T>()
-}
-
 private sealed class ParameterValue {
     abstract val actualValue: ActualValue
 
     sealed class ActualValue {
         object Undefined : ActualValue()
         class Value(val value: Any?) : ActualValue()
-    }
-
-    object FromDefaultValue : ParameterValue() {
-        override val actualValue = ActualValue.Undefined
     }
 
     class FromOverride(val value: Any?) : ParameterValue() {
@@ -99,16 +90,17 @@ class FundefFunctionWrapper<R>(
     private val function: KFunction<R>,
     qualifiers: Map<String, Qualifier>
 ) {
-    private val parameterMapping = function.parameters.associateWith { param ->
-        val kclass = param.type.classifier?.classOrNull()
-        if (kclass == null) {
-            // TODO log here
-            Mapping.Unknown
-        } else {
+    private val parameterMapping = function.parameters
+        .filter { it.name != null }
+        .associateWith { param ->
+            val kclass = param.type.classifier?.classOrNull()
+                ?: throw FundefException(
+                    "Type ${param.type} of parameter $param is either not denotable in Kotlin " +
+                        "or a generic type, neither of which are supported."
+                )
             val qualifier = param.name?.let { name -> qualifiers[name] } ?: EmptyQualifier
-            Mapping.Present(scope.optional(Identifier(kclass, qualifier)))
+            scope.optional(Identifier(kclass, qualifier))
         }
-    }
 
     init {
         require(function.typeParameters.isEmpty()) { "Functions with type parameters are not supported." }
@@ -121,22 +113,12 @@ class FundefFunctionWrapper<R>(
     ): Map<KParameter, ParameterValue> {
         val parameters = parameterMapping
             .mapValues { (k, v) ->
-                when {
-                    k.name != null && overrides.containsKey(k.name) ->
-                        ParameterValue.FromOverride(overrides[k.name])
-
-                    v is Mapping.Present<*> ->
-                        ParameterValue.FromEnvironmentOrDefaultValue {
-                            v.injector.getValue(this, ::parameterMapping)
-                        }
-
-                    k.isOptional ->
-                        ParameterValue.FromDefaultValue
-
-                    else ->
-                        error(
-                            "Missing value for parameter $k in function $function and the parameter is not optional."
-                        )
+                if (k.name != null && overrides.containsKey(k.name)) {
+                    ParameterValue.FromOverride(overrides[k.name])
+                } else {
+                    ParameterValue.FromEnvironmentOrDefaultValue {
+                        v.getValue(this, ::parameterMapping)
+                    }
                 }
             }
             .toMutableMap()
@@ -197,9 +179,6 @@ class FundefFunctionWrapper<R>(
                             "it is a special parameter that is not determined automatically. Provide its value " +
                                 "manually via the 'instance' or 'extension' parameters."
 
-                        is ParameterValue.FromDefaultValue ->
-                            "its type could not be determined ahead of time. Provide a value via an override."
-
                         is ParameterValue.FromEnvironmentOrDefaultValue ->
                             "tried to inject it via a regular injection but it was not found in the injection " +
                                 "environment. Either 'put' a compatible component or provide a value via an override."
@@ -216,7 +195,7 @@ class FundefFunctionWrapper<R>(
             }
         }
         if (errors.isNotEmpty()) {
-            error("Call with provided arguments will fail:\n" + errors.joinToString(separator = "\n"))
+            throw FundefException("Call with provided arguments will fail:\n" + errors.joinToString(separator = "\n"))
         }
     }
 }

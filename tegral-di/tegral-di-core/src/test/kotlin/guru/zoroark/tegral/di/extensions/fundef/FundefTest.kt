@@ -18,8 +18,16 @@ import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.dsl.tegralDi
 import guru.zoroark.tegral.di.environment.get
 import guru.zoroark.tegral.di.environment.named
+import io.mockk.InternalPlatformDsl.toStr
+import org.junit.jupiter.api.assertDoesNotThrow
+import kotlin.reflect.jvm.reflect
 import kotlin.test.Test
+import kotlin.test.assertContains
 import kotlin.test.assertEquals
+import kotlin.test.assertFails
+import kotlin.test.assertFailsWith
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 import kotlin.test.fail
 
 var doNotCallNow = true
@@ -57,12 +65,24 @@ fun functionWithApiDependency(api: SomeApi): String {
     return "The letter is ${api.whatsYourLetter()}"
 }
 
+fun functionWithNullableApiDependency(api: SomeApi?): String {
+    return if (api == null) "It was null!!!" else "The letter is ${api.whatsYourLetter()}"
+}
+
 fun functionWithDefault(api: SomeApi = ImplementationA()): String {
     return "The letter with default is ${api.whatsYourLetter()}"
 }
 
 fun SomeApi.extensionFunction(someText: String): String {
     return "The $someText is ${whatsYourLetter()}"
+}
+
+fun <T> genericDumb(hello: T): String {
+    return "hello is $hello"
+}
+
+class SomeDumbClass(val dumbProp: String) {
+    fun saySomething() = "Something $dumbProp"
 }
 
 @OptIn(ExperimentalFundef::class)
@@ -168,4 +188,116 @@ class FundefTest {
         val result = functionWrapper.invoke(mapOf("someText" to "bruh"), extension = ImplementationB())
         assertEquals("The bruh is B", result)
     }
+
+    @Test
+    fun `Check callable fails if extension is not provided`() {
+        val env = tegralDi {
+            put<SomeApi>(::ImplementationA)
+            putFundef(SomeApi::extensionFunction)
+            put { "Test" }
+        }
+        val functionWrapper = env.getFundefOf(SomeApi::extensionFunction)
+        val exc = assertFailsWith<FundefException> { functionWrapper.checkCallable() }
+        assertNotNull(exc.message)
+        assertTrue { exc.message!!.contains("special parameter") }
+    }
+
+    @Test
+    fun `Check callable fails if instance is not provided`() {
+        val env = tegralDi {
+            put(::Greeter)
+            putFundef(Greeter::greet)
+        }
+        val functionWrapper = env.getFundefOf(Greeter::greet)
+        val exc = assertFailsWith<FundefException> { functionWrapper.checkCallable() }
+        assertNotNull(exc.message)
+        assertTrue { exc.message!!.contains("special parameter") }
+    }
+
+
+    @Test
+    fun `Check callable fails if cannot find injection`() {
+        val env = tegralDi {
+            putFundef(::functionWithDependency)
+        }
+        val functionWrapper = env.getFundefOf(::functionWithDependency)
+        val exc = assertFailsWith<FundefException> { functionWrapper.checkCallable() }
+        assertNotNull(exc.message)
+        assertTrue { exc.message!!.contains("not found") }
+    }
+
+    @Test
+    fun `Check callable fails if incompatible types`() {
+        val env = tegralDi {
+            putFundef(::functionWithApiDependency)
+        }
+        val functionWrapper = env.getFundefOf(::functionWithApiDependency)
+        val exc = assertFailsWith<FundefException> { functionWrapper.checkCallable(mapOf("api" to Greeter())) }
+        assertNotNull(exc.message)
+        assertTrue("Actual message: '${exc.message}'") {
+            exc.message!!.contains("is not compatible")
+        }
+    }
+
+    @Test
+    fun `Check callable fails null check`() {
+        val env = tegralDi {
+            putFundef(::functionWithApiDependency)
+        }
+        val functionWrapper = env.getFundefOf(::functionWithApiDependency)
+        val exc = assertFailsWith<FundefException> { functionWrapper.checkCallable(mapOf("api" to null)) }
+        assertNotNull(exc.message)
+        assertTrue("Actual message: '${exc.message}'") {
+            exc.message!!.contains("is not compatible")
+        }
+    }
+
+    @Test
+    fun `Check callable successful null check`() {
+        val env = tegralDi {
+            putFundef(::functionWithNullableApiDependency)
+        }
+        val functionWrapper = env.getFundefOf(::functionWithNullableApiDependency)
+        assertDoesNotThrow { functionWrapper.checkCallable(mapOf("api" to null)) }
+    }
+
+    @Test
+    fun `Check callable successful with optionality`() {
+        val env = tegralDi {
+            putFundef(::functionWithDefault)
+        }
+        val functionWrapper = env.getFundefOf(::functionWithDefault)
+        assertDoesNotThrow { functionWrapper.checkCallable() }
+    }
+
+    @Test
+    fun `Instance provided when not an instance func`() {
+        val env = tegralDi {
+            putFundef(::functionWithDependency)
+            put(::Greeter)
+        }
+        val functionWrapper = env.getFundefOf(::functionWithDependency)
+        assertFailsWith<IllegalArgumentException> { functionWrapper.checkCallable(instance = "HELLO") }
+    }
+
+    @Test
+    fun `Extension provided when not an extension func`() {
+        val env = tegralDi {
+            putFundef(::functionWithDependency)
+            put(::Greeter)
+        }
+        val functionWrapper = env.getFundefOf(::functionWithDependency)
+        assertFailsWith<IllegalArgumentException> { functionWrapper.checkCallable(extension = "HELLO") }
+    }
+
+    @Test
+    fun `Actually working instance`() {
+        val env = tegralDi {
+            putFundef(SomeDumbClass::saySomething)
+        }
+        val functionWrapper = env.getFundefOf(SomeDumbClass::saySomething)
+        val res = functionWrapper.invoke(instance = SomeDumbClass("HIHIHI"))
+        assertEquals("Something HIHIHI", res)
+    }
+
 }
