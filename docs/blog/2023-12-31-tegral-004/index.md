@@ -16,6 +16,57 @@ Long time no see! Welcome to the release notes for Tegral 0.0.4!
 
 <!-- truncate -->
 
+## Experimental: Fundefs
+
+Fundefs allow you to define components as functions. Previously, you could only define components as classes that use properties to inject dependencies. Fundefs allow you to define components as functions. Here's a simple example:
+
+```kotlin
+class Greeter {
+    fun greet(name: String) = "Hello, $name!"
+}
+
+fun greetAlice(greeter: Greeter): String {
+    return greeter.greet("Alice")
+}
+
+val env = tegralDi {
+    put(::Greeter)
+    putFundef(::greetAlice)
+}
+
+val fundef = env.getFundefOf(::greetAlice)
+val result = fundef.invoke()
+// result == "Hello, Alice!"
+```
+
+You may not immediately see the usefulness of this, as this is a somewhat limited way of grabbing dependencies, but this will be extremely useful for Tegral Web Controllers. The end goal is to have a syntax that looks like this:
+
+```kotlin
+class Greeter {
+    fun greet(name: String) = "Hello, $name!"
+}
+
+fun Routing.hello(greeter: Greeter) {
+    get("/hello") {
+        call.respondText(greeter.greet("Alice"))
+    }
+}
+
+fun Application.myModule(/* ... */) {
+  // ...
+}
+
+fun main() {
+    tegral {
+        put(::Greeter)
+        put(Routing::hello)
+        put(Application::myModule)
+    }
+}
+```
+
+Not only is this more concise, this is also much closer to Ktor's "module" concept, making it less confusing for those who are familiar with Ktor. This is *not* fully done yet, we're about a third of the way there. You can check out [this issue](https://github.com/utybo/Tegral/issues/65) to follow how it's going.
+
 ## Updated dependencies
 
 We have a few updated dependencies in this release, but most importantly **Ktor was updated to verison 2.2.0**, which introduces some breaking changes. Refer to [their migration guide](https://ktor.io/docs/migrating-2-2.html) if you use:
