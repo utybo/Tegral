@@ -14,7 +14,15 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
   - **Experimental** Added functional component definitions (fundefs)
 
+- `tegral-web-config`
+
+  - Web configuration was made optional: it is no longer mandatory to have a configuration file. If no configuration file is found, a default configuration will be loaded instead.
+
 ### Changed
+
+- `tegral-config-core`
+
+  - Sectioned configurations can now be completely absent. If all of the registered sections are optional, this will lead to a default configuration being created.
 
 - Dependency updates (transient libraries)
 
@@ -44,7 +52,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - General
 
   - All packages can now be used with Java 11
-    ([#45](https://github.com/utybo/Tegral/pull/45))g
+    ([#45](https://github.com/utybo/Tegral/pull/45))
 
 - `tegral-openapi-ktor-resources`
 

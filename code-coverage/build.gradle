@@ -7,31 +7,41 @@ repositories {
     mavenCentral()
 }
 
+def projects = [
+    ':tegral-config:tegral-config-core',
+    ':tegral-core',
+    ':tegral-di:tegral-di-core',
+    ':tegral-di:tegral-di-services',
+    ':tegral-di:tegral-di-test',
+    ':tegral-di:tegral-di-test-mockk',
+    ':tegral-featureful',
+    ':tegral-logging',
+    ':tegral-openapi:tegral-openapi-cli',
+    ':tegral-openapi:tegral-openapi-dsl',
+    ':tegral-openapi:tegral-openapi-feature',
+    ':tegral-openapi:tegral-openapi-ktor',
+    ':tegral-openapi:tegral-openapi-ktor-resources',
+    ':tegral-openapi:tegral-openapi-ktorui',
+    ':tegral-openapi:tegral-openapi-scriptdef',
+    ':tegral-openapi:tegral-openapi-scripthost',
+    ':tegral-services:tegral-services-api',
+    ':tegral-services:tegral-services-feature',
+    ':tegral-web:tegral-web-appdefaults',
+    ':tegral-web:tegral-web-appdsl',
+    ':tegral-web:tegral-web-apptest',
+    ':tegral-web:tegral-web-config',
+    ':tegral-web:tegral-web-controllers',
+    ':tegral-web:tegral-web-controllers-test',
+    ':tegral-web:tegral-web-greeter',
+    ':e2e-tests:run-with-java-11',
+    ':e2e-tests:run-with-java-17',
+    ':e2e-tests:run-without-config'
+]
+
 dependencies {
-    jacocoAggregation project(':tegral-catalog')
-    jacocoAggregation project(':tegral-config:tegral-config-core')
-    jacocoAggregation project(':tegral-core')
-    jacocoAggregation project(':tegral-di:tegral-di-core')
-    jacocoAggregation project(':tegral-di:tegral-di-services')
-    jacocoAggregation project(':tegral-di:tegral-di-test')
-    jacocoAggregation project(':tegral-di:tegral-di-test-mockk')
-    jacocoAggregation project(':tegral-featureful')
-    jacocoAggregation project(':tegral-logging')
-    jacocoAggregation project(':tegral-openapi:tegral-openapi-dsl')
-    jacocoAggregation project(':tegral-openapi:tegral-openapi-feature')
-    jacocoAggregation project(':tegral-openapi:tegral-openapi-ktor')
-    jacocoAggregation project(':tegral-openapi:tegral-openapi-ktor-resources')
-    jacocoAggregation project(':tegral-openapi:tegral-openapi-ktorui')
-    jacocoAggregation project(':tegral-openapi:tegral-openapi-scriptdef')
-    jacocoAggregation project(':tegral-openapi:tegral-openapi-scripthost')
-    jacocoAggregation project(':tegral-services:tegral-services-api')
-    jacocoAggregation project(':tegral-services:tegral-services-feature')
-    jacocoAggregation project(':tegral-web:tegral-web-appdefaults')
-    jacocoAggregation project(':tegral-web:tegral-web-appdsl')
-    jacocoAggregation project(':tegral-web:tegral-web-apptest')
-    jacocoAggregation project(':tegral-web:tegral-web-config')
-    jacocoAggregation project(':tegral-web:tegral-web-controllers')
-    jacocoAggregation project(':tegral-web:tegral-web-controllers-test')
+    for (projectPath in projects) {
+        jacocoAggregation project(projectPath)
+    }
 }
 
 reporting {
@@ -41,6 +51,7 @@ reporting {
         }
     }
 }
+
 
 tasks.named('check') {
     dependsOn tasks.named('testCodeCoverageReport', JacocoReport)

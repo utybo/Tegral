@@ -24,7 +24,7 @@ data class WebConfiguration(
     /**
      * The port to use for hosting the main application.
      */
-    val port: Int,
+    val port: Int = 8080,
     /**
      * The hostname the main application will be bound to. `0.0.0.0` will be used by default and binds to all
      * network interfaces.
@@ -34,6 +34,9 @@ data class WebConfiguration(
     /**
      * The [ConfigurationSection] for [WebConfiguration].
      */
-    companion object :
-        ConfigurationSection<WebConfiguration>("web", SectionOptionality.Required, WebConfiguration::class)
+    companion object : ConfigurationSection<WebConfiguration>(
+        "web",
+        SectionOptionality.Optional(WebConfiguration()),
+        WebConfiguration::class
+    )
 }

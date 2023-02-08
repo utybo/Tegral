@@ -30,7 +30,8 @@ include 'tegral-catalog',
         'tegral-web:tegral-web-controllers-test',
         'tegral-web:tegral-web-greeter',
         'e2e-tests:run-with-java-11',
-        'e2e-tests:run-with-java-17'
+        'e2e-tests:run-with-java-17',
+        'e2e-tests:run-without-config'
 
 include 'examples:simple-json-api'
 

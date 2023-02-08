@@ -34,11 +34,10 @@ public class guru/zoroark/tegral/config/core/SectionedConfiguration {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class guru/zoroark/tegral/config/core/SectionedConfigurationDecoder : com/sksamuel/hoplite/decoder/NullHandlingDecoder {
+public final class guru/zoroark/tegral/config/core/SectionedConfigurationDecoder : com/sksamuel/hoplite/decoder/Decoder {
 	public fun <init> (Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function1;Ljava/util/List;)V
 	public fun decode (Lcom/sksamuel/hoplite/Node;Lkotlin/reflect/KType;Lcom/sksamuel/hoplite/DecoderContext;)Lcom/sksamuel/hoplite/fp/Validated;
 	public fun priority ()I
-	public fun safeDecode (Lcom/sksamuel/hoplite/Node;Lkotlin/reflect/KType;Lcom/sksamuel/hoplite/DecoderContext;)Lcom/sksamuel/hoplite/fp/Validated;
 	public fun supports (Lkotlin/reflect/KType;)Z
 }
 

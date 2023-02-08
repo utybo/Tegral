@@ -16,7 +16,15 @@ Long time no see! Welcome to the release notes for Tegral 0.0.4!
 
 <!-- truncate -->
 
-## Experimental: Fundefs
+## Optional configuration in Tegral Web
+
+When using Tegral Web, you previously had to always specify a configuration file. This is no longer required, as Tegral Web will now use a default configuration if none is provided. This default configuration is to use port 8080 and bind against `0.0.0.0`.
+
+## Tegral Config: Fully optional sectioned configuration
+
+Tegral Config's sectioned configurations are now fully optional if **all** of the defined sections are optional.
+
+## Experimental: Fundefs in Tegral DI
 
 Fundefs allow you to define components as functions. Previously, you could only define components as classes that use properties to inject dependencies. Fundefs allow you to define components as functions. Here's a simple example:
 
