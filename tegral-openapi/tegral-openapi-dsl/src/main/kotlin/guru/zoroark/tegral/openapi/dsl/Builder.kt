@@ -19,6 +19,7 @@ package guru.zoroark.tegral.openapi.dsl
  *
  * @param T The type of the object that is built.
  */
+@Deprecated("Use Tegral Core's Buildable<T> instead")
 fun interface Builder<out T> {
     /**
      * Build the object.

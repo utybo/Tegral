@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.servers.Server
 
@@ -26,7 +27,7 @@ interface ServerDsl
 /**
  * Builder for [ServerDsl].
  */
-class ServerBuilder(private val url: String) : ServerDsl, Builder<Server> {
+class ServerBuilder(private val url: String) : ServerDsl, @Suppress("DEPRECATION") Builder<Server>, Buildable<Server> {
     // TODO missing properties here
     override fun build() = Server().apply {
         url(this@ServerBuilder.url)

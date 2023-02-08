@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.media.MediaType
 
@@ -29,7 +30,7 @@ interface BodyDsl : PredefinedContentTypesDsl {
      * Note: this is provided as a MutableList in order to maintain the order content types were defined in.
      */
     @TegralDsl
-    val content: MutableList<Pair<String, Builder<MediaType>>>
+    val content: MutableList<Pair<String, Buildable<MediaType>>>
 
     /**
      * Creates a content entry for this content type (the string receiver) and body (the builder configured by the
@@ -64,7 +65,7 @@ interface BodyDsl : PredefinedContentTypesDsl {
  */
 @TegralDsl
 abstract class BodyBuilder(protected val context: OpenApiDslContext) : BodyDsl {
-    override val content = mutableListOf<Pair<String, Builder<MediaType>>>()
+    override val content = mutableListOf<Pair<String, Buildable<MediaType>>>()
 
     @TegralDsl
     override infix fun String.content(builder: MediaTypeBuilder.() -> Unit) {

@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.info.Contact
 import io.swagger.v3.oas.models.info.Info
@@ -103,7 +104,7 @@ interface InfoDsl {
  * Builder object for the [info object](https://spec.openapis.org/oas/v3.1.0#info-object).
  */
 @TegralDsl
-class InfoBuilder : Builder<Info>, InfoDsl {
+class InfoBuilder : @Suppress("DEPRECATION") Builder<Info>, Buildable<Info>, InfoDsl {
     override var title: String? = null
     override var summary: String? = null
     override var description: String? = null

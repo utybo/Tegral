@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.ExternalDocumentation
 import io.swagger.v3.oas.models.Operation
@@ -83,7 +84,7 @@ interface OperationDsl {
      * - [queryParameter]
      */
     @TegralDsl
-    val parameters: MutableList<Builder<Parameter>>
+    val parameters: MutableList<Buildable<Parameter>>
 
     /**
      * A declaration of which security mechanisms can be used for this operation.
@@ -99,7 +100,7 @@ interface OperationDsl {
      * The list of possible responses as they are returned from executing this operation.
      */
     @TegralDsl
-    val responses: MutableMap<Int, Builder<ApiResponse>>
+    val responses: MutableMap<Int, Buildable<ApiResponse>>
 
     /**
      * A list of tags for API documentation control. Tags can be used for logical grouping of operations by resources or
@@ -162,9 +163,9 @@ interface OperationDsl {
  */
 @TegralDsl
 @Suppress("TooManyFunctions")
-class OperationBuilder(private val context: OpenApiDslContext) : OperationDsl, Builder<Operation> {
+class OperationBuilder(private val context: OpenApiDslContext) : OperationDsl, @Suppress("DEPRECATION") Builder<Operation>, Buildable<Operation> {
     override var summary: String? = null
-    override val responses = mutableMapOf<Int, Builder<ApiResponse>>()
+    override val responses = mutableMapOf<Int, Buildable<ApiResponse>>()
     override var description: String? = null
     override var externalDocsDescription: String? = null
     override var externalDocsUrl: String? = null
@@ -175,7 +176,7 @@ class OperationBuilder(private val context: OpenApiDslContext) : OperationDsl, B
     // TODO callbacks, servers
 
     override val tags = mutableListOf<String>()
-    override val parameters = mutableListOf<Builder<Parameter>>()
+    override val parameters = mutableListOf<Buildable<Parameter>>()
     override val securityRequirements = mutableListOf<SecurityRequirement>()
 
     // TODO properly support AND scenarios between security requirements (right now it's OR only)

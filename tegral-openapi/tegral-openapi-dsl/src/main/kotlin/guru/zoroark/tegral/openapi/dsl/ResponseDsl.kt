@@ -14,7 +14,9 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
+import io.swagger.v3.oas.models.headers.Header
 import io.swagger.v3.oas.models.media.Content
 import io.swagger.v3.oas.models.responses.ApiResponse
 
@@ -28,16 +30,29 @@ interface ResponseDsl : BodyDsl {
      */
     @TegralDsl
     var description: String?
-    // TODO headers, links
+
+    /**
+     * Headers this response may return.
+     */
+    val headers: MutableList<Pair<String, Buildable<Header>>>
+
+    infix fun String.header(builder: HeaderBuilder.() -> Unit)
 }
 
 /**
  * Builder for Response objects, implementing the [ResponseDsl].
  */
-class ResponseBuilder(context: OpenApiDslContext) : BodyBuilder(context), ResponseDsl, Builder<ApiResponse> {
+class ResponseBuilder(context: OpenApiDslContext) : BodyBuilder(context), ResponseDsl, @Suppress("DEPRECATION") Builder<ApiResponse>, Buildable<ApiResponse> {
     override var description: String? = null
+    override val headers: MutableList<Pair<String, Buildable<Header>>> = mutableListOf()
+
+    override infix fun String.header(builder: HeaderBuilder.() -> Unit) {
+        headers += this to HeaderBuilder(context).apply(builder)
+    }
+
     override fun build(): ApiResponse = ApiResponse().apply {
         description(this@ResponseBuilder.description)
+        headers(this@ResponseBuilder.headers.associate { (name, builder) -> name to builder.build() })
         if (this@ResponseBuilder.content.isNotEmpty()) {
             content = Content()
             for ((typeString, typeBuilder) in this@ResponseBuilder.content) {

@@ -16,6 +16,7 @@ package guru.zoroark.tegral.openapi.dsl
 
 import io.mockk.every
 import io.mockk.mockk
+import io.swagger.v3.oas.models.headers.Header
 import io.swagger.v3.oas.models.media.Content
 import io.swagger.v3.oas.models.media.MediaType
 import io.swagger.v3.oas.models.media.Schema
@@ -67,6 +68,26 @@ class ResponseBuilderTest {
 
         val expected = ApiResponse().apply {
             description = "My response description"
+        }
+
+        assertEquals(expected, response)
+    }
+
+    @Test
+    fun `Test with header`() {
+        val context = mockk<OpenApiDslContext>()
+        val response = ResponseBuilder(context).apply {
+            description = "My response description"
+            "Test-Header" header {
+                description = "Some header thing"
+            }
+        }.build()
+
+        val expected = ApiResponse().apply {
+            description = "My response description"
+            headers(
+                mapOf("Test-Header" to Header().description("Some header thing"))
+            )
         }
 
         assertEquals(expected, response)

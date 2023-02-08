@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.Operation
 import io.swagger.v3.oas.models.PathItem
@@ -69,16 +70,16 @@ interface PathDsl {
 /**
  * Builder for [PathDsl]
  */
-class PathBuilder(private val context: OpenApiDslContext) : PathDsl, Builder<PathItem> {
+class PathBuilder(private val context: OpenApiDslContext) : PathDsl, @Suppress("DEPRECATION") Builder<PathItem>, Buildable<PathItem> {
     // TODO summary, description, ...
 
-    private var get: Builder<Operation>? = null
-    private var post: Builder<Operation>? = null
-    private var put: Builder<Operation>? = null
-    private var delete: Builder<Operation>? = null
-    private var patch: Builder<Operation>? = null
-    private var options: Builder<Operation>? = null
-    private var head: Builder<Operation>? = null
+    private var get: Buildable<Operation>? = null
+    private var post: Buildable<Operation>? = null
+    private var put: Buildable<Operation>? = null
+    private var delete: Buildable<Operation>? = null
+    private var patch: Buildable<Operation>? = null
+    private var options: Buildable<Operation>? = null
+    private var head: Buildable<Operation>? = null
 
     override fun get(block: OperationDsl.() -> Unit) {
         get = OperationBuilder(context).apply(block)
