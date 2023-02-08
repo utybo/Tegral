@@ -20,10 +20,6 @@ Long time no see! Welcome to the release notes for Tegral 0.0.4!
 
 When using Tegral Web, you previously had to always specify a configuration file. This is no longer required, as Tegral Web will now use a default configuration if none is provided. This default configuration is to use port 8080 and bind against `0.0.0.0`.
 
-## Tegral Config: Fully optional sectioned configuration
-
-Tegral Config's sectioned configurations are now fully optional if **all** of the defined sections are optional.
-
 ## Experimental: Fundefs in Tegral DI
 
 Fundefs allow you to define components as functions. Previously, you could only define components as classes that use properties to inject dependencies. Fundefs allow you to define components as functions. Here's a simple example:
@@ -95,3 +91,15 @@ Here's the full list of upgrades:
 | JUnit        | 5.9.0 -> 5.9.2   |
 | Swagger UI   | 4.13.2 -> 4.15.5 |
 | Logback      | 1.2.11 -> 1.4.5  |
+
+## Misc. changes
+
+Here are smaller, miscellaneous changes.
+
+### Tegral Config: Fully optional sectioned configuration
+
+Tegral Config's sectioned configurations are now fully optional if **all** of the defined sections are optional.
+
+### Tegral OpenAPI: Add headers in responses
+
+It's in the spec but I forgot to add it, woopsies. This has been fixed and you can use `"Hello" header { }` in your responses!

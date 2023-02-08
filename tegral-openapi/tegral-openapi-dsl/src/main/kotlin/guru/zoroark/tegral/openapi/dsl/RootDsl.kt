@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.ExternalDocumentation
@@ -72,9 +73,14 @@ class RootBuilder(
     private val infoBuilder: InfoBuilder = InfoBuilder(),
     private val paths: PathsBuilder = PathsBuilder(context),
     private val securitySchemes: MutableMap<String, SecuritySchemeBuilder> = mutableMapOf()
-) : RootDsl, InfoDsl by infoBuilder, PathsDsl by paths, Builder<OpenAPI> {
+) : RootDsl,
+    InfoDsl by infoBuilder,
+    PathsDsl by paths,
+    @Suppress("DEPRECATION")
+    Builder<OpenAPI>,
+    Buildable<OpenAPI> {
     private val tags = mutableListOf<TagBuilder>()
-    private val servers = mutableListOf<Builder<Server>>()
+    private val servers = mutableListOf<Buildable<Server>>()
 
     override var externalDocsDescription: String? = null
     override var externalDocsUrl: String? = null

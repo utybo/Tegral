@@ -255,6 +255,21 @@ Includes all of the [body-related utilities](#bodies)
 
 ```kotlin
 description = "Description of the response"
+"MyHeader" header {
+    // See HeaderDsl
+}
+```
+
+### HeaderDsl
+
+Defines a header in a response.
+
+Includes all of the [media type utilities](#media-types)
+
+```kotlin
+description = "Hey this is my header blah blah blah"
+deprecated = false
+explode = false
 ```
 
 ### Bodies

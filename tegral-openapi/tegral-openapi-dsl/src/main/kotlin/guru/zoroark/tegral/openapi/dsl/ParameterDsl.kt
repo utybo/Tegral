@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.media.Schema
 import io.swagger.v3.oas.models.parameters.CookieParameter
@@ -86,7 +87,7 @@ interface ParameterDsl : MediaTypeDsl {
     var allowEmptyValue: Boolean?
 
     /**
-     * Describes how the parameter value will be serialized dependong on the type of the parameter value.
+     * Describes how the parameter value will be serialized depending on the type of the parameter value.
      *
      * See [here](https://spec.openapis.org/oas/v3.1.0#style-values) for more information.
      */
@@ -137,7 +138,11 @@ class ParameterBuilder(
      * The kind of parameter. See [ParameterKind] for more information.
      */
     private val kind: ParameterKind
-) : Builder<Parameter>, ParameterDsl {
+) :
+    @Suppress("DEPRECATION")
+    Builder<Parameter>,
+    Buildable<Parameter>,
+    ParameterDsl {
     override var description: String? = null
     override var required: Boolean? = null
     override var deprecated: Boolean? = null

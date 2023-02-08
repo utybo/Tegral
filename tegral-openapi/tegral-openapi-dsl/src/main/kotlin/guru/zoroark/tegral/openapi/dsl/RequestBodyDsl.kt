@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.media.Content
 import io.swagger.v3.oas.models.parameters.RequestBody
@@ -40,7 +41,12 @@ interface RequestBodyDsl : BodyDsl {
 /**
  * Builder for the [request body DSL][RequestBodyDsl]
  */
-class RequestBodyBuilder(context: OpenApiDslContext) : BodyBuilder(context), RequestBodyDsl, Builder<RequestBody> {
+class RequestBodyBuilder(context: OpenApiDslContext) :
+    BodyBuilder(context),
+    RequestBodyDsl,
+    @Suppress("DEPRECATION")
+    Builder<RequestBody>,
+    Buildable<RequestBody> {
     override var description: String? = null
     override var required: Boolean? = null
     override fun build(): RequestBody = RequestBody().apply {

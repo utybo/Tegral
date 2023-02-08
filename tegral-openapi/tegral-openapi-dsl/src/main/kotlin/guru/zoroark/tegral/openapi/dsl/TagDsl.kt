@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.ExternalDocumentation
 import io.swagger.v3.oas.models.tags.Tag
@@ -52,7 +53,11 @@ interface TagDsl {
  * @param name The name of the tag. This is the same value that is put in the [tags][OperationDsl.tags] property of
  * operations.
  */
-class TagBuilder(private val name: String) : TagDsl, Builder<Tag> {
+class TagBuilder(private val name: String) :
+    TagDsl,
+    @Suppress("DEPRECATION")
+    Builder<Tag>,
+    Buildable<Tag> {
     override var description: String? = null
     override var externalDocsDescription: String? = null
     override var externalDocsUrl: String? = null

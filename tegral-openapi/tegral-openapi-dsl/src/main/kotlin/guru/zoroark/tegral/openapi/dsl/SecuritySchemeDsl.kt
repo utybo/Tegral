@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.security.OAuthFlows
 import io.swagger.v3.oas.models.security.SecurityScheme
@@ -163,7 +164,11 @@ val SecuritySchemeDsl.inQuery: Unit
 /**
  * Builder for the [security scheme DSL][SecuritySchemeDsl].
  */
-class SecuritySchemeBuilder : SecuritySchemeDsl, Builder<SecurityScheme> {
+class SecuritySchemeBuilder :
+    SecuritySchemeDsl,
+    @Suppress("DEPRECATION")
+    Builder<SecurityScheme>,
+    Buildable<SecurityScheme> {
     override var type: SecurityScheme.Type? = null
     override var description: String? = null
     override var name: String? = null

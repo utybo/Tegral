@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.Paths
 
@@ -74,7 +75,11 @@ interface PathsDsl {
 /**
  * Builder for [PathsDsl].
  */
-class PathsBuilder(private val context: OpenApiDslContext) : PathsDsl, Builder<Paths> {
+class PathsBuilder(private val context: OpenApiDslContext) :
+    PathsDsl,
+    @Suppress("DEPRECATION")
+    Builder<Paths>,
+    Buildable<Paths> {
     private val pathBuilders = mutableMapOf<String, PathBuilder>()
 
     override fun String.invoke(path: PathDsl.() -> Unit) {
