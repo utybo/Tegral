@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    api project(":tegral-core")
     api project(":tegral-openapi:tegral-openapi-dsl")
     api project(":tegral-openapi:tegral-openapi-scriptdef")
     api libs.kotlin.scripting.common
