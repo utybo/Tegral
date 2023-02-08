@@ -164,7 +164,11 @@ val SecuritySchemeDsl.inQuery: Unit
 /**
  * Builder for the [security scheme DSL][SecuritySchemeDsl].
  */
-class SecuritySchemeBuilder : SecuritySchemeDsl, @Suppress("DEPRECATION") Builder<SecurityScheme>, Buildable<SecurityScheme> {
+class SecuritySchemeBuilder :
+    SecuritySchemeDsl,
+    @Suppress("DEPRECATION")
+    Builder<SecurityScheme>,
+    Buildable<SecurityScheme> {
     override var type: SecurityScheme.Type? = null
     override var description: String? = null
     override var name: String? = null

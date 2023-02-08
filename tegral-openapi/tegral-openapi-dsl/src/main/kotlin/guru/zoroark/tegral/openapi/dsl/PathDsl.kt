@@ -70,7 +70,11 @@ interface PathDsl {
 /**
  * Builder for [PathDsl]
  */
-class PathBuilder(private val context: OpenApiDslContext) : PathDsl, @Suppress("DEPRECATION") Builder<PathItem>, Buildable<PathItem> {
+class PathBuilder(private val context: OpenApiDslContext) :
+    PathDsl,
+    @Suppress("DEPRECATION")
+    Builder<PathItem>,
+    Buildable<PathItem> {
     // TODO summary, description, ...
 
     private var get: Buildable<Operation>? = null

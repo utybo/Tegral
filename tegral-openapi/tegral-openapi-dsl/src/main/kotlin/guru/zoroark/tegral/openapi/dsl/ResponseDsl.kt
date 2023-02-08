@@ -36,13 +36,21 @@ interface ResponseDsl : BodyDsl {
      */
     val headers: MutableList<Pair<String, Buildable<Header>>>
 
+    /**
+     * Add a header to this response with the given string as its name.
+     */
     infix fun String.header(builder: HeaderBuilder.() -> Unit)
 }
 
 /**
  * Builder for Response objects, implementing the [ResponseDsl].
  */
-class ResponseBuilder(context: OpenApiDslContext) : BodyBuilder(context), ResponseDsl, @Suppress("DEPRECATION") Builder<ApiResponse>, Buildable<ApiResponse> {
+class ResponseBuilder(context: OpenApiDslContext) :
+    BodyBuilder(context),
+    ResponseDsl,
+    @Suppress("DEPRECATION")
+    Builder<ApiResponse>,
+    Buildable<ApiResponse> {
     override var description: String? = null
     override val headers: MutableList<Pair<String, Buildable<Header>>> = mutableListOf()
 
@@ -52,7 +60,9 @@ class ResponseBuilder(context: OpenApiDslContext) : BodyBuilder(context), Respon
 
     override fun build(): ApiResponse = ApiResponse().apply {
         description(this@ResponseBuilder.description)
-        headers(this@ResponseBuilder.headers.associate { (name, builder) -> name to builder.build() })
+        if (this@ResponseBuilder.headers.isNotEmpty()) {
+            headers(this@ResponseBuilder.headers.associate { (name, builder) -> name to builder.build() })
+        }
         if (this@ResponseBuilder.content.isNotEmpty()) {
             content = Content()
             for ((typeString, typeBuilder) in this@ResponseBuilder.content) {

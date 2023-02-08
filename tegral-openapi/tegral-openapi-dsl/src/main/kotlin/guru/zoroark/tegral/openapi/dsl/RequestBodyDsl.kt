@@ -41,8 +41,12 @@ interface RequestBodyDsl : BodyDsl {
 /**
  * Builder for the [request body DSL][RequestBodyDsl]
  */
-class RequestBodyBuilder(context: OpenApiDslContext)
-    : BodyBuilder(context), RequestBodyDsl, @Suppress("DEPRECATION") Builder<RequestBody>, Buildable<RequestBody> {
+class RequestBodyBuilder(context: OpenApiDslContext) :
+    BodyBuilder(context),
+    RequestBodyDsl,
+    @Suppress("DEPRECATION")
+    Builder<RequestBody>,
+    Buildable<RequestBody> {
     override var description: String? = null
     override var required: Boolean? = null
     override fun build(): RequestBody = RequestBody().apply {

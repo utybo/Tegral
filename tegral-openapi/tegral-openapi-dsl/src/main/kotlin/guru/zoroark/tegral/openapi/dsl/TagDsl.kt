@@ -53,7 +53,11 @@ interface TagDsl {
  * @param name The name of the tag. This is the same value that is put in the [tags][OperationDsl.tags] property of
  * operations.
  */
-class TagBuilder(private val name: String) : TagDsl, @Suppress("DEPRECATION") Builder<Tag>, Buildable<Tag> {
+class TagBuilder(private val name: String) :
+    TagDsl,
+    @Suppress("DEPRECATION")
+    Builder<Tag>,
+    Buildable<Tag> {
     override var description: String? = null
     override var externalDocsDescription: String? = null
     override var externalDocsUrl: String? = null
