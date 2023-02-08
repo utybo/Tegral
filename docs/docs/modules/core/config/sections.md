@@ -151,6 +151,12 @@ println(two) // Two!
 // highlight-end
 ```
 
+## Behavior with no input source
+
+If no input is provided for the sectioned configuration, either because no sections are defined in the configuration or because the sectioned configuration is not defined in the configuration, AND if none of the sections are required, then the sectioned configuration will be instantiated with the default values of the sections.
+
+Note that, to allow empty source files to be used with Hoplite, you'll need to call `.allowEmptySources()` on your Hoplite configuration builder.
+
 ## Limitations
 
 Sectioned configurations have the following limitations:

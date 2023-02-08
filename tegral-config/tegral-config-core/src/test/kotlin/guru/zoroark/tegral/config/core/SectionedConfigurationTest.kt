@@ -18,6 +18,7 @@ import com.google.common.jimfs.Configuration
 import com.google.common.jimfs.Jimfs
 import com.sksamuel.hoplite.ConfigException
 import com.sksamuel.hoplite.ConfigLoaderBuilder
+import com.sksamuel.hoplite.ConfigSource
 import com.sksamuel.hoplite.addPathSource
 import org.junit.jupiter.api.assertThrows
 import java.nio.file.FileSystem
@@ -83,8 +84,12 @@ class SectionedConfigurationTest {
         val fs = setupFs("/test.toml", content)
 
         return configLoader(sections.toList())
-            .addPathSource(fs.getPath("/test.toml"))
-            .build().loadConfigOrThrow<SectionedConfigurationContainer>()
+            .allowEmptySources()
+            .build()
+            .loadConfigOrThrow(
+                SectionedConfigurationContainer::class,
+                listOf(ConfigSource.PathSource(fs.getPath("/test.toml")))
+            )
     }
 
     @Test
@@ -177,5 +182,22 @@ class SectionedConfigurationTest {
             mapOf(SimpleSection to SimpleSection("value"))
         )
         assertEquals("SectionedConfigurationOne(simple-section=SimpleSection(key=value))", configuration.toString())
+    }
+
+    @Test
+    fun `Can create a default config if all sections are optional`() {
+        val toml = ""
+        val config = setupAndLoadTomlConfig(toml, OptionalSection)
+        assertEquals(OptionalSection("default"), config.sc[OptionalSection])
+    }
+
+    @Test
+    fun `Cannot create a default config if some sections are required`() {
+        val toml = ""
+        val exc = assertThrows<ConfigException> {
+            setupAndLoadTomlConfig(toml, OptionalSection, SimpleSection)
+        }
+        assertNotNull(exc.message)
+        assertTrue { exc.message!!.contains("Missing required section(s): simple-section") }
     }
 }
