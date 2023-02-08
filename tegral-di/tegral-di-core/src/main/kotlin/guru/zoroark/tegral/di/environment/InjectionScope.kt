@@ -27,9 +27,14 @@ interface MetalessInjectionScope {
      * Create an injector for the given identifier. The behavior of the injection depends on the
      * [injection environment][InjectionEnvironment], but this is guaranteed to return an element of type [T].
      *
+     * Injections made via this function will throw a [ComponentNotFoundException] if no such component could be found.
+     * Refer to [optional] if you wish for it to inject `null` instead.
+     *
      * @param what The identifier to use for finding the relevant element.
      * @param T The type of the element to retrieve.
      * @return A read-only property which, on `get`, returns the relevant object.
+     * @throws ComponentNotFoundException Component was not found when it was looked up. This exact moment when the
+     * component is looked up depends on the environment implementation.
      */
     fun <T : Any> inject(what: Identifier<T>): Injector<T>
 

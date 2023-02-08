@@ -8,6 +8,12 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased] (0.0.4)
 
+### Added
+
+- `tegral-di-core`
+
+  - **Experimental** Added functional component definitions (fundefs)
+
 ### Changed
 
 - Dependency updates (transient libraries)

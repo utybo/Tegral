@@ -166,7 +166,7 @@ class DslTests {
             }
         }
         val message = assertNotNull(ex.message)
-        assertContains(message, "must take either no arguments")
+        assertContains(message, "must take either no parameters")
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -180,7 +180,7 @@ class DslTests {
             }
         }
         val message = assertNotNull(ex.message)
-        assertContains(message, "must take either no arguments")
+        assertContains(message, "must take either no parameters")
     }
 
     interface Contract

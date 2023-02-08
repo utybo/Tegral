@@ -47,9 +47,6 @@ jobs:
     name: "Check examples"
     runs-on: ubuntu-latest
     needs: [validate-wrapper]
-    strategy:
-      matrix:
-        example: ["step-1", "step-2"]
     steps:
       - uses: actions/checkout@v3
 
@@ -65,7 +62,11 @@ jobs:
         run: "./gradlew :tegral-catalog:publishToMavenLocal --build-cache -I ci/build-cache.init.gradle"
 
       - name: Run check on example
-        run: ./gradlew -p "examples/tutorial/${{ matrix.example }}" check --include-build ../../.. --build-cache -I ../../../ci/build-cache.init.gradle
+        run: |
+          examples="step-1 step-2"
+          for example in $examples; do
+            ./gradlew -p "examples/tutorial/${example}" check --include-build ../../.. --build-cache -I ../../../ci/build-cache.init.gradle
+          done
 
   build-dokka:
     name: "Generate Dokka files"
