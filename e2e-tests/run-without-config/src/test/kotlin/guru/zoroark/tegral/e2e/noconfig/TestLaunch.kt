@@ -16,7 +16,6 @@ package guru.zoroark.tegral.e2e.noconfig
 
 import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.web.appdsl.tegral
-import kotlin.test.Test
 import guru.zoroark.tegral.web.controllers.KtorController
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.java.Java
@@ -27,6 +26,7 @@ import io.ktor.server.response.respondText
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.get
 import kotlinx.coroutines.runBlocking
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class Controller : KtorController() {
@@ -35,7 +35,6 @@ class Controller : KtorController() {
             call.respondText("Hello!")
         }
     }
-
 }
 
 class TestLaunch {
