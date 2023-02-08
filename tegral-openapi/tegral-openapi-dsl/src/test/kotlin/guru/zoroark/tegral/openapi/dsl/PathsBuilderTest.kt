@@ -20,6 +20,9 @@ import io.swagger.v3.oas.models.PathItem
 import io.swagger.v3.oas.models.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class PathsBuilderTest {
     @Test
@@ -225,5 +228,72 @@ class PathsBuilderTest {
         }
 
         assertEquals(expected, paths)
+    }
+
+    @Test
+    fun `Add everything via definition at path level`() {
+        val paths = PathsBuilder(mockk()).apply {
+            "/foo/bar" {
+                summary = "Never"
+                description = "gonna"
+                externalDocsDescription = "give"
+                externalDocsUrl = "you"
+                operationId = "up"
+                deprecated = true
+                security("never")
+                200 response {
+                    description = "gonna"
+                }
+                "let" pathParameter {
+                    description = "you"
+                }
+                "down" headerParameter {
+                    description = "never"
+                }
+                "gonna" cookieParameter {
+                    description = "run"
+                }
+                "around" queryParameter {
+                    description = "and"
+
+                }
+                get {
+                    // ...
+                }
+
+                body {
+                    description = "desert"
+                }
+
+                post {
+                    // youuuuuu
+                }
+            }
+        }.build()
+        val path = assertNotNull(paths["/foo/bar"])
+        val operations = listOf(
+            assertNotNull(path.get),
+            assertNotNull(path.post)
+        )
+        for (op in operations) {
+            assertEquals(1, op.security.size)
+
+            assertEquals("Never", op.summary)
+            assertEquals("gonna", op.description)
+            assertEquals("give", op.externalDocs.description)
+            assertEquals("you", op.externalDocs.url)
+            assertEquals("up", op.operationId)
+            assertEquals(emptyList(), op.security[0]["never"])
+            assertTrue(op.deprecated)
+            assertEquals("gonna", op.responses["200"]?.description)
+            assertEquals(4, op.parameters.size)
+            val expectations = listOf("let" to "you", "down" to "never", "gonna" to "run", "around" to "and")
+            for ((i, param) in op.parameters.withIndex()) {
+                assertEquals(expectations[i].first, param.name)
+                assertEquals(expectations[i].second, param.description)
+            }
+        }
+        assertNull(path.get.requestBody)
+        assertEquals("desert", path.post.requestBody.description)
     }
 }

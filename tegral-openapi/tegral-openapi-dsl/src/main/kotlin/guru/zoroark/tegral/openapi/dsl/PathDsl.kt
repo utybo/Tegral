@@ -18,12 +18,18 @@ import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.Operation
 import io.swagger.v3.oas.models.PathItem
+import io.swagger.v3.oas.models.parameters.Parameter
+import io.swagger.v3.oas.models.responses.ApiResponse
+import io.swagger.v3.oas.models.security.SecurityRequirement
 
 /**
  * DSL for the [path item object](https://spec.openapis.org/oas/v3.1.0#path-item-object).
+ *
+ * Any operation-related data entered at the path level are applied by default to all the paths defined *after* the data
+ * is specified.
  */
 @TegralDsl
-interface PathDsl {
+interface PathDsl : OperationDsl {
     /**
      * A definition of a GET operation on this path.
      */
@@ -67,15 +73,19 @@ interface PathDsl {
     fun head(block: OperationDsl.() -> Unit)
 }
 
+private const val WriteOnlyErrorMessage =
+    "Operation functions, when used on a path instead of an actual operation, are write-only"
+
 /**
  * Builder for [PathDsl]
  */
-class PathBuilder(private val context: OpenApiDslContext) :
+class PathBuilder(
+    private val context: OpenApiDslContext
+) :
     PathDsl,
     @Suppress("DEPRECATION")
     Builder<PathItem>,
     Buildable<PathItem> {
-    // TODO summary, description, ...
 
     private var get: Buildable<Operation>? = null
     private var post: Buildable<Operation>? = null
@@ -85,32 +95,118 @@ class PathBuilder(private val context: OpenApiDslContext) :
     private var options: Buildable<Operation>? = null
     private var head: Buildable<Operation>? = null
 
+    private val toApplyToOperations = mutableListOf<OperationDsl.() -> Unit>()
+    private fun addOperationDefault(block: OperationDsl.() -> Unit) {
+        toApplyToOperations += block
+    }
+    private fun newOperation(): OperationBuilder {
+        val op = OperationBuilder(context)
+        toApplyToOperations.forEach { it(op) }
+        return op
+    }
+
     override fun get(block: OperationDsl.() -> Unit) {
-        get = OperationBuilder(context).apply(block)
+        get = newOperation().apply(block)
     }
 
     override fun post(block: OperationDsl.() -> Unit) {
-        post = OperationBuilder(context).apply(block)
+        post = newOperation().apply(block)
     }
 
     override fun put(block: OperationDsl.() -> Unit) {
-        put = OperationBuilder(context).apply(block)
+        put = newOperation().apply(block)
     }
 
     override fun delete(block: OperationDsl.() -> Unit) {
-        delete = OperationBuilder(context).apply(block)
+        delete = newOperation().apply(block)
     }
 
     override fun patch(block: OperationDsl.() -> Unit) {
-        patch = OperationBuilder(context).apply(block)
+        patch = newOperation().apply(block)
     }
 
     override fun options(block: OperationDsl.() -> Unit) {
-        options = OperationBuilder(context).apply(block)
+        options = newOperation().apply(block)
     }
 
     override fun head(block: OperationDsl.() -> Unit) {
-        head = OperationBuilder(context).apply(block)
+        head = newOperation().apply(block)
+    }
+
+    override var summary: String?
+        get() = error(WriteOnlyErrorMessage)
+        set(value) {
+            addOperationDefault { summary = value }
+        }
+    override var description: String?
+        get() = error(WriteOnlyErrorMessage)
+        set(value) {
+            addOperationDefault { description = value }
+        }
+    override var externalDocsDescription: String?
+        get() = error(WriteOnlyErrorMessage)
+        set(value) {
+            addOperationDefault { externalDocsDescription = value }
+        }
+    override var externalDocsUrl: String?
+        get() = error(WriteOnlyErrorMessage)
+        set(value) {
+            addOperationDefault { externalDocsUrl = value }
+        }
+    override var requestBody: RequestBodyBuilder?
+        get() = error(WriteOnlyErrorMessage)
+        set(_) {
+            error("requestBody is not compatible with PathDsl, use the body function instead")
+        }
+    override var deprecated: Boolean?
+        get() = error(WriteOnlyErrorMessage)
+        set(value) {
+            addOperationDefault { deprecated = value }
+        }
+    override var operationId: String?
+        get() = error(WriteOnlyErrorMessage)
+        set(value) {
+            addOperationDefault { operationId = value }
+        }
+    override val parameters: MutableList<Buildable<Parameter>>
+        get() = error(WriteOnlyErrorMessage)
+    override val securityRequirements: MutableList<SecurityRequirement>
+        get() = error(WriteOnlyErrorMessage)
+    override val responses: MutableMap<Int, Buildable<ApiResponse>>
+        get() = error(WriteOnlyErrorMessage)
+    override val tags: MutableList<String>
+        get() = error(WriteOnlyErrorMessage)
+
+    override fun security(key: String) {
+        addOperationDefault { security(key) }
+    }
+
+    override fun security(key: String, vararg scopes: String) {
+        addOperationDefault { security(key, *scopes) }
+    }
+
+    override fun Int.response(builder: ResponseDsl.() -> Unit) {
+        addOperationDefault { this@response.response(builder)   }
+    }
+
+    override fun String.pathParameter(builder: ParameterDsl.() -> Unit) {
+        addOperationDefault { this@pathParameter.pathParameter(builder) }
+    }
+
+    override fun String.headerParameter(builder: ParameterDsl.() -> Unit) {
+        addOperationDefault { this@headerParameter.headerParameter(builder) }
+    }
+
+    override fun String.cookieParameter(builder: ParameterDsl.() -> Unit) {
+        addOperationDefault { this@cookieParameter.cookieParameter(builder) }
+    }
+
+    override fun String.queryParameter(builder: ParameterDsl.() -> Unit) {
+        addOperationDefault { this@queryParameter.queryParameter(builder) }
+    }
+
+    override fun body(builder: RequestBodyDsl.() -> Unit) {
+        addOperationDefault { body(builder) }
     }
 
     override fun build(): PathItem {
