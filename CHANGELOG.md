@@ -12,7 +12,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - `tegral-di-core`
 
-  - **Experimental** Added functional component definitions (fundefs)
+  - **Experimental** Added functional component definitions (fundefs).
+
+- `tegral-openapi-dsl`
+
+  - Added the ability to add headers to API responses.
 
 - `tegral-web-config`
 
