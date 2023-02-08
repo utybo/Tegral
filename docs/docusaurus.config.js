@@ -7,7 +7,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Tegral",
-  tagline: "Frameworks, libraries and DSLs for awesome Kotlin applications.",
+  tagline: "A web back-end framework, the libraries that make it tick, and beyond! 100% Kotlin.",
   url: "https://tegral.zoroark.guru",
   baseUrl: "/",
   onBrokenLinks: "throw",
