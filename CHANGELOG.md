@@ -6,7 +6,7 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] (0.0.4)
+## [Unreleased](0.0.4)
 
 ### Added
 
@@ -16,7 +16,21 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - `tegral-openapi-dsl`
 
+  - You can now define operation things (such as parameters, responses, etc.) at the *path* level. This allows you to define common properties between all of the operations within the same path.
+
   - Added the ability to add headers to API responses.
+
+- `tegral-openapi-ktor`
+
+  - You can now describe operations using an OperationBuilder, in addition to the existing direct DSL-way. This is mostly an internal change that was made to support the new Ktor Resources functionality.
+
+- `tegral-openapi-ktor-resources`
+
+  - Resources descriptions now have proper support for:
+
+    - *Parent* resources. Descriptions of parent resources will now cascade down to their children. This is comparable to an automatic `describeSubroutes`.
+
+    - Multiple operations on the same resource. You can now use `get`, `post`, etc. in the description of a resource. Anything set outside of these blocks will be applied to all following operations, while anything set inside will be applied to that specific operation.
 
 - `tegral-web-config`
 
@@ -27,6 +41,16 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `tegral-config-core`
 
   - Sectioned configurations can now be completely absent. If all of the registered sections are optional, this will lead to a default configuration being created.
+
+- `tegral-openapi-ktor`
+
+  - Misc. internal changes:
+
+    - `getOpenApiOrNullWithMessage` is now public
+
+    - The DSL context in the `TegralOpenApiKtor` plugin is now publicly accessible via the `context` property.
+
+    - `getHooksForRoute` now returns a list instead of a sequence.
 
 - Dependency updates (transient libraries)
 

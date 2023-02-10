@@ -15,6 +15,8 @@
 package guru.zoroark.tegral.openapi.ktor
 
 import guru.zoroark.tegral.core.TegralDsl
+import guru.zoroark.tegral.openapi.dsl.OpenApiDslContext
+import guru.zoroark.tegral.openapi.dsl.OperationBuilder
 import guru.zoroark.tegral.openapi.dsl.OperationDsl
 import guru.zoroark.tegral.openapi.dsl.RootDsl
 import io.ktor.http.HttpMethod
@@ -46,7 +48,11 @@ private fun printNotInstalledWarning(application: Application) {
     }
 }
 
-internal fun Application.getOpenApiOrNullWithMessage(): TegralOpenApiKtor? {
+/**
+ * Retrieve the [TegralOpenApiKtor] plugin instance from this application, or print a warning message once and return
+ * null.
+ */
+fun Application.getOpenApiOrNullWithMessage(): TegralOpenApiKtor? {
     val plugin = pluginOrNull(TegralOpenApiKtor)
     return if (plugin != null) {
         plugin
@@ -77,6 +83,32 @@ fun Application.describe(description: RootDsl.() -> Unit) {
 @TegralDsl
 @KtorDsl
 infix fun Route.describe(description: OperationDsl.() -> Unit): Route {
+    return describeWith { ctx, hooks ->
+        OperationBuilder(ctx).apply { hooks.forEach { it() } }.apply(description)
+    }
+}
+
+/**
+ * A lambda for creating OperationBuilders. This is useful if you need to heavily customize the operation creation
+ * process.
+ *
+ * This lambda receives:
+ *
+ * - A context, from which types can be created (via [OpenApiDslContext.computeAndRegisterSchema]
+ * - A list of hooks that **must** be added to the description *before* anything else.
+ */
+typealias OperationBuilderWithHooks = (OpenApiDslContext, List<EndpointDescriptionHook>) -> OperationBuilder
+
+/**
+ * Adds an OpenAPI operation description to this route using a prepared builder.
+ *
+ * Refer to [OperationBuilderWithHooks] for details on how to construct custom builders. For most cases, you should
+ * instead use [describe].
+ *
+ * The [TegralOpenApiKtor] plugin needs to be installed for this to work.
+ */
+@TegralDsl
+infix fun Route.describeWith(builder: OperationBuilderWithHooks): Route {
     val openApi = application.getOpenApiOrNullWithMessage() ?: return this
 
     var metadata = parseMetadataFromRoute(this)
@@ -89,14 +121,12 @@ infix fun Route.describe(description: OperationDsl.() -> Unit): Route {
     }
 
     val hooks = openApi.getHooksForRoute(this)
-
+    val opBuilder = builder(openApi.context, hooks)
     openApi.registerOperation(
         "/" + metadata.httpPath.asReversed().joinToString("/"),
-        metadata.httpMethod!!
-    ) {
-        hooks.forEach { it() }
-        description()
-    }
+        metadata.httpMethod!!,
+        opBuilder
+    )
     return this
 }
 

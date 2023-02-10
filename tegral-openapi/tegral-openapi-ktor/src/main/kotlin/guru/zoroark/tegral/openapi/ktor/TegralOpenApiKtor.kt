@@ -14,7 +14,9 @@
 
 package guru.zoroark.tegral.openapi.ktor
 
+import guru.zoroark.tegral.openapi.dsl.OperationBuilder
 import guru.zoroark.tegral.openapi.dsl.OperationDsl
+import guru.zoroark.tegral.openapi.dsl.PathDsl
 import guru.zoroark.tegral.openapi.dsl.PathsDsl
 import guru.zoroark.tegral.openapi.dsl.RootBuilder
 import guru.zoroark.tegral.openapi.dsl.RootDsl
@@ -31,6 +33,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 typealias EndpointDescriptionHook = OperationDsl.() -> Unit
+typealias PathDescriptionHook = PathDsl.() -> Unit
 
 /**
  * A Ktor plugin that adds a Tegral OpenAPI DSL integration to the Ktor application, including:
@@ -41,7 +44,10 @@ typealias EndpointDescriptionHook = OperationDsl.() -> Unit
  * - Support for serving OpenAPI documents from an endpoint
  */
 class TegralOpenApiKtor {
-    private val context = SimpleDslContext()
+    /**
+     * The context used by this plugin. This can be used to register new types.
+     */
+    val context = SimpleDslContext()
     private val builder: RootBuilder = RootBuilder(context)
     private val logger: Logger = LoggerFactory.getLogger("tegral.openapi.ktor.plugin")
     private val hooks: MutableMap<Route, MutableList<OperationDsl.() -> Unit>> = mutableMapOf()
@@ -90,6 +96,12 @@ class TegralOpenApiKtor {
         }
     }
 
+    fun registerOperation(path: String, method: HttpMethod, operationBuilder: OperationBuilder) {
+        builder.apply {
+            operation(path, method, operationBuilder)
+        }
+    }
+
     private fun PathsDsl.operation(path: String, method: HttpMethod, operation: OperationDsl.() -> Unit) {
         when (method) {
             HttpMethod.Get -> path get operation
@@ -99,6 +111,19 @@ class TegralOpenApiKtor {
             HttpMethod.Patch -> path patch operation
             HttpMethod.Head -> path head operation
             HttpMethod.Options -> path options operation
+            else -> logger.warn("Ignoring unsupported HTTP method $method (while registering '$path')")
+        }
+    }
+
+    private fun PathsDsl.operation(path: String, method: HttpMethod, operationBuilder: OperationBuilder) {
+        when (method) {
+            HttpMethod.Get -> path { get = operationBuilder }
+            HttpMethod.Post -> path { post = operationBuilder }
+            HttpMethod.Put -> path { put = operationBuilder }
+            HttpMethod.Delete -> path { delete = operationBuilder }
+            HttpMethod.Patch -> path { patch = operationBuilder }
+            HttpMethod.Head -> path { head = operationBuilder }
+            HttpMethod.Options -> path { options = operationBuilder }
             else -> logger.warn("Ignoring unsupported HTTP method $method (while registering '$path')")
         }
     }
@@ -140,8 +165,8 @@ class TegralOpenApiKtor {
     /**
      * Retrieve all registered hooks for the parents of the given route.
      */
-    fun getHooksForRoute(route: Route): Sequence<EndpointDescriptionHook> =
-        route.parentsExcludingSelf().flatMap { hooks[it]?.asSequence() ?: emptySequence() }
+    fun getHooksForRoute(route: Route): List<EndpointDescriptionHook> =
+        route.parentsExcludingSelf().flatMap { hooks[it]?.asSequence() ?: emptySequence() }.toList()
 }
 
 /**

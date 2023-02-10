@@ -16,7 +16,6 @@ package guru.zoroark.tegral.openapi.dsl
 
 import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
-import io.swagger.v3.oas.models.Operation
 import io.swagger.v3.oas.models.PathItem
 import io.swagger.v3.oas.models.parameters.Parameter
 import io.swagger.v3.oas.models.responses.ApiResponse
@@ -30,6 +29,55 @@ import io.swagger.v3.oas.models.security.SecurityRequirement
  */
 @TegralDsl
 interface PathDsl : OperationDsl {
+    /**
+     * The currently registered GET operation, or null if none was registered yet.
+     *
+     * Consider using the `get` function instead of this property.
+     */
+    var get: OperationBuilder?
+
+    /**
+     * The currently registered POST operation, or null if none was registered yet.
+     *
+     * Consider using the `post` function instead of this property.
+     */
+    var post: OperationBuilder?
+
+    /**
+     * The currently registered PUT operation, or null if none was registered yet.
+     *
+     * Consider using the `put` function instead of this property.
+     */
+    var put: OperationBuilder?
+
+    /**
+     * The currently registered DELETE operation, or null if none was registered yet.
+     *
+     * Consider using the `delete` function instead of this property.
+     */
+    var delete: OperationBuilder?
+
+    /**
+     * The currently registered PATCH operation, or null if none was registered yet.
+     *
+     * Consider using the `patch` function instead of this property.
+     */
+    var patch: OperationBuilder?
+
+    /**
+     * The currently registered OPTIONS operation, or null if none was registered yet.
+     *
+     * Consider using the `options` function instead of this property.
+     */
+    var options: OperationBuilder?
+
+    /**
+     * The currently registered HEAD operation, or null if none was registered yet.
+     *
+     * Consider using the `head` function instead of this property.
+     */
+    var head: OperationBuilder?
+
     /**
      * A definition of a GET operation on this path.
      */
@@ -73,7 +121,7 @@ interface PathDsl : OperationDsl {
     fun head(block: OperationDsl.() -> Unit)
 }
 
-private const val WriteOnlyErrorMessage =
+private const val WRITE_ONLY_ERROR_MSG =
     "Operation functions, when used on a path instead of an actual operation, are write-only"
 
 /**
@@ -81,27 +129,28 @@ private const val WriteOnlyErrorMessage =
  */
 class PathBuilder(
     private val context: OpenApiDslContext
-) :
-    PathDsl,
+) : PathDsl,
     @Suppress("DEPRECATION")
     Builder<PathItem>,
     Buildable<PathItem> {
 
-    private var get: Buildable<Operation>? = null
-    private var post: Buildable<Operation>? = null
-    private var put: Buildable<Operation>? = null
-    private var delete: Buildable<Operation>? = null
-    private var patch: Buildable<Operation>? = null
-    private var options: Buildable<Operation>? = null
-    private var head: Buildable<Operation>? = null
+    override var get: OperationBuilder? = null
+    override var post: OperationBuilder? = null
+    override var put: OperationBuilder? = null
+    override var delete: OperationBuilder? = null
+    override var patch: OperationBuilder? = null
+    override var options: OperationBuilder? = null
+    override var head: OperationBuilder? = null
 
-    private val toApplyToOperations = mutableListOf<OperationDsl.() -> Unit>()
+    private val operationHooks = mutableListOf<OperationDsl.() -> Unit>()
     private fun addOperationDefault(block: OperationDsl.() -> Unit) {
-        toApplyToOperations += block
+        operationHooks += block
     }
+
     private fun newOperation(): OperationBuilder {
         val op = OperationBuilder(context)
-        toApplyToOperations.forEach { it(op) }
+        operationHooks.forEach { it(op) }
+        op.tags += tags
         return op
     }
 
@@ -134,48 +183,47 @@ class PathBuilder(
     }
 
     override var summary: String?
-        get() = error(WriteOnlyErrorMessage)
+        get() = error(WRITE_ONLY_ERROR_MSG)
         set(value) {
             addOperationDefault { summary = value }
         }
     override var description: String?
-        get() = error(WriteOnlyErrorMessage)
+        get() = error(WRITE_ONLY_ERROR_MSG)
         set(value) {
             addOperationDefault { description = value }
         }
     override var externalDocsDescription: String?
-        get() = error(WriteOnlyErrorMessage)
+        get() = error(WRITE_ONLY_ERROR_MSG)
         set(value) {
             addOperationDefault { externalDocsDescription = value }
         }
     override var externalDocsUrl: String?
-        get() = error(WriteOnlyErrorMessage)
+        get() = error(WRITE_ONLY_ERROR_MSG)
         set(value) {
             addOperationDefault { externalDocsUrl = value }
         }
     override var requestBody: RequestBodyBuilder?
-        get() = error(WriteOnlyErrorMessage)
+        get() = error(WRITE_ONLY_ERROR_MSG)
         set(_) {
             error("requestBody is not compatible with PathDsl, use the body function instead")
         }
     override var deprecated: Boolean?
-        get() = error(WriteOnlyErrorMessage)
+        get() = error(WRITE_ONLY_ERROR_MSG)
         set(value) {
             addOperationDefault { deprecated = value }
         }
     override var operationId: String?
-        get() = error(WriteOnlyErrorMessage)
+        get() = error(WRITE_ONLY_ERROR_MSG)
         set(value) {
             addOperationDefault { operationId = value }
         }
     override val parameters: MutableList<Buildable<Parameter>>
-        get() = error(WriteOnlyErrorMessage)
+        get() = error(WRITE_ONLY_ERROR_MSG)
     override val securityRequirements: MutableList<SecurityRequirement>
-        get() = error(WriteOnlyErrorMessage)
+        get() = error(WRITE_ONLY_ERROR_MSG)
     override val responses: MutableMap<Int, Buildable<ApiResponse>>
-        get() = error(WriteOnlyErrorMessage)
-    override val tags: MutableList<String>
-        get() = error(WriteOnlyErrorMessage)
+        get() = error(WRITE_ONLY_ERROR_MSG)
+    override val tags: MutableList<String> = mutableListOf()
 
     override fun security(key: String) {
         addOperationDefault { security(key) }
@@ -186,7 +234,7 @@ class PathBuilder(
     }
 
     override fun Int.response(builder: ResponseDsl.() -> Unit) {
-        addOperationDefault { this@response.response(builder)   }
+        addOperationDefault { this@response.response(builder) }
     }
 
     override fun String.pathParameter(builder: ParameterDsl.() -> Unit) {

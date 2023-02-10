@@ -14,7 +14,6 @@
 
 package guru.zoroark.tegral.openapi.ktor.resources
 
-import guru.zoroark.tegral.openapi.dsl.OperationDsl
 import guru.zoroark.tegral.openapi.ktor.TegralOpenApiKtor
 import guru.zoroark.tegral.openapi.ktor.openApi
 import io.ktor.resources.Resource
@@ -33,11 +32,9 @@ import kotlin.test.assertNotNull
 @Resource("/hello/{name}")
 @Serializable
 class Hello(val name: String) {
-    companion object : ResourceDescription {
-        override val openApi: OperationDsl.() -> Unit = {
-            description = "Returns a greeting"
-        }
-    }
+    companion object : ResourceDescription by describeResource({
+        description = "Returns a greeting"
+    })
 }
 
 typealias RouteBuilder = Route.(suspend PipelineContext<Unit, ApplicationCall>.(Hello) -> Unit) -> Route
