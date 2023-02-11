@@ -152,7 +152,7 @@ internal tailrec fun parseMutableMetadataFromSelector(route: Route?, metadata: M
             metadata.httpPath += selector.prefix.orEmpty() + "{${selector.name}}" + selector.suffix.orEmpty()
 
         else -> {
-            /* TODO avoid ignoring silently */
+            logger.debug("Ignoring unknown route selector type ${selector::class}")
         }
     }
     parseMutableMetadataFromSelector(route.parent, metadata)

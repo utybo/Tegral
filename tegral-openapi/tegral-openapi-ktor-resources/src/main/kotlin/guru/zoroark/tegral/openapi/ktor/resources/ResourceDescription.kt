@@ -7,10 +7,12 @@ import guru.zoroark.tegral.openapi.dsl.PathDsl
 import guru.zoroark.tegral.openapi.ktor.OperationBuilderWithHooks
 import guru.zoroark.tegral.openapi.ktor.PathDescriptionHook
 import io.ktor.resources.Resource
+import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 import kotlin.reflect.full.companionObjectInstance
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.hasAnnotation
+import kotlin.reflect.full.isSubclassOf
 
 /**
  * Provides endpoint descriptions for [resource classes](https://ktor.io/docs/type-safe-routing.html#resource_classes).
@@ -54,8 +56,27 @@ fun describeResource(description: PathDsl.() -> Unit): ResourceDescription {
     }
 }
 
+private val logger = LoggerFactory.getLogger("tegral.openapi.ktor.resources")
+
 private object EmptyDescription : ResourceDescription by describeResource({ })
-private fun KClass<*>.findResourceDescription() = companionObjectInstance as? ResourceDescription ?: EmptyDescription
+
+private fun KClass<*>.findResourceDescription(): ResourceDescription {
+    val rd = companionObjectInstance as? ResourceDescription
+    if (rd != null) {
+        return rd
+    } else {
+        logger.warn(
+            "Tried to retrieve the resource description of $this, but was not found because " +
+                when (companionObjectInstance) {
+                    null ->
+                        "the class does not have a companion object"
+                    is ResourceDescription -> "the class' companion object does not implement the ResourceDescription interface."
+                    else -> "of an unknown reason. Please report this."
+                }
+        )
+        return EmptyDescription
+    }
+}
 
 private tailrec fun KClass<*>.findParentDescriptions(
     acc: MutableList<ResourceDescription> = mutableListOf()
