@@ -1,0 +1,22 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+    id 'application'
+}
+
+dependencies {
+    implementation project(":tegral-utils:tegral-utils-logtools")
+    implementation project(":tegral-di:tegral-di-core")
+    implementation libs.logback
+    implementation libs.jackson.kotlin
+
+    testImplementation libs.jimfs
+}
+
+application {
+    mainClass = "guru.zoroark.tegral.prismakt.generator.MainKt"
+}
+
+// TODO
+ext.humanName = "Tegral PrismaKt Generator"
+ext.description = "A handy companion for working with .openapi.kts files." // TODO
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/openapi/cli" // TODO

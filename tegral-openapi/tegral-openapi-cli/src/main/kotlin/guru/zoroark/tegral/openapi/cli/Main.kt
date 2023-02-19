@@ -26,6 +26,7 @@ import guru.zoroark.tegral.openapi.dsl.OpenApiVersion
 import guru.zoroark.tegral.openapi.dsl.toJson
 import guru.zoroark.tegral.openapi.dsl.toYaml
 import guru.zoroark.tegral.openapi.scripthost.OpenApiScriptHost
+import guru.zoroark.tegral.utils.logtools.applyMinimalistLoggingOverrides
 import io.swagger.v3.oas.models.OpenAPI
 import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
