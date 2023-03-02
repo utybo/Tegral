@@ -10,76 +10,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//model User {
-//  id    Int     @id @default(autoincrement())
-//  email String  @unique
-//  name  String?
-//}
-
-
 model User {
-  id                  Int                 @id @default(autoincrement())
-  address             String              @unique
-  username            String
-  email               String              @unique
-  password            String
-  role                String              @default("USER")
-  team                Team?               @relation(fields: [teamId], references: [id])
-  teamId              Int?
-  nfts                Nft[]
-  Ratings             Ratings[]
-  nftsTransferredFrom OwnershipTransfer[] @relation(name: "from")
-  nftsTransferredTo   OwnershipTransfer[] @relation(name: "to")
-}
-
-model Team {
-  id               Int          @id @default(autoincrement())
-  name             String       @unique
-  balance          Int          @default(0)
-  members          User[]
-  ownedCollections Collection[]
-}
-
-model Nft {
-  id           Int                 @id @default(autoincrement())
-  name         String
-  image        Bytes
-  price        Int
-  status       String              @default("DRAFT")
-  owner        User                @relation(fields: [userId], references: [id])
-  userId       Int
-  Ratings      Ratings[]
-  collection   Collection?         @relation(fields: [collectionId], references: [id])
-  collectionId Int?
-  transfers    OwnershipTransfer[]
-}
-
-model Collection {
-  id     Int    @id @default(autoincrement())
-  name   String
-  logo   Bytes
-  status String @default("DRAFT")
-  nfts   Nft[]
-  owner  Team   @relation(fields: [teamId], references: [id])
-  teamId Int
-}
-
-model Ratings {
-  id     Int  @id @default(autoincrement())
-  rating Int
-  nft    Nft  @relation(fields: [nftId], references: [id])
-  nftId  Int
-  user   User @relation(fields: [userId], references: [id])
-  userId Int
-}
-
-model OwnershipTransfer {
-  id          Int   @id @default(autoincrement())
-  nft         Nft   @relation(fields: [nftId], references: [id])
-  fromOwner   User? @relation(name: "from", fields: [fromOwnerId], references: [id])
-  toOwner     User  @relation(name: "to", fields: [toOwnerId], references: [id])
-  fromOwnerId Int?
-  toOwnerId   Int
-  price       Int
-  nftId       Int
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
 }

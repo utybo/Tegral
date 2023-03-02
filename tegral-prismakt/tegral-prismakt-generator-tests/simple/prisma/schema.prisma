@@ -1,0 +1,18 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator tegralkt {
+  // provider = "node prisma/launch-prismakt-generator.js"
+  provider = "gradle --console=plain -q runGeneratorInternal"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  identifier   Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+}

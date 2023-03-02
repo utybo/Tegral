@@ -21,6 +21,8 @@ licenserPlugin = "0.6.1"
 swaggerCore = "2.2.8"
 swaggerUi = "4.15.5"
 clikt = "3.5.0"
+exposed = "0.41.1"
+kotlinPoet = "1.12.0"
 
 [libraries]
 # Dependencies
@@ -64,6 +66,11 @@ swaggerCore-core = { module = "io.swagger.core.v3:swagger-core", version.ref = "
 swaggerUi = { module = "org.webjars:swagger-ui", version.ref = "swaggerUi" }
 
 clikt = { module = "com.github.ajalt.clikt:clikt", version.ref = "clikt" }
+
+exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
+exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
+
+kotlinPoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinPoet" }
 
 # Test dependencies
 

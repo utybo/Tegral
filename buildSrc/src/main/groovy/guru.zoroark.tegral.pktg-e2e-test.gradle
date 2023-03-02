@@ -1,0 +1,31 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-common-conventions'
+
+    id 'com.github.node-gradle.node'
+}
+
+dependencies {
+    implementation libs.exposed.core
+    implementation libs.exposed.dao
+}
+
+configurations {
+    generator
+}
+
+task prismaGenerate(type: NpxTask) {
+    command = "prisma"
+    args = ["generate"]
+
+    inputs.dir("prisma")
+    outputs.dir(project.layout.buildDirectory.dir("prismakt-generator"))
+}
+
+task runGeneratorInternal(type: JavaExec) {
+    mainClass = "guru.zoroark.tegral.prismakt.generator.MainKt"
+    classpath = configurations.generator
+    standardInput = System.in
+}
+
+tasks.compileKotlin.dependsOn prismaGenerate
+tasks.compileTestKotlin.dependsOn prismaGenerate

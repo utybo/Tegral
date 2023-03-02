@@ -28,7 +28,7 @@ task rewriteDokkaLinks(type: Copy) {
         filesMatching(["index.html"]) {
             filter { line -> 
                 line.replaceAll("href=\"", "href=\"/dokka/")
-                    .replaceAll("src=\"", "src=\"/dokka/")
+                    .replaceAl l("src=\"", "src=\"/dokka/")
                     .replaceAll("pathToRoot = \"\"", "pathToRoot = \"/dokka\"")
             }
         }
