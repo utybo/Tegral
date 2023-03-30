@@ -18,6 +18,7 @@ unstable.mkShell {
     unstable.nodejs-16_x
     nodePackages16.pnpm
     unstable.prisma-engines
+    nodePackages16.prisma
   ];
   shellHook = ''
     export PRISMA_MIGRATION_ENGINE_BINARY="${unstable.prisma-engines}/bin/migration-engine"

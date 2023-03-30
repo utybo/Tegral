@@ -6,10 +6,13 @@ plugins {
 dependencies {
     implementation project(":tegral-utils:tegral-utils-logtools")
     implementation project(":tegral-di:tegral-di-core")
+    implementation project(":tegral-niwen:tegral-niwen-parser")
+    implementation project(":tegral-niwen:tegral-niwen-lexer")
     implementation libs.logback
     implementation libs.jackson.kotlin
     implementation libs.exposed.core
     implementation libs.exposed.dao
+    implementation libs.exposed.javatime
     implementation libs.kotlinPoet
 
     testImplementation libs.jimfs

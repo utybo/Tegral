@@ -1,18 +1,59 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator tegralkt {
+generator prismakt {
   // provider = "node prisma/launch-prismakt-generator.js"
-  provider = "gradle --console=plain -q runGeneratorInternal"
+  provider      = "gradle --console=plain -q runGeneratorInternal"
+  output        = "../build/prismaGeneratedSrc"
+  exposedTarget = "sql" // or dao
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = "file:./dev.db"
 }
 
 model User {
-  identifier   Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  identifier Int     @id @default(autoincrement())
+  email      String  @unique
+  name       String?
+}
+
+model AllTypesInOne {
+  id Int @id @default(autoincrement())
+
+  // Core types
+  string    String
+  stringOpt String?
+
+  boolean    Boolean
+  booleanOpt Boolean?
+
+  int    Int
+  intOpt Int?
+
+  bigInt    BigInt
+  bigIntOpt BigInt?
+
+  float    Float
+  floatOpt Float?
+
+  decimal    Decimal
+  decimalOpt Decimal?
+
+  bytes    Bytes
+  bytesOpt Bytes?
+
+  // Date and time related things
+  dateTime    DateTime
+  dateTimeOpt DateTime?
+
+  timestamp    DateTime @db.Timestamp(0)
+  timestampOpt DateTime @db.Timestamp(0)
+
+  time    DateTime @db.Time(0)
+  timeOpt DateTime @db.Time(0)
+
+  date    DateTime  @db.Date()
+  dateOpt DateTime? @db.Date
 }

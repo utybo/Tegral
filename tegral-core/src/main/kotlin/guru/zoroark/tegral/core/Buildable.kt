@@ -17,7 +17,7 @@ package guru.zoroark.tegral.core
 /**
  * Represents a builder that can be turned into an object of type `T`.
  */
-fun interface Buildable<T> {
+fun interface Buildable<out T> {
     /**
      * Build the current object into a [T] object.
      */
