@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.niwen.lexer
 
+import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.niwen.lexer.matchers.*
 
 
@@ -27,6 +28,7 @@ internal const val NIWEN_LEXER_DOCS = "tegral.zoroark.guru"
  * a [LexerBuilder] that can be used to modify the lexer that is
  * eventually returned.
  */
+@TegralDsl
 fun niwenLexer(body: LexerBuilder.() -> Unit): Lexer {
     val dslEnv = LexerBuilder()
     body(dslEnv)

@@ -4,7 +4,16 @@ package guru.zoroark.tegral.niwen.parser
  * A *node declaration*. This simple interface provides a way to turn the
  * description of a node into an actual node.
  *
+ * In most cases, Niwen can determine which constructors to use using reflection. Use the following:
+ *
+ * ```kotlin
+ * class MyNodeType(val child: MyOtherNodeType) {
+ *     companion object : ParserNodeDeclaration<MyNodeType> by reflective()
+ * }
+ * ```
+ *
  * You would typically implement it like so:
+ * TODO this is wrong
  *
  *  ```
  *  class MyNodeType(val child: MyOtherNodeType) {

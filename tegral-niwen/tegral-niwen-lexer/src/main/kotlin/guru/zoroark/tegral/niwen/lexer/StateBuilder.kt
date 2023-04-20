@@ -15,6 +15,7 @@
 package guru.zoroark.tegral.niwen.lexer
 
 import guru.zoroark.tegral.core.Buildable
+import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.niwen.lexer.matchers.TokenMatcher
 import guru.zoroark.tegral.niwen.lexer.matchers.toRecognizer
 
@@ -28,6 +29,7 @@ import guru.zoroark.tegral.niwen.lexer.matchers.toRecognizer
  * [LexerState] objects are immutable and the goal of the DSL is to provide a way
  * to configure them.
  */
+@TegralDsl
 class StateBuilder : Buildable<LexerState> {
     private val tokenMatchers = mutableListOf<Buildable<TokenMatcher>>()
 
@@ -49,6 +51,7 @@ class StateBuilder : Buildable<LexerState> {
      * that uses the given (pseudo-)recognizers as its recognition technique.
      * @see toRecognizer
      */
+    @TegralDsl
     infix fun Any.isToken(token: TokenType): MatchedMatcherBuilder {
         val recognizer = toRecognizer(this)
         val env = MatchedMatcherBuilder(recognizer, token)
@@ -77,10 +80,16 @@ class StateBuilder : Buildable<LexerState> {
      * @return A matcher environment that will produce a matcher that will make
      * the lexer ignore anything that it matches.
      */
+    @TegralDsl
     val Any.ignore: IgnoringMatcherBuilder
         get() {
             val env = IgnoringMatcherBuilder(toRecognizer(this))
             tokenMatchers += env
             return env
         }
+
+    object Default
+
+    @TegralDsl
+    val default = Default
 }

@@ -126,14 +126,3 @@ inline infix fun <T> EitherBuilder<T>.or(branchInit: EitherBranchBuilder<T>.() -
     addBranch(branchInit)
     return this
 }
-
-fun <T, R : T> selfKeyFor(type: KType) = NodeParameterKey<T, R>(type, "self")
-
-inline fun <reified T, R : T> ExpectationReceiver<T>.self(): NodeParameterKey<T, R> {
-    return selfKeyFor(typeOf<T>())
-}
-
-inline fun <reified T> subtype(): ParserNodeDeclaration<T> {
-    val type = typeOf<T>()
-    return ParserNodeDeclaration { it[selfKeyFor(type)] }
-}

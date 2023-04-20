@@ -15,13 +15,15 @@
 package guru.zoroark.tegral.niwen.lexer
 
 import guru.zoroark.tegral.core.Buildable
+import guru.zoroark.tegral.core.TegralDsl
 
 /**
  * This class is used to build a [Lexer] using the Niwen Lexer DSL, and is used
  * in lambda-with-receivers to provide high level DSLs for the configuration of
  * a lexer.
  */
-class LexerBuilder : Buildable<Lexer> {
+@TegralDsl
+class LexerBuilder : Buildable<Lexer>, UnlockDefaultState {
     /**
      * An enum that represents the different kinds of lexers that can be built
      */
@@ -77,6 +79,7 @@ class LexerBuilder : Buildable<Lexer> {
             }
         }
 
+    @TegralDsl
     infix fun StateLabel.state(body: StateBuilder.() -> Unit): Unit =
         createLabeledState(this, body)
 
@@ -88,6 +91,7 @@ class LexerBuilder : Buildable<Lexer> {
         /**
          * Create a state.
          */
+        @TegralDsl
         infix fun state(body: StateBuilder.() -> Unit) {
             if (defaultStateLabel == null)
                 this@LexerBuilder.createLabeledState(null, body)
@@ -109,12 +113,13 @@ class LexerBuilder : Buildable<Lexer> {
     }
 
     /**
-     * DSL construct that allows you to directly create a default state.
+     * DSL construct that allows you to directly create and go to a default state.
      * Use it like this: `default state { ... }`
      *
-     * The only use for this property is for its
-     * [state][StateInfixCreator.state] function.
+     * The only use for this property is for its [state][StateInfixCreator.state] function and the
+     * [TokenMatcherBuilder.thenState] function.
      */
+    @TegralDsl
     val default = StateInfixCreator()
 
     /**

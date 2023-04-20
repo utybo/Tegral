@@ -43,8 +43,10 @@ enum Role {
 class NiwenPrismTest {
     @Test
     fun `Test full example`() {
-        val tokens = NiwenPrism.lexer.tokenize(fullExample)
-        println(tokens)
+        val tokens = NiwenPrism.tokenize(fullExample)
+        println(tokens.joinToString("\n"))
+        val res = NiwenPrism.parse(tokens)
+        println(res)
     }
 
 }

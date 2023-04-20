@@ -9,6 +9,7 @@ import guru.zoroark.tegral.niwen.parser.expectations.ExpectedEither
 import guru.zoroark.tegral.niwen.parser.expectations.ExpectedNode
 import guru.zoroark.tegral.niwen.parser.expectations.ExpectedToken
 import guru.zoroark.tegral.niwen.parser.expectations.NodeParameterKey
+import guru.zoroark.tegral.niwen.parser.expectations.StoreStateCallback
 import kotlin.reflect.typeOf
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -51,7 +52,7 @@ class ExpectedEitherTest {
                         ExpectedToken(tPar),
                         ExpectedNode(
                             BranchOneOrTwo.BranchOne,
-                            rootKey<BranchOneOrTwo>("ambiguous")
+                            StoreStateCallback(rootKey<BranchOneOrTwo>("ambiguous"))
                         ),
                         ExpectedToken(tPar)
                     )
@@ -61,7 +62,7 @@ class ExpectedEitherTest {
                         ExpectedToken(tPar),
                         ExpectedNode(
                             BranchOneOrTwo.BranchTwo,
-                            rootKey<BranchOneOrTwo>("ambiguous")
+                            StoreStateCallback(rootKey<BranchOneOrTwo>("ambiguous"))
                         ),
                         ExpectedToken(tPar)
                     )
@@ -75,14 +76,14 @@ class ExpectedEitherTest {
                     BranchOneOrTwo.BranchOne to DescribedType(
                         BranchOneOrTwo.BranchOne,
                         listOf(
-                            ExpectedToken(tWord, storeValueIn = NodeParameterKey(typeOf<String>(), "oneWord")),
+                            ExpectedToken(tWord, stateCallback = StoreStateCallback(NodeParameterKey(typeOf<String>(), "oneWord"))),
                             ExpectedToken(tOne)
                         )
                     ),
                     BranchOneOrTwo.BranchTwo to DescribedType(
                         BranchOneOrTwo.BranchTwo,
                         listOf(
-                            ExpectedToken(tWord, storeValueIn = NodeParameterKey(typeOf<String>(), "twoWord")),
+                            ExpectedToken(tWord, stateCallback = StoreStateCallback(NodeParameterKey(typeOf<String>(), "twoWord"))),
                             ExpectedToken(tTwo)
                         )
                     )

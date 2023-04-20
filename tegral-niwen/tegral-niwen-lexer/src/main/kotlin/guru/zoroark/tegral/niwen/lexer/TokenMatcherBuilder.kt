@@ -15,6 +15,7 @@
 package guru.zoroark.tegral.niwen.lexer
 
 import guru.zoroark.tegral.core.Buildable
+import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.niwen.lexer.matchers.*
 
 abstract class TokenMatcherBuilder(
@@ -41,14 +42,13 @@ abstract class TokenMatcherBuilder(
      *   state
      * * A [StateLabel] to go to the state with the given label
      */
+    @TegralDsl
     infix fun thenState(next: StateLabel) {
         nextStateBehavior = GoToLabeledState(next)
     }
 
-    infix fun thenState(
-        @Suppress("UNUSED_PARAMETER")
-        defaultMarker: LexerBuilder.StateInfixCreator
-    ) {
+    @TegralDsl
+    infix fun thenState(default: StateBuilder.Default) {
         nextStateBehavior = GoToDefaultState
     }
 }

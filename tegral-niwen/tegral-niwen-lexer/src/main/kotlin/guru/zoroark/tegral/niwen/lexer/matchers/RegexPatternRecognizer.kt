@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.niwen.lexer.matchers
 
+import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.niwen.lexer.StateBuilder
 import org.intellij.lang.annotations.Language
 import java.util.regex.Pattern
@@ -41,6 +42,7 @@ class RegexPatternRecognizer(private val pattern: Pattern) :
  *
  * @param pattern The regular expression to use in the recognizer
  */
+@TegralDsl
 fun StateBuilder.matches(@Language("RegExp") pattern: String): TokenRecognizer {
     return RegexPatternRecognizer(Pattern.compile(pattern))
 }

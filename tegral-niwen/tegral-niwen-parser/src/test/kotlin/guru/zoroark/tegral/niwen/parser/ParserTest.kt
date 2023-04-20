@@ -6,6 +6,7 @@ import guru.zoroark.tegral.niwen.lexer.tokenType
 import guru.zoroark.tegral.niwen.parser.expectations.ExpectedNode
 import guru.zoroark.tegral.niwen.parser.expectations.ExpectedToken
 import guru.zoroark.tegral.niwen.parser.expectations.NodeParameterKey
+import guru.zoroark.tegral.niwen.parser.expectations.StoreStateCallback
 import guru.zoroark.tegral.niwen.parser.expectations.asKey
 import kotlin.reflect.typeOf
 import kotlin.test.*
@@ -34,7 +35,7 @@ class ParserTest {
                     expectations = listOf(
                         ExpectedNode(
                             SimpleType,
-                            StoringType::child.asKey()
+                            stateCallback = StoreStateCallback(StoringType::child.asKey())
                         )
                     )
                 )
@@ -101,14 +102,14 @@ class ParserTest {
             listOf(
                 DescribedType(
                     AdditionNode, listOf(
-                    ExpectedNode(NumberNode, AdditionNode::first.asKey()),
+                    ExpectedNode(NumberNode, StoreStateCallback(AdditionNode::first.asKey())),
                     ExpectedToken(tokenPlus),
-                    ExpectedNode(NumberNode, AdditionNode::second.asKey())
+                    ExpectedNode(NumberNode, StoreStateCallback(AdditionNode::second.asKey()))
                 )
                 ),
                 DescribedType(
                     NumberNode,
-                    listOf(ExpectedToken(tokenNumber, storeValueIn = NodeParameterKey(typeOf<String>(), "value")))
+                    listOf(ExpectedToken(tokenNumber, stateCallback = StoreStateCallback(NodeParameterKey(typeOf<String>(), "value"))))
                 )
             ),
             AdditionNode

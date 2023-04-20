@@ -32,11 +32,26 @@ class NiwenParserBuilder<T> : Buildable<NiwenParser<T>> {
      */
     @TegralDsl
     infix fun ParserNodeDeclaration<T>.root(block: DescribedTypeBuilder<T>.() -> Unit) {
+        root(this)
+        this(block)
+    }
+
+    @TegralDsl
+    fun root(decl: ParserNodeDeclaration<T>) {
         if (rootNodeType != null) {
             throw NiwenParserException("Another node was already defined as the root, ${this::class} cannot also be a root.")
         }
-        this(block)
-        rootNodeType = this
+        rootNodeType = decl
+    }
+
+    /**
+     * Provides a way to group declaration together.
+     *
+     * This has no effect; use this function to better organize your [niwenParser] block.
+     */
+    @TegralDsl
+    infix fun String.group(block: NiwenParserBuilder<T>.() -> Unit) {
+        block()
     }
 
     /**
@@ -69,7 +84,6 @@ class NiwenParserBuilder<T> : Buildable<NiwenParser<T>> {
  *  parser.parse(tokens)
  *  ```
  */
-@OptIn(ExperimentalTypeInference::class)
 @TegralDsl
-fun <T> niwenParser(@BuilderInference block: NiwenParserBuilder<T>.() -> Unit): NiwenParser<T> =
+fun <T> niwenParser(block: NiwenParserBuilder<T>.() -> Unit): NiwenParser<T> =
     NiwenParserBuilder<T>().apply(block).build()

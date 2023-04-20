@@ -42,7 +42,6 @@ class EitherDslTest {
     @Test
     fun test_either_dsl() {
         // Operation parser
-
         val tOperator = tokenType("tOperator")
         val tNumber = tokenType("tNumber")
         val tOpenPar = tokenType("tOpenPar")

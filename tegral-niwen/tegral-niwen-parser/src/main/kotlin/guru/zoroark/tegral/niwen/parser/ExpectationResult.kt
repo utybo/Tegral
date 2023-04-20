@@ -17,7 +17,7 @@ sealed class ExpectationResult<in T> {
      * the parsing process. May be out of bounds (e.g. to indicate the end of
      * the string)
      */
-    class Success<T>(val stored: Map<NodeParameterKey<T, *>, *>, val nextIndex: Int) :
+    class Success<T>(val stored: Map<NodeParameterKey<T, *>, *>, val nextIndex: Int, val stopReason: String = "End of expectation reached") :
         ExpectationResult<T>()
 
     /**

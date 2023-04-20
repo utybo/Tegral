@@ -1,7 +1,7 @@
 package guru.zoroark.tegral.niwen.parser
 
+import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.niwen.parser.expectations.NodeParameterKey
-import javax.swing.text.html.parser.Parser
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter
@@ -22,6 +22,7 @@ import kotlin.reflect.full.starProjectedType
  *
  *  @see ReflectiveNodeDeclaration
  */
+@TegralDsl
 inline fun <reified T : Any> reflective(): ParserNodeDeclaration<T> = ReflectiveNodeDeclaration(T::class)
 
 /**
@@ -49,7 +50,8 @@ class ReflectiveNodeDeclaration<T : Any>(
         // TODO Better error messages on reflection errors
         val callArgs = ctor.parameters
             .associateWith {
-                it.toKey() ?: throw NiwenParserException("Internal error: a name-less parameter was returned by findValidConstructor")
+                it.toKey()
+                    ?: throw NiwenParserException("Internal error: a name-less parameter was returned by findValidConstructor")
             }
             .filterNot { (param, key) ->
                 param.isOptional && !args.arguments.containsKey(key)
@@ -63,25 +65,59 @@ class ReflectiveNodeDeclaration<T : Any>(
         return ctor.callBy(callArgs)
     }
 
+    private sealed class ConstructorResult<T> {
+        class Valid<T>(val ctor: KFunction<T>) : ConstructorResult<T>()
+        class Invalid<T>(val ctor: KFunction<T>, val param: KParameter, val reason: String) : ConstructorResult<T>()
+    }
+
     private fun findValidConstructor(arguments: Map<NodeParameterKey<T, *>, *>): KFunction<T> {
-        return tClass.constructors.filter {
+        val constructorsMatched = tClass.constructors.map { constructor ->
             // All parameters have a value in the map (except for optional parameters)
             // with a compatible type
-            it.parameters.all { param ->
-                val paramName = param.name ?: return@all false
-                val matchingArg = arguments[NodeParameterKey<T, Nothing>(param.type, paramName)]
-                    ?: return@all param.isOptional
-                param.isCompatibleWith(matchingArg)
+            val firstInvalid: ConstructorResult.Invalid<T>? = constructor.parameters.firstNotNullOfOrNull { ctorParam ->
+                val ctorParamName = ctorParam.name
+                    ?: return@firstNotNullOfOrNull ConstructorResult.Invalid(constructor, ctorParam, "Parameter does not have a name")
+                val matchingArg = arguments[NodeParameterKey<T, Nothing>(ctorParam.type, ctorParamName)]
+                if (matchingArg == null) {
+                    if (ctorParam.isOptional) null
+                    else ConstructorResult.Invalid(constructor, ctorParam, "No available value and the parameter is not optional")
+                } else {
+                    null
+                }
             }
-        }.maxByOrNull {
-            // Pick the constructor with the most non-optional parameters
-            it.parameters.count { param -> !param.isOptional }
-        } ?: throw NiwenParserException(
-            "Could not find a constructor that uses keys " +
-                arguments.entries.joinToString(", ") { (k, v) -> k.toString() }
-        )
+
+            firstInvalid ?: ConstructorResult.Valid(constructor)
+        }
+
+        return constructorsMatched
+            .filterIsInstance<ConstructorResult.Valid<T>>()
+            .maxByOrNull {
+                // Pick the constructor with the most non-optional parameters
+                it.ctor.parameters.count { param -> !param.isOptional }
+            }
+            ?.ctor
+            ?: throw NiwenParserException(createNoValidConstructorMessage(constructorsMatched, arguments))
+    }
+
+    private fun createNoValidConstructorMessage(constructorsMatched: List<ConstructorResult<T>>, arguments: Map<NodeParameterKey<T, *>, *>): String {
+        return buildString {
+            appendLine("Could not find a constructor that uses parameters")
+            appendLine(arguments.entries.joinToString("\n") { (k, v) -> "- ${k.name}: ${k.outputType}" })
+            appendLine()
+            appendLine("None of the following constructors matched:")
+            constructorsMatched
+                .filterIsInstance<ConstructorResult.Invalid<T>>()
+                .forEach { match ->
+                    append("Constructor ${match.ctor.returnType}(")
+                    append(match.ctor.parameters.joinToString(", ") { "${it.name}: ${it.type}" })
+                    appendLine(")")
+                    appendLine("  -> ${match.reason}")
+                }
+            appendLine()
+            appendLine("Available parameters:")
+            appendLine(arguments.entries.joinToString("\n") { (k, v) ->
+                "  -> ${k.name}: ${k.outputType} = $v"
+            })
+        }
     }
 }
-
-private fun KParameter.isCompatibleWith(matchingArg: Any): Boolean =
-    matchingArg::class.starProjectedType.isSubtypeOf(type)

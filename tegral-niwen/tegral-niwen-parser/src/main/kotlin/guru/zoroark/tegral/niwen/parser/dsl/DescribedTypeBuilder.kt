@@ -60,6 +60,7 @@ interface ExpectationReceiver<T> {
      * Concise notation for the [expect] function.
      */
     operator fun TokenType.unaryPlus() = expect(this)
+
     operator fun <R> ParserNodeDeclaration<R>.unaryPlus() = expect(this)
 }
 

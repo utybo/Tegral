@@ -3,6 +3,7 @@ package guru.zoroark.tegral.niwen.parser.dsl
 import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.niwen.lexer.TokenType
 import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
+import guru.zoroark.tegral.niwen.parser.expectations.ExpectedEmitConstant
 import guru.zoroark.tegral.niwen.parser.expectations.ExpectedToken
 import guru.zoroark.tegral.niwen.parser.expectations.ExpectedNode
 
@@ -12,9 +13,9 @@ import guru.zoroark.tegral.niwen.parser.expectations.ExpectedNode
  * A token of the given token type is expected at this point.
  */
 @TegralDsl
-fun <T> ExpectationReceiver<T>.expect(tokenType: TokenType, withValue: String? = null): ExpectationBuilder<T, String> =
-    ExpectationBuilder<T, String> {
-        ExpectedToken(tokenType, withValue, storeValueIn = it)
+fun <T> ExpectationReceiver<T>.expect(tokenType: TokenType, withValue: String? = null) =
+    ExpectationStateCallbackBuilder<T, String> {
+        ExpectedToken(tokenType, withValue, it)
     }.also {
         this += it
     }
@@ -26,9 +27,17 @@ fun <T> ExpectationReceiver<T>.expect(tokenType: TokenType, withValue: String? =
  * point
  */
 @TegralDsl
-infix fun <T, R> ExpectationReceiver<T>.expect(node: ParserNodeDeclaration<R>): ExpectationBuilder<T, R> =
-    ExpectationBuilder<T, R> {
+infix fun <T, R> ExpectationReceiver<T>.expect(node: ParserNodeDeclaration<R>) =
+    ExpectationStateCallbackBuilder<T, R> {
         ExpectedNode(node, it)
+    }.also {
+        this += it
+    }
+
+@TegralDsl
+fun <T, R> ExpectationReceiver<T>.emit(value: R) =
+    ExpectationStateCallbackBuilder<T, R> {
+        ExpectedEmitConstant(value, it)
     }.also {
         this += it
     }

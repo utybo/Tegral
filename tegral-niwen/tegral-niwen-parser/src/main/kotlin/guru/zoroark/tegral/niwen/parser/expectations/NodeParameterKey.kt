@@ -1,5 +1,6 @@
 package guru.zoroark.tegral.niwen.parser.expectations
 
+import guru.zoroark.tegral.core.TegralDsl
 import kotlin.reflect.KParameter
 import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty1
@@ -40,11 +41,11 @@ data class NodeParameterKey<in T, in R>(val outputType: KType, val name: String)
 
 data class RawKey<R>(val outputType: KType, val name: String)
 
-inline fun <reified R> key(name: String): RawKey<R> {
-    return RawKey(typeOf<R>(), name)
+@TegralDsl
+inline fun <T, reified R> key(name: String): NodeParameterKey<T, R> {
+    return NodeParameterKey(typeOf<R>(), name)
 }
 
 fun <T, R> KProperty1<T, R>.asKey(): NodeParameterKey<T, R> {
     return NodeParameterKey(this.returnType, this.name)
 }
-

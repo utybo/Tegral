@@ -2,6 +2,7 @@ package guru.zoroark.tegral.niwen.parser
 
 import guru.zoroark.tegral.niwen.parser.expectations.ExpectedNode
 import guru.zoroark.tegral.niwen.parser.expectations.NodeParameterKey
+import guru.zoroark.tegral.niwen.parser.expectations.StoreStateCallback
 import kotlin.reflect.typeOf
 import kotlin.test.*
 
@@ -38,7 +39,7 @@ class ExpectedNodeTest {
     @Test
     fun test_successful() {
         val key = NodeParameterKey<Nothing, Two>(typeOf<Two>(), "yeet")
-        val exp = ExpectedNode(Two, key)
+        val exp = ExpectedNode(Two, stateCallback =  StoreStateCallback(key))
         val res = exp.matches(
             ParsingContext(
                 listOf(),

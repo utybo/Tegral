@@ -24,8 +24,8 @@ import guru.zoroark.tegral.niwen.parser.ExpectationResult.Success
  */
 class ExpectedNode<T, R>(
     private val node: ParserNodeDeclaration<R>,
-    storeValueIn: NodeParameterKey<T, R>? = null
-) : Expectation<T, R>(storeValueIn) {
+    stateCallback: StateCallback<T, R, *>? = null
+) : Expectation<T, R>(stateCallback) {
     override fun matches(
         context: ParsingContext,
         index: Int
@@ -35,10 +35,7 @@ class ExpectedNode<T, R>(
         return when (val result = describedType.expectations.applyExpectations(context, index)) {
             is Success<R> -> {
                 val value = describedType.type.make(TypeDescription(result.stored))
-                val res = storeValueIn?.let {
-                    mapOf<NodeParameterKey<T, *>, Any?>(storeValueIn to value)
-                } ?: mapOf()
-                Success(res, nextIndex = result.nextIndex)
+                Success(stateCallback.createStoreMap(value), nextIndex = result.nextIndex, result.stopReason)
             }
 
             is DidNotMatch -> DidNotMatch(result.message, result.atTokenIndex)

@@ -4,6 +4,7 @@ import guru.zoroark.tegral.niwen.lexer.Token
 import guru.zoroark.tegral.niwen.parser.expectations.Expectation
 import guru.zoroark.tegral.niwen.parser.expectations.ExpectedNode
 import guru.zoroark.tegral.niwen.parser.expectations.NodeParameterKey
+import guru.zoroark.tegral.niwen.parser.expectations.StoreStateCallback
 import kotlin.reflect.typeOf
 
 
@@ -25,7 +26,7 @@ class NiwenParser<T>(
 ) {
     private val rootKey = NodeParameterKey<Nothing, T>(typeOf<Any?>(), "N/A")
     private val rootExpectation: Expectation<Nothing, T> =
-        ExpectedNode(rootType, rootKey)
+        ExpectedNode(rootType, StoreStateCallback(rootKey))
 
     private val typeMap: Map<ParserNodeDeclaration<*>, DescribedType<*>> =
         types.associateBy { it.type }
@@ -45,8 +46,13 @@ class NiwenParser<T>(
             is ExpectationResult.DidNotMatch ->
                 throw NiwenParserException("Parsing failed: ${result.message} (token nb ${result.atTokenIndex})")
 
-            is ExpectationResult.Success -> result.stored[rootKey] as? T
-                ?: error("Internal error: the root result was not stored. Please report this.")
+            is ExpectationResult.Success -> {
+                if (result.nextIndex != tokens.last().endsAt) {
+                    error("Parsing stopped, but not all tokens were consumed. Reason: ${result.stopReason}.")
+                }
+                result.stored[rootKey] as? T
+                    ?: error("Internal error: the root result was not stored. Please report this.")
+            }
         }
     }
 }

@@ -46,6 +46,10 @@ import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
  * the expectation crash). If the expectation can handle situations where there
  * are not enough tokens, then it should implement the [HandlesTokenDrought]
  * marker interface.
+ *
+ * @param T Type this expectation is ran in.
+ * @param R Result this expectation will produce. For explanations on the
+ * variance of this type, see [NodeParameterKey]
  */
 abstract class Expectation<T, in R>(
     /**
@@ -53,7 +57,7 @@ abstract class Expectation<T, in R>(
      * stored, or `null` if the matched value of this expectation should not or
      * cannot be stored.
      */
-    val storeValueIn: NodeParameterKey<T, R>? = null
+    val stateCallback: StateCallback<T, R, *>? = null
 ) {
     /**
      * Check if this expectation matches the given context at the given index
@@ -75,12 +79,12 @@ abstract class Expectation<T, in R>(
  */
 fun <T> List<Expectation<T, *>>.applyExpectations(
     context: ParsingContext,
-    startAt: Int = 0
+    startAt: Int
 ): ExpectationResult<T> {
     var index = startAt
     val map = mutableMapOf<NodeParameterKey<T, *>, Any?>()
     forEach {
-        if(index >= context.tokens.size && it !is HandlesTokenDrought) {
+        if (index >= context.tokens.size && it !is HandlesTokenDrought) {
             return ExpectationResult.DidNotMatch(
                 "Expected more tokens, but ran out of tokens",
                 index

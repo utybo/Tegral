@@ -27,8 +27,8 @@ import guru.zoroark.tegral.niwen.parser.ParsingContext
 class ExpectedToken<T>(
     private val tokenType: TokenType,
     private val withValue: String? = null,
-    storeValueIn: NodeParameterKey<T, String>? = null
-) : Expectation<T, String>(storeValueIn) {
+    stateCallback: StateCallback<T, String, *>? = null
+) : Expectation<T, String>(stateCallback) {
     override fun matches(
         context: ParsingContext,
         index: Int
@@ -36,8 +36,7 @@ class ExpectedToken<T>(
         val token = tokens[index]
         if (token.tokenType == tokenType && (withValue == null || withValue == token.string))
             return ExpectationResult.Success(
-                if (storeValueIn == null) mapOf()
-                else mapOf(storeValueIn to token.string),
+                stateCallback.createStoreMap(token.string),
                 index + 1
             )
         return ExpectationResult.DidNotMatch(
