@@ -15,7 +15,12 @@ class ExpectedLookahead<T>(
                 index
             )
         } else {
-            ExpectationResult.Success(emptyMap<NodeParameterKey<T, Nothing>, Nothing>(), index, index to index, "Lookahead expectations were met")
+            ExpectationResult.Success(
+                emptyMap<NodeParameterKey<T, Nothing>, Nothing>(),
+                index,
+                index to index,
+                "Lookahead expectations were met"
+            )
         }
     }
 

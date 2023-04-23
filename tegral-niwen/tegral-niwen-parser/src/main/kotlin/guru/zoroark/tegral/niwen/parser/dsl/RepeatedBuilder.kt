@@ -10,7 +10,8 @@ import guru.zoroark.tegral.niwen.parser.expectations.StateCallback
 import kotlin.reflect.typeOf
 
 
-class ItemExpectationBuilder<R> : ExpectationReceiver<RepeatedItemReceiver<R>>, Buildable<List<Expectation<RepeatedItemReceiver<R>, *>>> {
+class ItemExpectationBuilder<R> : ExpectationReceiver<RepeatedItemReceiver<R>>,
+    Buildable<List<Expectation<RepeatedItemReceiver<R>, *>>> {
     private val expectations = mutableListOf<Buildable<Expectation<RepeatedItemReceiver<R>, *>>>()
     override fun plusAssign(expectationBuilder: Buildable<Expectation<RepeatedItemReceiver<R>, *>>) {
         expectations += expectationBuilder

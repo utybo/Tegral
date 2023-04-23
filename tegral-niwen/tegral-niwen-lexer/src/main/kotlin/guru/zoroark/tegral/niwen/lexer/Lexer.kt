@@ -14,7 +14,13 @@
 
 package guru.zoroark.tegral.niwen.lexer
 
-import guru.zoroark.tegral.niwen.lexer.matchers.*
+import guru.zoroark.tegral.niwen.lexer.matchers.GoToDefaultState
+import guru.zoroark.tegral.niwen.lexer.matchers.GoToLabeledState
+import guru.zoroark.tegral.niwen.lexer.matchers.IgnoreMatchResult
+import guru.zoroark.tegral.niwen.lexer.matchers.MatchedTokenResult
+import guru.zoroark.tegral.niwen.lexer.matchers.NextStateBehavior
+import guru.zoroark.tegral.niwen.lexer.matchers.NoMatchResult
+import guru.zoroark.tegral.niwen.lexer.matchers.NoStateChange
 
 /**
  * A Lexer is a data class that contains the states that will be used for
@@ -46,10 +52,12 @@ data class Lexer(
      * The tokenize method will turn a string into a list of tokens based on
      * the [LexerState]s contained in this [Lexer] ([states]) and the
      */
+    @Suppress("NestedBlockDepth")
     fun tokenize(s: String): List<Token> {
         var index = 0
         val tokens = mutableListOf<Token>()
         var state = defaultState
+
         /**
          * A function for updating the lexer's index and state based on what
          * is returned by a matcher
@@ -64,31 +72,26 @@ data class Lexer(
         }
         // While we are in the string
         while (index < s.length) {
-            // The first matcher to match will return true, and firstOrNull
-            // returns null if no matchers matched, in which case we throw an
-            // exception
-            state.matchers.firstOrNull { matcher ->
+            for (matcher in state.matchers) {
                 // Attempt to match
                 when (val result = matcher.match(s, index)) {
-                    // Did not match
-                    is NoMatchResult -> false
-                    // Matched, but no token should be created (ignore the
-                    // match) in the final token sequence
+                    is NoMatchResult ->
+                        throw NiwenLexerNoMatchException(
+                            "No match for string starting at index $index (character: '${s[index]}')"
+                        )
+
                     is IgnoreMatchResult -> with(result) {
                         updateParams(tokenEndsAt, nextStateBehavior)
-                        true
                     }
-                    // Matched,
-                    is MatchedTokenResult -> result.token.let {
-                        checkTokenBounds(it, index, s.length)
-                        tokens += it
-                        updateParams(it.endsAt, result.nextStateBehavior)
-                        true
+
+                    is MatchedTokenResult -> {
+                        val token = result.token
+                        checkTokenBounds(token, index, s.length)
+                        tokens += token
+                        updateParams(token.endsAt, result.nextStateBehavior)
                     }
                 }
             }
-            // firstOrNull returned null: throw an exception, nothing matched
-                ?: throw NiwenLexerNoMatchException("No match for string starting at index $index (character: '${s[index]}')")
         }
         return tokens
     }
@@ -100,11 +103,20 @@ data class Lexer(
     ): Unit = with(match) {
         when {
             string.length > endsAt - startsAt ->
-                throw NiwenLexerException("Returned token string ($string) is too large for the given range ($startsAt-$endsAt)")
+                throw NiwenLexerException(
+                    "Returned token string ($string) is too large for the given range ($startsAt-$endsAt)"
+                )
+
             startsAt < index ->
-                throw NiwenLexerException("Incoherent indices: matcher says the token starts at $startsAt when the current index is $index")
+                throw NiwenLexerException(
+                    "Incoherent indices: matcher says the token starts at $startsAt when the current index is $index"
+                )
+
             endsAt > totalLength ->
-                throw NiwenLexerException("Incoherent indices: matcher says the token ends at $endsAt, which is out of bounds (total length is $totalLength)")
+                throw NiwenLexerException(
+                    "Incoherent indices: matcher says the token ends at $endsAt, which is out of bounds (total " +
+                        "length is $totalLength)"
+                )
         }
     }
 

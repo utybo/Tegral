@@ -1,8 +1,6 @@
 package guru.zoroark.tegral.niwen.parser.expectations
 
 import guru.zoroark.tegral.core.TegralDsl
-import kotlin.reflect.KParameter
-import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty1
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf

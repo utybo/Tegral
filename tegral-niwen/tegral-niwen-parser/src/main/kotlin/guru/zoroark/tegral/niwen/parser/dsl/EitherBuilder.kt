@@ -2,13 +2,9 @@ package guru.zoroark.tegral.niwen.parser.dsl
 
 import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
-import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 import guru.zoroark.tegral.niwen.parser.expectations.EitherBranch
 import guru.zoroark.tegral.niwen.parser.expectations.Expectation
 import guru.zoroark.tegral.niwen.parser.expectations.ExpectedEither
-import guru.zoroark.tegral.niwen.parser.expectations.NodeParameterKey
-import kotlin.reflect.KType
-import kotlin.reflect.typeOf
 
 /**
  * Build an "either" construct, with different branches the parsing process can

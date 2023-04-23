@@ -23,7 +23,7 @@ import guru.zoroark.tegral.core.TegralDsl
  * a lexer.
  */
 @TegralDsl
-class LexerBuilder : Buildable<Lexer>, UnlockDefaultState {
+class LexerBuilder : Buildable<Lexer> {
     /**
      * An enum that represents the different kinds of lexers that can be built
      */
@@ -33,10 +33,12 @@ class LexerBuilder : Buildable<Lexer>, UnlockDefaultState {
          * labeled states
          */
         LABELED_STATES,
+
         /**
          * A lexer that uses exactly one unlabeled state
          */
         SINGLE_STATE,
+
         /**
          * Used when the kind of lexer is not known yet
          */
@@ -70,21 +72,32 @@ class LexerBuilder : Buildable<Lexer>, UnlockDefaultState {
     fun state(body: StateBuilder.() -> Unit): Unit =
         when (lexerKind) {
             Kind.LABELED_STATES ->
-                throw NiwenLexerException("Cannot create an unlabeled state in a stateful context. You cannot mix labeled states and unlabeled states.")
+                throw NiwenLexerException(
+                    "Cannot create an unlabeled state in a stateful context. You cannot mix labeled states and " +
+                        "unlabeled states."
+                )
+
             Kind.SINGLE_STATE ->
-                throw NiwenLexerException("Cannot create multiple unlabeled states. Try adding labels to your states, or using only one state.")
+                throw NiwenLexerException(
+                    "Cannot create multiple unlabeled states. Try adding labels to your states, or using only one " +
+                        "state."
+                )
+
             Kind.UNDETERMINED -> {
                 lexerKind = Kind.SINGLE_STATE
                 constructedStates[null] = StateBuilder().apply(body)
             }
         }
 
+    /**
+     * Register a state with the given [StateLabel]
+     */
     @TegralDsl
     infix fun StateLabel.state(body: StateBuilder.() -> Unit): Unit =
         createLabeledState(this, body)
 
     /**
-     * Utility class whose only role is to allow the default state construct.
+     * Utility class whose only role is to allow the default state construct to work.
      * (`default state { ... }` and `default state label`).
      */
     inner class StateInfixCreator internal constructor() {
@@ -93,10 +106,11 @@ class LexerBuilder : Buildable<Lexer>, UnlockDefaultState {
          */
         @TegralDsl
         infix fun state(body: StateBuilder.() -> Unit) {
-            if (defaultStateLabel == null)
+            if (defaultStateLabel == null) {
                 this@LexerBuilder.createLabeledState(null, body)
-            else
+            } else {
                 throw NiwenLexerException("Default state was already defined as being another state")
+            }
         }
 
         /**
@@ -104,10 +118,10 @@ class LexerBuilder : Buildable<Lexer>, UnlockDefaultState {
          * is provided afterwards.
          */
         infix fun state(labelOfDefaultState: StateLabel) {
-            if (lexerKind == Kind.SINGLE_STATE)
+            if (lexerKind == Kind.SINGLE_STATE) {
                 throw NiwenLexerException("Cannot redefine a default state in a single-state lexer.")
-            if (lexerKind == Kind.UNDETERMINED)
-                lexerKind = Kind.LABELED_STATES
+            }
+            if (lexerKind == Kind.UNDETERMINED) lexerKind = Kind.LABELED_STATES
             this@LexerBuilder.defaultStateLabel = labelOfDefaultState
         }
     }
@@ -130,11 +144,23 @@ class LexerBuilder : Buildable<Lexer>, UnlockDefaultState {
         body: StateBuilder.() -> Unit
     ): Unit = when {
         lexerKind == Kind.SINGLE_STATE ->
-            throw NiwenLexerException("Cannot create a labeled state in a single-state context. You cannot mix labeled states and unlabeled states.")
+            throw NiwenLexerException(
+                "Cannot create a labeled state in a single-state context. You cannot mix labeled states and " +
+                    "unlabeled states."
+            )
+
         label == null && constructedStates.containsKey(null) ->
-            throw NiwenLexerException("Cannot create two default states. A null label implies that the state is the default state. Use a label for one of the default states or merge both states.")
+            throw NiwenLexerException(
+                "Cannot create two default states. A null label implies that the state is the default state. Use a " +
+                    "label for one of the default states or merge both states."
+            )
+
         constructedStates.containsKey(label) ->
-            throw NiwenLexerException("Cannot create two states with the same label. Use a different label so that all states have distinct labels.")
+            throw NiwenLexerException(
+                "Cannot create two states with the same label. Use a different label so that " +
+                    "all states have distinct labels."
+            )
+
         else -> {
             lexerKind = Kind.LABELED_STATES
             constructedStates[label] = StateBuilder().apply(body)

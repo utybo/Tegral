@@ -5,7 +5,6 @@ import guru.zoroark.tegral.niwen.parser.expectations.Expectation
 import guru.zoroark.tegral.niwen.parser.expectations.ExpectedNode
 import guru.zoroark.tegral.niwen.parser.expectations.NodeParameterKey
 import guru.zoroark.tegral.niwen.parser.expectations.StoreStateCallback
-import org.yaml.snakeyaml.parser.ParserException
 import kotlin.reflect.typeOf
 
 

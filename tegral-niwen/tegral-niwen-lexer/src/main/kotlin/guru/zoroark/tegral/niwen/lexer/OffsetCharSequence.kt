@@ -19,22 +19,21 @@ internal class OffsetCharSequence(
     val offsetBy: Int
 ) : CharSequence {
     init {
-        if (offsetBy > charSequence.length)
-            error("Invalid offset, exceeds original sequence's length")
+        if (offsetBy > charSequence.length) error("Invalid offset, exceeds original sequence's length")
     }
 
     override val length: Int
         get() = charSequence.length - offsetBy
 
     override fun get(index: Int): Char =
-        if (index + offsetBy >= charSequence.length)
+        if (index + offsetBy >= charSequence.length) {
             throw IndexOutOfBoundsException("Index ${index + offsetBy} is out of bounds (max. ${charSequence.length}")
-        else
+        } else {
             charSequence[index + offsetBy]
+        }
 
     override fun subSequence(startIndex: Int, endIndex: Int): CharSequence =
         charSequence.subSequence(startIndex + offsetBy, endIndex + offsetBy)
-
 }
 
 internal fun CharSequence.offsetBy(startAt: Int): CharSequence =

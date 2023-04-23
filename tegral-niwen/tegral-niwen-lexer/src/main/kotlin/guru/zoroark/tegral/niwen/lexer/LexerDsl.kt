@@ -15,13 +15,17 @@
 package guru.zoroark.tegral.niwen.lexer
 
 import guru.zoroark.tegral.core.TegralDsl
-import guru.zoroark.tegral.niwen.lexer.matchers.*
-
+import guru.zoroark.tegral.niwen.lexer.matchers.MatchedTokenResult
+import guru.zoroark.tegral.niwen.lexer.matchers.MatcherResult
+import guru.zoroark.tegral.niwen.lexer.matchers.NextStateBehavior
+import guru.zoroark.tegral.niwen.lexer.matchers.NoMatchResult
+import guru.zoroark.tegral.niwen.lexer.matchers.NoStateChange
+import guru.zoroark.tegral.niwen.lexer.matchers.TokenMatcher
 
 /**
  * URL to the documentation of Niwen Lexer
  */
-internal const val NIWEN_LEXER_DOCS = "tegral.zoroark.guru"
+internal const val NIWEN_LEXER_DOCS = "tegral.zoroark.guru" // TODO
 
 /**
  * Creates a [Lexer] object using the Niwen Lexer DSL, where [body] receives
@@ -33,10 +37,10 @@ fun niwenLexer(body: LexerBuilder.() -> Unit): Lexer {
     val dslEnv = LexerBuilder()
     body(dslEnv)
     return dslEnv.build().also {
-        if (it.statesCount == 0)
+        if (it.statesCount == 0) {
             throw NiwenLexerException("Empty body is not allowed. Need help? Visit $NIWEN_LEXER_DOCS")
+        }
     }
-
 }
 
 /**

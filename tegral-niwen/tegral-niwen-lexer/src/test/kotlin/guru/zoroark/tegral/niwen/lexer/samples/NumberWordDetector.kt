@@ -15,10 +15,10 @@
 package guru.zoroark.tegral.niwen.lexer.samples
 
 import guru.zoroark.tegral.niwen.lexer.TokenType
-import guru.zoroark.tegral.niwen.lexer.niwenLexer
 import guru.zoroark.tegral.niwen.lexer.matchers.anyOf
 import guru.zoroark.tegral.niwen.lexer.matchers.matches
 import guru.zoroark.tegral.niwen.lexer.matchers.repeated
+import guru.zoroark.tegral.niwen.lexer.niwenLexer
 import kotlin.test.Test
 
 enum class Tokens : TokenType {

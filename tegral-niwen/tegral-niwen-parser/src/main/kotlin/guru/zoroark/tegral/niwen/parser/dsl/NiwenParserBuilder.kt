@@ -2,8 +2,10 @@ package guru.zoroark.tegral.niwen.parser.dsl
 
 import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
-import guru.zoroark.tegral.niwen.parser.*
-import kotlin.experimental.ExperimentalTypeInference
+import guru.zoroark.tegral.niwen.parser.DescribedType
+import guru.zoroark.tegral.niwen.parser.NiwenParser
+import guru.zoroark.tegral.niwen.parser.NiwenParserException
+import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 
 /**
  * DSL builder for a Niwen parser.

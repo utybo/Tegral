@@ -42,5 +42,4 @@ class TokenRecognizerMatched(
                 nextStateBehavior
             )
         } ?: NoMatchResult
-
 }

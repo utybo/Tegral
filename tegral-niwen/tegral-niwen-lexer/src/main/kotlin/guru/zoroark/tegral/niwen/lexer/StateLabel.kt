@@ -22,6 +22,9 @@ package guru.zoroark.tegral.niwen.lexer
  */
 interface StateLabel
 
+/**
+ * State labels created by [stateLabel] are instances of this class.
+ */
 class GenericStateLabel : StateLabel
 
 /**

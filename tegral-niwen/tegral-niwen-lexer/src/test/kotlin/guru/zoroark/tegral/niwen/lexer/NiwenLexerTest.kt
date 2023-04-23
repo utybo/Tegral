@@ -60,7 +60,9 @@ class NiwenLexerTest {
             tokens,
             (0 until 4).map { i ->
                 Token(
-                    string = ".", startsAt = i, endsAt = i + 1,
+                    string = ".",
+                    startsAt = i,
+                    endsAt = i + 1,
                     tokenType = simpleStateDot
                 )
             }
@@ -175,13 +177,14 @@ class NiwenLexerTest {
             state {
                 // Erroneous matcher
                 +matcher { s, start ->
-                    if (start == 1)
-                    // The second character returns a token that starts
-                    // on the very first character, which is a big no-no
+                    if (start == 1) {
+                        // The second character returns a token that starts
+                        // on the very first character, which is a big no-no
                         Token(s[0].toString(), 0, 2, ttype)
-                    else
-                    // Returning null to signal no match
+                    } else {
+                        // Returning null to signal no match
                         null
+                    }
                 }
                 "." isToken ttdot
             }

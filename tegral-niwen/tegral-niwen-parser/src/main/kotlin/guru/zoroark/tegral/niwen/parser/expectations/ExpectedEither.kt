@@ -23,10 +23,12 @@ class ExpectedEither<T>(private val branches: List<EitherBranch<T>>) : Expectati
         val failures = mutableListOf<ExpectationResult.DidNotMatch<T>>()
         branches.withIndex().forEach { (i, branch) ->
 
-            when (val result = context.enterBranch("Branch $i") { context.applyExpectations(index, branch.expectations) }) {
+            when (val result =
+                context.enterBranch("Branch $i") { context.applyExpectations(index, branch.expectations) }) {
                 is ExpectationResult.Success -> {
                     return result.copy(stopReason = "Branch $i matched")
                 }
+
                 is ExpectationResult.DidNotMatch -> {
                     failures += result
                 }

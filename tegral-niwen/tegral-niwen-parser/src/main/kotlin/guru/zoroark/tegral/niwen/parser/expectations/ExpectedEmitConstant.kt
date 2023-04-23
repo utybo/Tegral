@@ -8,7 +8,12 @@ class ExpectedEmitConstant<T, R>(
     stateCallback: StateCallback<T, R, *>? = null
 ) : Expectation<T, R>(stateCallback) {
     override fun matches(context: ParsingContext, index: Int): ExpectationResult<T> {
-        return ExpectationResult.Success(stateCallback.createStoreMap(value), index, index to index, "Emitted value $value")
+        return ExpectationResult.Success(
+            stateCallback.createStoreMap(value),
+            index,
+            index to index,
+            "Emitted value $value"
+        )
     }
 
     override val title: String = "emit($value)"

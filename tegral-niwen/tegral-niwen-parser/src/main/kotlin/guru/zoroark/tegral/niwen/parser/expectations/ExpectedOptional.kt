@@ -18,7 +18,12 @@ class ExpectedOptional<T, R>(private val expectations: List<Expectation<T, R>>) 
         index: Int
     ): ExpectationResult<T> =
         if (index >= context.tokens.size)
-            ExpectationResult.Success(mapOf<NodeParameterKey<T, *>, Any?>(), index, index to index, "Optional branch did not match and was skipped")
+            ExpectationResult.Success(
+                mapOf<NodeParameterKey<T, *>, Any?>(),
+                index,
+                index to index,
+                "Optional branch did not match and was skipped"
+            )
         else when (val result = context.applyExpectations(index, expectations)) {
             is ExpectationResult.Success -> result.copy(stopReason = "Took optional branch")
             is ExpectationResult.DidNotMatch -> ExpectationResult.Success(

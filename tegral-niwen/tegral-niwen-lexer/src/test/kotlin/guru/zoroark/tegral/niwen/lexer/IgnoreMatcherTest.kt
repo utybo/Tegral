@@ -102,4 +102,3 @@ class IgnoreMatcherTest {
         assertEquals(expected, result)
     }
 }
-

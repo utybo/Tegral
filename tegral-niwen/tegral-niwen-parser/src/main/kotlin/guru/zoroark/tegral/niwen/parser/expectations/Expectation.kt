@@ -1,9 +1,9 @@
 package guru.zoroark.tegral.niwen.parser.expectations
 
 import guru.zoroark.tegral.niwen.parser.ExpectationResult
+import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 import guru.zoroark.tegral.niwen.parser.ParsingContext
 import guru.zoroark.tegral.niwen.parser.TypeDescription
-import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 
 /**
  * General class for an expectation.

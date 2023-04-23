@@ -27,19 +27,17 @@ class StringRecognizer(
     val toRecognize: String
 ) : TokenRecognizer {
     override fun recognize(s: String, startAt: Int): Pair<String, Int>? {
-        if (startAt + toRecognize.length > s.length) {
-            return null // Cannot match (match goes beyond s boundaries)
+        return if (
+            startAt + toRecognize.length > s.length ||
+            toRecognize.withIndex().any { (i, c) -> s[i + startAt] != c }
+        ) {
+            null
+        } else {
+            // Everything matched, return a token
+            s.substring(
+                startAt,
+                startAt + toRecognize.length
+            ) to startAt + toRecognize.length
         }
-        for (i in toRecognize.indices) {
-            if (s[i + startAt] != toRecognize[i])
-                return null // Does not match
-        }
-        // Everything matched, return a token
-        return s.substring(
-            startAt,
-            startAt + toRecognize.length
-        ) to startAt + toRecognize.length
-
     }
-
 }

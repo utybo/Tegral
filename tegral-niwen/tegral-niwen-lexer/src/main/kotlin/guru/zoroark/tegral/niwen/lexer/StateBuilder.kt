@@ -34,9 +34,11 @@ class StateBuilder : Buildable<LexerState> {
     private val tokenMatchers = mutableListOf<Buildable<TokenMatcher>>()
 
     override fun build(): LexerState {
-        return LexerState(mutableListOf<TokenMatcher>().apply {
-            addAll(tokenMatchers.map { it.build() })
-        })
+        return LexerState(
+            mutableListOf<TokenMatcher>().apply {
+                addAll(tokenMatchers.map { it.build() })
+            }
+        )
     }
 
     /**
@@ -88,8 +90,18 @@ class StateBuilder : Buildable<LexerState> {
             return env
         }
 
+    /**
+     * Special object for using the default class in the Niwen Lexer DSL
+     */
     object Default
 
+    /**
+     * State label for the default state.
+     *
+     * Because the default state is handled differently internally, this is not actually an instance of [StateLabel].
+     * All DSL functions that accept a state label can accept either a real [StateLabel] or the [default] value.
+     *
+     */
     @TegralDsl
     val default = Default
 }

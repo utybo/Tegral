@@ -14,12 +14,21 @@
 
 package guru.zoroark.tegral.niwen.lexer.matchers
 
+/**
+ * A token recognizer made for recognizing a [ClosedRange] of characters.
+ *
+ * This recognizer is intended to be used with the `'a'..'b'` syntax.
+ */
 class CharRangeTokenRecognizer(
+    /**
+     * The character range to detect.
+     */
     val detectedCharRange: ClosedRange<Char>
 ) : TokenRecognizer {
     override fun recognize(s: String, startAt: Int): Pair<String, Int>? =
-        if(s[startAt] in detectedCharRange)
+        if (s[startAt] in detectedCharRange) {
             s[startAt].toString() to startAt + 1
-        else
+        } else {
             null
+        }
 }

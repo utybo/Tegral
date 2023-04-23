@@ -16,15 +16,23 @@ package guru.zoroark.tegral.niwen.lexer
 
 import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
-import guru.zoroark.tegral.niwen.lexer.matchers.*
+import guru.zoroark.tegral.niwen.lexer.matchers.GoToDefaultState
+import guru.zoroark.tegral.niwen.lexer.matchers.GoToLabeledState
+import guru.zoroark.tegral.niwen.lexer.matchers.NextStateBehavior
+import guru.zoroark.tegral.niwen.lexer.matchers.NoStateChange
+import guru.zoroark.tegral.niwen.lexer.matchers.TokenMatcher
+import guru.zoroark.tegral.niwen.lexer.matchers.TokenRecognizer
 
+/**
+ * An abstract builder for token matchers. This is used for supporting `.ignored`, `thenState`, etc.
+ */
 abstract class TokenMatcherBuilder(
     /**
      * The original recognizer that should be used by the matcher that will be
      * built
      */
     var baseRecognizer: TokenRecognizer
-): Buildable<TokenMatcher> {
+) : Buildable<TokenMatcher> {
     /**
      * Which state the built matcher will lead to, in the form of a
      * [NextStateBehavior] object.
@@ -47,8 +55,11 @@ abstract class TokenMatcherBuilder(
         nextStateBehavior = GoToLabeledState(next)
     }
 
+    /**
+     * Specifies that, once a match is found, the lexer should go to the default state.
+     */
     @TegralDsl
-    infix fun thenState(default: StateBuilder.Default) {
+    infix fun thenState(@Suppress("UnusedPrivateMember") default: StateBuilder.Default) {
         nextStateBehavior = GoToDefaultState
     }
 }

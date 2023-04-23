@@ -44,4 +44,4 @@ fun interface ParserNodeDeclaration<T> {
 }
 
 val ParserNodeDeclaration<*>.name: String
-        get() = nodeName ?: this.toString()
+    get() = nodeName ?: this.toString()

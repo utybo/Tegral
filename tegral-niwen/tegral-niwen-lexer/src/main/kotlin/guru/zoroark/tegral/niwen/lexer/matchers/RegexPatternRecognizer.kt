@@ -19,8 +19,17 @@ import guru.zoroark.tegral.niwen.lexer.StateBuilder
 import org.intellij.lang.annotations.Language
 import java.util.regex.Pattern
 
-class RegexPatternRecognizer(private val pattern: Pattern) :
-    TokenRecognizer {
+/**
+ * A [TokenRecognizer] for [Pattern]s.
+ *
+ * Patterns work as for usual regular expressions in Java with the following additional rules:
+ *
+ * - Look-behind and look-ahead can go beyond the bounds of the string that needs to be recognized. Specifically, the
+ * pattern's look-behind will correctly go "through" the previously already recognized tokens.
+ *
+ * - The bounds symbols `^` and `$` match the start and end of the original string.
+ */
+class RegexPatternRecognizer(private val pattern: Pattern) : TokenRecognizer {
     override fun recognize(s: String, startAt: Int): Pair<String, Int>? {
         val matcher = pattern.matcher(s).apply {
             region(startAt, s.length)
@@ -29,9 +38,11 @@ class RegexPatternRecognizer(private val pattern: Pattern) :
             // ^ and $ match the real start and end of the original string
             useAnchoringBounds(false)
         }
-        if (!matcher.lookingAt())
-            return null
-        return matcher.group() to matcher.end()
+        return if (!matcher.lookingAt()) {
+            null
+        } else {
+            matcher.group() to matcher.end()
+        }
     }
 }
 

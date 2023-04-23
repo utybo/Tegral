@@ -5,8 +5,6 @@ import guru.zoroark.tegral.niwen.parser.expectations.NodeParameterKey
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter
-import kotlin.reflect.full.isSubtypeOf
-import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.jvmName
 
 /**
@@ -77,11 +75,19 @@ class ReflectiveNodeDeclaration<T : Any>(
             // with a compatible type
             val firstInvalid: ConstructorResult.Invalid<T>? = constructor.parameters.firstNotNullOfOrNull { ctorParam ->
                 val ctorParamName = ctorParam.name
-                    ?: return@firstNotNullOfOrNull ConstructorResult.Invalid(constructor, ctorParam, "Parameter does not have a name")
+                    ?: return@firstNotNullOfOrNull ConstructorResult.Invalid(
+                        constructor,
+                        ctorParam,
+                        "Parameter does not have a name"
+                    )
                 val matchingArg = arguments[NodeParameterKey<T, Nothing>(ctorParam.type, ctorParamName)]
                 if (matchingArg == null) {
                     if (ctorParam.isOptional) null
-                    else ConstructorResult.Invalid(constructor, ctorParam, "No available value and the parameter is not optional")
+                    else ConstructorResult.Invalid(
+                        constructor,
+                        ctorParam,
+                        "No available value and the parameter is not optional"
+                    )
                 } else {
                     null
                 }
@@ -100,7 +106,10 @@ class ReflectiveNodeDeclaration<T : Any>(
             ?: throw NiwenParserException(createNoValidConstructorMessage(constructorsMatched, arguments))
     }
 
-    private fun createNoValidConstructorMessage(constructorsMatched: List<ConstructorResult<T>>, arguments: Map<NodeParameterKey<T, *>, *>): String {
+    private fun createNoValidConstructorMessage(
+        constructorsMatched: List<ConstructorResult<T>>,
+        arguments: Map<NodeParameterKey<T, *>, *>
+    ): String {
         return buildString {
             appendLine("Could not find a constructor that uses parameters")
             appendLine(arguments.entries.joinToString("\n") { (k, v) -> "- ${k.name}: ${k.outputType}" })

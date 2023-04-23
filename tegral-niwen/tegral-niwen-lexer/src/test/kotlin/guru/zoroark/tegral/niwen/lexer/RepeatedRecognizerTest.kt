@@ -16,7 +16,9 @@ package guru.zoroark.tegral.niwen.lexer
 
 import guru.zoroark.tegral.niwen.lexer.matchers.anyOf
 import guru.zoroark.tegral.niwen.lexer.matchers.repeated
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 class RepeatedRecognizerTest {
 

@@ -1,8 +1,13 @@
 package guru.zoroark.tegral.niwen.parser.expectations
 
-import guru.zoroark.tegral.niwen.parser.*
+import guru.zoroark.tegral.niwen.parser.ExpectationResult
 import guru.zoroark.tegral.niwen.parser.ExpectationResult.DidNotMatch
 import guru.zoroark.tegral.niwen.parser.ExpectationResult.Success
+import guru.zoroark.tegral.niwen.parser.NiwenParserException
+import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
+import guru.zoroark.tegral.niwen.parser.ParsingContext
+import guru.zoroark.tegral.niwen.parser.TypeDescription
+import guru.zoroark.tegral.niwen.parser.name
 
 /**
  * An expectation that expects another node to be present at this point.
@@ -37,7 +42,12 @@ class ExpectedNode<T, R>(
         return when (val result = context.applyExpectations(index, describedType.expectations)) {
             is Success<R> -> {
                 val value = describedType.type.make(TypeDescription(result.stored))
-                Success(stateCallback.createStoreMap(value), nextIndex = result.nextIndex, index to result.nextIndex, "Node matched successfully")
+                Success(
+                    stateCallback.createStoreMap(value),
+                    nextIndex = result.nextIndex,
+                    index to result.nextIndex,
+                    "Node matched successfully"
+                )
             }
 
             is DidNotMatch -> DidNotMatch(result.message, result.atTokenIndex)

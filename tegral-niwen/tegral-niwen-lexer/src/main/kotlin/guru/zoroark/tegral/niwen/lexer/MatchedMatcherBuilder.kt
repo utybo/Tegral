@@ -34,9 +34,5 @@ class MatchedMatcherBuilder(
     var matchesToTokenType: TokenType
 ) : TokenMatcherBuilder(baseRecognizer) {
     override fun build(): TokenMatcher =
-        TokenRecognizerMatched(
-            baseRecognizer,
-            matchesToTokenType,
-            nextStateBehavior
-        )
+        TokenRecognizerMatched(baseRecognizer, matchesToTokenType, nextStateBehavior)
 }

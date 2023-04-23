@@ -19,5 +19,7 @@ import guru.zoroark.tegral.niwen.lexer.matchers.TokenMatcher
 /**
  * A state that contains matchers. The list of matchers is tested sequentially
  * in order.
+ *
+ * @property matchers The matchers contained in this state
  */
 data class LexerState(val matchers: List<TokenMatcher>)

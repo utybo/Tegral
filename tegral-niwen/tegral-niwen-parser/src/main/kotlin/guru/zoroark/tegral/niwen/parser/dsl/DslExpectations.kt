@@ -4,8 +4,8 @@ import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.niwen.lexer.TokenType
 import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 import guru.zoroark.tegral.niwen.parser.expectations.ExpectedEmitConstant
-import guru.zoroark.tegral.niwen.parser.expectations.ExpectedToken
 import guru.zoroark.tegral.niwen.parser.expectations.ExpectedNode
+import guru.zoroark.tegral.niwen.parser.expectations.ExpectedToken
 
 /**
  * Adds an expectation to this node descriptor based on a token type.

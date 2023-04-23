@@ -1,10 +1,7 @@
 package guru.zoroark.tegral.niwen.parser.expectations
 
 import guru.zoroark.tegral.niwen.parser.ExpectationResult
-import guru.zoroark.tegral.niwen.parser.NiwenParserException
 import guru.zoroark.tegral.niwen.parser.ParsingContext
-import guru.zoroark.tegral.niwen.parser.dsl.ExpectationReceiver
-import kotlin.reflect.full.isSubtypeOf
 
 sealed interface RepeatedItemReceiver<R>
 
@@ -29,8 +26,10 @@ class ExpectedRepeated<T, R>(
                 }
             }
         }
-        return ExpectationResult.Success(stateCallback.createStoreMap(valueAcc), currIndex, index to currIndex,
-            "Repeated $matchCount time(s).")
+        return ExpectationResult.Success(
+            stateCallback.createStoreMap(valueAcc), currIndex, index to currIndex,
+            "Repeated $matchCount time(s)."
+        )
     }
 
     override val title: String = "repeated { ${repeatableExpectations.size} expectation(s) }"

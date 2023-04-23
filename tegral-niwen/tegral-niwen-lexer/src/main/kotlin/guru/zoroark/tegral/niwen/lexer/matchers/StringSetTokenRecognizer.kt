@@ -35,26 +35,20 @@ class StringSetTokenRecognizer(stringsToRecognize: List<String>) : TokenRecogniz
         val c = HashMap<Int, HashSet<String>>()
         stringsToRecognize.forEach {
             val x = c.getOrPut(it.length) { HashSet() }
-            if (!x.add(it)) throw NiwenLexerException(
-                "Duplicate element in multi-string recognizer initialization"
-            )
+            if (!x.add(it)) throw NiwenLexerException("Duplicate element in multi-string recognizer initialization")
         }
         criteria = c
     }
 
     override fun recognize(s: String, startAt: Int): Pair<String, Int>? {
         for ((len, possibilities) in criteria) {
-            if (startAt + len > s.length)
-                continue
+            if (startAt + len > s.length) continue
             val sub = s.subSequence(startAt, startAt + len)
-            if (possibilities.contains(sub))
-                return sub.toString() to (startAt + len)
+            if (possibilities.contains(sub)) return sub.toString() to (startAt + len)
         }
         return null
     }
-
 }
-
 
 /**
  * Create a recognizer that recognizes any of the strings provided as
@@ -64,9 +58,8 @@ class StringSetTokenRecognizer(stringsToRecognize: List<String>) : TokenRecogniz
  * @return A string recognizer. Use [isToken] to make it a usable matcher.
  */
 fun anyOf(vararg s: String): TokenRecognizer =
-    if (s.isEmpty())
+    if (s.isEmpty()) {
         throw NiwenLexerException("anyOf() must have at least one string argument")
-    else
-        StringSetTokenRecognizer(
-            s.asList()
-        )
+    } else {
+        StringSetTokenRecognizer(s.asList())
+    }

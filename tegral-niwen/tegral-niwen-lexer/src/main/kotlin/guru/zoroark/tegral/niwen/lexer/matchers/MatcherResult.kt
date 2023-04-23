@@ -45,5 +45,6 @@ class IgnoreMatchResult(val tokenEndsAt: Int, val nextStateBehavior: NextStateBe
  * Indicates that the match was successful and a token was created.
  *
  * @property token The token that is the result of the match.
+ * @property nextStateBehavior Behavior to apply (e.g. go to the default state, ...)
  */
 class MatchedTokenResult(val token: Token, val nextStateBehavior: NextStateBehavior) : MatcherResult()

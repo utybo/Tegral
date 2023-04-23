@@ -39,7 +39,6 @@ interface TokenRecognizer {
     fun recognize(s: String, startAt: Int): Pair<String, Int>?
 }
 
-
 /**
  * Universal function to turn an object into a recognizer. This function
  * returns a [token recognizer][TokenRecognizer].

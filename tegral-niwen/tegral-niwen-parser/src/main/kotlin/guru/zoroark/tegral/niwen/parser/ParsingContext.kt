@@ -26,12 +26,13 @@ class ParsingContext(
     fun <T> enterBranch(branchTitle: String, branch: () -> ExpectationResult<T>): ExpectationResult<T> {
         branchSeeker?.stepIn(branchTitle)
         val result = branch()
-        when(result) {
+        when (result) {
             is ExpectationResult.DidNotMatch -> branchSeeker?.stepOut(
                 BranchSeeker.Status.DID_NOT_MATCH,
                 result.message,
                 emptyMap()
             )
+
             is ExpectationResult.Success -> branchSeeker?.stepOut(
                 BranchSeeker.Status.SUCCESS,
                 result.stopReason,

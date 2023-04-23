@@ -27,7 +27,7 @@ class IgnoringMatcherBuilder(
      * The recognizer that will be used by the matcher.
      */
     baseRecognizer: TokenRecognizer
-): TokenMatcherBuilder(baseRecognizer) {
+) : TokenMatcherBuilder(baseRecognizer) {
     override fun build(): TokenMatcher =
         TokenRecognizerIgnored(
             baseRecognizer,

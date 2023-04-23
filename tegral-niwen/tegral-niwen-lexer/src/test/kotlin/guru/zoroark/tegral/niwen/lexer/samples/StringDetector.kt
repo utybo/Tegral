@@ -16,33 +16,32 @@ package guru.zoroark.tegral.niwen.lexer.samples
 
 import guru.zoroark.tegral.niwen.lexer.StateLabel
 import guru.zoroark.tegral.niwen.lexer.TokenType
-import guru.zoroark.tegral.niwen.lexer.niwenLexer
 import guru.zoroark.tegral.niwen.lexer.matchers.anyOf
 import guru.zoroark.tegral.niwen.lexer.matchers.matches
+import guru.zoroark.tegral.niwen.lexer.niwenLexer
 import kotlin.test.Test
 
-
 class StringDetector {
-    enum class Tokens: TokenType {
-        word, whitespace, quotes, stringContent, punctuation
+    enum class Tokens : TokenType {
+        WORD, WHITESPACE, QUOTES, STRING_CONTENT, PUNCTUATION
     }
 
-    enum class States: StateLabel {
-        inString
+    enum class States : StateLabel {
+        IN_STRING
     }
 
     @Test
     fun string_detector() {
         val lexer = niwenLexer {
             default state {
-                anyOf(" ", "\t", "\n") isToken Tokens.whitespace
-                "\"" isToken Tokens.quotes thenState States.inString
-                anyOf(".", ",", "!", "?") isToken Tokens.punctuation
-                matches("\\w+") isToken Tokens.word
+                anyOf(" ", "\t", "\n") isToken Tokens.WHITESPACE
+                "\"" isToken Tokens.QUOTES thenState States.IN_STRING
+                anyOf(".", ",", "!", "?") isToken Tokens.PUNCTUATION
+                matches("\\w+") isToken Tokens.WORD
             }
-            States.inString state {
-                matches("""(\\"|[^"])+""") isToken Tokens.stringContent
-                "\"" isToken Tokens.quotes thenState default
+            States.IN_STRING state {
+                matches("""(\\"|[^"])+""") isToken Tokens.STRING_CONTENT
+                "\"" isToken Tokens.QUOTES thenState default
             }
         }
         val str = """
