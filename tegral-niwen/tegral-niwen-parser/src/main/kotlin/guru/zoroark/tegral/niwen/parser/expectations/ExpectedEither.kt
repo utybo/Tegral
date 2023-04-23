@@ -21,10 +21,11 @@ class ExpectedEither<T>(private val branches: List<EitherBranch<T>>) : Expectati
         index: Int
     ): ExpectationResult<T> {
         val failures = mutableListOf<ExpectationResult.DidNotMatch<T>>()
-        branches.forEach {
-            when (val result = it.expectations.applyExpectations(context, index)) {
+        branches.withIndex().forEach { (i, branch) ->
+
+            when (val result = context.enterBranch("Branch $i") { context.applyExpectations(index, branch.expectations) }) {
                 is ExpectationResult.Success -> {
-                    return result
+                    return result.copy(stopReason = "Branch $i matched")
                 }
                 is ExpectationResult.DidNotMatch -> {
                     failures += result
@@ -32,13 +33,12 @@ class ExpectedEither<T>(private val branches: List<EitherBranch<T>>) : Expectati
             }
         }
         return ExpectationResult.DidNotMatch(
-            "None of the ${branches.size} branches matched.\n" +
-                    failures.mapIndexed { i, x ->
-                        "    -> Branch $i:\n${x.message.prependIndent("        ")}\n"
-                    },
+            "None of the ${branches.size} branches matched.",
             index
         )
     }
+
+    override val title: String = "either { ${branches.size} branch(es) }"
 }
 
 /**

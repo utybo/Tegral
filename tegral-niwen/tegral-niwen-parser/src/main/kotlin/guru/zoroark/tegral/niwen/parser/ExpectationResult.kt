@@ -16,8 +16,21 @@ sealed class ExpectationResult<in T> {
      * @property nextIndex The next index that needs to be checked to continue
      * the parsing process. May be out of bounds (e.g. to indicate the end of
      * the string)
+     *
+     * @property matchBounds Boundaries for the match: specifically, the index
+     * for the first and *right after* the last token that this success result
+     * matched. Boundaries follow the same rules as `String.substring`
+     * (specifically w.r.t. how the boundaries work), except these are indexes
+     * for *tokens*, not *characters*.
+     *
+     * @property stopReason Reason for the successful match.
      */
-    class Success<T>(val stored: Map<NodeParameterKey<T, *>, *>, val nextIndex: Int, val stopReason: String = "End of expectation reached") :
+    data class Success<T>(
+        val stored: Map<NodeParameterKey<T, *>, *>,
+        val nextIndex: Int,
+        val matchBounds: Pair<Int, Int>,
+        val stopReason: String = "End of expectation reached"
+    ) :
         ExpectationResult<T>()
 
     /**

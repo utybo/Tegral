@@ -26,16 +26,18 @@ class ExpectedNode<T, R>(
     private val node: ParserNodeDeclaration<R>,
     stateCallback: StateCallback<T, R, *>? = null
 ) : Expectation<T, R>(stateCallback) {
+    override val title: String = "ExpectedNode(${node.name})"
+
     override fun matches(
         context: ParsingContext,
         index: Int
     ): ExpectationResult<T> {
         val describedType = context[node]
             ?: throw NiwenParserException("Node ${node::class} is expected but not declared in the parser")
-        return when (val result = describedType.expectations.applyExpectations(context, index)) {
+        return when (val result = context.applyExpectations(index, describedType.expectations)) {
             is Success<R> -> {
                 val value = describedType.type.make(TypeDescription(result.stored))
-                Success(stateCallback.createStoreMap(value), nextIndex = result.nextIndex, result.stopReason)
+                Success(stateCallback.createStoreMap(value), nextIndex = result.nextIndex, index to result.nextIndex, "Node matched successfully")
             }
 
             is DidNotMatch -> DidNotMatch(result.message, result.atTokenIndex)

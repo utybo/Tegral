@@ -20,6 +20,7 @@ import guru.zoroark.tegral.niwen.lexer.matchers.matches
 import guru.zoroark.tegral.niwen.lexer.matchers.repeated
 import guru.zoroark.tegral.niwen.lexer.niwenLexer
 import guru.zoroark.tegral.niwen.lexer.stateLabel
+import guru.zoroark.tegral.niwen.parser.NiwenParser
 import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 import guru.zoroark.tegral.niwen.parser.TypeDescription
 import guru.zoroark.tegral.niwen.parser.dsl.either
@@ -54,6 +55,10 @@ object NiwenPrism {
 
     fun parse(tokens: List<Token>): PRoot {
         return parser.parse(tokens)
+    }
+
+    fun parseDebug(tokens: List<Token>): NiwenParser.ParserResult<PRoot> {
+        return parser.parseWithDebugger(tokens)
     }
 }
 
@@ -118,6 +123,7 @@ val lexer = niwenLexer {
 val parser = niwenParser<PRoot> {
     PRoot root {
         repeated { expect(PRootElement) storeIn item } storeIn PRoot::elements
+        optional { expect(Tokens.NEWLINE) }
     }
 
     PRootElement {
@@ -128,12 +134,13 @@ val parser = niwenParser<PRoot> {
             expect(PGenerator) storeIn self()
         } or {
             expect(PModel) storeIn self()
+        } or {
+            expect(PEnum) storeIn self()
         }
         optional { expect(Tokens.NEWLINE) }
     }
 
     "Datasource/generator" group {
-
         PDatasource {
             expect(Tokens.WORD, "datasource")
             expect(Tokens.WORD) storeIn PDatasource::name
@@ -167,8 +174,8 @@ val parser = niwenParser<PRoot> {
         expect(Tokens.WORD) storeIn PField::type
 
         either {
-            expect(Tokens.BRACE_OPEN)
-            expect(Tokens.BRACE_CLOSE)
+            expect(Tokens.SQRBRK_OPEN)
+            expect(Tokens.SQRBRK_CLOSE)
             emit(true) storeIn PField::isArray
         } or {
             emit(false) storeIn PField::isArray
@@ -196,58 +203,88 @@ val parser = niwenParser<PRoot> {
         }
 
         either {
-            expect(Tokens.WORD) storeIn PAttribute::name
-        } or {
             expect(Tokens.WORD, "db")
             expect(Tokens.DOT)
             expect(Tokens.WORD) transform { "db.${it}" } storeIn PAttribute::name
+        } or {
+            expect(Tokens.WORD) storeIn PAttribute::name
         }
         optional {
             expect(PArgsList) transform { it.args } storeIn PAttribute::params
         }
     }
 
-    PExpression {
-        either {
-            expect(PExpValue) storeIn self()
-        } or {
-            expect(PExpFunCall) storeIn self()
+    "Expression" group {
+        PExpression {
+            either {
+                expect(PExpValue) storeIn self()
+            } or {
+                expect(PExpFunCall) storeIn self()
+            } or {
+                expect(PExpArray) storeIn self()
+            } or {
+                expect(PExpReference) storeIn self()
+            }
+        }
+
+        PExpValue {
+            expect(PString) storeIn PExpValue::value
+        }
+
+        PExpFunCall {
+            expect(Tokens.WORD) storeIn PExpFunCall::functionName
+            expect(PArgsList) transform { it.args } storeIn PExpFunCall::argsList
+        }
+
+        PExpReference {
+            expect(Tokens.WORD) storeIn PExpReference::ref
+        }
+
+        PExpArray {
+            expect(Tokens.SQRBRK_OPEN)
+            repeated {
+                expect(PExpression) storeIn item
+                either {
+                    lookahead { expect(Tokens.SQRBRK_CLOSE) }
+                } or {
+                    expect(Tokens.COMMA)
+                }
+            } storeIn PExpArray::values
+            expect(Tokens.SQRBRK_CLOSE)
         }
     }
 
-    PArgsList {
-        expect(Tokens.PAR_OPEN)
-        repeated {
-            expect(PExpression) storeIn item
+    "Argument" group {
+        PArgsList {
+            expect(Tokens.PAR_OPEN)
+            repeated {
+                expect(PArgument) storeIn item
+                either {
+                    lookahead { expect(Tokens.PAR_CLOSE) }
+                } or {
+                    expect(Tokens.COMMA)
+                }
+            } storeIn PArgsList::args
+            expect(Tokens.PAR_CLOSE)
+        }
+
+        PArgument {
             either {
-                lookahead { expect(Tokens.PAR_CLOSE) }
+                expect(PArgNamed) storeIn self()
             } or {
-                expect(Tokens.COMMA)
+                expect(PArgBare) storeIn self()
             }
-        } storeIn PArgsList::args
-        expect(Tokens.PAR_CLOSE)
-    }
+        }
 
-    PExpValue {
-        expect(PString) storeIn PExpValue::value
-    }
+        PArgNamed {
+            expect(Tokens.WORD) storeIn PArgNamed::name
+            expect(Tokens.COLON)
+            expect(PExpression) storeIn PArgNamed::expr
+        }
 
-    PExpFunCall {
-        expect(Tokens.WORD) storeIn PExpFunCall::functionName
-        expect(PArgsList) transform { it.args } storeIn PExpFunCall::argsList
-    }
-
-    PExpArray {
-        expect(Tokens.SQRBRK_OPEN)
-        repeated {
-            expect(PExpression) storeIn item
-            either {
-                lookahead { expect(Tokens.SQRBRK_CLOSE) }
-            } or {
-                expect(Tokens.COMMA)
-            }
-        } storeIn PExpArray::values
-        expect(Tokens.SQRBRK_CLOSE)
+        PArgBare {
+            expect(PExpression) storeIn PArgBare::expr
+        }
     }
 
     "Properties" group {
@@ -286,6 +323,18 @@ val parser = niwenParser<PRoot> {
             repeated { expect(Tokens.STRING_CONTENT) storeIn item } storeIn PString.parts
             expect(Tokens.QUOTATION_MARK)
         }
+    }
+
+    PEnum {
+        expect(Tokens.WORD, withValue = "enum")
+        expect(Tokens.WORD) storeIn PEnum::enumName
+        expect(Tokens.BRACE_OPEN)
+        optional { expect(Tokens.NEWLINE) }
+        repeated {
+            expect(Tokens.WORD) storeIn item
+            expect(Tokens.NEWLINE)
+        } storeIn PEnum::enumTypes
+        expect(Tokens.BRACE_CLOSE)
     }
 }
 
@@ -345,12 +394,24 @@ data class PField(val name: String, val type: String, val isOptional: Boolean, v
     companion object : ParserNodeDeclaration<PField> by reflective()
 }
 
-data class PAttribute(val name: String, val params: List<PExpression> = listOf(), val isBlockAttribute: Boolean) {
+data class PAttribute(val name: String, val params: List<PArgument> = listOf(), val isBlockAttribute: Boolean) {
     companion object : ParserNodeDeclaration<PAttribute> by reflective()
 }
 
-data class PArgsList(val args: List<PExpression>) {
+data class PArgsList(val args: List<PArgument>) {
     companion object : ParserNodeDeclaration<PArgsList> by reflective()
+}
+
+sealed class PArgument {
+    companion object : ParserNodeDeclaration<PArgument> by subtype()
+}
+
+data class PArgNamed(val name: String, val expr: PExpression) : PArgument() {
+    companion object : ParserNodeDeclaration<PArgNamed> by reflective()
+}
+
+data class PArgBare(val expr: PExpression) : PArgument() {
+    companion object : ParserNodeDeclaration<PArgBare> by reflective()
 }
 
 sealed class PExpression {
@@ -363,10 +424,18 @@ data class PExpValue(val value: PString) : PExpression() {
     companion object : ParserNodeDeclaration<PExpValue> by reflective()
 }
 
-data class PExpFunCall(val functionName: String, val argsList: List<PExpression>) : PExpression() {
+data class PExpFunCall(val functionName: String, val argsList: List<PArgument>) : PExpression() {
     companion object : ParserNodeDeclaration<PExpFunCall> by reflective()
+}
+
+data class PExpReference(val ref: String) : PExpression() {
+    companion object : ParserNodeDeclaration<PExpReference> by reflective()
 }
 
 data class PExpArray(val values: List<PExpression>) : PExpression() {
     companion object : ParserNodeDeclaration<PExpArray> by reflective()
+}
+
+data class PEnum(val enumName: String, val enumTypes: List<String>) : PRootElement() {
+    companion object : ParserNodeDeclaration<PEnum> by reflective()
 }

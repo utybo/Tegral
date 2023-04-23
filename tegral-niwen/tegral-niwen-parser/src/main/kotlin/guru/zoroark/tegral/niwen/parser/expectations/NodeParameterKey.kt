@@ -37,7 +37,9 @@ import kotlin.reflect.typeOf
  *
  * (Note, the example above is heavily simplified. The real version would use the `self()` and `by subtype()` mechanisms).
  */
-data class NodeParameterKey<in T, in R>(val outputType: KType, val name: String)
+data class NodeParameterKey<in T, in R>(val outputType: KType, val name: String) {
+    override fun toString(): String = "$name ($outputType)"
+}
 
 data class RawKey<R>(val outputType: KType, val name: String)
 

@@ -6,7 +6,6 @@ import guru.zoroark.tegral.niwen.parser.expectations.Expectation
 import guru.zoroark.tegral.niwen.parser.expectations.ExpectedToken
 import guru.zoroark.tegral.niwen.parser.expectations.NodeParameterKey
 import guru.zoroark.tegral.niwen.parser.expectations.StoreStateCallback
-import guru.zoroark.tegral.niwen.parser.expectations.applyExpectations
 import kotlin.reflect.typeOf
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -17,9 +16,10 @@ class ExpectationApplyTest {
 
     @Test
     fun test_successful_with_no_expectations() {
-        val result = listOf<Expectation<Nothing, *>>().applyExpectations(
-            ParsingContext(listOf(), mapOf()),
-            0
+        val ctx = ParsingContext(listOf(), mapOf(), null)
+        val result = ctx.applyExpectations(
+            0,
+            listOf<Expectation<Nothing, *>>()
         )
         assertTrue(result is ExpectationResult.Success)
         assertTrue(result.stored.isEmpty())
@@ -43,7 +43,7 @@ class ExpectationApplyTest {
                 'd'..'f' isToken two
             }
         }.tokenize("abdce")
-        val result = exp.applyExpectations(ParsingContext(tokens, mapOf()), 0)
+        val result = ParsingContext(tokens, mapOf()).applyExpectations(0, exp)
         assertTrue(result is ExpectationResult.Success)
         assertEquals(
             mapOf("1" to "a", "2" to "b", "3" to "d", "4" to "e"),
@@ -68,7 +68,7 @@ class ExpectationApplyTest {
                 'd'..'f' isToken two
             }
         }.tokenize("abdc")
-        val result = exp.applyExpectations(ParsingContext(tokens, mapOf()), 0)
+        val result = ParsingContext(tokens, mapOf()).applyExpectations(0, exp)
         assertTrue(result is ExpectationResult.DidNotMatch)
         assertEquals(result.atTokenIndex, 4)
     }
@@ -90,7 +90,7 @@ class ExpectationApplyTest {
                 'd'..'f' isToken two
             }
         }.tokenize("abdfe")
-        val result = exp.applyExpectations(ParsingContext(tokens, mapOf()), 0)
+        val result = ParsingContext(tokens, mapOf()).applyExpectations(0, exp)
         assertTrue(result is ExpectationResult.DidNotMatch)
     }
 }

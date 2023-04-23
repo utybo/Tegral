@@ -34,9 +34,9 @@ model Post {
   authorId  Int?
 }
 
-enum Role {
-  USER
-  ADMIN
+enum Role { 
+  USER 
+  ADMIN 
 }
 """
 
@@ -45,8 +45,7 @@ class NiwenPrismTest {
     fun `Test full example`() {
         val tokens = NiwenPrism.tokenize(fullExample)
         println(tokens.joinToString("\n"))
-        val res = NiwenPrism.parse(tokens)
-        println(res)
+        val res = NiwenPrism.parseDebug(tokens)
+        println(res.debuggerResult)
     }
-
 }

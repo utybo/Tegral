@@ -7,6 +7,7 @@ import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.starProjectedType
+import kotlin.reflect.jvm.jvmName
 
 /**
  * Creates a node declaration that uses reflection to initialize instances of
@@ -36,11 +37,11 @@ inline fun <reified T : Any> reflective(): ParserNodeDeclaration<T> = Reflective
  *
  * This class supports classes with multiple constructors: just remember that
  * constructors are chosen exclusively based on parameter names, not typing.
+ * TODO is that still true?
  */
 class ReflectiveNodeDeclaration<T : Any>(
     private val tClass: KClass<T>
 ) : ParserNodeDeclaration<T> {
-
     private fun KParameter.toKey(): NodeParameterKey<T, *>? {
         return this.name?.let { name -> NodeParameterKey<T, Nothing>(this.type, name) }
     }
@@ -120,4 +121,6 @@ class ReflectiveNodeDeclaration<T : Any>(
             })
         }
     }
+
+    override val nodeName: String = tClass.simpleName ?: tClass.jvmName
 }

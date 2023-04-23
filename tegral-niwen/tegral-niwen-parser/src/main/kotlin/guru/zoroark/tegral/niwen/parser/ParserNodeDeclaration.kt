@@ -38,4 +38,10 @@ fun interface ParserNodeDeclaration<T> {
      * information for creating it.
      */
     fun make(args: TypeDescription<T>): T
+
+    val nodeName: String?
+        get() = null
 }
+
+val ParserNodeDeclaration<*>.name: String
+        get() = nodeName ?: this.toString()

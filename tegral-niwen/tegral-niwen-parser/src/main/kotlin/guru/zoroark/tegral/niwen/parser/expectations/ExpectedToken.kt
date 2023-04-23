@@ -37,12 +37,19 @@ class ExpectedToken<T>(
         if (token.tokenType == tokenType && (withValue == null || withValue == token.string))
             return ExpectationResult.Success(
                 stateCallback.createStoreMap(token.string),
-                index + 1
+                index + 1,
+                index to index + 1,
+                if (withValue == null) "Token '${token.string}' is of correct type ${token.tokenType}"
+                else "Token '${token.string} is of correct type ${token.tokenType} and has correct 'withValue'"
             )
         return ExpectationResult.DidNotMatch(
-            if (withValue == null) "At index $index, expected token of type $tokenType, but encountered ${token.tokenType} instead"
-            else "At index $index, expected token of type $tokenType with value $withValue, but encountered ${token.tokenType} with value '${token.string}'",
+            if (withValue == null) "At index $index, expected token of type $tokenType, but encountered ${token.tokenType} ('${token.string}') instead"
+            else "At index $index, expected token of type $tokenType with value '$withValue', but encountered ${token.tokenType} ('${token.string}')",
             index
         )
     }
+
+    override val title: String =
+        if (withValue == null) "expect(${tokenType})"
+        else "expect(${tokenType}, withValue = '${withValue}')"
 }

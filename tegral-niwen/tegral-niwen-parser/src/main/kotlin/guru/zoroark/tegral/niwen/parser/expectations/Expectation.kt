@@ -71,34 +71,8 @@ abstract class Expectation<T, in R>(
         context: ParsingContext,
         index: Int
     ): ExpectationResult<T>
-}
 
-/**
- * Apply each expectation of this list to the given context starting at the
- * given index.
- */
-fun <T> List<Expectation<T, *>>.applyExpectations(
-    context: ParsingContext,
-    startAt: Int
-): ExpectationResult<T> {
-    var index = startAt
-    val map = mutableMapOf<NodeParameterKey<T, *>, Any?>()
-    forEach {
-        if (index >= context.tokens.size && it !is HandlesTokenDrought) {
-            return ExpectationResult.DidNotMatch(
-                "Expected more tokens, but ran out of tokens",
-                index
-            )
-        }
-        val result = it.matches(context, index)
-        if (result is ExpectationResult.Success) {
-            map.putAll(result.stored)
-            index = result.nextIndex
-        } else {
-            return result
-        }
-    }
-    return ExpectationResult.Success(map, index)
+    abstract val title: String
 }
 
 /**

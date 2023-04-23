@@ -6,6 +6,9 @@ dependencies {
     api project(":tegral-core")
     api project(":tegral-niwen:tegral-niwen-lexer")
     api libs.kotlin.reflect
+
+    implementation libs.jackson.kotlin
+    implementation libs.jackson.dataformats.yaml
 }
 
 // TODO
