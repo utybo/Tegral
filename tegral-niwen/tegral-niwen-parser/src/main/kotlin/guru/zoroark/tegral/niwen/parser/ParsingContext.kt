@@ -1,3 +1,17 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package guru.zoroark.tegral.niwen.parser
 
 import guru.zoroark.tegral.niwen.lexer.Token
@@ -17,12 +31,29 @@ import guru.zoroark.tegral.niwen.parser.expectations.NodeParameterKey
 class ParsingContext(
     val tokens: List<Token>,
     private val typeMap: Map<ParserNodeDeclaration<*>, DescribedType<*>>,
+    /**
+     * The [BranchSeeker] instance associated with this parsing context.
+     *
+     * If null, debugging is disabled.
+     *
+     * You should rarely need to manually update the rare seeker. [enterBranch] should be enough for most purposes
+     */
     val branchSeeker: BranchSeeker? = null
 ) {
+    /**
+     * Retrieve the provided node declaration, or null if no such declaration could be found.
+     */
     operator fun <T> get(declaration: ParserNodeDeclaration<T>): DescribedType<T>? {
         return typeMap[declaration] as? DescribedType<T>
     }
 
+    /**
+     * If debugging is enabled, execute a set of expectations "within" a special node. Otherwise, directly executed the
+     * provided branch.
+     *
+     * This can be used to provide additional context for several "execution runs" that may occur within an expectation.
+     * For example, this is used in `either { ... }` 's expectation to identify each branch.
+     */
     fun <T> enterBranch(branchTitle: String, branch: () -> ExpectationResult<T>): ExpectationResult<T> {
         branchSeeker?.stepIn(branchTitle)
         val result = branch()
@@ -53,10 +84,8 @@ class ParsingContext(
         }
     }
 
-
     /**
-     * Apply each expectation of this list to the given context starting at the
-     * given index.
+     * Apply each expectation of this list to the given context, starting at the given index.
      */
     fun <T> applyExpectations(
         startAt: Int,
@@ -74,6 +103,11 @@ class ParsingContext(
                 return result
             }
         }
-        return ExpectationResult.Success(map, index, startAt to index, "All expectations in branch matched")
+        return ExpectationResult.Success(
+            map,
+            index,
+            startAt to index,
+            "All expectations in branch matched"
+        )
     }
 }

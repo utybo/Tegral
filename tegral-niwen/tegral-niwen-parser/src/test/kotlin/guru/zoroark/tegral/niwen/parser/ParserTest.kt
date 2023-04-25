@@ -1,3 +1,17 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package guru.zoroark.tegral.niwen.parser
 
 import guru.zoroark.tegral.niwen.lexer.matchers.matches
@@ -9,10 +23,13 @@ import guru.zoroark.tegral.niwen.parser.expectations.NodeParameterKey
 import guru.zoroark.tegral.niwen.parser.expectations.StoreStateCallback
 import guru.zoroark.tegral.niwen.parser.expectations.asKey
 import kotlin.reflect.typeOf
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class ParserTest {
 
+    @Suppress("UtilityClassWithPublicConstructor")
     class SimpleType {
         companion object : ParserNodeDeclaration<SimpleType> by reflective()
     }
@@ -101,15 +118,21 @@ class ParserTest {
         val parser = NiwenParser(
             listOf(
                 DescribedType(
-                    AdditionNode, listOf(
-                    ExpectedNode(NumberNode, StoreStateCallback(AdditionNode::first.asKey())),
-                    ExpectedToken(tokenPlus),
-                    ExpectedNode(NumberNode, StoreStateCallback(AdditionNode::second.asKey()))
-                )
+                    AdditionNode,
+                    listOf(
+                        ExpectedNode(NumberNode, StoreStateCallback(AdditionNode::first.asKey())),
+                        ExpectedToken(tokenPlus),
+                        ExpectedNode(NumberNode, StoreStateCallback(AdditionNode::second.asKey()))
+                    )
                 ),
                 DescribedType(
                     NumberNode,
-                    listOf(ExpectedToken(tokenNumber, stateCallback = StoreStateCallback(NodeParameterKey(typeOf<String>(), "value"))))
+                    listOf(
+                        ExpectedToken(
+                            tokenNumber,
+                            stateCallback = StoreStateCallback(NodeParameterKey(typeOf<String>(), "value"))
+                        )
+                    )
                 )
             ),
             AdditionNode

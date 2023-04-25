@@ -1,8 +1,21 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package guru.zoroark.tegral.niwen.parser
 
 import guru.zoroark.tegral.niwen.parser.expectations.NodeParameterKey
 import guru.zoroark.tegral.niwen.parser.expectations.asKey
-import guru.zoroark.tegral.niwen.parser.expectations.key
 import kotlin.reflect.typeOf
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -66,7 +79,9 @@ class TestReflectiveNodeDeclaration {
     }
 
     data class OptionalConstructor(
-        val first: String, val e: Char, val optSecond: Int = 42
+        val first: String,
+        val e: Char,
+        val optSecond: Int = 42
     ) {
         companion object :
             ParserNodeDeclaration<OptionalConstructor> by reflective()
@@ -86,11 +101,14 @@ class TestReflectiveNodeDeclaration {
     }
 
     data class MultiOptionalConstructor(
-        val first: String, val second: Char, val third: List<String> = listOf()
+        val first: String,
+        val second: Char,
+        val third: List<String> = listOf()
     ) {
         constructor(
             second: Char,
             first: String = "Heyy",
+            @Suppress("UnusedPrivateMember")
             third: List<String> = listOf()
         ) : this("Second ctor $first", second, listOf("Hello"))
 

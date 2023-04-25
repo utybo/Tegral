@@ -1,3 +1,17 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package guru.zoroark.tegral.niwen.parser
 
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
@@ -55,6 +69,11 @@ class BranchSeeker {
          */
         val storedData: MutableMap<NodeParameterKey<*, *>, Any?> = mutableMapOf()
     ) {
+        /**
+         * Create a child node for this node.
+         *
+         * @return The created child
+         */
         fun createChild(title: String): Node {
             val child = Node(this, title)
             nodes += child
@@ -112,13 +131,15 @@ class BranchSeeker {
         fun Node.toMap(): LinkedHashMap<String, Any> {
             val result = linkedMapOf<String, Any>()
             result[title] = "${status.toIcon()} $message"
-            if (storedData.isNotEmpty()) result["Stored"] =
-                storedData.mapKeys { it.key.toString() }.mapValues { it.value.toString() }
-            if (nodes.isNotEmpty()) result["Expectations"] = nodes.map { it.toMap() }
+            if (storedData.isNotEmpty()) {
+                result["Stored"] = storedData.mapKeys { it.key.toString() }.mapValues { it.value.toString() }
+            }
+            if (nodes.isNotEmpty()) {
+                result["Expectations"] = nodes.map { it.toMap() }
+            }
             return result
         }
 
         return DEBUGGER_MAPPER.writeValueAsString(root.toMap())
     }
-
 }

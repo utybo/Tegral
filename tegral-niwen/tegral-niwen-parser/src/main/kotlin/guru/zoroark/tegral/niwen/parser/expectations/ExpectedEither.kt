@@ -1,3 +1,17 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package guru.zoroark.tegral.niwen.parser.expectations
 
 import guru.zoroark.tegral.niwen.parser.ExpectationResult
@@ -23,8 +37,11 @@ class ExpectedEither<T>(private val branches: List<EitherBranch<T>>) : Expectati
         val failures = mutableListOf<ExpectationResult.DidNotMatch<T>>()
         branches.withIndex().forEach { (i, branch) ->
 
-            when (val result =
-                context.enterBranch("Branch $i") { context.applyExpectations(index, branch.expectations) }) {
+            when (
+                val result = context.enterBranch("Branch $i") {
+                    context.applyExpectations(index, branch.expectations)
+                }
+            ) {
                 is ExpectationResult.Success -> {
                     return result.copy(stopReason = "Branch $i matched")
                 }

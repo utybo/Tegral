@@ -80,9 +80,14 @@ public final class guru/zoroark/tegral/niwen/lexer/StateBuilder : guru/zoroark/t
 	public fun <init> ()V
 	public fun build ()Lguru/zoroark/tegral/niwen/lexer/LexerState;
 	public synthetic fun build ()Ljava/lang/Object;
+	public final fun getDefault ()Lguru/zoroark/tegral/niwen/lexer/StateBuilder$Default;
 	public final fun getIgnore (Ljava/lang/Object;)Lguru/zoroark/tegral/niwen/lexer/IgnoringMatcherBuilder;
 	public final fun isToken (Ljava/lang/Object;Lguru/zoroark/tegral/niwen/lexer/TokenType;)Lguru/zoroark/tegral/niwen/lexer/MatchedMatcherBuilder;
 	public final fun unaryPlus (Lguru/zoroark/tegral/niwen/lexer/matchers/TokenMatcher;)V
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/StateBuilder$Default {
+	public static final field INSTANCE Lguru/zoroark/tegral/niwen/lexer/StateBuilder$Default;
 }
 
 public abstract interface class guru/zoroark/tegral/niwen/lexer/StateLabel {
@@ -115,7 +120,7 @@ public abstract class guru/zoroark/tegral/niwen/lexer/TokenMatcherBuilder : guru
 	protected final fun getNextStateBehavior ()Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;
 	public final fun setBaseRecognizer (Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;)V
 	protected final fun setNextStateBehavior (Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;)V
-	public final fun thenState (Lguru/zoroark/tegral/niwen/lexer/LexerBuilder$StateInfixCreator;)V
+	public final fun thenState (Lguru/zoroark/tegral/niwen/lexer/StateBuilder$Default;)V
 	public final fun thenState (Lguru/zoroark/tegral/niwen/lexer/StateLabel;)V
 }
 
@@ -166,6 +171,11 @@ public final class guru/zoroark/tegral/niwen/lexer/matchers/NoMatchResult : guru
 
 public final class guru/zoroark/tegral/niwen/lexer/matchers/NoStateChange : guru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior {
 	public static final field INSTANCE Lguru/zoroark/tegral/niwen/lexer/matchers/NoStateChange;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/RegexPatternRecognizer : guru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer {
+	public fun <init> (Ljava/util/regex/Pattern;)V
+	public fun recognize (Ljava/lang/String;I)Lkotlin/Pair;
 }
 
 public final class guru/zoroark/tegral/niwen/lexer/matchers/RegexPatternRecognizerKt {

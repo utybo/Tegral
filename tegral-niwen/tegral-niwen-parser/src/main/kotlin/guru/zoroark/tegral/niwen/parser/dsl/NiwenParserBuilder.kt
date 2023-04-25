@@ -1,3 +1,17 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package guru.zoroark.tegral.niwen.parser.dsl
 
 import guru.zoroark.tegral.core.Buildable
@@ -22,7 +36,9 @@ class NiwenParserBuilder<T> : Buildable<NiwenParser<T>> {
      */
     operator fun <T> ParserNodeDeclaration<T>.invoke(block: DescribedTypeBuilder<T>.() -> Unit) {
         if (this in knownDeclarations) {
-            throw NiwenParserException("The node declaration ${this::class} was already described elsewhere: you cannot describe it twice.")
+            throw NiwenParserException(
+                "The node declaration ${this::class} was already described elsewhere: you cannot describe it twice."
+            )
         }
         builtTypeDef += DescribedTypeBuilder(this).apply(block).build()
         knownDeclarations += this
@@ -38,10 +54,15 @@ class NiwenParserBuilder<T> : Buildable<NiwenParser<T>> {
         this(block)
     }
 
+    /**
+     * Set the root node of this parser.
+     */
     @TegralDsl
     fun root(decl: ParserNodeDeclaration<T>) {
         if (rootNodeType != null) {
-            throw NiwenParserException("Another node was already defined as the root, ${this::class} cannot also be a root.")
+            throw NiwenParserException(
+                "Another node was already defined as the root, ${this::class} cannot also be a root."
+            )
         }
         rootNodeType = decl
     }
@@ -49,7 +70,8 @@ class NiwenParserBuilder<T> : Buildable<NiwenParser<T>> {
     /**
      * Provides a way to group declaration together.
      *
-     * This has no effect; use this function to better organize your [niwenParser] block.
+     * Groups have no effect; the provided lambda is directly executed and nothing else happens. Use this function to
+     * better organize your [niwenParser] block.
      */
     @TegralDsl
     infix fun String.group(block: NiwenParserBuilder<T>.() -> Unit) {
@@ -60,11 +82,13 @@ class NiwenParserBuilder<T> : Buildable<NiwenParser<T>> {
      * Build this parser
      */
     override fun build(): NiwenParser<T> =
-        //  user to configure the root node.
         NiwenParser<T>(
             builtTypeDef,
             rootNodeType
-                ?: throw NiwenParserException("You never defined a root node: please described a node with 'root' so the parser knows where to start!")
+                ?: throw NiwenParserException(
+                    "You never defined a root node: please described a node with 'root' so the parser knows where to " +
+                        "start!"
+                )
         )
 }
 

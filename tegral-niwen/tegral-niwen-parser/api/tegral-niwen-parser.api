@@ -1,0 +1,416 @@
+public final class guru/zoroark/tegral/niwen/parser/BranchSeeker {
+	public fun <init> ()V
+	public final fun stepIn (Ljava/lang/String;)V
+	public final fun stepOut (Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;Ljava/lang/String;Ljava/util/Map;)V
+	public final fun toYamlRepresentation ()Ljava/lang/String;
+	public final fun updateRoot (Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;Ljava/lang/String;Ljava/util/Map;)V
+}
+
+public final class guru/zoroark/tegral/niwen/parser/BranchSeeker$Node {
+	public fun <init> (Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Node;Ljava/lang/String;Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Node;Ljava/lang/String;Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Node;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/util/List;
+	public final fun component6 ()Ljava/util/Map;
+	public final fun copy (Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Node;Ljava/lang/String;Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Node;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Node;Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Node;Ljava/lang/String;Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Node;
+	public final fun createChild (Ljava/lang/String;)Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Node;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMessage ()Ljava/lang/String;
+	public final fun getNodes ()Ljava/util/List;
+	public final fun getParent ()Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Node;
+	public final fun getStatus ()Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;
+	public final fun getStoredData ()Ljava/util/Map;
+	public final fun getTitle ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun setMessage (Ljava/lang/String;)V
+	public final fun setStatus (Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;)V
+	public final fun setTitle (Ljava/lang/String;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/BranchSeeker$Status : java/lang/Enum {
+	public static final field DID_NOT_MATCH Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;
+	public static final field SUCCESS Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;
+	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;
+	public static fun values ()[Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/DescribedType {
+	public fun <init> (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;Ljava/util/List;)V
+	public final fun getExpectations ()Ljava/util/List;
+	public final fun getType ()Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;
+}
+
+public abstract class guru/zoroark/tegral/niwen/parser/ExpectationResult {
+}
+
+public final class guru/zoroark/tegral/niwen/parser/ExpectationResult$DidNotMatch : guru/zoroark/tegral/niwen/parser/ExpectationResult {
+	public fun <init> (Ljava/lang/String;I)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()I
+	public final fun copy (Ljava/lang/String;I)Lguru/zoroark/tegral/niwen/parser/ExpectationResult$DidNotMatch;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/niwen/parser/ExpectationResult$DidNotMatch;Ljava/lang/String;IILjava/lang/Object;)Lguru/zoroark/tegral/niwen/parser/ExpectationResult$DidNotMatch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAtTokenIndex ()I
+	public final fun getMessage ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/ExpectationResult$Success : guru/zoroark/tegral/niwen/parser/ExpectationResult {
+	public fun <init> (Ljava/util/Map;ILkotlin/Pair;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/util/Map;ILkotlin/Pair;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/Map;
+	public final fun component2 ()I
+	public final fun component3 ()Lkotlin/Pair;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ljava/util/Map;ILkotlin/Pair;Ljava/lang/String;)Lguru/zoroark/tegral/niwen/parser/ExpectationResult$Success;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/niwen/parser/ExpectationResult$Success;Ljava/util/Map;ILkotlin/Pair;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/niwen/parser/ExpectationResult$Success;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMatchBounds ()Lkotlin/Pair;
+	public final fun getNextIndex ()I
+	public final fun getStopReason ()Ljava/lang/String;
+	public final fun getStored ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/NiwenParser {
+	public fun <init> (Ljava/util/List;Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;)V
+	public final fun parse (Ljava/util/List;)Ljava/lang/Object;
+	public final fun parseWithDebugger (Ljava/util/List;)Lguru/zoroark/tegral/niwen/parser/NiwenParser$ParserResult;
+}
+
+public abstract class guru/zoroark/tegral/niwen/parser/NiwenParser$ParserResult {
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getDebuggerResult ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/NiwenParser$ParserResult$Failure : guru/zoroark/tegral/niwen/parser/NiwenParser$ParserResult {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun getReason ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/NiwenParser$ParserResult$Success : guru/zoroark/tegral/niwen/parser/NiwenParser$ParserResult {
+	public fun <init> (Ljava/lang/Object;Ljava/lang/String;)V
+	public final fun getResult ()Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/NiwenParserException : guru/zoroark/tegral/core/TegralException {
+	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public abstract interface class guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public abstract fun getNodeName ()Ljava/lang/String;
+	public abstract fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration$DefaultImpls {
+	public static fun getNodeName (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;)Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/ParserNodeDeclarationKt {
+	public static final fun getName (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;)Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/ParsingContext {
+	public fun <init> (Ljava/util/List;Ljava/util/Map;Lguru/zoroark/tegral/niwen/parser/BranchSeeker;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/Map;Lguru/zoroark/tegral/niwen/parser/BranchSeeker;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun applyExpectations (ILjava/util/List;)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
+	public final fun enterBranch (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
+	public final fun get (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;)Lguru/zoroark/tegral/niwen/parser/DescribedType;
+	public final fun getBranchSeeker ()Lguru/zoroark/tegral/niwen/parser/BranchSeeker;
+	public final fun getTokens ()Ljava/util/List;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/ReflectiveNodeDeclaration : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun <init> (Lkotlin/reflect/KClass;)V
+	public fun getNodeName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/TypeDescription {
+	public fun <init> (Ljava/util/Map;)V
+	public final fun getArguments ()Ljava/util/Map;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/ComposableStateCallbackBuilder : guru/zoroark/tegral/core/Buildable, guru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder {
+	public fun <init> (Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)V
+	public fun build ()Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun compose (Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)Lguru/zoroark/tegral/niwen/parser/dsl/ComposableStateCallbackBuilder;
+	public synthetic fun compose (Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;
+	public fun storeIn (Lguru/zoroark/tegral/niwen/parser/expectations/NodeParameterKey;)Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;
+	public fun storeIn (Lguru/zoroark/tegral/niwen/parser/expectations/RawKey;)V
+	public fun storeIn (Lkotlin/reflect/KProperty1;)Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;
+	public fun transform (Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/DescribedTypeBuilder : guru/zoroark/tegral/core/Buildable, guru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver {
+	public fun <init> (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;)V
+	public fun build ()Lguru/zoroark/tegral/niwen/parser/DescribedType;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun plusAssign (Lguru/zoroark/tegral/core/Buildable;)V
+	public fun unaryPlus (Lguru/zoroark/tegral/niwen/lexer/TokenType;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+	public fun unaryPlus (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/DescribedTypeBuilderKt {
+	public static final fun plusAssign (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Lguru/zoroark/tegral/niwen/parser/expectations/Expectation;)V
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/DslExpectationsKt {
+	public static final fun emit (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Ljava/lang/Object;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+	public static final fun expect (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Lguru/zoroark/tegral/niwen/lexer/TokenType;Ljava/lang/String;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+	public static final fun expect (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+	public static synthetic fun expect$default (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Lguru/zoroark/tegral/niwen/lexer/TokenType;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/EitherBranchBuilder : guru/zoroark/tegral/core/Buildable, guru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver {
+	public fun <init> ()V
+	public fun build ()Lguru/zoroark/tegral/niwen/parser/expectations/EitherBranch;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun plusAssign (Lguru/zoroark/tegral/core/Buildable;)V
+	public fun unaryPlus (Lguru/zoroark/tegral/niwen/lexer/TokenType;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+	public fun unaryPlus (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/EitherBuilder : guru/zoroark/tegral/core/Buildable {
+	public fun <init> ()V
+	public final fun addBranch (Lguru/zoroark/tegral/core/Buildable;)V
+	public fun build ()Lguru/zoroark/tegral/niwen/parser/expectations/ExpectedEither;
+	public synthetic fun build ()Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/EitherBuilderKt {
+	public static final fun addBranch (Lguru/zoroark/tegral/niwen/parser/dsl/EitherBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final fun either (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/niwen/parser/dsl/EitherBuilder;
+	public static final fun or (Lguru/zoroark/tegral/niwen/parser/dsl/EitherBuilder;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/niwen/parser/dsl/EitherBuilder;
+}
+
+public abstract interface class guru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver {
+	public abstract fun plusAssign (Lguru/zoroark/tegral/core/Buildable;)V
+	public abstract fun unaryPlus (Lguru/zoroark/tegral/niwen/lexer/TokenType;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+	public abstract fun unaryPlus (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver$DefaultImpls {
+	public static fun unaryPlus (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Lguru/zoroark/tegral/niwen/lexer/TokenType;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+	public static fun unaryPlus (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder : guru/zoroark/tegral/core/Buildable, guru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder {
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public fun build ()Lguru/zoroark/tegral/niwen/parser/expectations/Expectation;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun compose (Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;
+	public fun storeIn (Lguru/zoroark/tegral/niwen/parser/expectations/NodeParameterKey;)Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;
+	public fun storeIn (Lguru/zoroark/tegral/niwen/parser/expectations/RawKey;)V
+	public fun storeIn (Lkotlin/reflect/KProperty1;)Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;
+	public fun transform (Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/ItemExpectationBuilder : guru/zoroark/tegral/core/Buildable, guru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver {
+	public fun <init> ()V
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun build ()Ljava/util/List;
+	public fun plusAssign (Lguru/zoroark/tegral/core/Buildable;)V
+	public fun unaryPlus (Lguru/zoroark/tegral/niwen/lexer/TokenType;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+	public fun unaryPlus (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/LookaheadBuilder : guru/zoroark/tegral/core/Buildable, guru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver {
+	public fun <init> ()V
+	public fun build ()Lguru/zoroark/tegral/niwen/parser/expectations/ExpectedLookahead;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun plusAssign (Lguru/zoroark/tegral/core/Buildable;)V
+	public fun unaryPlus (Lguru/zoroark/tegral/niwen/lexer/TokenType;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+	public fun unaryPlus (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/LookaheadBuilderKt {
+	public static final fun lookahead (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/NiwenParserBuilder : guru/zoroark/tegral/core/Buildable {
+	public fun <init> ()V
+	public fun build ()Lguru/zoroark/tegral/niwen/parser/NiwenParser;
+	public synthetic fun build ()Ljava/lang/Object;
+	public final fun group (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun invoke (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;Lkotlin/jvm/functions/Function1;)V
+	public final fun root (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;)V
+	public final fun root (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/NiwenParserBuilderKt {
+	public static final fun niwenParser (Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/niwen/parser/NiwenParser;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/OptionalBranchBuilder : guru/zoroark/tegral/core/Buildable, guru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver {
+	public fun <init> ()V
+	public fun build ()Lguru/zoroark/tegral/niwen/parser/expectations/Expectation;
+	public synthetic fun build ()Ljava/lang/Object;
+	public fun plusAssign (Lguru/zoroark/tegral/core/Buildable;)V
+	public fun unaryPlus (Lguru/zoroark/tegral/niwen/lexer/TokenType;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+	public fun unaryPlus (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/OptionalBranchBuilderKt {
+	public static final fun optional (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/RepeatedBuilder : guru/zoroark/tegral/core/Buildable {
+	public fun <init> (Lguru/zoroark/tegral/niwen/parser/dsl/ItemExpectationBuilder;Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)V
+	public fun build ()Lguru/zoroark/tegral/niwen/parser/expectations/ExpectedRepeated;
+	public synthetic fun build ()Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/RepeatedBuilderKt {
+	public static final fun repeated (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+}
+
+public abstract interface class guru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder {
+	public abstract fun compose (Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;
+	public abstract fun storeIn (Lguru/zoroark/tegral/niwen/parser/expectations/NodeParameterKey;)Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;
+	public abstract fun storeIn (Lguru/zoroark/tegral/niwen/parser/expectations/RawKey;)V
+	public abstract fun storeIn (Lkotlin/reflect/KProperty1;)Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;
+	public abstract fun transform (Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder$DefaultImpls {
+	public static fun storeIn (Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;Lguru/zoroark/tegral/niwen/parser/expectations/NodeParameterKey;)Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;
+	public static fun storeIn (Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;Lguru/zoroark/tegral/niwen/parser/expectations/RawKey;)V
+	public static fun storeIn (Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;Lkotlin/reflect/KProperty1;)Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;
+	public static fun transform (Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/dsl/StoreInSelfSubtypeKt {
+	public static final fun selfKeyFor (Lkotlin/reflect/KType;)Lguru/zoroark/tegral/niwen/parser/expectations/NodeParameterKey;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/ComposeStateCallbacks : guru/zoroark/tegral/niwen/parser/expectations/StateCallback {
+	public fun <init> (Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)V
+	public fun reduceState (Ljava/util/Map;Ljava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/EitherBranch {
+	public fun <init> (Ljava/util/List;)V
+	public final fun getExpectations ()Ljava/util/List;
+}
+
+public abstract class guru/zoroark/tegral/niwen/parser/expectations/Expectation {
+	public fun <init> ()V
+	public fun <init> (Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)V
+	public synthetic fun <init> (Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getStateCallback ()Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;
+	public abstract fun getTitle ()Ljava/lang/String;
+	public abstract fun matches (Lguru/zoroark/tegral/niwen/parser/ParsingContext;I)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/ExpectedEither : guru/zoroark/tegral/niwen/parser/expectations/Expectation {
+	public fun <init> (Ljava/util/List;)V
+	public fun getTitle ()Ljava/lang/String;
+	public fun matches (Lguru/zoroark/tegral/niwen/parser/ParsingContext;I)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/ExpectedEmitConstant : guru/zoroark/tegral/niwen/parser/expectations/Expectation {
+	public fun <init> (Ljava/lang/Object;Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)V
+	public synthetic fun <init> (Ljava/lang/Object;Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getTitle ()Ljava/lang/String;
+	public final fun getValue ()Ljava/lang/Object;
+	public fun matches (Lguru/zoroark/tegral/niwen/parser/ParsingContext;I)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/ExpectedLookahead : guru/zoroark/tegral/niwen/parser/expectations/Expectation {
+	public fun <init> (Ljava/util/List;)V
+	public fun getTitle ()Ljava/lang/String;
+	public fun matches (Lguru/zoroark/tegral/niwen/parser/ParsingContext;I)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/ExpectedNode : guru/zoroark/tegral/niwen/parser/expectations/Expectation {
+	public fun <init> (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)V
+	public synthetic fun <init> (Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getTitle ()Ljava/lang/String;
+	public fun matches (Lguru/zoroark/tegral/niwen/parser/ParsingContext;I)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/ExpectedOptional : guru/zoroark/tegral/niwen/parser/expectations/Expectation, guru/zoroark/tegral/niwen/parser/expectations/HandlesTokenDrought {
+	public fun <init> (Ljava/util/List;)V
+	public fun getTitle ()Ljava/lang/String;
+	public fun matches (Lguru/zoroark/tegral/niwen/parser/ParsingContext;I)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/ExpectedRepeated : guru/zoroark/tegral/niwen/parser/expectations/Expectation, guru/zoroark/tegral/niwen/parser/expectations/HandlesTokenDrought {
+	public fun <init> (Ljava/util/List;Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)V
+	public synthetic fun <init> (Ljava/util/List;Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getTitle ()Ljava/lang/String;
+	public fun matches (Lguru/zoroark/tegral/niwen/parser/ParsingContext;I)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/ExpectedToken : guru/zoroark/tegral/niwen/parser/expectations/Expectation {
+	public fun <init> (Lguru/zoroark/tegral/niwen/lexer/TokenType;Ljava/lang/String;Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)V
+	public synthetic fun <init> (Lguru/zoroark/tegral/niwen/lexer/TokenType;Ljava/lang/String;Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getTitle ()Ljava/lang/String;
+	public fun matches (Lguru/zoroark/tegral/niwen/parser/ParsingContext;I)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
+}
+
+public abstract interface class guru/zoroark/tegral/niwen/parser/expectations/HandlesTokenDrought {
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/NodeParameterKey {
+	public fun <init> (Lkotlin/reflect/KType;Ljava/lang/String;)V
+	public final fun component1 ()Lkotlin/reflect/KType;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Lkotlin/reflect/KType;Ljava/lang/String;)Lguru/zoroark/tegral/niwen/parser/expectations/NodeParameterKey;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/niwen/parser/expectations/NodeParameterKey;Lkotlin/reflect/KType;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/niwen/parser/expectations/NodeParameterKey;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Ljava/lang/String;
+	public final fun getOutputType ()Lkotlin/reflect/KType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/NodeParameterKeyKt {
+	public static final fun asKey (Lkotlin/reflect/KProperty1;)Lguru/zoroark/tegral/niwen/parser/expectations/NodeParameterKey;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/RawKey {
+	public fun <init> (Lkotlin/reflect/KType;Ljava/lang/String;)V
+	public final fun component1 ()Lkotlin/reflect/KType;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Lkotlin/reflect/KType;Ljava/lang/String;)Lguru/zoroark/tegral/niwen/parser/expectations/RawKey;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/niwen/parser/expectations/RawKey;Lkotlin/reflect/KType;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/niwen/parser/expectations/RawKey;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Ljava/lang/String;
+	public final fun getOutputType ()Lkotlin/reflect/KType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class guru/zoroark/tegral/niwen/parser/expectations/RepeatedItemReceiver {
+}
+
+public abstract interface class guru/zoroark/tegral/niwen/parser/expectations/StateCallback {
+	public abstract fun reduceState (Ljava/util/Map;Ljava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/StateCallbackKt {
+	public static final fun createStoreMap (Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;Ljava/lang/Object;)Ljava/util/Map;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/StoreStateCallback : guru/zoroark/tegral/niwen/parser/expectations/StateCallback {
+	public fun <init> (Lguru/zoroark/tegral/niwen/parser/expectations/NodeParameterKey;)V
+	public final fun getStoreValueIn ()Lguru/zoroark/tegral/niwen/parser/expectations/NodeParameterKey;
+	public fun reduceState (Ljava/util/Map;Ljava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/TransformStateCallback : guru/zoroark/tegral/niwen/parser/expectations/StateCallback {
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public fun reduceState (Ljava/util/Map;Ljava/lang/Object;)Ljava/lang/Object;
+}
+

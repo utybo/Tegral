@@ -1,3 +1,17 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package guru.zoroark.tegral.niwen.parser
 
 import guru.zoroark.tegral.niwen.lexer.matchers.anyOf
@@ -31,6 +45,7 @@ class ExpectedEitherTest {
         return NodeParameterKey(typeOf<R>(), name)
     }
 
+    @Suppress("LongMethod")
     private fun match(string: String): ExpectationResult<Nothing> {
         val tWord = tokenType("tWord")
         val tPar = tokenType("tPar")
@@ -76,14 +91,20 @@ class ExpectedEitherTest {
                     BranchOneOrTwo.BranchOne to DescribedType(
                         BranchOneOrTwo.BranchOne,
                         listOf(
-                            ExpectedToken(tWord, stateCallback = StoreStateCallback(NodeParameterKey(typeOf<String>(), "oneWord"))),
+                            ExpectedToken(
+                                tWord,
+                                stateCallback = StoreStateCallback(NodeParameterKey(typeOf<String>(), "oneWord"))
+                            ),
                             ExpectedToken(tOne)
                         )
                     ),
                     BranchOneOrTwo.BranchTwo to DescribedType(
                         BranchOneOrTwo.BranchTwo,
                         listOf(
-                            ExpectedToken(tWord, stateCallback = StoreStateCallback(NodeParameterKey(typeOf<String>(), "twoWord"))),
+                            ExpectedToken(
+                                tWord,
+                                stateCallback = StoreStateCallback(NodeParameterKey(typeOf<String>(), "twoWord"))
+                            ),
                             ExpectedToken(tTwo)
                         )
                     )
@@ -97,7 +118,10 @@ class ExpectedEitherTest {
     fun either_matches_first_branch() {
         val result = match("(hello 1)")
 
-        assertTrue(result is ExpectationResult.Success, "Failed to parse: ${(result as? ExpectationResult.DidNotMatch)?.message}")
+        assertTrue(
+            result is ExpectationResult.Success,
+            "Failed to parse: ${(result as? ExpectationResult.DidNotMatch)?.message}"
+        )
         assertEquals(
             BranchOneOrTwo.BranchOne("hello"),
             result.stored[rootKey<BranchOneOrTwo>("ambiguous")]
@@ -107,7 +131,10 @@ class ExpectedEitherTest {
     @Test
     fun either_matches_second_branch() {
         val result = match("(hey 2)")
-        assertTrue(result is ExpectationResult.Success, "Failed to parse: ${(result as? ExpectationResult.DidNotMatch)?.message}")
+        assertTrue(
+            result is ExpectationResult.Success,
+            "Failed to parse: ${(result as? ExpectationResult.DidNotMatch)?.message}"
+        )
         assertEquals(
             BranchOneOrTwo.BranchTwo("hey"),
             result.stored[rootKey<BranchOneOrTwo>("ambiguous")]

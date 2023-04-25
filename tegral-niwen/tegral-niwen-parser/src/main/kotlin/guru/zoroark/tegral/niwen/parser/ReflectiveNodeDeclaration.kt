@@ -1,3 +1,17 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package guru.zoroark.tegral.niwen.parser
 
 import guru.zoroark.tegral.core.TegralDsl
@@ -49,15 +63,19 @@ class ReflectiveNodeDeclaration<T : Any>(
         // TODO Better error messages on reflection errors
         val callArgs = ctor.parameters
             .associateWith {
-                it.toKey()
-                    ?: throw NiwenParserException("Internal error: a name-less parameter was returned by findValidConstructor")
+                it.toKey() ?: throw NiwenParserException(
+                    "Internal error: a name-less parameter was returned by findValidConstructor"
+                )
             }
             .filterNot { (param, key) ->
                 param.isOptional && !args.arguments.containsKey(key)
             }
             .mapValues { (_, key) ->
                 args.arguments.getOrElse(key) {
-                    throw NiwenParserException("Internal error: could not find a parameter despite the constructor passing findValidConstructor")
+                    throw NiwenParserException(
+                        "Internal error: could not find a parameter despite the constructor passing " +
+                            "findValidConstructor"
+                    )
                 }
             }
 
@@ -82,12 +100,15 @@ class ReflectiveNodeDeclaration<T : Any>(
                     )
                 val matchingArg = arguments[NodeParameterKey<T, Nothing>(ctorParam.type, ctorParamName)]
                 if (matchingArg == null) {
-                    if (ctorParam.isOptional) null
-                    else ConstructorResult.Invalid(
-                        constructor,
-                        ctorParam,
-                        "No available value and the parameter is not optional"
-                    )
+                    if (ctorParam.isOptional) {
+                        null
+                    } else {
+                        ConstructorResult.Invalid(
+                            constructor,
+                            ctorParam,
+                            "No available value and the parameter is not optional"
+                        )
+                    }
                 } else {
                     null
                 }
@@ -112,7 +133,7 @@ class ReflectiveNodeDeclaration<T : Any>(
     ): String {
         return buildString {
             appendLine("Could not find a constructor that uses parameters")
-            appendLine(arguments.entries.joinToString("\n") { (k, v) -> "- ${k.name}: ${k.outputType}" })
+            appendLine(arguments.entries.joinToString("\n") { (k, _) -> "- ${k.name}: ${k.outputType}" })
             appendLine()
             appendLine("None of the following constructors matched:")
             constructorsMatched
@@ -125,9 +146,11 @@ class ReflectiveNodeDeclaration<T : Any>(
                 }
             appendLine()
             appendLine("Available parameters:")
-            appendLine(arguments.entries.joinToString("\n") { (k, v) ->
-                "  -> ${k.name}: ${k.outputType} = $v"
-            })
+            appendLine(
+                arguments.entries.joinToString("\n") { (k, v) ->
+                    "  -> ${k.name}: ${k.outputType} = $v"
+                }
+            )
         }
     }
 

@@ -1,3 +1,17 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package guru.zoroark.tegral.niwen.parser.expectations
 
 import guru.zoroark.tegral.niwen.lexer.TokenType
@@ -34,22 +48,34 @@ class ExpectedToken<T>(
         index: Int
     ): ExpectationResult<T> = with(context) {
         val token = tokens[index]
-        if (token.tokenType == tokenType && (withValue == null || withValue == token.string))
+        if (token.tokenType == tokenType && (withValue == null || withValue == token.string)) {
             return ExpectationResult.Success(
                 stateCallback.createStoreMap(token.string),
                 index + 1,
                 index to index + 1,
-                if (withValue == null) "Token '${token.string}' is of correct type ${token.tokenType}"
-                else "Token '${token.string} is of correct type ${token.tokenType} and has correct 'withValue'"
+                if (withValue == null) {
+                    "Token '${token.string}' is of correct type ${token.tokenType}"
+                } else {
+                    "Token '${token.string} is of correct type ${token.tokenType} and has correct 'withValue'"
+                }
             )
+        }
         return ExpectationResult.DidNotMatch(
-            if (withValue == null) "At index $index, expected token of type $tokenType, but encountered ${token.tokenType} ('${token.string}') instead"
-            else "At index $index, expected token of type $tokenType with value '$withValue', but encountered ${token.tokenType} ('${token.string}')",
+            if (withValue == null) {
+                "At index $index, expected token of type $tokenType, but encountered ${token.tokenType} " +
+                    "('${token.string}') instead"
+            } else {
+                "At index $index, expected token of type $tokenType with value '$withValue', but encountered " +
+                    "${token.tokenType} ('${token.string}')"
+            },
             index
         )
     }
 
     override val title: String =
-        if (withValue == null) "expect(${tokenType})"
-        else "expect(${tokenType}, withValue = '${withValue}')"
+        if (withValue == null) {
+            "expect($tokenType)"
+        } else {
+            "expect($tokenType, withValue = '$withValue')"
+        }
 }

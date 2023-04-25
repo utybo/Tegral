@@ -70,18 +70,15 @@ data class Lexer(
                 is NoStateChange -> state
             }
         }
-        // While we are in the string
         while (index < s.length) {
-            for (matcher in state.matchers) {
+            state.matchers.firstNotNullOfOrNull { matcher ->
                 // Attempt to match
                 when (val result = matcher.match(s, index)) {
-                    is NoMatchResult ->
-                        throw NiwenLexerNoMatchException(
-                            "No match for string starting at index $index (character: '${s[index]}')"
-                        )
+                    is NoMatchResult -> null
 
-                    is IgnoreMatchResult -> with(result) {
-                        updateParams(tokenEndsAt, nextStateBehavior)
+                    is IgnoreMatchResult -> {
+                        updateParams(result.tokenEndsAt, result.nextStateBehavior)
+                        matcher
                     }
 
                     is MatchedTokenResult -> {
@@ -89,9 +86,13 @@ data class Lexer(
                         checkTokenBounds(token, index, s.length)
                         tokens += token
                         updateParams(token.endsAt, result.nextStateBehavior)
+                        matcher
                     }
                 }
             }
+                ?: throw NiwenLexerNoMatchException(
+                    "No match for string starting at index $index (character: '${s[index]}')"
+                )
         }
         return tokens
     }
