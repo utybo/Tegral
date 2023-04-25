@@ -15,8 +15,8 @@
 package guru.zoroark.tegral.niwen.lexer
 
 internal class OffsetCharSequence(
-    val charSequence: CharSequence,
-    val offsetBy: Int
+    private val charSequence: CharSequence,
+    private val offsetBy: Int
 ) : CharSequence {
     init {
         if (offsetBy > charSequence.length) error("Invalid offset, exceeds original sequence's length")

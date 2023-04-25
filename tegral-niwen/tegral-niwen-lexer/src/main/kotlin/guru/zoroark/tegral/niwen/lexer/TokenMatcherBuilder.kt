@@ -31,8 +31,10 @@ abstract class TokenMatcherBuilder(
      * The original recognizer that should be used by the matcher that will be
      * built
      */
-    var baseRecognizer: TokenRecognizer
+    val baseRecognizer: TokenRecognizer
 ) : Buildable<TokenMatcher> {
+    private var _nextStateBehavior: NextStateBehavior = NoStateChange
+
     /**
      * Which state the built matcher will lead to, in the form of a
      * [NextStateBehavior] object.
@@ -40,7 +42,8 @@ abstract class TokenMatcherBuilder(
      * @see thenState
      * @see NextStateBehavior
      */
-    protected var nextStateBehavior: NextStateBehavior = NoStateChange
+    protected val nextStateBehavior
+        get() = _nextStateBehavior
 
     /**
      * Specifies that, once a match is found, the lexer should use the given
@@ -52,7 +55,7 @@ abstract class TokenMatcherBuilder(
      */
     @TegralDsl
     infix fun thenState(next: StateLabel) {
-        nextStateBehavior = GoToLabeledState(next)
+        _nextStateBehavior = GoToLabeledState(next)
     }
 
     /**
@@ -60,6 +63,6 @@ abstract class TokenMatcherBuilder(
      */
     @TegralDsl
     infix fun thenState(@Suppress("UnusedPrivateMember") default: StateBuilder.Default) {
-        nextStateBehavior = GoToDefaultState
+        _nextStateBehavior = GoToDefaultState
     }
 }

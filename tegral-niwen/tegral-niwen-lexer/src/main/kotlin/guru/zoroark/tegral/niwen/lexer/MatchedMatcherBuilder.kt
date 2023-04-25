@@ -31,7 +31,7 @@ class MatchedMatcherBuilder(
     /**
      * The token type this matcher will be matched against.
      */
-    var matchesToTokenType: TokenType
+    private val matchesToTokenType: TokenType
 ) : TokenMatcherBuilder(baseRecognizer) {
     override fun build(): TokenMatcher =
         TokenRecognizerMatched(baseRecognizer, matchesToTokenType, nextStateBehavior)

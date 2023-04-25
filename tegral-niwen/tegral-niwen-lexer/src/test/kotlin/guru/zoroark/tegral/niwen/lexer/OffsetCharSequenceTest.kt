@@ -40,4 +40,10 @@ class OffsetCharSequenceTest {
         assertEquals(offset[2], 'o')
         assertFailsWith<IndexOutOfBoundsException> { offset[3] }
     }
+
+    @Test
+    fun substring() {
+        val offset = "Foo bar".offsetBy(3)
+        assertEquals(" ba", offset.substring(0..2))
+    }
 }

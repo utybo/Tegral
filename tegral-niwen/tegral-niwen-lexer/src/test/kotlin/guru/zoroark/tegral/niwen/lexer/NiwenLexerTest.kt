@@ -33,6 +33,14 @@ class NiwenLexerTest {
     }
 
     @Test
+    fun manually_constructed_lexer_with_no_state_should_fail() {
+        val exc = assertFailsWith<IllegalStateException> {
+            Lexer(emptyMap()).defaultState
+        }
+        assertEquals("No default state in lexer, or the default state label was set to an invalid value", exc.message)
+    }
+
+    @Test
     fun constructs_single_unlabeled_state() {
         // Should construct a single empty state
         val ret = niwenLexer {
@@ -169,6 +177,24 @@ class NiwenLexerTest {
     }
 
     @Test
+    fun incoherent_matcher_results_with_wrong_token_size() {
+        val ttype = tokenType()
+        val lexer = niwenLexer {
+            state {
+                // Erroneous matcher
+                +matcher { _, _ ->
+                    Token("Wow that does not work", 0, 1, ttype)
+                }
+            }
+        }
+        val exc = assertFailsWith<NiwenLexerException> {
+            lexer.tokenize("...")
+        }
+        assertNotNull(exc.message)
+        assertTrue(exc.message!!.contains("too large for the given range"))
+    }
+
+    @Test
     fun incoherent_matcher_results_cause_exception_start_before_index() {
         // Our token types
         val ttype = tokenType()
@@ -222,6 +248,14 @@ class NiwenLexerTest {
         }
         assertNotNull(exc.message)
         assertTrue(exc.message!!.contains("token ends"))
+    }
+
+    @Test
+    fun incoherent_matcher_get_state_not_found() {
+        val exc = assertFailsWith<NiwenLexerException> {
+            Lexer(emptyMap()).getState(stateLabel())
+        }
+        assertEquals("State with given label not found", exc.message)
     }
 
     @Test

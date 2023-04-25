@@ -37,7 +37,7 @@ class NiwenParser<T>(
     types: List<DescribedType<*>>,
     private val rootType: ParserNodeDeclaration<T>
 ) {
-    private val rootKey = NodeParameterKey<Nothing, T>(typeOf<Any?>(), "N/A")
+    private val rootKey = NodeParameterKey<Nothing, T>(typeOf<Any?>(), "Parser root result")
     private val rootExpectation: Expectation<Nothing, T> =
         ExpectedNode(rootType, StoreStateCallback(rootKey))
 
