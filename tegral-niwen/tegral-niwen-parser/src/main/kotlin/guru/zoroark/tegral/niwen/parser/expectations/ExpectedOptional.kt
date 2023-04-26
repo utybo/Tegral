@@ -36,7 +36,7 @@ class ExpectedOptional<T, R>(private val expectations: List<Expectation<T, R>>) 
                 mapOf<NodeParameterKey<T, *>, Any?>(),
                 index,
                 index to index,
-                "Optional branch did not match and was skipped"
+                "End of input reached: optional branch was skipped"
             )
         } else {
             when (val result = context.applyExpectations(index, expectations)) {

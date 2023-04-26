@@ -43,7 +43,7 @@ fun interface StateCallback<T, in R, U> {
  * @param T The context type (see [NodeParameterKey] for details)
  * @param R The type of the state
  */
-class StoreStateCallback<T, R>(val storeValueIn: NodeParameterKey<T, R>) : StateCallback<T, R, R> {
+class StoreStateCallback<T, R>(private val storeValueIn: NodeParameterKey<T, R>) : StateCallback<T, R, R> {
     override fun reduceState(storage: MutableMap<NodeParameterKey<T, *>, Any?>, state: R): R {
         storage[storeValueIn] = state
         return state

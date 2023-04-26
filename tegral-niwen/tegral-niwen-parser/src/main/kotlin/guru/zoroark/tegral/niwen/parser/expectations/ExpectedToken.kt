@@ -56,7 +56,7 @@ class ExpectedToken<T>(
                 if (withValue == null) {
                     "Token '${token.string}' is of correct type ${token.tokenType}"
                 } else {
-                    "Token '${token.string} is of correct type ${token.tokenType} and has correct 'withValue'"
+                    "Token '${token.string}' is of correct type ${token.tokenType} and has correct 'withValue'"
                 }
             )
         }

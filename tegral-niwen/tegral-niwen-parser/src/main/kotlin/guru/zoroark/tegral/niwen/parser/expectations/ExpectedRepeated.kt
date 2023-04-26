@@ -31,7 +31,7 @@ sealed interface RepeatedItemReceiver<R>
  */
 class ExpectedRepeated<T, R>(
     private val repeatableExpectations: List<Expectation<RepeatedItemReceiver<R>, *>>,
-    stateCallback: StateCallback<T, List<R>, *>? = null
+    stateCallback: StateCallback<T, List<R>, *>?
 ) : Expectation<T, List<R>>(stateCallback), HandlesTokenDrought {
     override fun matches(context: ParsingContext, index: Int): ExpectationResult<T> {
         var currIndex = index

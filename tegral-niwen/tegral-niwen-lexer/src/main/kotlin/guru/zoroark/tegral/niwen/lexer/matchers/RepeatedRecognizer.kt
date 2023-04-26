@@ -14,6 +14,8 @@
 
 package guru.zoroark.tegral.niwen.lexer.matchers
 
+import guru.zoroark.tegral.core.TegralDsl
+
 /**
  * A recognizer that, using another "base" recognizer, will recognize a
  * repetition of the other recognizer.
@@ -57,6 +59,7 @@ class RepeatedRecognizer(
  * @return A [RepeatedRecognizer] using the given
  * recognizer/pseudo-recognizer.
  */
+@TegralDsl
 val Any.repeated: RepeatedRecognizer
     get() = RepeatedRecognizer(toRecognizer(this))
 

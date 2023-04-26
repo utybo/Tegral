@@ -16,10 +16,13 @@ package guru.zoroark.tegral.niwen.parser
 
 import guru.zoroark.tegral.niwen.lexer.matchers.matches
 import guru.zoroark.tegral.niwen.lexer.niwenLexer
+import guru.zoroark.tegral.niwen.lexer.stateLabel
 import guru.zoroark.tegral.niwen.lexer.tokenType
+import guru.zoroark.tegral.niwen.parser.dsl.either
 import guru.zoroark.tegral.niwen.parser.dsl.expect
 import guru.zoroark.tegral.niwen.parser.dsl.item
 import guru.zoroark.tegral.niwen.parser.dsl.niwenParser
+import guru.zoroark.tegral.niwen.parser.dsl.or
 import guru.zoroark.tegral.niwen.parser.dsl.repeated
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -65,5 +68,38 @@ class RepeatedDslTest {
                 listOf(Value("One"), Value("Two"), Value("Three"))
             )
         )
+    }
+
+    @Test
+    fun `Does not emit items`() {
+        // This test stores even characters only
+        val sEven = stateLabel()
+        val tOdd = tokenType("charOdd")
+        val tEven = tokenType("charEven")
+        val lexer = niwenLexer {
+            default state {
+                'a'..'z' isToken tOdd thenState sEven
+            }
+
+            sEven state {
+                ('a'..'z') isToken tEven thenState default
+            }
+        }
+
+        val parser = niwenParser<Value> {
+            Value root {
+                repeated {
+                    either {
+                        expect(tOdd)
+                    } or {
+                        expect(tEven) storeIn item
+                    }
+                } transform { it.joinToString(separator = "") } storeIn Value::value
+            }
+        }
+
+        val result = parser.parse(lexer.tokenize("abcdefghijk"))
+        assertEquals(Value("bdfhj"), result)
+
     }
 }

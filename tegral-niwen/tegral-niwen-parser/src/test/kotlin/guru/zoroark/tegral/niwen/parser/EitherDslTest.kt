@@ -26,6 +26,8 @@ import guru.zoroark.tegral.niwen.parser.dsl.self
 import guru.zoroark.tegral.niwen.parser.dsl.subtype
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 sealed class Expression {
     companion object : ParserNodeDeclaration<Expression> by subtype()
@@ -159,5 +161,24 @@ class EitherDslTest {
             ),
             parser.parse(lexer.tokenize(str))
         )
+    }
+
+    @Test
+    fun `Test either that does not match any`() {
+        val token = tokenType()
+        val lexer = niwenLexer {
+            state { 'a'..'z' isToken token }
+        }
+        val parser = niwenParser {
+            Number root {
+                either {
+                    expect(token, withValue = "a")
+                } or {
+                    expect(token, withValue = "b")
+                }
+            }
+        }
+        val exc = assertFailsWith<NiwenParserException> { parser.parse(lexer.tokenize("ccdd")) }
+        assertTrue { exc.message!!.contains("None of the 2 branches matched.") }
     }
 }

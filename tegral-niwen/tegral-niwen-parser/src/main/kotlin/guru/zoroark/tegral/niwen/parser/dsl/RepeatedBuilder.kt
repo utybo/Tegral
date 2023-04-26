@@ -54,7 +54,7 @@ class RepeatedBuilder<T, R>(
  * Used with `storeIn`, allows placing some state as the item of the output list.
  */
 @TegralDsl
-inline val <reified R> ItemExpectationBuilder<R>.item
+inline val <reified R> ExpectationReceiver<RepeatedItemReceiver<R>>.item
     get() = NodeParameterKey<RepeatedItemReceiver<R>, R>(typeOf<R>(), "0")
 
 // TODO Whenever K2 lands, remove the "Type inference failure" section

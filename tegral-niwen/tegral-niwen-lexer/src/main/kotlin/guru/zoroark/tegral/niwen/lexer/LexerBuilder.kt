@@ -69,6 +69,7 @@ class LexerBuilder : Buildable<Lexer> {
      * The state is not constructed immediately and is only constructed when
      * [build] is called.
      */
+    @TegralDsl
     fun state(body: StateBuilder.() -> Unit): Unit =
         when (lexerKind) {
             Kind.LABELED_STATES ->

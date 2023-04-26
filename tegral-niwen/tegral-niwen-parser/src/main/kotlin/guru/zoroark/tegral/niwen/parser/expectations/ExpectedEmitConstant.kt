@@ -24,9 +24,9 @@ class ExpectedEmitConstant<T, R>(
     /**
      * The value that will always be emitted.
      */
-    val value: R,
-    stateCallback: StateCallback<T, R, *>? = null
-) : Expectation<T, R>(stateCallback) {
+    private val value: R,
+    stateCallback: StateCallback<T, R, *>?
+) : Expectation<T, R>(stateCallback), HandlesTokenDrought {
     override fun matches(context: ParsingContext, index: Int): ExpectationResult<T> {
         return ExpectationResult.Success(
             stateCallback.createStoreMap(value),
