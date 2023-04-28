@@ -15,6 +15,7 @@
 package guru.zoroark.tegral.niwen.parser
 
 import guru.zoroark.tegral.niwen.lexer.matchers.anyOf
+import guru.zoroark.tegral.niwen.lexer.matchers.matches
 import guru.zoroark.tegral.niwen.lexer.matchers.repeated
 import guru.zoroark.tegral.niwen.lexer.niwenLexer
 import guru.zoroark.tegral.niwen.lexer.tokenType
@@ -180,5 +181,48 @@ class EitherDslTest {
         }
         val exc = assertFailsWith<NiwenParserException> { parser.parse(lexer.tokenize("ccdd")) }
         assertTrue { exc.message!!.contains("None of the 2 branches matched.") }
+    }
+
+    sealed class Value {
+        companion object : ParserNodeDeclaration<Value> by subtype()
+
+        data class Number(val number: String) : Value() {
+            companion object : ParserNodeDeclaration<Number> by reflective()
+        }
+
+        data class Str(val string: String) : Value() {
+            companion object : ParserNodeDeclaration<Str> by reflective()
+        }
+    }
+
+    @Test
+    fun `by subtype with either`() {
+        val tNumber = tokenType("tNumber")
+        val tStr = tokenType("tStr")
+        val lexer = niwenLexer {
+            state {
+                matches("[a-z]+") isToken tStr
+                matches("[0-9]+") isToken tNumber
+            }
+        }
+        val parser = niwenParser {
+            Value root {
+                either {
+                    expect(Value.Number) storeIn self()
+                } or {
+                    expect(Value.Str) storeIn self()
+                }
+            }
+
+            Value.Number {
+                expect(tNumber) storeIn Value.Number::number
+            }
+
+            Value.Str {
+                expect(tStr) storeIn Value.Str::string
+            }
+        }
+        val result = parser.parse(lexer.tokenize("123"))
+        assertEquals(Value.Number("123"), result)
     }
 }

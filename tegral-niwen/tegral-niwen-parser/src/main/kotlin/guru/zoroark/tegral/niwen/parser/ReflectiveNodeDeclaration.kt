@@ -154,5 +154,5 @@ class ReflectiveNodeDeclaration<T : Any>(
         }
     }
 
-    override val nodeName: String = tClass.simpleName ?: tClass.jvmName
+    override val name: String = tClass.simpleName ?: tClass.jvmName
 }

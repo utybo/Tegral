@@ -27,16 +27,24 @@ class TypeDescription<T>(
     val arguments: Map<NodeParameterKey<T, *>, *>
 ) {
     /**
+     * Retrieve a value using a key, without type-checking.
+     *
+     * This is an escape hatch. Consider using the [get] operator instead.
+     */
+    fun getUntypedValueOrThrow(key: NodeParameterKey<T, *>): Any? {
+        return arguments.getOrElse(key) {
+            throw NiwenParserException("Key '$key' does not exist in the stored arguments")
+        }
+    }
+
+    /**
      * Retrieve the given argument, casting it to `T` automatically
      */
     inline operator fun <reified R> get(parameterKey: NodeParameterKey<T, R>): R {
-        val value = arguments.getOrElse(parameterKey) {
-            throw NiwenParserException("Key '$parameterKey' does not exist in the stored arguments")
-        }
-        if (value is R) {
-            return value // Auto-cast by Kotlin
-        } else {
-            throw NiwenParserException(
+        when (val value = getUntypedValueOrThrow(parameterKey)) {
+            is R -> return value // Auto-cast by Kotlin
+
+            else -> throw NiwenParserException(
                 "Expected $parameterKey to be of type ${R::class}, but it is actually of type " +
                     value?.let { it::class }
             )

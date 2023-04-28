@@ -54,14 +54,11 @@ fun interface ParserNodeDeclaration<T> {
     fun make(args: TypeDescription<T>): T
 
     /**
-     * Name for the provided node (usually the name of the class [T])
+     * Name for the provided node (usually the name of the class [T]).
+     *
+     * By default, this function does a call to [toString] on the declaration, which is not accurate but close enough to
+     * provide useful debug data.
      */
-    val nodeName: String?
-        get() = null
+    val name: String
+        get() = this.toString()
 }
-
-/**
- * Resolves the name of this node.
- */
-val ParserNodeDeclaration<*>.name: String
-    get() = nodeName ?: this.toString()

@@ -100,6 +100,5 @@ class RepeatedDslTest {
 
         val result = parser.parse(lexer.tokenize("abcdefghijk"))
         assertEquals(Value("bdfhj"), result)
-
     }
 }

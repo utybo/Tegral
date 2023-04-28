@@ -84,6 +84,6 @@ inline fun <reified T> subtype(): ParserNodeDeclaration<T> {
             return args[selfKeyFor(type)]
         }
 
-        override val nodeName = T::class.simpleName ?: T::class.jvmName
+        override val name = T::class.simpleName ?: T::class.jvmName
     }
 }

@@ -21,7 +21,6 @@ import guru.zoroark.tegral.niwen.parser.NiwenParserException
 import guru.zoroark.tegral.niwen.parser.ParserNodeDeclaration
 import guru.zoroark.tegral.niwen.parser.ParsingContext
 import guru.zoroark.tegral.niwen.parser.TypeDescription
-import guru.zoroark.tegral.niwen.parser.name
 
 /**
  * An expectation that expects another node to be present at this point.
