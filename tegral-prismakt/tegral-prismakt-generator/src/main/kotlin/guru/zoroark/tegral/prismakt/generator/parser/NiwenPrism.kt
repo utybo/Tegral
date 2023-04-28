@@ -32,6 +32,7 @@ import guru.zoroark.tegral.niwen.parser.dsl.niwenParser
 import guru.zoroark.tegral.niwen.parser.dsl.optional
 import guru.zoroark.tegral.niwen.parser.dsl.or
 import guru.zoroark.tegral.niwen.parser.dsl.repeated
+import guru.zoroark.tegral.niwen.parser.dsl.repeatedIgnore
 import guru.zoroark.tegral.niwen.parser.dsl.self
 import guru.zoroark.tegral.niwen.parser.dsl.subtype
 import guru.zoroark.tegral.niwen.parser.expectations.key
@@ -39,12 +40,11 @@ import guru.zoroark.tegral.niwen.parser.reflective
 import javax.swing.text.html.parser.Parser
 
 /**
- * ### What is NiwenPrism?
+ * An internal, **extremely** hacky parser for Prisma schema file. The main objective is to retrieve `@db.xyz`
+ * attributes.
  *
- * NiwenPrism is an internal, **extremely** hacky parser for Prisma schema file. The main objective is to retrieve `@db.xyz` attributes.
- *
- * Prisma does not expose all attributes through its DMMF (the model passed to generators like PrismaKT), so we have to resort to this to
- * retrieve proper types.
+ * Prisma does not expose all attributes through its DMMF (the model passed to generators like PrismaKT), so we have to
+ * resort to this to retrieve proper types.
  *
  * [Related Prisma issue](https://github.com/prisma/prisma/issues/10252)
  */
@@ -53,8 +53,8 @@ object NiwenPrism {
         return lexer.tokenize(str)
     }
 
-    fun parse(tokens: List<Token>): PRoot {
-        return parser.parse(tokens)
+    fun parse(tokens: List<Token>): NiwenParser.ParserResult<PRoot> {
+        return parser.parseToResult(tokens, false)
     }
 
     fun parseDebug(tokens: List<Token>): NiwenParser.ParserResult<PRoot> {
@@ -105,6 +105,7 @@ val lexer = niwenLexer {
         ':' isToken Tokens.COLON
         '=' isToken Tokens.EQUAL
         '"' isToken Tokens.QUOTATION_MARK thenState inStringState
+        matches("//.+?(?=\\n)").ignore
     }
 
     inStringState state {
@@ -123,11 +124,11 @@ val lexer = niwenLexer {
 val parser = niwenParser<PRoot> {
     PRoot root {
         repeated { expect(PRootElement) storeIn item } storeIn PRoot::elements
-        optional { expect(Tokens.NEWLINE) }
+        repeatedIgnore { expect(Tokens.NEWLINE) }
     }
 
     PRootElement {
-        optional { expect(Tokens.NEWLINE) }
+        repeatedIgnore { expect(Tokens.NEWLINE) }
         either {
             expect(PDatasource) storeIn self()
         } or {
@@ -137,7 +138,7 @@ val parser = niwenParser<PRoot> {
         } or {
             expect(PEnum) storeIn self()
         }
-        optional { expect(Tokens.NEWLINE) }
+        repeatedIgnore { expect(Tokens.NEWLINE) }
     }
 
     "Datasource/generator" group {
@@ -145,7 +146,7 @@ val parser = niwenParser<PRoot> {
             expect(Tokens.WORD, "datasource")
             expect(Tokens.WORD) storeIn PDatasource::name
             expect(Tokens.BRACE_OPEN)
-            optional { expect(Tokens.NEWLINE) }
+            repeatedIgnore { expect(Tokens.NEWLINE) }
             expect(PPropertySet) storeIn PDatasource::properties
             expect(Tokens.BRACE_CLOSE)
         }
@@ -154,7 +155,7 @@ val parser = niwenParser<PRoot> {
             expect(Tokens.WORD, "generator")
             expect(Tokens.WORD) storeIn PGenerator::name
             expect(Tokens.BRACE_OPEN)
-            optional { expect(Tokens.NEWLINE) }
+            repeatedIgnore { expect(Tokens.NEWLINE) }
             expect(PPropertySet) storeIn PGenerator::properties
             expect(Tokens.BRACE_CLOSE)
         }
@@ -164,7 +165,7 @@ val parser = niwenParser<PRoot> {
         expect(Tokens.WORD, "model")
         expect(Tokens.WORD) storeIn PModel::name
         expect(Tokens.BRACE_OPEN)
-        optional { expect(Tokens.NEWLINE) }
+        repeatedIgnore { expect(Tokens.NEWLINE) }
         repeated { expect(PField) storeIn item } storeIn PModel::fields
         expect(Tokens.BRACE_CLOSE)
     }
@@ -190,7 +191,7 @@ val parser = niwenParser<PRoot> {
 
         repeated { expect(PAttribute) storeIn item } storeIn PField::attributes
 
-        expect(Tokens.NEWLINE)
+        repeatedIgnore(min = 1) { expect(Tokens.NEWLINE) }
     }
 
     PAttribute {
@@ -296,7 +297,7 @@ val parser = niwenParser<PRoot> {
             expect(Tokens.WORD) storeIn PProperty::name
             expect(Tokens.EQUAL)
             expect(PValueOrEnv) storeIn PProperty::value
-            expect(Tokens.NEWLINE)
+            repeatedIgnore(min = 1) { expect(Tokens.NEWLINE) }
         }
 
         PValueOrEnv {
@@ -329,10 +330,10 @@ val parser = niwenParser<PRoot> {
         expect(Tokens.WORD, withValue = "enum")
         expect(Tokens.WORD) storeIn PEnum::enumName
         expect(Tokens.BRACE_OPEN)
-        optional { expect(Tokens.NEWLINE) }
+        repeatedIgnore { expect(Tokens.NEWLINE) }
         repeated {
             expect(Tokens.WORD) storeIn item
-            expect(Tokens.NEWLINE)
+            repeatedIgnore(min = 1) { expect(Tokens.NEWLINE) }
         } storeIn PEnum::enumTypes
         expect(Tokens.BRACE_CLOSE)
     }

@@ -29,7 +29,7 @@ import java.nio.file.Path
 
 private val logger = LoggerFactory.getLogger("tegral.prismakt.exposed-dao")
 
-class ExposedDaoGenerator(scope: InjectionScope) {
+class ExposedDaoGenerator(scope: InjectionScope) : ModelGenerator {
     private val exposedSqlGenerator: ExposedSqlGenerator by scope()
 
     private fun unwrapTableIdType(tableSpec: TypeSpec): TypeName? {
@@ -79,8 +79,9 @@ class ExposedDaoGenerator(scope: InjectionScope) {
         }.build()
     }
 
-    fun generateModels(outputDir: Path, models: List<Model>) {
-        for (model in models) {
+
+    override fun generateModels(context: GeneratorContext) {
+        for (model in context.datamodel.models) {
             val fileName = model.name + "Table"
             logger.trace("Generating $fileName")
             val fileContent = FileSpec.builder("prismakt.generated", fileName).apply {
@@ -90,7 +91,7 @@ class ExposedDaoGenerator(scope: InjectionScope) {
                 if (idType != null) addType(generateDaoClass(model, tableSpec, idType))
                 else logger.warn("Not generating a DAO for model ${model.name} because no ID type could be found")
             }.build()
-            fileContent.writeTo(outputDir)
+            fileContent.writeTo(context.outputDir)
             logger.debug("Generated $fileName")
             logger.trace(fileContent.toString())
         }

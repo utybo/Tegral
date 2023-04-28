@@ -20,6 +20,7 @@ import guru.zoroark.tegral.di.dsl.tegralDi
 import guru.zoroark.tegral.di.environment.get
 import guru.zoroark.tegral.prismakt.generator.generators.ExposedDaoGenerator
 import guru.zoroark.tegral.prismakt.generator.generators.ExposedSqlGenerator
+import guru.zoroark.tegral.prismakt.generator.parser.NiwenPrismParser
 import guru.zoroark.tegral.prismakt.generator.protocol.GeneratorProtocolController
 import guru.zoroark.tegral.prismakt.generator.protocol.GeneratorProtocolHandler
 import guru.zoroark.tegral.prismakt.generator.protocol.JsonRpcProtocol
@@ -38,6 +39,8 @@ fun main() {
             put<GeneratorProtocolHandler>(::GeneratorProtocolController)
             put(::ExposedSqlGenerator)
             put(::ExposedDaoGenerator)
+            put { ExecutionContext(true) }
+            put(::NiwenPrismParser)
         }
         val protocol = env.get<JsonRpcProtocol>()
         protocol.exchange()

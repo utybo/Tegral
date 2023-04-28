@@ -19,13 +19,17 @@ import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.prismakt.generator.*
 import guru.zoroark.tegral.prismakt.generator.generators.ExposedDaoGenerator
 import guru.zoroark.tegral.prismakt.generator.generators.ExposedSqlGenerator
+import guru.zoroark.tegral.prismakt.generator.generators.GeneratorContext
+import guru.zoroark.tegral.prismakt.generator.parser.NiwenPrismParser
+import org.slf4j.LoggerFactory
 import java.nio.file.Path
 
 private const val DEFAULT_OUTPUT_DIR = "generatedSrc"
 
 class GeneratorProtocolController(scope: InjectionScope) : GeneratorProtocolHandler {
-    private val exposedSqlGenerator: ExposedSqlGenerator by scope()
     private val exposedDaoGenerator: ExposedDaoGenerator by scope()
+    private val parser: NiwenPrismParser by scope()
+    private val executionContext: ExecutionContext by scope()
 
     override fun getManifest(request: GeneratorRequest.GetManifestRequest): GeneratorResponse.GetManifestResponse {
         return GeneratorResponse.GetManifestResponse(
@@ -47,7 +51,12 @@ class GeneratorProtocolController(scope: InjectionScope) : GeneratorProtocolHand
         )
         genericLogger.debug(request.params.dmmf.datamodel.toString())
         val outputDir = request.params.generator.output?.value ?: DEFAULT_OUTPUT_DIR
-        exposedDaoGenerator.generateModels(Path.of(outputDir), request.params.dmmf.datamodel.models)
+        val generationContext = GeneratorContext(
+            Path.of(outputDir),
+            request.params.dmmf.datamodel,
+            parser.parseOrNull(Path.of(request.params.schemaPath), executionContext.enableParsingDebug)
+        )
+        exposedDaoGenerator.generateModels(generationContext)
         genericLogger.info(request.params.datasources.toString())
     }
 }

@@ -42,11 +42,13 @@ class ItemExpectationBuilder<R> :
  * Builder class for [ExpectedRepeated].
  */
 class RepeatedBuilder<T, R>(
+    private val minIterations: Int?,
+    private val maxIterations: Int?,
     private val itemExpectationBuilder: ItemExpectationBuilder<R>,
     private val callback: StateCallback<T, List<R>, *>?
 ) : Buildable<ExpectedRepeated<T, R>> {
     override fun build(): ExpectedRepeated<T, R> {
-        return ExpectedRepeated(itemExpectationBuilder.build(), callback)
+        return ExpectedRepeated(minIterations, maxIterations, itemExpectationBuilder.build(), callback)
     }
 }
 
@@ -86,11 +88,30 @@ inline val <reified R> ExpectationReceiver<RepeatedItemReceiver<R>>.item
  */
 @TegralDsl
 fun <T, R> ExpectationReceiver<T>.repeated(
+    min: Int? = null,
+    max: Int? = null,
     itemBuilder: ItemExpectationBuilder<R>.() -> Unit
 ): ExpectationStateCallbackBuilder<T, List<R>> {
     val builder = ExpectationStateCallbackBuilder<T, List<R>> { storeIn ->
-        RepeatedBuilder(ItemExpectationBuilder<R>().apply(itemBuilder), storeIn).build()
+        RepeatedBuilder(
+            min,
+            max,
+            ItemExpectationBuilder<R>().apply(itemBuilder),
+            storeIn
+        ).build()
     }
     this += builder
     return builder
 }
+
+/**
+ * Repeatedly runs the provided expectations without storing anything.
+ *
+ * Identical to [repeated] with `R` set to `Nothing`.
+ */
+@TegralDsl
+fun <T> ExpectationReceiver<T>.repeatedIgnore(
+    min: Int? = null,
+    max: Int? = null,
+    itemBuilder: ItemExpectationBuilder<Nothing>.() -> Unit
+) = repeated(min, max, itemBuilder)

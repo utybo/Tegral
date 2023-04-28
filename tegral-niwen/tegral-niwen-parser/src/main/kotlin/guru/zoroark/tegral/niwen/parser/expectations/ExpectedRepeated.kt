@@ -30,6 +30,8 @@ sealed interface RepeatedItemReceiver<R>
  * then be stored in the model results.
  */
 class ExpectedRepeated<T, R>(
+    private val minIterations: Int?,
+    private val maxIterations: Int?,
     private val repeatableExpectations: List<Expectation<RepeatedItemReceiver<R>, *>>,
     stateCallback: StateCallback<T, List<R>, *>?
 ) : Expectation<T, List<R>>(stateCallback), HandlesTokenDrought {
@@ -52,12 +54,24 @@ class ExpectedRepeated<T, R>(
                 }
             }
         }
-        return ExpectationResult.Success(
-            stateCallback.createStoreMap(valueAcc),
-            currIndex,
-            index to currIndex,
-            "Repeated $matchCount time(s)."
-        )
+        return when {
+            minIterations != null && matchCount < minIterations -> ExpectationResult.DidNotMatch(
+                "Expected at least $minIterations iterations, but only got $matchCount",
+                currIndex
+            )
+
+            maxIterations != null && matchCount > maxIterations -> ExpectationResult.DidNotMatch(
+                "Expected at most $maxIterations iterations, but got $matchCount repetitions",
+                currIndex
+            )
+
+            else -> ExpectationResult.Success(
+                stateCallback.createStoreMap(valueAcc),
+                currIndex,
+                index to currIndex,
+                "Repeated $matchCount time(s)."
+            )
+        }
     }
 
     override val title: String = "repeated { ${repeatableExpectations.size} expectation(s) }"

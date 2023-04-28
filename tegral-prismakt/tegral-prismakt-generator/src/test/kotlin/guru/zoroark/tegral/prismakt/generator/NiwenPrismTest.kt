@@ -46,6 +46,5 @@ class NiwenPrismTest {
         val tokens = NiwenPrism.tokenize(fullExample)
         println(tokens.joinToString("\n"))
         val res = NiwenPrism.parseDebug(tokens)
-        println(res.debuggerResult)
     }
 }

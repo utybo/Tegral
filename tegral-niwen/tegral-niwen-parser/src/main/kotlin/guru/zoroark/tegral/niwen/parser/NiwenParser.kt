@@ -54,7 +54,7 @@ class NiwenParser<T>(
         }
     }
 
-    private fun parseToResult(tokens: List<Token>, enableDebugger: Boolean): ParserResult<T> {
+    fun parseToResult(tokens: List<Token>, enableDebugger: Boolean): ParserResult<T> {
         val context = ParsingContext(tokens, typeMap, if (enableDebugger) BranchSeeker() else null)
         val result = rootExpectation.matches(context, 0)
         fun finishDebugger(status: BranchSeeker.Status, message: String): String {
@@ -80,6 +80,7 @@ class NiwenParser<T>(
                     ParserResult.Failure(message, finishDebugger(BranchSeeker.Status.DID_NOT_MATCH, message))
                 } else {
                     val obj = result.stored[rootKey] as? T
+                        // TODO change to regular failure and not an exception
                         ?: error("Internal error: the root result was not stored. Please report this.")
                     ParserResult.Success(obj, finishDebugger(BranchSeeker.Status.SUCCESS, "Parsing successful"))
                 }
