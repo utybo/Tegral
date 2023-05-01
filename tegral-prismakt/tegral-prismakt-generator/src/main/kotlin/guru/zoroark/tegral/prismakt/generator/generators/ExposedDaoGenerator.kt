@@ -85,11 +85,14 @@ class ExposedDaoGenerator(scope: InjectionScope) : ModelGenerator {
             val fileName = model.name + "Table"
             logger.trace("Generating $fileName")
             val fileContent = FileSpec.builder("prismakt.generated", fileName).apply {
-                val tableSpec = exposedSqlGenerator.generateTypeSpec(model)
+                val tableSpec = exposedSqlGenerator.generateTypeSpec(model, context)
                 addType(tableSpec)
                 val idType = unwrapTableIdType(tableSpec)
-                if (idType != null) addType(generateDaoClass(model, tableSpec, idType))
-                else logger.warn("Not generating a DAO for model ${model.name} because no ID type could be found")
+                if (idType != null) {
+                    addType(generateDaoClass(model, tableSpec, idType))
+                } else {
+                    logger.warn("Not generating a DAO for model ${model.name} because no ID type could be found")
+                }
             }.build()
             fileContent.writeTo(context.outputDir)
             logger.debug("Generated $fileName")

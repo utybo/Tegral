@@ -10,7 +10,7 @@ generator prismakt {
 
 datasource db {
   provider = "postgresql"
-  url      = "file:./dev.db"
+  url      = "some_fake_url"
 }
 
 model User {
@@ -25,6 +25,9 @@ model AllTypesInOne {
   // Core types
   string    String
   stringOpt String?
+
+  varchar    String @db.VarChar(20)
+  varcharOpt String @db.VarChar(20)
 
   boolean    Boolean
   booleanOpt Boolean?

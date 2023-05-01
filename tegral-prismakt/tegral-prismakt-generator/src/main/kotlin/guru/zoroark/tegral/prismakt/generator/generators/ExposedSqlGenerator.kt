@@ -16,73 +16,97 @@ package guru.zoroark.tegral.prismakt.generator.generators
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
-import guru.zoroark.tegral.di.extensions.fundef.configureFundef
+import guru.zoroark.tegral.prismakt.generator.parser.PModel
 import guru.zoroark.tegral.prismakt.generator.protocol.Field
 import guru.zoroark.tegral.prismakt.generator.protocol.Model
-import guru.zoroark.tegral.prismakt.generator.protocol.TypeRef
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IdTable
 import org.jetbrains.exposed.sql.Column
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.javatime.timestamp
 import org.slf4j.LoggerFactory
-import java.lang.reflect.Member
 import java.math.BigDecimal
 import java.nio.file.Path
 import java.time.Instant
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
+import java.util.UUID
+import kotlin.reflect.KClass
 
 private val logger = LoggerFactory.getLogger("tegral.prismakt.exposed-sql")
 
+private fun initializeColumnWith(
+    initializer: CodeBlock.Builder,
+    fieldName: String,
+    type: ScalarType
+): ParameterizedTypeName {
+    fun builtInColumn(funName: String, columnTypeParam: KClass<*>, size: Int? = null): ParameterizedTypeName {
+        if (size == null) {
+            initializer.add("$funName(name = %S)", fieldName)
+        } else {
+            initializer.add("$funName(name = %S, length = %L)", fieldName, size)
+        }
+        return Column::class.parameterizedBy(columnTypeParam)
+    }
+
+    fun javaDateColumn(funName: String, columnTypeParam: KClass<*>): ParameterizedTypeName {
+        val memberName = MemberName("org.jetbrains.exposed.sql.javatime", funName, true)
+        initializer.add("%M(name = %S)", memberName, fieldName)
+        return Column::class.parameterizedBy(columnTypeParam)
+    }
+
+    return when (type) {
+        is ScalarType.TBinary -> builtInColumn("binary", ByteArray::class, type.maxSize)
+        ScalarType.TBoolean -> builtInColumn("bool", Boolean::class)
+        ScalarType.TByte -> builtInColumn("byte", Byte::class)
+        is ScalarType.TChar -> builtInColumn("char", String::class, type.n)
+
+        is ScalarType.TDecimal -> type.getPrecisionAndScale(false /* TODO */).let { (precision, scale) ->
+            initializer.add("decimal(name = %S, precision = %L, scale = %L)", fieldName, precision, scale)
+            Column::class.parameterizedBy(BigDecimal::class)
+        }
+
+        ScalarType.TDouble -> builtInColumn("double", Double::class)
+        ScalarType.TFloat -> builtInColumn("float", Float::class)
+        ScalarType.TInstant -> javaDateColumn("timestamp", Instant::class)
+        ScalarType.TInt -> builtInColumn("integer", Int::class)
+        ScalarType.TLocalDate -> javaDateColumn("date", LocalDate::class)
+        ScalarType.TLocalDateTime -> javaDateColumn("datetime", LocalDateTime::class)
+        ScalarType.TLocalTime -> javaDateColumn("time", LocalTime::class)
+        ScalarType.TLong -> builtInColumn("long", Long::class)
+        ScalarType.TLongText -> builtInColumn("largeText", String::class)
+        ScalarType.TMediumText -> builtInColumn("mediumText", String::class)
+        ScalarType.TShort -> builtInColumn("short", Short::class)
+        ScalarType.TString -> builtInColumn("text", String::class)
+        ScalarType.TText -> builtInColumn("text", String::class)
+        ScalarType.TUByte -> builtInColumn("ubyte", UByte::class)
+        ScalarType.TUInt -> builtInColumn("uinteger", UInt::class)
+        ScalarType.TULong -> builtInColumn("ulong", ULong::class)
+        ScalarType.TUShort -> builtInColumn("ushort", UShort::class)
+        ScalarType.TUuid -> builtInColumn("uuid", UUID::class)
+        is ScalarType.TVarChar -> builtInColumn("varchar", String::class, type.n)
+    }
+}
 
 class ExposedSqlGenerator {
 
-    private fun columnTypeOf(field: Field): Pair<TypeName, CodeBlock> {
-        val initializer = CodeBlock.builder()
-        var typeName: ParameterizedTypeName = when (parseScalarType(field.type)) {
-            ScalarTypes.Int -> {
-                initializer.add("integer(name = %S)", field.name)
-                Column::class.parameterizedBy(Int::class)
-            }
-
-            ScalarTypes.String -> {
-                initializer.add("text(name = %S)", field.name)
-                Column::class.parameterizedBy(String::class)
-            }
-
-            ScalarTypes.Boolean -> {
-                initializer.add("bool(name = %S)", field.name)
-                Column::class.parameterizedBy(Boolean::class)
-            }
-
-            ScalarTypes.BigInt -> {
-                initializer.add("long(name = %S)", field.name)
-                Column::class.parameterizedBy(Long::class)
-            }
-
-            ScalarTypes.Bytes -> {
-                initializer.add("binary(name = %S)", field.name)
-                Column::class.parameterizedBy(ByteArray::class)
-            }
-
-            ScalarTypes.Float -> {
-                initializer.add("float(name = %S)", field.name)
-                Column::class.parameterizedBy(Float::class)
-            }
-
-            ScalarTypes.Decimal -> {
-                initializer.add("decimal(name = %S, precision = %L, scale = %L)", field.name, 65, 30) // TODO this is 32, 16 for mssql
-                Column::class.parameterizedBy(BigDecimal::class)
-            }
-
-            ScalarTypes.DateTime -> {
-                val timestampFun = MemberName("org.jetbrains.exposed.sql.javatime", "timestamp", true)
-                initializer.add("%M(name = %S)", timestampFun, field.name)
-                Column::class.parameterizedBy(Instant::class)
-            }
-
-            else -> error("Unrecognized field type ${field.type}, stopping")
+    private fun columnTypeOf(modelName: String, pmodel: PModel?, field: Field): Pair<TypeName, CodeBlock>? {
+        val pfield = pmodel?.fields?.firstOrNull { it.name == field.name }
+        if (pfield == null && pmodel != null) {
+            logger.warn("Field $modelName.${field.name} was not found in re-parsed model. Please report this.")
         }
+        val foundType = nativeTypeToScalarType(field.name, field.type, pfield?.attributes ?: emptyList())
+        if (foundType == null) {
+            logger.warn(
+                "Unrecognized field type ${field.type} for field $modelName.${field.name}, field will be skipped " +
+                    "during generation"
+            )
+            return null
+        }
+        if (foundType is ScalarTypeWithAccuracy.Inaccurate) {
+            logger.warn("Typing for $modelName.${field.name} will be inaccurate: ${foundType.inaccuracyReason}")
+        }
+        val initializer = CodeBlock.builder()
+        var typeName: ParameterizedTypeName = initializeColumnWith(initializer, field.name, foundType.type)
         if (!field.isRequired) {
             initializer.add(".nullable()")
             // Make all type parameters nullable
@@ -91,8 +115,8 @@ class ExposedSqlGenerator {
         return typeName to initializer.build()
     }
 
-    private fun createProperty(field: Field): PropertySpec {
-        val (typeName, initializer) = columnTypeOf(field)
+    private fun createProperty(modelName: String, pmodel: PModel?, field: Field): PropertySpec? {
+        val (typeName, initializer) = columnTypeOf(modelName, pmodel, field) ?: return null
         return PropertySpec.builder(field.name, typeName)
             .initializer(initializer)
             .build()
@@ -143,10 +167,13 @@ class ExposedSqlGenerator {
         }
     }
 
-    fun generateTypeSpec(model: Model): TypeSpec {
+    fun generateTypeSpec(model: Model, generatorContext: GeneratorContext): TypeSpec {
+        val pmodel = generatorContext.rawParsingResult?.elements?.asSequence()
+            ?.filterIsInstance<PModel>()
+            ?.firstOrNull { it.name == model.name }
         return TypeSpec.objectBuilder("${model.name}Table").apply {
             for (field in model.fields) {
-                addProperty(createProperty(field))
+                createProperty(model.name, pmodel, field)?.let { addProperty(it) }
             }
 
             val idField = model.fields.find { it.isId }
@@ -156,12 +183,12 @@ class ExposedSqlGenerator {
         }.build()
     }
 
-    fun generateModels(outputDir: Path, models: List<Model>) {
+    fun generateModels(outputDir: Path, models: List<Model>, generatorContext: GeneratorContext) {
         for (model in models) {
             val fileName = "${model.name}Table"
             logger.trace("Generating $fileName")
             val fileContent = FileSpec.builder("prismakt.generated", fileName).apply {
-                addType(generateTypeSpec(model))
+                addType(generateTypeSpec(model, generatorContext))
             }.build()
             fileContent.writeTo(outputDir)
             logger.debug("Generated $fileName")

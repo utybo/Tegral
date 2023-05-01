@@ -90,8 +90,8 @@ val lexer = niwenLexer {
     default state {
         matches("[ \\t]+").ignore
         matches("[\\r\\n]+") isToken Tokens.NEWLINE
-        matches("[a-zA-Z0-9_]+") isToken Tokens.WORD
         matches("[0-9]+") isToken Tokens.NUMBER
+        matches("[a-zA-Z0-9_]+") isToken Tokens.WORD
         '?' isToken Tokens.QUESTION_MARK
         '[' isToken Tokens.SQRBRK_OPEN
         ']' isToken Tokens.SQRBRK_CLOSE
@@ -229,7 +229,19 @@ val parser = niwenParser<PRoot> {
         }
 
         PExpValue {
-            expect(PString) storeIn PExpValue::value
+            either {
+                expect(PExpValueString) storeIn self()
+            } or {
+                expect(PExpValueInt) storeIn self()
+            }
+        }
+
+        PExpValueString{
+            expect(PString) storeIn PExpValueString::value
+        }
+
+        PExpValueInt {
+             expect(Tokens.NUMBER) transform { it.toInt() } storeIn PExpValueInt::value
         }
 
         PExpFunCall {
@@ -421,8 +433,16 @@ sealed class PExpression {
 
 }
 
-data class PExpValue(val value: PString) : PExpression() {
-    companion object : ParserNodeDeclaration<PExpValue> by reflective()
+sealed class PExpValue : PExpression() {
+    companion object : ParserNodeDeclaration<PExpValue> by subtype()
+}
+
+data class PExpValueString(val value: PString) : PExpValue() {
+    companion object : ParserNodeDeclaration<PExpValueString> by reflective()
+}
+
+data class PExpValueInt(val value: Int) : PExpValue() {
+    companion object : ParserNodeDeclaration<PExpValueInt> by reflective()
 }
 
 data class PExpFunCall(val functionName: String, val argsList: List<PArgument>) : PExpression() {

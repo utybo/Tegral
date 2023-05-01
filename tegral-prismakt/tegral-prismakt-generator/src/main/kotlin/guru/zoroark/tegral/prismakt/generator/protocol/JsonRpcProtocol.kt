@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.prismakt.generator.protocol
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import guru.zoroark.tegral.di.environment.InjectionScope
@@ -21,7 +22,7 @@ import guru.zoroark.tegral.di.environment.invoke
 import org.slf4j.LoggerFactory
 
 class JsonRpcProtocol(scope: InjectionScope) {
-    private val objectMapper = jacksonObjectMapper()
+    private val objectMapper = jacksonObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     private val logger = LoggerFactory.getLogger("tegral.prismakt.rpc")
 
     private val handler: GeneratorProtocolHandler by scope()

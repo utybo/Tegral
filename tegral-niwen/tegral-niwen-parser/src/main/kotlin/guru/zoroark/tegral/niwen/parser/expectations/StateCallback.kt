@@ -14,20 +14,26 @@
 
 package guru.zoroark.tegral.niwen.parser.expectations
 
+import guru.zoroark.tegral.niwen.parser.ExpectationResult
+
 /**
- * A callback for state information.
+ * A callback for manipulating and invoking side effects with state information.
  *
- * When expectations output some state in a way (e.g., an `expect(SomeNode)` that emits an instance of `SomeNode)`, said
- * state can be transformed and/or stored using a **state callback.** State callbacks take in a mutable storage and a
- * state, and returns some state. Implementations can return `state` directly or transform it and return it in some way.
+ * When expectations output some state in some way (e.g., an `expect(SomeNode)` that emits an instance of `SomeNode)`,
+ * said state can be transformed and/or stored using a **state callback.** State callbacks take in a mutable storage and
+ * a state, and returns some state. Implementations can return `state` directly or transform it and return it in some
+ * way.
  *
  * @param T The context type (see [NodeParameterKey] for details)
  * @param R The initial type of the state, as input into this callback
- * @param U The returned, possibly transformed type of the state
+ * @param U The returned, possibly transformed type of the state. May be the same as `R`.
  */
 fun interface StateCallback<T, in R, U> {
     /**
      * Reduce the provided [state], optionally storing it in the [storage].
+     *
+     * **Note:** Implementations may throw any arbitrary `Exception` in `reduceState`. In case an exception occurs,
+     * matching this callback is being executed for will be considered as a "Did not match".
      *
      * @param storage Map in which you can store data
      * @param state The state provided to this reducer.
@@ -96,9 +102,35 @@ class ComposeStateCallbacks<T, R, U, V>(
  * Create a store map and evaluate this state callback. The map is returned.
  *
  * If `this` is `null`, an empty map is returned.
+ *
+ * **Note:** May throw any exception since [StateCallback.reduceState] can itself throw any exception. Consider wrapping
+ * use of `createStoreMap` with `runCatching`.
+ *
+ * @see withStoreMap Wraps [createStoreMap] with error-handling for producing [ExpectationResult]s
  */
 fun <T, R> StateCallback<T, R, *>?.createStoreMap(value: R): Map<NodeParameterKey<T, *>, Any?> {
     val map = mutableMapOf<NodeParameterKey<T, *>, Any?>()
     this?.reduceState(map, value)
     return map
+}
+
+/**
+ * Create a store map (using [createStoreMap]) and call the provided [handler], returning an [ExpectationResult].
+ *
+ * This function properly handles any errors that may bubble up as a result of [StateCallback.reduceState] and
+ * [createStoreMap] by returning an [ExpectationResult.DidNotMatch].
+ */
+fun <T, R> StateCallback<T, R, *>?.withStoreMap(
+    value: R,
+    currIndex: Int,
+    handler: (Map<NodeParameterKey<T, *>, Any?>) -> ExpectationResult<T>
+): ExpectationResult<T> {
+    return runCatching { createStoreMap(value) }
+        .map(handler)
+        .getOrElse {
+            ExpectationResult.DidNotMatch(
+                "State callback failed: ${it.message}.\nStack trace:\n${it.stackTraceToString()}",
+                currIndex
+            )
+        }
 }
