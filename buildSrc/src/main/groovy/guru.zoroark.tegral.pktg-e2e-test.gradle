@@ -4,6 +4,8 @@ plugins {
     id 'com.github.node-gradle.node'
 
     id 'jacoco'
+
+    id 'project-report'
 }
 
 dependencies {
@@ -45,9 +47,11 @@ jacoco {
     applyTo runGeneratorInternal
 }
 
-tasks.register('generatorCodeCoveragge', JacocoReport) {
+tasks.register('generatorCodeCoverage', JacocoReport) {
     executionData runGeneratorInternal
     sourceSets sourceSets.main
+
+    dependsOn(tasks.prismaGenerate)
 }
 
 tasks.compileKotlin.dependsOn prismaGenerate

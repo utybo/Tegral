@@ -70,7 +70,7 @@ class SimpleUserTableTest {
     }
 
     @Test
-    fun `Simple database transactino with DAO API`() = withDb {
+    fun `Simple database transaction with DAO API`() = withDb {
         val id = newSuspendedTransaction(db = this) {
             UserEntity.new {
                 email = "user2@example.com"
