@@ -5,6 +5,7 @@ plugins {
     id 'io.gitlab.arturbosch.detekt'
 
     id 'java-library'
+    id 'jacoco'
 }
 
 repositories {

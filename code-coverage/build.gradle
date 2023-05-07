@@ -1,6 +1,6 @@
 plugins {
     id 'base'
-    id 'jacoco-report-aggregation'
+    id 'guru.zoroark.tegral.coverage-aggregator'
 }
 
 repositories {
@@ -26,7 +26,7 @@ def projects = [
     ':tegral-openapi:tegral-openapi-ktorui',
     ':tegral-openapi:tegral-openapi-scriptdef',
     ':tegral-openapi:tegral-openapi-scripthost',
-    ':tegral-prismakt:tegral-prismakt-generator-tests',
+    ':tegral-prismakt:tegral-prismakt-generator',
     ':tegral-services:tegral-services-api',
     ':tegral-services:tegral-services-feature',
     ':tegral-utils:tegral-utils-logtools',
@@ -44,19 +44,15 @@ def projects = [
 
 dependencies {
     for (projectPath in projects) {
-        jacocoAggregation project(projectPath)
+        aggregatedProjects project(projectPath)
+    }
+
+    for (prismaktTestProject in project(':tegral-prismakt:tegral-prismakt-generator-tests').subprojects) {
+        aggregatedProjects prismaktTestProject
     }
 }
-
-reporting {
-    reports {
-        testCodeCoverageReport(JacocoCoverageReport) {
-            testType = TestSuiteType.UNIT_TEST
-        }
-    }
-}
-
 
 tasks.named('check') {
-    dependsOn tasks.named('testCodeCoverageReport', JacocoReport)
+    dependsOn tasks.compositeCodeCoverage
 }
+

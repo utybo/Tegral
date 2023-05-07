@@ -54,6 +54,26 @@ tasks.register('generatorCodeCoverage', JacocoReport) {
     dependsOn(tasks.prismaGenerate)
 }
 
+configurations {
+    generatorCodeCoverageOutput {
+        canBeConsumed = true
+        canBeResolved = false
+
+        extendsFrom configurations.coverageDataElementsForTest
+
+        attributes {
+            attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.VERIFICATION))
+            attribute(VerificationType.VERIFICATION_TYPE_ATTRIBUTE, objects.named(VerificationType, VerificationType.JACOCO_RESULTS))
+        }
+    }
+}
+
+artifacts {
+    generatorCodeCoverageOutput(((JacocoReport)tasks.generatorCodeCoverage).getExecutionData().getFiles()) {
+        builtBy(prismaGenerate)
+    }
+}
+
 tasks.compileKotlin.dependsOn prismaGenerate
 tasks.compileTestKotlin.dependsOn prismaGenerate
 
