@@ -178,9 +178,10 @@ fun ScalarType.inaccurate(reason: String): ScalarTypeWithAccuracy {
     return ScalarTypeWithAccuracy.Inaccurate(this, reason)
 }
 
-sealed class ScalarTypeWithAccuracy(val type: ScalarType) {
-    class Accurate(type: ScalarType) : ScalarTypeWithAccuracy(type)
-    class Inaccurate(type: ScalarType, val inaccuracyReason: String) : ScalarTypeWithAccuracy(type)
+sealed class ScalarTypeWithAccuracy {
+    abstract val type: ScalarType
+    data class Accurate(override val type: ScalarType) : ScalarTypeWithAccuracy()
+    data class Inaccurate(override val type: ScalarType, val inaccuracyReason: String) : ScalarTypeWithAccuracy()
 }
 
 /**
@@ -196,8 +197,8 @@ sealed class ScalarType {
     object TText : ScalarType()
     object TMediumText : ScalarType()
     object TLongText : ScalarType()
-    class TChar(val n: Int) : ScalarType()
-    class TVarChar(val n: Int) : ScalarType()
+    data class TChar(val n: Int) : ScalarType()
+    data class TVarChar(val n: Int) : ScalarType()
     object TUuid : ScalarType()
 
     // Int-like types
@@ -213,7 +214,7 @@ sealed class ScalarType {
     object TULong : ScalarType()
     object TDouble : ScalarType()
     object TFloat : ScalarType()
-    class TDecimal(private val precisionAndScale: Pair<Int, Int>?) : ScalarType() {
+    data class TDecimal(private val precisionAndScale: Pair<Int, Int>?) : ScalarType() {
         fun getPrecisionAndScale(isMsSql: Boolean): Pair<Int, Int> {
             return precisionAndScale ?: if (isMsSql) 32 to 16 else 65 to 30
         }
@@ -224,5 +225,5 @@ sealed class ScalarType {
     object TLocalTime : ScalarType()
     object TInstant : ScalarType()
 
-    class TBinary(val maxSize: Int?) : ScalarType()
+    data class TBinary(val maxSize: Int?) : ScalarType()
 }

@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     for (subproject in subprojects) {
-        "aggregatedProjects"(subproject)
+        "aggregatedProjects"(project(subproject.name))
     }
     "aggregatedProjects"(project(":tegral-prismakt:tegral-prismakt-generator"))
 }

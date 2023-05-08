@@ -24,6 +24,7 @@ clikt = "3.5.0"
 exposed = "0.41.1"
 kotlinPoet = "1.12.0"
 sqlite = "3.41.0.0"
+testcontainers = "1.18.0"
 
 [libraries]
 # Dependencies
@@ -90,6 +91,9 @@ junit-jupiterEngine = { module = "org.junit.jupiter:junit-jupiter-engine", versi
 # Detekt plugins
 
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+
+testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
+testcontainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
 
 [plugins]
 

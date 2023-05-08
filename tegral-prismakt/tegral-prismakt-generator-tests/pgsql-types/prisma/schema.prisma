@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator prismakt {
+  provider = "gradle --console=plain -q runGeneratorInternal"
+  output   = "../build/prismaGeneratedSrc"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "some_fake_url"
+}
+
+model PgsqlTypes {
+  id String @id @db.Uuid
+
+  text    String @db.Text
+  char    String @db.Char(20)
+  varchar String @db.VarChar(20)
+  bit     String @db.Bit(20)
+  varbit  String @db.VarBit(20)
+  uuid    String @db.Uuid
+
+  boolean Boolean @db.Boolean
+
+  int         Int @db.Integer
+  smallInt    Int @db.SmallInt
+  smallSerial Int @default(autoincrement()) @db.SmallInt
+  serial      Int @default(autoincrement()) @db.Int
+  oid         Int @db.Oid
+
+  bigint     @db.BigInt
+  bigserial  @default(autoincrement()) @db.BigInt
+
+  double Float @db.DoublePrecision
+  real   Float @db.Real
+
+  decimal  @db.Decimal(20, 20)
+
+  timestamp    @db.Timestamp
+  timestamptz  @db.Timestamptz
+  date         @db.Date
+  time         @db.Time
+  timetz       @db.Timetz
+
+  bytea	@db.ByteA
+}

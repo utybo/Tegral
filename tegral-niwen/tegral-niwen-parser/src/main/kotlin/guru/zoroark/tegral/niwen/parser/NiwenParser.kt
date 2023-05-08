@@ -102,7 +102,9 @@ class NiwenParser<T>(
          *
          * @property result The resulting object
          */
-        class Success<T>(val result: T, debuggerResult: String) : ParserResult<T>(debuggerResult)
+        class Success<T>(val result: T, debuggerResult: String) : ParserResult<T>(debuggerResult) {
+            override fun orThrow() = result
+        }
 
         /**
          * Failed parser result. You can usually get a more in-depth analysis by enabling the debugger and getting the
@@ -110,7 +112,11 @@ class NiwenParser<T>(
          *
          * @property reason Short reason message for the failure
          */
-        class Failure<T>(val reason: String, debuggerResult: String) : ParserResult<T>(debuggerResult)
+        class Failure<T>(val reason: String, debuggerResult: String) : ParserResult<T>(debuggerResult) {
+            override fun orThrow() = throw NiwenParserException("Parsing failed: $reason")
+        }
+
+        abstract fun orThrow(): T
     }
 
     /**
