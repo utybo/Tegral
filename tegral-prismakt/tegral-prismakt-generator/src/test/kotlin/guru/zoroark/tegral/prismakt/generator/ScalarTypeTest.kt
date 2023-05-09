@@ -40,7 +40,6 @@ class ScalarTypeTest {
     private fun getScalarType(fieldName: String): ScalarTypeWithAccuracy {
         val field = parseAndGetModelAndField(fieldName)
         return assertNotNull(nativeTypeToScalarType(field.name, field.type, field.attributes))
-
     }
 
     @Test
@@ -109,12 +108,10 @@ class ScalarTypeTest {
         )
     }
 
-
     @Test
     fun uuidType() {
         assertEquals(ScalarType.TUuid.accurate(), getScalarType("someUuid"))
     }
-
 
     @Test
     fun whatType() {
@@ -124,3 +121,5 @@ class ScalarTypeTest {
         )
     }
 }
+
+// TODO more tests there

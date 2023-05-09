@@ -1,0 +1,7 @@
+plugins {
+    id 'guru.zoroark.tegral.pktg-e2e-test'
+}
+
+dependencies {
+    generator project(":tegral-prismakt:tegral-prismakt-generator")
+}

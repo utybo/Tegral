@@ -28,8 +28,12 @@ import guru.zoroark.tegral.utils.logtools.applyMinimalistLoggingOverrides
 import org.slf4j.LoggerFactory
 import kotlin.system.exitProcess
 
-val genericLogger = LoggerFactory.getLogger("tegral.prismakt")
+internal val genericLogger = LoggerFactory.getLogger("tegral.prismakt")
 
+/**
+ * Entrypoint for the Tegral PrismaKT Generator.
+ */
+@Suppress("TooGenericExceptionCaught")
 fun main() {
     applyMinimalistLoggingOverrides(Level.DEBUG)
     try {
@@ -46,6 +50,6 @@ fun main() {
         protocol.exchange()
     } catch (ex: Exception) {
         genericLogger.error("Fatal error", ex)
-        exitProcess(1);
+        exitProcess(1)
     }
 }

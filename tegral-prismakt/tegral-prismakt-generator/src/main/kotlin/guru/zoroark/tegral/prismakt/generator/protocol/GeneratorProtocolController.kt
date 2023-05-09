@@ -16,17 +16,21 @@ package guru.zoroark.tegral.prismakt.generator.protocol
 
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.invoke
-import guru.zoroark.tegral.prismakt.generator.*
+import guru.zoroark.tegral.prismakt.generator.ExecutionContext
 import guru.zoroark.tegral.prismakt.generator.generators.ExposedDaoGenerator
 import guru.zoroark.tegral.prismakt.generator.generators.ExposedSqlGenerator
 import guru.zoroark.tegral.prismakt.generator.generators.GeneratorContext
+import guru.zoroark.tegral.prismakt.generator.genericLogger
 import guru.zoroark.tegral.prismakt.generator.parser.NiwenPrismParser
-import org.slf4j.LoggerFactory
 import java.nio.file.Path
 
 private const val DEFAULT_OUTPUT_DIR = "generatedSrc"
 
+/**
+ * A simplified implementation of [GeneratorProtocolHandler].
+ */
 class GeneratorProtocolController(scope: InjectionScope) : GeneratorProtocolHandler {
+    private val exposedSqlGenerator: ExposedSqlGenerator by scope()
     private val exposedDaoGenerator: ExposedDaoGenerator by scope()
     private val parser: NiwenPrismParser by scope()
     private val executionContext: ExecutionContext by scope()
@@ -56,7 +60,14 @@ class GeneratorProtocolController(scope: InjectionScope) : GeneratorProtocolHand
             request.params.dmmf.datamodel,
             parser.parseOrNull(Path.of(request.params.schemaPath), executionContext.enableParsingDebug)
         )
-        exposedDaoGenerator.generateModels(generationContext)
+        val target = request.params.generator.config["exposedTarget"]
+            ?.also { genericLogger.debug("Using exposedTarget: $it") }
+            ?: "dao".also { genericLogger.debug("No exposedTarget defined: using 'dao' target") }
+        when (target.lowercase()) {
+            "sql" -> exposedSqlGenerator.generateModels(generationContext)
+            "dao" -> exposedDaoGenerator.generateModels(generationContext)
+            else -> error("Unknown exposedTarget: \"$target\"")
+        }
         genericLogger.info(request.params.datasources.toString())
     }
 }

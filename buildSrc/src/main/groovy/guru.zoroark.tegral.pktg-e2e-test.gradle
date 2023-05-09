@@ -41,6 +41,15 @@ tasks.register('runGeneratorInternal', JavaExec) {
     mainClass = "guru.zoroark.tegral.prismakt.generator.MainKt"
     classpath = configurations.generator
     standardInput = System.in
+
+    outputs.upToDateWhen { false }
+}
+
+tasks.register('prismaDbPush', NpxTask) {
+    command = "prisma"
+    args = ["db", "push", "--force-reset", "--skip-generate"]
+
+    // No inputs as this should never be considered as "up to date"
 }
 
 jacoco {

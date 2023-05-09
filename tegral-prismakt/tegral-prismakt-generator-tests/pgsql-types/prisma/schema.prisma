@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator prismakt {
   provider = "gradle --console=plain -q runGeneratorInternal"
   output   = "../build/prismaGeneratedSrc"
@@ -8,40 +5,38 @@ generator prismakt {
 
 datasource db {
   provider = "postgresql"
-  url      = "some_fake_url"
+  url      = env("DATABASE_URL")
 }
 
 model PgsqlTypes {
   id String @id @db.Uuid
 
-  text    String @db.Text
-  char    String @db.Char(20)
-  varchar String @db.VarChar(20)
-  bit     String @db.Bit(20)
-  varbit  String @db.VarBit(20)
-  uuid    String @db.Uuid
+  text            String @db.Text
+  char            String @db.Char(20)
+  varchar         String @db.VarChar(20)
+  uuid            String @db.Uuid
 
   boolean Boolean @db.Boolean
 
   int         Int @db.Integer
   smallInt    Int @db.SmallInt
   smallSerial Int @default(autoincrement()) @db.SmallInt
-  serial      Int @default(autoincrement()) @db.Int
+  serial      Int @default(autoincrement()) @db.Integer
   oid         Int @db.Oid
 
-  bigint     @db.BigInt
-  bigserial  @default(autoincrement()) @db.BigInt
+  bigint    BigInt @db.BigInt
+  bigSerial BigInt @default(autoincrement()) @db.BigInt
 
   double Float @db.DoublePrecision
   real   Float @db.Real
 
-  decimal  @db.Decimal(20, 20)
+  decimal Decimal @db.Decimal(30, 20)
 
-  timestamp    @db.Timestamp
-  timestamptz  @db.Timestamptz
-  date         @db.Date
-  time         @db.Time
-  timetz       @db.Timetz
+  timestamp   DateTime @db.Timestamp
+  timestamptz DateTime @db.Timestamptz
+  date        DateTime @db.Date
+  time        DateTime @db.Time
+  timetz      DateTime @db.Timetz
 
-  bytea	@db.ByteA
+  bytea Bytes @db.ByteA
 }

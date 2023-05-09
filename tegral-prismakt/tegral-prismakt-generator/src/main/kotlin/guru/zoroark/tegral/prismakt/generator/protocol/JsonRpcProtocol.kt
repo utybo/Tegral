@@ -21,6 +21,9 @@ import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.invoke
 import org.slf4j.LoggerFactory
 
+/**
+ * Simple implementation of Prisma's restricted JSON RPC protocol
+ */
 class JsonRpcProtocol(scope: InjectionScope) {
     private val objectMapper = jacksonObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     private val logger = LoggerFactory.getLogger("tegral.prismakt.rpc")
@@ -38,6 +41,9 @@ class JsonRpcProtocol(scope: InjectionScope) {
         return req
     }
 
+    /**
+     * Run the protocol, performing 2 request-response exchanges with Prisma via stdin/stderr.
+     */
     fun exchange() {
         repeat(2) {
             val request = blockUntilRequest() ?: return@repeat

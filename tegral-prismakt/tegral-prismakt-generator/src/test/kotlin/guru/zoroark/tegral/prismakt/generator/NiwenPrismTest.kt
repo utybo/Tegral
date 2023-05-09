@@ -2,6 +2,8 @@ package guru.zoroark.tegral.prismakt.generator
 
 import guru.zoroark.tegral.prismakt.generator.parser.NiwenPrism
 import org.intellij.lang.annotations.Language
+import org.junit.jupiter.api.assertDoesNotThrow
+import kotlin.system.measureTimeMillis
 import kotlin.test.Test
 
 @Language("prisma")
@@ -43,8 +45,46 @@ enum Role {
 class NiwenPrismTest {
     @Test
     fun `Test full example`() {
-        val tokens = NiwenPrism.tokenize(fullExample)
-        println(tokens.joinToString("\n"))
-        val res = NiwenPrism.parseDebug(tokens)
+        fun noDebug() {
+            val tokens = NiwenPrism.tokenize(fullExample)
+            NiwenPrism.parse(tokens)
+        }
+
+        fun withDebug() {
+            val tokens = NiwenPrism.tokenize(fullExample)
+            NiwenPrism.parseDebug(tokens)
+        }
+
+        assertDoesNotThrow {
+            val timeTakenNoDebug = mutableListOf<Long>()
+            val timeTakenDebug = mutableListOf<Long>()
+
+            // Warmup
+            repeat(10) {
+                println("No debug: warmup $it")
+                noDebug()
+            }
+
+            // Exec
+            repeat(10) {
+                print("No debug: exec $it | ")
+                timeTakenNoDebug += measureTimeMillis(::noDebug)
+                println("${timeTakenNoDebug.last()} ms")
+            }
+
+            println("No debug: avg ${timeTakenNoDebug.average()} ms")
+
+            // Warmup
+            repeat(10) { withDebug() }
+
+            // Exec
+            repeat(10) {
+                print("W/ debug: exec $it | ")
+                timeTakenDebug += measureTimeMillis(::withDebug)
+                println("${timeTakenDebug.last()} ms")
+            }
+
+            println("W/ debug: avg ${timeTakenDebug.average()} ms")
+        }
     }
 }

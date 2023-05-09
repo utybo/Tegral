@@ -15,11 +15,6 @@
 package guru.zoroark.tegral.prismakt.generator.tests.simple
 
 import kotlinx.coroutines.runBlocking
-import org.jetbrains.exposed.dao.Entity
-import org.jetbrains.exposed.dao.EntityClass
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.dao.id.IdTable
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -28,8 +23,9 @@ import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import prismakt.generated.UserEntity
-import prismakt.generated.UserTable
+import org.junit.jupiter.api.BeforeEach
+import prismakt.generated.DaoUserEntity
+import prismakt.generated.DaoUserTable
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -45,41 +41,53 @@ fun withDb(block: suspend Database.() -> Unit) {
 
     runBlocking {
         newSuspendedTransaction(db = db) {
-            UserTable.deleteAll()
+            DaoUserTable.deleteAll()
         }
         block(db)
     }
 }
 
 class SimpleUserTableTest {
+    @BeforeEach
+    fun resetDb() {
+        val res = ProcessBuilder()
+            .apply {
+                command("gradle", "prismaDbPush")
+                inheritIO()
+            }
+            .start()
+            .waitFor()
+        require(res == 0) { "'prisma db push' failed" }
+    }
+
     @Test
     fun `Simple database transaction with DSL API`() = withDb {
         val id = newSuspendedTransaction(db = this) {
-            UserTable.insertAndGetId {
+            DaoUserTable.insertAndGetId {
                 it[email] = "user@example.com"
                 it[name] = "User"
             }
         }
 
         val result = newSuspendedTransaction {
-            UserTable.select(UserTable.id eq id).single()
+            DaoUserTable.select(DaoUserTable.id eq id).single()
         }
 
-        assertEquals("user@example.com", result[UserTable.email])
-        assertEquals("User", result[UserTable.name])
+        assertEquals("user@example.com", result[DaoUserTable.email])
+        assertEquals("User", result[DaoUserTable.name])
     }
 
     @Test
     fun `Simple database transaction with DAO API`() = withDb {
         val id = newSuspendedTransaction(db = this) {
-            UserEntity.new {
+            DaoUserEntity.new {
                 email = "user2@example.com"
                 name = "User2"
             }.id
         }
 
         val result = newSuspendedTransaction {
-            UserEntity.findById(id)
+            DaoUserEntity.findById(id)
         }
 
         assertNotNull(result)

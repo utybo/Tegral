@@ -14,10 +14,19 @@
 
 package guru.zoroark.tegral.prismakt.generator.generators
 
-import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.ParameterSpec
+import com.squareup.kotlinpoet.ParameterizedTypeName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.TypeName
+import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.asClassName
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.invoke
+import guru.zoroark.tegral.prismakt.generator.protocol.Field
 import guru.zoroark.tegral.prismakt.generator.protocol.Model
 import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass
@@ -25,10 +34,12 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IdTable
 import org.jetbrains.exposed.sql.Column
 import org.slf4j.LoggerFactory
-import java.nio.file.Path
 
 private val logger = LoggerFactory.getLogger("tegral.prismakt.exposed-dao")
 
+/**
+ * Generator for JetBrains Exposed's DAO API.
+ */
 class ExposedDaoGenerator(scope: InjectionScope) : ModelGenerator {
     private val exposedSqlGenerator: ExposedSqlGenerator by scope()
 
@@ -41,44 +52,74 @@ class ExposedDaoGenerator(scope: InjectionScope) : ModelGenerator {
     }
 
     private fun unwrapColumnType(type: TypeName): TypeName {
-        if (type !is ParameterizedTypeName || type.rawType != Column::class.asClassName() || type.typeArguments.size != 1) {
+        if (
+            type !is ParameterizedTypeName ||
+            type.rawType != Column::class.asClassName() ||
+            type.typeArguments.size != 1
+        ) {
             error("Table contains a type that is not Column<T>: $type")
         }
         return type.typeArguments.single()
+    }
+
+    private fun unwrapIdType(type: TypeName): TypeName {
+        if (
+            type !is ParameterizedTypeName ||
+            type.rawType != EntityID::class.asClassName() ||
+            type.typeArguments.size != 1
+        ) {
+            error("Table contains an ID type that is not EntityID<T>: $type")
+        }
+        return type.typeArguments.single()
+    }
+
+    private fun generateField(tableSpec: TypeSpec, field: Field): PropertySpec? {
+        val tableProperty = tableSpec.propertySpecs.find { it.name == field.name }
+            ?: error("Expected property was not generated?")
+        val unwrappedColumnType = unwrapColumnType(tableProperty.type)
+        return if (field.isId) {
+            if (field.name != "id") {
+                PropertySpec.builder(field.name, unwrapIdType(unwrappedColumnType))
+                    .getter(FunSpec.getterBuilder().addCode("return this.id.value").build())
+                    .build()
+            } else {
+                null
+            }
+        } else {
+            PropertySpec.builder(field.name, unwrappedColumnType)
+                .mutable()
+                .delegate("${tableSpec.name}.${tableProperty.name}")
+                .build()
+        }
     }
 
     private fun generateDaoClass(model: Model, tableSpec: TypeSpec, idType: TypeName): TypeSpec {
         val entityClassName = "${model.name}Entity"
         val entityIdType = EntityID::class.asClassName().parameterizedBy(idType)
         return TypeSpec.classBuilder(entityClassName).apply {
-            primaryConstructor(FunSpec.constructorBuilder().apply {
-                addParameter(ParameterSpec.builder("id", entityIdType).build())
-            }.build())
+            primaryConstructor(
+                FunSpec.constructorBuilder().apply {
+                    addParameter(ParameterSpec.builder("id", entityIdType).build())
+                }.build()
+            )
 
             superclass(Entity::class.asClassName().parameterizedBy(listOf(idType)))
             addSuperclassConstructorParameter("id")
 
-            val nonIdFields = model.fields.filterNot { it.isId }
-            for (field in nonIdFields) {
-                val tableProperty = tableSpec.propertySpecs.find { it.name == field.name }
-                    ?: error("Expected property was not generated?")
-                val unwrappedColumnType = unwrapColumnType(tableProperty.type)
-                addProperty(
-                    PropertySpec.builder(field.name, unwrappedColumnType)
-                        .mutable()
-                        .delegate("${tableSpec.name}.${tableProperty.name}")
-                        .build()
-                )
+            for (field in model.fields) {
+                generateField(tableSpec, field)?.let { addProperty(it) }
             }
 
-            addType(TypeSpec.companionObjectBuilder().apply {
-                superclass(EntityClass::class.asClassName()
-                    .parameterizedBy(listOf(idType, ClassName("prismakt.generated", entityClassName))))
-                addSuperclassConstructorParameter(tableSpec.name!!)
-            }.build())
+            val type = TypeSpec.companionObjectBuilder()
+            type.superclass(
+                EntityClass::class.asClassName().parameterizedBy(
+                    listOf(idType, ClassName("prismakt.generated", entityClassName))
+                )
+            )
+            type.addSuperclassConstructorParameter(tableSpec.name!!)
+            addType(type.build())
         }.build()
     }
-
 
     override fun generateModels(context: GeneratorContext) {
         for (model in context.datamodel.models) {

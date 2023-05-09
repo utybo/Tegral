@@ -7,5 +7,5 @@ dependencies {
 
     testImplementation libs.testcontainers
     testImplementation libs.testcontainers.junit
-    testImplementation libs.sqlDrivers.postgresql
+    testImplementation libs.sqlDrivers.mysql
 }

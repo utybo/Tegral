@@ -1,7 +1,5 @@
 package guru.zoroark.tegral.prismakt.generator.parser
 
-import guru.zoroark.tegral.niwen.lexer.NiwenLexerException
-import guru.zoroark.tegral.niwen.lexer.Token
 import guru.zoroark.tegral.niwen.parser.NiwenParser
 import org.slf4j.LoggerFactory
 import java.nio.file.Files
@@ -21,6 +19,11 @@ class NiwenPrismParser {
     private fun createErrorMessage(msg: String) =
         "$msg. Resulting models may be less accurate. Please consider reporting this."
 
+    /**
+     * Parse a Prisma schema at the provided [path].
+     *
+     * Will also dump debugging information if [enableDebugging] is set to true.
+     */
     @OptIn(ExperimentalTime::class)
     fun parseOrNull(path: Path, enableDebugging: Boolean): PRoot? = runCatching {
         logger.debug("Reading Prisma file $path")

@@ -12,6 +12,10 @@
  * limitations under the License.
  */
 
+// Unfortunately, these types are from the undocumented DMMF
+// For more context, see https://prismaio.notion.site/Prisma-Generators-a2cdf262207a4e9dbcd0e362dfac8dc0
+@file:Suppress("UndocumentedPublicClass", "UndocumentedPublicProperty")
+
 package guru.zoroark.tegral.prismakt.generator.protocol
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -316,8 +320,7 @@ data class SchemaField(
 
 class ObjectOrString<T : Any> {
     private constructor(stringValue: String?, objectValue: T?) {
-        if (stringValue == null && objectValue == null)
-            error("Both string and objects are null")
+        if (stringValue == null && objectValue == null) error("Both string and objects are null")
 
         string = stringValue
         obj = objectValue
