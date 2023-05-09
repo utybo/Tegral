@@ -137,6 +137,7 @@ class EagerImmutableMetaEnvironment(context: EnvironmentContext) : InjectionEnvi
                         "Please report this."
                 )
             }
+            @Suppress("UNCHECKED_CAST")
             val injector = initializeComponentResolver(
                 (info.declarations[identifier] ?: throw ComponentNotFoundException(identifier)) as Declaration<T>
             )

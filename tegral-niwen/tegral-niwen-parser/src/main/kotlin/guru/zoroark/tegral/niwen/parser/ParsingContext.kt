@@ -44,6 +44,7 @@ class ParsingContext(
      * Retrieve the provided node declaration, or null if no such declaration could be found.
      */
     operator fun <T> get(declaration: ParserNodeDeclaration<T>): DescribedType<T>? {
+        @Suppress("UNCHECKED_CAST")
         return typeMap[declaration] as? DescribedType<T>
     }
 

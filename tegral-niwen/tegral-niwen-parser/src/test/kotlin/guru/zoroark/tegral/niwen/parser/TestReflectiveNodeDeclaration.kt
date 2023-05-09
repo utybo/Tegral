@@ -108,7 +108,7 @@ class TestReflectiveNodeDeclaration {
         constructor(
             second: Char,
             first: String = "Heyy",
-            @Suppress("UnusedPrivateMember")
+            @Suppress("UnusedPrivateMember", "UNUSED_PARAMETER")
             third: List<String> = listOf()
         ) : this("Second ctor $first", second, listOf("Hello"))
 

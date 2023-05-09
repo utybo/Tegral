@@ -50,6 +50,7 @@ class ExpectedRepeated<T, R>(
                 is ExpectationResult.Success -> {
                     currIndex = next.nextIndex
                     matchCount++
+                    @Suppress("UNCHECKED_CAST")
                     next.stored.entries.firstOrNull()?.let { valueAcc += it.value as R }
                 }
             }

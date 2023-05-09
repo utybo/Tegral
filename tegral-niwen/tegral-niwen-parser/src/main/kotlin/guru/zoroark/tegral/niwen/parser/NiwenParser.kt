@@ -104,6 +104,8 @@ class NiwenParser<T>(
          */
         class Success<T>(val result: T, debuggerResult: String) : ParserResult<T>(debuggerResult) {
             override fun orThrow() = result
+
+            override fun toString(): String = "ParserResult.Success(result = ${result})"
         }
 
         /**
@@ -114,6 +116,7 @@ class NiwenParser<T>(
          */
         class Failure<T>(val reason: String, debuggerResult: String) : ParserResult<T>(debuggerResult) {
             override fun orThrow() = throw NiwenParserException("Parsing failed: $reason")
+            override fun toString(): String = "ParserResult.Failure(reason = $reason)"
         }
 
         abstract fun orThrow(): T

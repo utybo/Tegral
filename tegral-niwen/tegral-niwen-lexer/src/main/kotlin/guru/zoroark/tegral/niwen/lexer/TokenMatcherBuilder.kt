@@ -62,7 +62,7 @@ abstract class TokenMatcherBuilder(
      * Specifies that, once a match is found, the lexer should go to the default state.
      */
     @TegralDsl
-    infix fun thenState(@Suppress("UnusedPrivateMember") default: StateBuilder.Default) {
+    infix fun thenState(@Suppress("UnusedPrivateMember", "UNUSED_PARAMETER") default: StateBuilder.Default) {
         _nextStateBehavior = GoToDefaultState
     }
 }
