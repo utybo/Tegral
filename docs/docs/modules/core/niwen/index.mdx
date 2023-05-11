@@ -1,0 +1,204 @@
+import PackageVersions from '@site/src/components/PackageVersions';
+
+# Tegral Niwen
+
+Tegral Niwen (formerly known as [Lixy](https://github.com/utybo/Lixy) and [Pangoro](https://github.com/utybo/Pangoro)) is a framework for building lexers and parsers, with a large focus on ease of use.
+
+Tegral Niwen is subdivided into two separate libraries:
+
+- [Tegral Niwen Lexer](lexer.md), a framework for building lexers
+- [Tegral Niwen Parser](parser.md), a framework for building parsers
+
+You'll often need both of them, but are provided as separate dependencies just in case.
+
+<PackageVersions libraries={[
+    { name: 'tegral-niwen-lexer', catalog: 'niwen.lexer' },
+    { name: 'tegral-niwen-parser', catalog: 'niwen.parser' }
+]}/>
+
+## Introduction
+
+Here's a simple example of a parser written using Tegral Niwen for documents that contain a list of sums, like this:
+
+```text
+1 + 2
+
+   33       +     44
+```
+
+We'll first define the model our parser will output. This can be seen as an AST, but what it actually is will depend on what you're trying to achieve.
+
+```kotlin
+data class Sum(val left: Number, val right: Number) {
+    companion object : ParserNodeDeclaration<Sum> by reflective()
+}
+
+data class Number(val value: Int) {
+    companion object : ParserNodeDeclaration<Number> by reflective()
+}
+
+data class SumsDocument(val sums: List<Sum>) {
+    companion object : ParserNodeDeclaration<SumsDocument> by reflective()
+}
+```
+
+Then, we'll define our *lexer tokens*. These represent the *lexemes* of what you're trying to parse, i.e. the simplest, abstractiest "particles" of your language. You'll usually have tokens for strings, numbers, for each operator, etc. They significantly simplify the parsing process but getting the exact details of "what character is that" out of the way.
+
+Tegral Niwen Lexer's lexers are built using the `niwenLexer` function. Niwen lexers support defining multiple states, which can be useful if you're trying to parse a language that has different "modes" (e.g. a language that has both a "code" mode and a "string" mode), but we won't be using it here.
+
+When defining our lexer, we use *recognizers* and *actions*. Recognizers recognize a sequence of characters and, if true, "match" and execute the actions. Actions can be to ignore the current character sequence, emit a token, etc.
+
+Here's our lexer:
+
+```kotlin
+enum class Tokens : TokenType {
+    NUMBER,
+    PLUS,
+    NEWLINE
+}
+
+val lexer = niwenLexer {
+    state {
+        matches("\\d+") isToken Tokens.NUMBER
+        '+' isToken Tokens.PLUS
+        '\n'.repeated isToken Tokens.NEWLINE
+        ' '.ignore
+    }
+}
+```
+
+Finally, we'll define our parser.
+
+```
+val parser = niwenParser<SumsDocument> {
+    SumsDocument root {
+        repeated {
+            expect(Sum) storeIn item
+        } storeIn SumsDocument::sums
+    }
+
+    Sum {
+        expect(Number) storeIn Sum::left
+        expect(Tokens.PLUS)
+        expect(Number) storeIn Sum::right
+        either {
+            expect(Tokens.NEWLINE)
+        } or {
+            expectEof()
+        }
+    }
+
+    Number {
+        expect(Tokens.NUMBER) transform { it.toInt() } storeIn Number::value
+    }
+}
+
+// Finally, let's use all of that:
+
+val tokens = lexer.tokenize(
+    """
+    1 + 2
+    33     +       44
+
+
+    555+666
+    """.trimIndent()
+)
+val result = parser.parse(tokens)
+/*
+ * SumsDocument(
+ *   sums=[
+ *     Sum(left=Number(value=1), right=Number(value=2)),
+ *     Sum(left=Number(value=33), right=Number(value=44)),
+ *     Sum(left=Number(value=555), right=Number(value=666))
+ *   ]
+ * )
+ */
+```
+
+## Lexers and parsers 101
+
+Confused about what this is all about? Here's a tl;dr.
+
+From a very abstract perspective, when we think of parsing things, what we really want to do is turn a string of character into some usefuli model of our choice.
+
+Compilation of programming languages is an example of something like this: compilers take in files (which are inherently strings of characters) and output some form of executable format.[^1]
+
+[^1]: This is a big simplification of the process that goes into the compilation programming languages. Parsing, as in looking at the file and extracting its structure into an *abstract syntax tree*, is usually the first step of this process.
+
+**Lexers** and **parsers** are two categories of tools that you can use to perform this process.
+
+Say, for example, we wanted to parse some imaginary culinary language which you could use to create some cookbook:
+
+```text
+recipe "plainPasta" {
+    description = "Just some plain pasta"
+    difficulty = "easy"
+    timeMinutes = 10
+}
+
+recipe "pastaWithCheese" {
+    description = "Doesn't get much easier";
+    difficulty = "easy";
+    timeMinutes = 12;
+}
+```
+
+Say we wanted to *parse* this cookbook into the following model:
+
+```kotlin
+data class Cookbook(val recipes: List<Recipe>)
+
+data class Recipe(
+    val name: String,
+    val properties: Map<String, String> // contains descriptions, difficulty, etc.
+)
+```
+
+We can first create a *lexer* to turn the original string into a sequence of tokens. This is a very basic step: the idea here is to just get the very basic "words" and symbols of our language, so that our parser can focus on putting these tokens together and not worry about each individual character of the input string:
+
+```text
+Input string                  Token type        Token value
+-------------------------     ---------------   ----------------
+recipe                    --> IDENTIFIER        recipe
+"                         --> QUOTE             "
+plainPasta                --> STRING_CONTENT    plainPasta
+"                         --> QUOTE             ""
+{                         --> OPEN_BRACE        {
+description               --> IDENTIFIER        description
+=                         --> EQUALS            =
+"                         --> QUOTE             "
+Doesn't get much easier   --> STRING_CONTENT    Doesn't get much easier
+"                         --> QUOTE             ""
+;                         --> SEMICOLON         ;
+...                              ...                   ...
+}                         --> CLOSE_BRACE       }
+```
+
+It may not look like it at first, but these tokens are *much* easier to reason about.
+
+As for our parser, we'll reflect Tegral Niwen's philosophy here and use an "expectation"-style parser. Specifically, we'll use a parser that just describes what each one of its nodes is supposed to contain. For example, let's take the following definition, where things in **bold** are models we want to describe, and things in *italics* are tokens we retrieved as part of our lexer.
+
+- **Cookbook**
+  - A list of **recipes**
+- **Recipe**
+  - An *identifier* with value `recipe`.
+  - A **string**, which we'll store in the recipe's `name`.
+  - An *open brace*
+  - A list of **properties**
+  - A *close brace*
+- **Property**
+  - An *identifier*, which we'll store in the property's `key`.
+  - An *equals* sign
+  - A **string**, which we'll store in the property's `value`.
+  - A *semicolon*
+- **String**
+  - A *quote*
+  - A *string content*, which we'll store as the string's `value`.
+  - A *quote*
+
+This example is obviously simplified and does not take all the possible edge cases into account, but it should give you a good idea of what our parser may look like.
+
+With this given lexer and parser, we can now parse our cookbook into a proper model.
+
+*Tegral Niwen* allows you to create a lexer and a parser using simple definitions that are close to what we used in the example here.
