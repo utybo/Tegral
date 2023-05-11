@@ -24,7 +24,7 @@ import guru.zoroark.tegral.niwen.parser.ParsingContext
  */
 class ExpectedLookahead<T>(
     private val lookaheadExpectations: List<Expectation<Nothing, *>>
-) : Expectation<T, Nothing>(null) {
+) : Expectation<T, Nothing>(null), HandlesTokenDrought {
     override fun matches(context: ParsingContext, index: Int): ExpectationResult<T> {
         val result = context.applyExpectations(index, lookaheadExpectations)
         return if (result is ExpectationResult.DidNotMatch) {

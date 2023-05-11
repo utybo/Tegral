@@ -36,7 +36,7 @@ import guru.zoroark.tegral.niwen.parser.TypeDescription
  * - For the first operand and the equals sign, a simple
  * [ExpectedToken]
  *
- * - For the right operand,  a `ExpectedNode(ExpressionNode)`.
+ * - For the right operand, an `ExpectedNode(ExpressionNode)`.
  *
  * This expectation is the main way of composing nodes.
  */

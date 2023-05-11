@@ -29,7 +29,7 @@ import guru.zoroark.tegral.niwen.parser.ParsingContext
  * @property branches The branches of this expectation. They are always
  * checked in the list's order.
  */
-class ExpectedEither<T>(private val branches: List<EitherBranch<T>>) : Expectation<T, Nothing>() {
+class ExpectedEither<T>(private val branches: List<EitherBranch<T>>) : Expectation<T, Nothing>(), HandlesTokenDrought {
     override fun matches(
         context: ParsingContext,
         index: Int
