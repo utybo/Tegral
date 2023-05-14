@@ -346,6 +346,8 @@ SomeNode {
 }
 ```
 
+Note that there is a lot of type checking going on here: the type of the storage key (here `SomeNode::someField`'s type ) must be compatible with the value it's fed with using what's on the left of `storeIn`. If you need to perform some form of transformation on the valaue to make it compatible with the key, consider using [`transform`](#transform)
+
 #### `storeIn self()`
 
 This is a special use case for `storeIn`. When dealing with sealed classes, you can use `by subtype()` on the parent class to be able to do things like this:

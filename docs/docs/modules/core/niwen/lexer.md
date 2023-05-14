@@ -197,8 +197,6 @@ anyOf(*myStrings)
 
 :::
 
-When `anyOf` only contains `String`, a special `StringSetTokenRecognizer` recognizer is created which has better.
-
 ### Regex with `matches` (R)
 
 You can use `matches` to recognize a sequence of characters using a regex pattern.
