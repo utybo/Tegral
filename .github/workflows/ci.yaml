@@ -136,7 +136,7 @@ jobs:
         run: ./gradlew :website:assembleFiles --build-cache -I ci/build-cache.init.gradle
 
       - name: Deploy to Vercel
-        uses: BetaHuhn/deploy-to-vercel-action@v1.9.1
+        uses: BetaHuhn/deploy-to-vercel-action@v1.9.12
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
