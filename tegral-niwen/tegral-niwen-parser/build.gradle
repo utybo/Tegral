@@ -11,7 +11,6 @@ dependencies {
     implementation libs.jackson.dataformats.yaml
 }
 
-// TODO
 ext.humanName = "Tegral Niwen Parser"
-ext.description = "Tegral Niwen Parser is an experimental parser library for Kotlin"
-ext.url = "https://tegral.zoroark.guru" // TODO
+ext.description = "Tegral Niwen Parser is an easy-to-use parser library for Kotlin"
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/niwen/parser"

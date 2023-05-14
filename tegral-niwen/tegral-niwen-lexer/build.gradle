@@ -6,7 +6,6 @@ dependencies {
     api project(":tegral-core")
 }
 
-// TODO
-ext.humanName = "Tegral Niwen"
-ext.description = "Tegral Niwen is an experimental lexer/parser library for Kotlin"
-ext.url = "https://tegral.zoroark.guru" // TODO
+ext.humanName = "Tegral Niwen Lexer"
+ext.description = "Tegral Niwen Lexer is an easy-to-use lexer library for Kotlin"
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/niwen/lexer"

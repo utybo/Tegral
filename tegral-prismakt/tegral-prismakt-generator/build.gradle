@@ -22,7 +22,6 @@ application {
     mainClass = "guru.zoroark.tegral.prismakt.generator.MainKt"
 }
 
-// TODO
-ext.humanName = "Tegral PrismaKt Generator"
-ext.description = "A handy companion for working with .openapi.kts files." // TODO
-ext.url = "https://tegral.zoroark.guru/docs/modules/core/openapi/cli" // TODO
+ext.humanName = "Tegral PrismaKT Generator"
+ext.description = "A Prisma generator for writing JetBrains Exposed tables & entities"
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/prismakt"
