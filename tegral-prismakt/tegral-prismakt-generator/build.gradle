@@ -25,3 +25,9 @@ application {
 ext.humanName = "Tegral PrismaKT Generator"
 ext.description = "A Prisma generator for writing JetBrains Exposed tables & entities"
 ext.url = "https://tegral.zoroark.guru/docs/modules/core/prismakt"
+
+jar {
+    manifest {
+        attributes.put("Main-Class", "guru.zoroark.tegral.prismakt.generator.MainKt")
+    }
+}

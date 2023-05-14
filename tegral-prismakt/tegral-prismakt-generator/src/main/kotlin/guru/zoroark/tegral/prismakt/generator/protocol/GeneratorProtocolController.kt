@@ -68,6 +68,6 @@ class GeneratorProtocolController(scope: InjectionScope) : GeneratorProtocolHand
             "dao" -> exposedDaoGenerator.generateModels(generationContext)
             else -> error("Unknown exposedTarget: \"$target\"")
         }
-        genericLogger.info(request.params.datasources.toString())
+        genericLogger.info("Done!")
     }
 }
