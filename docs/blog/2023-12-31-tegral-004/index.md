@@ -71,6 +71,117 @@ fun main() {
 
 Not only is this more concise, this is also much closer to Ktor's "module" concept, making it less confusing for those who are familiar with Ktor. This is *not* fully done yet, we're about a third of the way there. You can check out [this issue](https://github.com/utybo/Tegral/issues/65) to follow how it's going.
 
+## Tegral OpenAPI improvement
+
+### Set common operation properties in OpenAPI paths
+
+That title probably does not make any sense, so let's dig in a little:
+
+OpenAPI documents are made of paths (e.g. `/foo/bar`), which themselves contain operations (e.g. `GET`, which would make `GET /foo/bar`).
+
+Previously, you could only define operation attributes (descriptions, responses, headers, etc.) on the operation. That ended up being somewhat cumbersome as all operations in a single path tend to have some similar details (e.g. two operations under `/cat/{id}` will both have information on the `id` parameter).
+
+Moreover, as a @Ribesg pointed out [in a GitHub issue](https://github.com/utybo/Tegral/issues/59), that ended up making things like properly defining multiple operations on a single Ktor resource impossible. More specifically, Ktor resources provide an *operation* description while they actually really only represent *paths*. That meant that you could not define multiple descriptions for the same resource.
+
+You can now define properties that should be present on all operations of a path directly in the path. For example:
+
+```kotlin
+// Before
+"/cat/{id}" {
+    get {
+        description = "Get the cat with the given ID"
+
+        "id" pathParameter {
+            description = "The ID of the cat"
+            // ...
+        }
+    }
+
+    put {
+        description = "Update the cat with the given ID"
+
+        "id" pathParameter {
+            description = "The ID of the cat"
+            // ...
+        }
+    }
+
+    // ...
+}
+
+// After
+"/cat/{id}" {
+    "id" pathParameter {
+        "The ID of the cat"
+    }
+
+    get {
+        description = "Get the cat with the given ID"
+    }
+
+    put {
+        description = "Update the cat with the given ID"
+    }
+
+    // ...
+}
+```
+
+`describeResource` now accepts a `PathDsl` instead of an `OperationDsl`, and you can now do things like this:
+
+```kotlin
+@Serializable @Resource("/cat/{id}")
+class Cat(val id: Long) {
+    companion object : OpenApiDescription by describeResource({
+        "id" pathParameter {
+            description = "The ID of the cat"
+        }
+
+        get {
+            description = "Get the cat with the given ID"
+        }
+
+        put {
+            description = "Update the cat with the given ID"
+        }
+    })
+}
+```
+
+### Cascading OpenAPI descriptions for Ktor resources
+
+Ktor resources' descriptions will now *cascade*. Anything defined at the path level of an outer resource will be replicated in the inner resource, e.g.:
+
+```kotlin
+@Resource("/cat") @Serializable
+class Cat {
+    companion object : ResourceDescription by describeResource({
+        tags += "cat-api"
+    })
+
+    @Resource("/{id}") @Serializable
+    class WithId(val id: Int) {
+        companion object : ResourceDescription by describeResource({
+            // Inherits the tags += "cat-api"
+            "id" pathParameter {
+                description = "The ID of the thing"
+            }
+        })
+    }
+
+    @Resource("/owner")
+    @Serializable
+    class OwnerDetails(val parent: WithId) {
+        companion object : ResourceDescription by describeResource({
+            // Inherits the tags += "cat-api" as well as the "id" path parameter
+            get {
+                summary = "Retrieve the owner details of the cat"
+            }
+        })
+    }
+}
+```
+
 ## Updated dependencies
 
 We have a few updated dependencies in this release, but most importantly **Ktor was updated to verison 2.2.0**, which introduces some breaking changes. Refer to [their migration guide](https://ktor.io/docs/migrating-2-2.html) if you use:
