@@ -10,6 +10,14 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- `tegral-niwen` (`tegral-niwen-parser` and `tegral-niwen-lexer`)
+
+  - **Experimental** Initial release
+
+- `tegral-prismakt`
+
+  - **Experimental** Initial release
+
 - `tegral-di-core`
 
   - **Experimental** Added functional component definitions (fundefs).
@@ -56,22 +64,26 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 | Dependency | Old version | New version | Changelog(s) |
 | ---------- | ----------- | ----------- | ---------- |
-| Hoplite | 2.5.2 | 2.7.1 | [All](https://github.com/sksamuel/hoplite/blob/master/changelog.md) |
-| MockK | 1.12.5 | 1.13.4 | [1.12.6](https://github.com/mockk/mockk/releases/tag/1.12.6) [1.12.7](https://github.com/mockk/mockk/releases/tag/1.12.7) [1.12.8](https://github.com/mockk/mockk/releases/tag/v1.12.8) [1.13.1](https://github.com/mockk/mockk/releases/tag/1.13.1) [1.13.2](https://github.com/mockk/mockk/releases/tag/1.13.2) [1.13.3](https://github.com/mockk/mockk/releases/tag/1.13.3) [1.13.4](https://github.com/mockk/mockk/releases/tag/v1.13.4) |
-| Ktor | 2.1.0 | 2.2.3 | [2.1.x](https://ktor.io/changelog/2.1/) [2.2.x](https://ktor.io/changelog/2.2) |
-| Swagger Core | 2.2.2 | 2.2.8 | [2.2.3](https://github.com/swagger-api/swagger-core/releases/tag/v2.2.3) [2.2.4](https://github.com/swagger-api/swagger-core/releases/tag/v2.2.4) [2.2.5](https://github.com/swagger-api/swagger-core/releases/tag/v2.2.5) [2.2.6](https://github.com/swagger-api/swagger-core/releases/tag/v2.2.6) [2.2.7](https://github.com/swagger-api/swagger-core/releases/tag/v2.2.7) [2.2.8](https://github.com/swagger-api/swagger-core/releases/tag/v2.2.8)
-| Kotlin | 1.7.10 | 1.8.10 | [1.8 highlights](https://kotlinlang.org/docs/whatsnew18.html)
+| Clikt | 3.5.0 | 3.5.2 | [Changelog](https://github.com/ajalt/clikt/blob/master/CHANGELOG.md) |
+| Hoplite | 2.5.2 | 2.7.4 | [All](https://github.com/sksamuel/hoplite/blob/master/changelog.md) |
+| Jackson | 2.13.1 | 2.15.0 | [Releases](https://github.com/FasterXML/jackson/wiki/Jackson-Releases) |
 | JUnit | 5.9.0 | 5.9.2 | [All](https://junit.org/junit5/docs/5.9.2/release-notes/) |
-| Swagger UI | 4.13.2 | 4.15.5 | [4.14.0](https://github.com/swagger-api/swagger-ui/releases/tag/v4.14.0) [4.14.1](https://github.com/swagger-api/swagger-ui/releases/tag/v4.14.1) [4.14.2](https://github.com/swagger-api/swagger-ui/releases/tag/v4.14.2) [4.14.3](https://github.com/swagger-api/swagger-ui/releases/tag/v4.14.3) [4.15.0](https://github.com/swagger-api/swagger-ui/releases/tag/v4.15.0) [4.15.1](https://github.com/swagger-api/swagger-ui/releases/tag/v4.15.1) [4.15.2](https://github.com/swagger-api/swagger-ui/releases/tag/v4.15.2) [4.15.3](https://github.com/swagger-api/swagger-ui/releases/tag/v4.15.3) |
-| Logback | 1.2.11 | 1.4.5 | |
+| Kotlin | 1.7.10 | 1.8.21 | [1.8 highlights](https://kotlinlang.org/docs/whatsnew18.html) [All](https://github.com/JetBrains/kotlin/releases) |
+| Kotlin Coroutines | 1.6.4 | 1.7.1 | [All](https://github.com/Kotlin/kotlinx.coroutines/releases) |
+| Ktor | 2.1.0 | 2.3.0 | [2.1.x](https://ktor.io/changelog/2.1/) [2.2.x](https://ktor.io/changelog/2.2) [2.3.x](https://ktor.io/changelog/2.3/) |
+| Logback | 1.2.11 | 1.4.5 | [News](https://logback.qos.ch/news.html) |
+| MockK | 1.12.5 | 1.13.4 | [All](https://github.com/mockk/mockk/releases) |
+| SLF4J | 1.7.36 | 2.0.7 | [News](https://www.slf4j.org/news.html) |
+| Swagger Core | 2.2.2 | 2.2.9 | [All](https://github.com/swagger-api/swagger-core/releases) |
+| Swagger UI | 4.13.2 | 4.15.5 | [All](https://github.com/swagger-api/swagger-ui/releases) |
 
 - Dependency updates (tooling)
 
 | Dependency | Old version | New version | Changelog(s) |
 | ---------- | ----------- | ----------- | ---------- |
-| Gradle | 7.5 | 7.6 | [7.6](https://docs.gradle.org/current/release-notes.html) ] |
+| Gradle | 7.5 | 8.1.1 | [All](https://docs.gradle.org/current/release-notes.html) |
 | Detekt | 1.21.0 | 1.22.0 | [1.22.0](https://github.com/detekt/detekt/releases/tag/v1.22.0) |
-| Dokka | 1.7.10 | 1.7.20 | [1.7.20](https://github.com/Kotlin/dokka/releases/tag/v1.7.20)|
+| Dokka | 1.7.10 | 1.8.10 | [All](https://github.com/Kotlin/dokka/releases)|
 
 ## [0.0.3] - 2022-10-01
 
