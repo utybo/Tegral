@@ -27,6 +27,7 @@ sqlite = "3.41.0.0"
 testcontainers = "1.18.0"
 postgresql = "42.6.0"
 mysql = "8.0.33"
+lang3 = "3.12.0"
 
 [libraries]
 # Dependencies
@@ -99,6 +100,8 @@ testcontainers-junit = { module = "org.testcontainers:junit-jupiter", version.re
 
 sqlDrivers-mysql = { module = "com.mysql:mysql-connector-j", version.ref = "mysql" }
 sqlDrivers-postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+
+commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "lang3" }
 
 [plugins]
 

@@ -14,6 +14,8 @@ dependencies {
     implementation libs.exposed.jdbc
     implementation libs.exposed.javatime
     implementation libs.sqlite
+
+    testImplementation project(":tegral-prismakt:tegral-prismakt-generator-tests-support")
 }
 
 configurations {
@@ -43,13 +45,6 @@ tasks.register('runGeneratorInternal', JavaExec) {
     standardInput = System.in
 
     outputs.upToDateWhen { false }
-}
-
-tasks.register('prismaDbPush', NpxTask) {
-    command = "prisma"
-    args = ["db", "push", "--force-reset", "--skip-generate"]
-
-    // No inputs as this should never be considered as "up to date"
 }
 
 jacoco {

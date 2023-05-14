@@ -47,9 +47,8 @@ inline fun <reified T : Any> reflective(): ParserNodeDeclaration<T> = Reflective
  * Keys are mapped to the constructors' argument parameter names, and the first
  * match is used to initialize the class.
  *
- * This class supports classes with multiple constructors: just remember that
- * constructors are chosen exclusively based on parameter names, not typing.
- * TODO is that still true?
+ * This class supports classes with multiple constructors. Refer to the documentation for details on the selection
+ * algorithm.
  */
 class ReflectiveNodeDeclaration<T : Any>(
     private val tClass: KClass<T>
@@ -60,7 +59,6 @@ class ReflectiveNodeDeclaration<T : Any>(
 
     override fun make(args: TypeDescription<T>): T {
         val ctor = findValidConstructor(args.arguments)
-        // TODO Better error messages on reflection errors
         val callArgs = ctor.parameters
             .associateWith {
                 it.toKey() ?: throw NiwenParserException(
@@ -89,8 +87,7 @@ class ReflectiveNodeDeclaration<T : Any>(
 
     private fun findValidConstructor(arguments: Map<NodeParameterKey<T, *>, *>): KFunction<T> {
         val constructorsMatched = tClass.constructors.map { constructor ->
-            // All parameters have a value in the map (except for optional parameters)
-            // with a compatible type
+            // Check that all parameters have a value in the map (except for optional parameters) with a compatible type
             val firstInvalid: ConstructorResult.Invalid<T>? = constructor.parameters.firstNotNullOfOrNull { ctorParam ->
                 val ctorParamName = ctorParam.name
                     ?: return@firstNotNullOfOrNull ConstructorResult.Invalid(

@@ -2,14 +2,20 @@ import PackageVersions from '@site/src/components/PackageVersions';
 
 # Tegral Niwen
 
-Tegral Niwen (formerly known as [Lixy](https://github.com/utybo/Lixy) and [Pangoro](https://github.com/utybo/Pangoro)) is a framework for building lexers and parsers, with a large focus on ease of use.
+Tegral Niwen is a framework for building lexers and parsers, with a large focus on ease of use. This project was formerly known as [Lixy](https://github.com/utybo/Lixy) (for the lexer part) and [Pangoro](https://github.com/utybo/Pangoro) (for the parser part), see [here](#differences-with-lixy-and-pangoro) for more information.
 
 Tegral Niwen is subdivided into two separate libraries:
 
 - [Tegral Niwen Lexer](lexer.md), a framework for building lexers
 - [Tegral Niwen Parser](parser.md), a framework for building parsers
 
-You'll often need both of them, but are provided as separate dependencies just in case.
+```mermaid
+graph LR
+    string[String] -->|Niwen Lexer| tokens[Tokens]
+    tokens -->|Niwen Parser| model[Business Model, AST, ...]
+```
+
+You'll often need both, but are provided as separate dependencies just in case.
 
 <PackageVersions libraries={[
     { name: 'tegral-niwen-lexer', catalog: 'niwen.lexer' },
@@ -44,9 +50,7 @@ data class SumsDocument(val sums: List<Sum>) {
 
 Then, we'll define our *lexer tokens*. These represent the *lexemes* of what you're trying to parse, i.e. the simplest, abstractiest "particles" of your language. You'll usually have tokens for strings, numbers, for each operator, etc. They significantly simplify the parsing process but getting the exact details of "what character is that" out of the way.
 
-Tegral Niwen Lexer's lexers are built using the `niwenLexer` function. Niwen lexers support defining multiple states, which can be useful if you're trying to parse a language that has different "modes" (e.g. a language that has both a "code" mode and a "string" mode), but we won't be using it here.
-
-When defining our lexer, we use *recognizers* and *actions*. Recognizers recognize a sequence of characters and, if true, "match" and execute the actions. Actions can be to ignore the current character sequence, emit a token, etc.
+Tegral Niwen Lexer's lexers are built using the `niwenLexer` function. When defining our lexer, we use *recognizers* and *actions*. Recognizers recognize a sequence of characters and, if true, "match" and execute the actions. Actions can be to ignore the current character sequence, emit a token, etc.
 
 Here's our lexer:
 
@@ -67,9 +71,29 @@ val lexer = niwenLexer {
 }
 ```
 
+:::note What's this `state` thing?
+
+Niwen lexers are actually *multi-state* lexers. This means that you can define and switch between different states within your lexer. This can be useful if you're trying to parse a language that has different "modes", e.g. a language that has both a "code" mode and a "string" mode:
+
+```mermaid
+stateDiagram-v2
+    direction LR
+    defaultState: Default
+    inString: In string
+    escapeSequence: In escape sequence
+
+    [*] --> defaultState
+    defaultState --> inString: Quote
+    inString --> escapeSequence: Backslash
+    escapeSequence --> inString: Sequence finished
+    inString --> defaultState: Quote
+```
+
+:::
+
 Finally, we'll define our parser.
 
-```
+```kotlin
 val parser = niwenParser<SumsDocument> {
     SumsDocument root {
         repeated {
@@ -92,9 +116,12 @@ val parser = niwenParser<SumsDocument> {
         expect(Tokens.NUMBER) transform { it.toInt() } storeIn Number::value
     }
 }
+```
 
-// Finally, let's use all of that:
+And use our lexer and parser to parse something!
 
+```kotlin
+// We'll first call tokenize on our lexer to get the tokens...
 val tokens = lexer.tokenize(
     """
     1 + 2
@@ -104,6 +131,7 @@ val tokens = lexer.tokenize(
     555+666
     """.trimIndent()
 )
+// ...then call parse on the parser to get our final result!
 val result = parser.parse(tokens)
 /*
  * SumsDocument(
@@ -116,11 +144,25 @@ val result = parser.parse(tokens)
  */
 ```
 
+Now, this example is obviously not the best use case for something like Tegral Niwen, as you could easily manually create a lexer/parser for this language. But the main idea here is that you can easily scale your parser/lexer *up* from here and build even more features into your language!
+
+Want to find out more? Click [here for more information on lexers](lexer.md) or [here for more information on parsers](parser.md)
+
+## Side note: philosophy and background
+
+You may already know quite a few tools for building lexers and parsers, such as [ANTLR](https://www.antlr.org/) or [JFlex](https://jflex.de/). So, why should you use Tegral Niwen?
+
+The truth is that [I](https://github.com/utybo) made Tegral Niwen because I wanted to have a lexer/parser framework that was intuitive, easy to reason about and allowed me to create small projects, putting things like performance to the background.
+
+This means that Tegral Niwen is explicitly **not** built for the absolute best performance. It is primarily designed to be easy to use, and that is often at odds with performance. Or at least, in this case, it kind of is.
+
+I'd recommend using Tegral Niwen either for simple projects, prototyping or for situations where you can live with not having the best performance for your project. And once you do need that performance, you could always switch to a more performant tool -- Niwen is not holding you hostage and, thanks to its easy to understand DSL, it should be easy to reread your own model and translate it to another tool.
+
 ## Lexers and parsers 101
 
 Confused about what this is all about? Here's a tl;dr.
 
-From a very abstract perspective, when we think of parsing things, what we really want to do is turn a string of character into some usefuli model of our choice.
+From a very abstract perspective, when we think of parsing things, what we really want to do is turn a string of character into some useful model of our choice.
 
 Compilation of programming languages is an example of something like this: compilers take in files (which are inherently strings of characters) and output some form of executable format.[^1]
 
@@ -202,3 +244,29 @@ This example is obviously simplified and does not take all the possible edge cas
 With this given lexer and parser, we can now parse our cookbook into a proper model.
 
 *Tegral Niwen* allows you to create a lexer and a parser using simple definitions that are close to what we used in the example here.
+
+## Differences with Lixy and Pangoro
+
+Tegral Niwen Lexer and Parser have several differences compared to their original libraries, respectively Lixy and Pangoro:
+
+### Kotlin Multiplatform support was removed
+
+Kotlin Multiplatform Projects (MPP) support was removed. This allowed you to use Lixy/Pangoro with targets other than the JVM, such as Kotlin/JS or Kotlin/Native.
+
+Tegral is currently a JVM-only project and I preferred focusing on the existing JVM target first. There are currently no plans for reintroducing MPP support, but that is not definitive, please [open an issue](https://github.com/utybo/Tegral) describing your use case if you'd like to see MPP support for Tegral Niwen.
+
+### "Lixy" and "Pangoro" names dropped from class names
+
+Almost all the classes from both Lixy and Pangoro had "Lixy" or "Pangoro" in their name. This was removed in Tegral Niwen to make the classes easier to deal with.
+
+### PangoroNode interface was removed
+
+The `PangoroNode` interface, which allowed you to mark parser nodes as such, is no longer required and has been removed. It was mostly useless, and this removal can allow you to create models that were not originally planned for Pangoro/Niwen.
+
+### Type-safety in Pangoro's DSL
+
+Pangoro's DSL now features type-safety with `storeIn` and the likes. This means that, instead of `storeIn "someField"`, you must now use `storeIn MyModel::someField`. Most of the internals were reworked around this change.
+
+### Shorthand notations removed
+
+Shorthand notations (aka "Pangoro, the unreadable version") were removed.

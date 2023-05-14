@@ -19,7 +19,7 @@ import guru.zoroark.tegral.niwen.lexer.NiwenLexerException
 /**
  * A [StringSetTokenRecognizer] is a [TokenRecognizer] specifically
  * built to be able to recognize whether a substring of the input matches at a
- * relatively high sexpectedEitherd. The sexpectedEitherd improvements are mostly noticeable when the
+ * relatively high speed. The speed improvements are mostly noticeable when the
  * input consists of strings of characters of the same length.
  *
  * Internally, this recognizer uses a map from integers (length of strings to

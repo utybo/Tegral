@@ -53,6 +53,6 @@ dependencies {
 }
 
 tasks.named('check') {
-    dependsOn tasks.compositeCodeCoverage
+    dependsOn tasks.aggregatedCodeCoverage
 }
 

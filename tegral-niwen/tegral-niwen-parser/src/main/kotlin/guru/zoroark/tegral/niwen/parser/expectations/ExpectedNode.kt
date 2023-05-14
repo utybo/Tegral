@@ -55,12 +55,14 @@ class ExpectedNode<T, R>(
         return when (val result = context.applyExpectations(index, describedType.expectations)) {
             is Success<R> -> {
                 val value = describedType.type.make(TypeDescription(result.stored))
-                Success(
-                    stateCallback.createStoreMap(value),
-                    nextIndex = result.nextIndex,
-                    index to result.nextIndex,
-                    "Node matched successfully"
-                )
+                stateCallback.withStoreMap(value, index) { storeMap ->
+                    Success(
+                        storeMap,
+                        nextIndex = result.nextIndex,
+                        index to result.nextIndex,
+                        "Node matched successfully"
+                    )
+                }
             }
 
             is DidNotMatch -> DidNotMatch(result.message, result.atTokenIndex)

@@ -66,12 +66,14 @@ class ExpectedRepeated<T, R>(
                 currIndex
             )
 
-            else -> ExpectationResult.Success(
-                stateCallback.createStoreMap(valueAcc),
-                currIndex,
-                index to currIndex,
-                "Repeated $matchCount time(s)."
-            )
+            else -> stateCallback.withStoreMap(valueAcc, currIndex) { storeMap ->
+                ExpectationResult.Success(
+                    storeMap,
+                    currIndex,
+                    index to currIndex,
+                    "Repeated $matchCount time(s)."
+                )
+            }
         }
     }
 

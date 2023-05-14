@@ -4,4 +4,6 @@ plugins {
 
 dependencies {
     generator project(":tegral-prismakt:tegral-prismakt-generator")
+
+    testImplementation libs.commons.lang3
 }

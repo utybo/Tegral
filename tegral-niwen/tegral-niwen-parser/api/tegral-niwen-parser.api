@@ -82,22 +82,29 @@ public final class guru/zoroark/tegral/niwen/parser/ExpectationResult$Success : 
 public final class guru/zoroark/tegral/niwen/parser/NiwenParser {
 	public fun <init> (Ljava/util/List;Lguru/zoroark/tegral/niwen/parser/ParserNodeDeclaration;)V
 	public final fun parse (Ljava/util/List;)Ljava/lang/Object;
+	public final fun parseToResult (Ljava/util/List;Z)Lguru/zoroark/tegral/niwen/parser/NiwenParser$ParserResult;
 	public final fun parseWithDebugger (Ljava/util/List;)Lguru/zoroark/tegral/niwen/parser/NiwenParser$ParserResult;
 }
 
 public abstract class guru/zoroark/tegral/niwen/parser/NiwenParser$ParserResult {
 	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getDebuggerResult ()Ljava/lang/String;
+	public abstract fun orThrow ()Ljava/lang/Object;
 }
 
 public final class guru/zoroark/tegral/niwen/parser/NiwenParser$ParserResult$Failure : guru/zoroark/tegral/niwen/parser/NiwenParser$ParserResult {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun getReason ()Ljava/lang/String;
+	public synthetic fun orThrow ()Ljava/lang/Object;
+	public fun orThrow ()Ljava/lang/Void;
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class guru/zoroark/tegral/niwen/parser/NiwenParser$ParserResult$Success : guru/zoroark/tegral/niwen/parser/NiwenParser$ParserResult {
 	public fun <init> (Ljava/lang/Object;Ljava/lang/String;)V
 	public final fun getResult ()Ljava/lang/Object;
+	public fun orThrow ()Ljava/lang/Object;
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class guru/zoroark/tegral/niwen/parser/NiwenParserException : guru/zoroark/tegral/core/TegralException {
@@ -190,6 +197,10 @@ public final class guru/zoroark/tegral/niwen/parser/dsl/EitherBuilderKt {
 	public static final fun or (Lguru/zoroark/tegral/niwen/parser/dsl/EitherBuilder;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/niwen/parser/dsl/EitherBuilder;
 }
 
+public final class guru/zoroark/tegral/niwen/parser/dsl/EofBuilderKt {
+	public static final fun expectEof (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;)V
+}
+
 public abstract interface class guru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver {
 	public abstract fun plusAssign (Lguru/zoroark/tegral/core/Buildable;)V
 	public abstract fun unaryPlus (Lguru/zoroark/tegral/niwen/lexer/TokenType;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
@@ -262,13 +273,16 @@ public final class guru/zoroark/tegral/niwen/parser/dsl/OptionalBranchBuilderKt 
 }
 
 public final class guru/zoroark/tegral/niwen/parser/dsl/RepeatedBuilder : guru/zoroark/tegral/core/Buildable {
-	public fun <init> (Lguru/zoroark/tegral/niwen/parser/dsl/ItemExpectationBuilder;Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)V
+	public fun <init> (Ljava/lang/Integer;Ljava/lang/Integer;Lguru/zoroark/tegral/niwen/parser/dsl/ItemExpectationBuilder;Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)V
 	public fun build ()Lguru/zoroark/tegral/niwen/parser/expectations/ExpectedRepeated;
 	public synthetic fun build ()Ljava/lang/Object;
 }
 
 public final class guru/zoroark/tegral/niwen/parser/dsl/RepeatedBuilderKt {
-	public static final fun repeated (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+	public static final fun repeated (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Ljava/lang/Integer;Ljava/lang/Integer;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+	public static synthetic fun repeated$default (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Ljava/lang/Integer;Ljava/lang/Integer;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+	public static final fun repeatedIgnore (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Ljava/lang/Integer;Ljava/lang/Integer;Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
+	public static synthetic fun repeatedIgnore$default (Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationReceiver;Ljava/lang/Integer;Ljava/lang/Integer;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lguru/zoroark/tegral/niwen/parser/dsl/ExpectationStateCallbackBuilder;
 }
 
 public abstract interface class guru/zoroark/tegral/niwen/parser/dsl/StateCallbackBuilder {
@@ -309,7 +323,7 @@ public abstract class guru/zoroark/tegral/niwen/parser/expectations/Expectation 
 	public abstract fun matches (Lguru/zoroark/tegral/niwen/parser/ParsingContext;I)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
 }
 
-public final class guru/zoroark/tegral/niwen/parser/expectations/ExpectedEither : guru/zoroark/tegral/niwen/parser/expectations/Expectation {
+public final class guru/zoroark/tegral/niwen/parser/expectations/ExpectedEither : guru/zoroark/tegral/niwen/parser/expectations/Expectation, guru/zoroark/tegral/niwen/parser/expectations/HandlesTokenDrought {
 	public fun <init> (Ljava/util/List;)V
 	public fun getTitle ()Ljava/lang/String;
 	public fun matches (Lguru/zoroark/tegral/niwen/parser/ParsingContext;I)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
@@ -321,7 +335,13 @@ public final class guru/zoroark/tegral/niwen/parser/expectations/ExpectedEmitCon
 	public fun matches (Lguru/zoroark/tegral/niwen/parser/ParsingContext;I)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
 }
 
-public final class guru/zoroark/tegral/niwen/parser/expectations/ExpectedLookahead : guru/zoroark/tegral/niwen/parser/expectations/Expectation {
+public final class guru/zoroark/tegral/niwen/parser/expectations/ExpectedEof : guru/zoroark/tegral/niwen/parser/expectations/Expectation, guru/zoroark/tegral/niwen/parser/expectations/HandlesTokenDrought {
+	public fun <init> ()V
+	public fun getTitle ()Ljava/lang/String;
+	public fun matches (Lguru/zoroark/tegral/niwen/parser/ParsingContext;I)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
+}
+
+public final class guru/zoroark/tegral/niwen/parser/expectations/ExpectedLookahead : guru/zoroark/tegral/niwen/parser/expectations/Expectation, guru/zoroark/tegral/niwen/parser/expectations/HandlesTokenDrought {
 	public fun <init> (Ljava/util/List;)V
 	public fun getTitle ()Ljava/lang/String;
 	public fun matches (Lguru/zoroark/tegral/niwen/parser/ParsingContext;I)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
@@ -341,7 +361,7 @@ public final class guru/zoroark/tegral/niwen/parser/expectations/ExpectedOptiona
 }
 
 public final class guru/zoroark/tegral/niwen/parser/expectations/ExpectedRepeated : guru/zoroark/tegral/niwen/parser/expectations/Expectation, guru/zoroark/tegral/niwen/parser/expectations/HandlesTokenDrought {
-	public fun <init> (Ljava/util/List;Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)V
+	public fun <init> (Ljava/lang/Integer;Ljava/lang/Integer;Ljava/util/List;Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;)V
 	public fun getTitle ()Ljava/lang/String;
 	public fun matches (Lguru/zoroark/tegral/niwen/parser/ParsingContext;I)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
 }
@@ -395,6 +415,7 @@ public abstract interface class guru/zoroark/tegral/niwen/parser/expectations/St
 
 public final class guru/zoroark/tegral/niwen/parser/expectations/StateCallbackKt {
 	public static final fun createStoreMap (Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;Ljava/lang/Object;)Ljava/util/Map;
+	public static final fun withStoreMap (Lguru/zoroark/tegral/niwen/parser/expectations/StateCallback;Ljava/lang/Object;ILkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/niwen/parser/ExpectationResult;
 }
 
 public final class guru/zoroark/tegral/niwen/parser/expectations/StoreStateCallback : guru/zoroark/tegral/niwen/parser/expectations/StateCallback {

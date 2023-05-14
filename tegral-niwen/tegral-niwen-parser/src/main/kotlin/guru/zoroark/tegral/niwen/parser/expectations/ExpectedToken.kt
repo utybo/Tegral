@@ -49,16 +49,18 @@ class ExpectedToken<T>(
     ): ExpectationResult<T> = with(context) {
         val token = tokens[index]
         if (token.tokenType == tokenType && (withValue == null || withValue == token.string)) {
-            return ExpectationResult.Success(
-                stateCallback.createStoreMap(token.string),
-                index + 1,
-                index to index + 1,
-                if (withValue == null) {
-                    "Token '${token.string}' is of correct type ${token.tokenType}"
-                } else {
-                    "Token '${token.string}' is of correct type ${token.tokenType} and has correct 'withValue'"
-                }
-            )
+            return stateCallback.withStoreMap(token.string, index) { storeMap ->
+                ExpectationResult.Success(
+                    storeMap,
+                    index + 1,
+                    index to index + 1,
+                    if (withValue == null) {
+                        "Token '${token.string}' is of correct type ${token.tokenType}"
+                    } else {
+                        "Token '${token.string}' is of correct type ${token.tokenType} and has correct 'withValue'"
+                    }
+                )
+            }
         }
         return ExpectationResult.DidNotMatch(
             if (withValue == null) {

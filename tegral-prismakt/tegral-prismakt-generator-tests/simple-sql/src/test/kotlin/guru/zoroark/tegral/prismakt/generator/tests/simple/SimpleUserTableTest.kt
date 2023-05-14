@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.prismakt.generator.tests.simple
 
+import guru.zoroark.tegral.prismakt.generator.tests.prismaDbPush
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -40,14 +41,7 @@ fun withDb(block: suspend Database.() -> Unit) {
 class SimpleSqlUserTableTest {
     @BeforeEach
     fun resetDb() {
-        val res = ProcessBuilder()
-            .apply {
-                command("gradle", "prismaDbPush")
-                inheritIO()
-            }
-            .start()
-            .waitFor()
-        require(res == 0) { "'prisma db push' failed" }
+        prismaDbPush(null)
     }
 
     @Test

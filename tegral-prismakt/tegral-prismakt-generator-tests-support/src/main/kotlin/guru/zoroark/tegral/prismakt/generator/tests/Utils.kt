@@ -12,19 +12,19 @@
  * limitations under the License.
  */
 
-package guru.zoroark.tegral.niwen.lexer
+package guru.zoroark.tegral.prismakt.generator.tests
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import org.apache.commons.lang3.SystemUtils.IS_OS_WINDOWS
 
-class GenericTokenTypeTest {
-    @Test
-    fun `toString call`() {
-        assertEquals("GenericTokenType[myName]", tokenType("myName").toString())
-    }
-
-    @Test
-    fun `getName call`() {
-        assertEquals("myName", tokenType("myName").name)
-    }
+fun prismaDbPush(connectionUrl: String?) {
+    val res = ProcessBuilder()
+        .apply {
+            val npx = if (IS_OS_WINDOWS) "npx.cmd" else "npx"
+            command(npx, "prisma", "db", "push", "--force-reset", "--skip-generate")
+            if (connectionUrl != null) environment()["DATABASE_URL"] = connectionUrl
+            inheritIO()
+        }
+        .start()
+        .waitFor()
+    require(res == 0) { "'prisma db push' failed" }
 }

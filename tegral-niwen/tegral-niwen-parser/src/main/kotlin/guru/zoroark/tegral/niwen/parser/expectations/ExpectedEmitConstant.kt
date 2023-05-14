@@ -28,12 +28,9 @@ class ExpectedEmitConstant<T, R>(
     stateCallback: StateCallback<T, R, *>?
 ) : Expectation<T, R>(stateCallback), HandlesTokenDrought {
     override fun matches(context: ParsingContext, index: Int): ExpectationResult<T> {
-        return ExpectationResult.Success(
-            stateCallback.createStoreMap(value),
-            index,
-            index to index,
-            "Emitted value $value"
-        )
+        return stateCallback.withStoreMap(value, index) {
+            ExpectationResult.Success(it, index, index to index, "Emitted value $value")
+        }
     }
 
     override val title: String = "emit($value)"

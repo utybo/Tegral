@@ -104,7 +104,7 @@ class ComposeStateCallbacks<T, R, U, V>(
  * If `this` is `null`, an empty map is returned.
  *
  * **Note:** May throw any exception since [StateCallback.reduceState] can itself throw any exception. Consider wrapping
- * use of `createStoreMap` with `runCatching`.
+ * use of `createStoreMap` with `runCatching`, e.g. use [withStoreMap] instead.
  *
  * @see withStoreMap Wraps [createStoreMap] with error-handling for producing [ExpectationResult]s
  */

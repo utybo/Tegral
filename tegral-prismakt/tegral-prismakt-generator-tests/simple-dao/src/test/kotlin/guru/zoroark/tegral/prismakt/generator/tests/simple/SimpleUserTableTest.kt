@@ -14,13 +14,12 @@
 
 package guru.zoroark.tegral.prismakt.generator.tests.simple
 
+import guru.zoroark.tegral.prismakt.generator.tests.prismaDbPush
 import kotlinx.coroutines.runBlocking
-import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteAll
 import org.jetbrains.exposed.sql.insertAndGetId
-import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.junit.jupiter.api.BeforeEach
@@ -29,12 +28,6 @@ import prismakt.generated.DaoUserTable
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
-
-object TableThing : IntIdTable() {
-    val bruh = bool("bruh")
-    val bruhh = long("bruhh")
-    val bruhhh = datetime("bruhhh")
-}
 
 fun withDb(block: suspend Database.() -> Unit) {
     val db = Database.connect("jdbc:sqlite:prisma/dev.db", "org.sqlite.JDBC")
@@ -50,14 +43,7 @@ fun withDb(block: suspend Database.() -> Unit) {
 class SimpleUserTableTest {
     @BeforeEach
     fun resetDb() {
-        val res = ProcessBuilder()
-            .apply {
-                command("gradle", "prismaDbPush")
-                inheritIO()
-            }
-            .start()
-            .waitFor()
-        require(res == 0) { "'prisma db push' failed" }
+        prismaDbPush(null)
     }
 
     @Test

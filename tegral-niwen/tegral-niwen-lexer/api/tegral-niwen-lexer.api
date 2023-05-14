@@ -63,8 +63,6 @@ public final class guru/zoroark/tegral/niwen/lexer/MatchedMatcherBuilder : guru/
 	public fun <init> (Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;Lguru/zoroark/tegral/niwen/lexer/TokenType;)V
 	public fun build ()Lguru/zoroark/tegral/niwen/lexer/matchers/TokenMatcher;
 	public synthetic fun build ()Ljava/lang/Object;
-	public final fun getMatchesToTokenType ()Lguru/zoroark/tegral/niwen/lexer/TokenType;
-	public final fun setMatchesToTokenType (Lguru/zoroark/tegral/niwen/lexer/TokenType;)V
 }
 
 public class guru/zoroark/tegral/niwen/lexer/NiwenLexerException : guru/zoroark/tegral/core/TegralException {
@@ -118,8 +116,6 @@ public abstract class guru/zoroark/tegral/niwen/lexer/TokenMatcherBuilder : guru
 	public fun <init> (Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;)V
 	public final fun getBaseRecognizer ()Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;
 	protected final fun getNextStateBehavior ()Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;
-	public final fun setBaseRecognizer (Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;)V
-	protected final fun setNextStateBehavior (Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;)V
 	public final fun thenState (Lguru/zoroark/tegral/niwen/lexer/StateBuilder$Default;)V
 	public final fun thenState (Lguru/zoroark/tegral/niwen/lexer/StateLabel;)V
 }

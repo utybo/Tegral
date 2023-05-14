@@ -24,8 +24,7 @@ import kotlin.reflect.typeOf
 /**
  * Class for a full parser that is ready to parse a chain of tokens.
  *
- * @param T The type of the *root node*, the node at the root of the abstract
- * syntax tree
+ * @param T The type of the *root node*, the node at the root of the resulting model.
  *
  * @param types List of described types that will be used for the parsing
  * process. Each entry describes a type of node that can be encountered in the
@@ -54,6 +53,10 @@ class NiwenParser<T>(
         }
     }
 
+    /**
+     * Parse this token list to a [ParserResult]. Whether debugging is enabled or not is controlled by the
+     * [enableDebugger] parameter.
+     */
     fun parseToResult(tokens: List<Token>, enableDebugger: Boolean): ParserResult<T> {
         val context = ParsingContext(tokens, typeMap, if (enableDebugger) BranchSeeker() else null)
         val result = rootExpectation.matches(context, 0)
@@ -105,7 +108,7 @@ class NiwenParser<T>(
         class Success<T>(val result: T, debuggerResult: String) : ParserResult<T>(debuggerResult) {
             override fun orThrow() = result
 
-            override fun toString(): String = "ParserResult.Success(result = ${result})"
+            override fun toString(): String = "ParserResult.Success(result = $result)"
         }
 
         /**
@@ -119,6 +122,9 @@ class NiwenParser<T>(
             override fun toString(): String = "ParserResult.Failure(reason = $reason)"
         }
 
+        /**
+         * Return the object wrapped by this
+         */
         abstract fun orThrow(): T
     }
 

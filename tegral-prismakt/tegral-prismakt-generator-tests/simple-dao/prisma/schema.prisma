@@ -2,7 +2,6 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator prismakt {
-  // provider = "node prisma/launch-prismakt-generator.js"
   provider      = "gradle --console=plain -q runGeneratorInternal"
   output        = "../build/prismaGeneratedSrc"
   exposedTarget = "dao"
