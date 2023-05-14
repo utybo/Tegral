@@ -135,20 +135,10 @@ jobs:
       - name: Assemble website files
         run: ./gradlew :website:assembleFiles --build-cache -I ci/build-cache.init.gradle
 
-      - name: Deploy to Vercel
-        uses: BetaHuhn/deploy-to-vercel-action@v1.9.12
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-          WORKING_DIRECTORY: "website/build/output"
-          PR_LABELS: "false"
-          PRODUCTION: "${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}"
-
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v2.0.0
         with:
+          production-deploy: "${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}"
           publish-dir: "website/build/output"
           github-token: ${{ secrets.GITHUB_TOKEN }}
           enable-pull-request-comment: true
@@ -158,7 +148,7 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        timeout-minutes: 1
+        timeout-minutes: 5
 
   publish-snapshot:
     name: Publish snapshot
