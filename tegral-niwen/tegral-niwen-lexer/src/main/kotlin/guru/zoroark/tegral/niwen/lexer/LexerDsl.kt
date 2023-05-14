@@ -25,7 +25,7 @@ import guru.zoroark.tegral.niwen.lexer.matchers.TokenMatcher
 /**
  * URL to the documentation of Niwen Lexer
  */
-internal const val NIWEN_LEXER_DOCS = "tegral.zoroark.guru" // TODO
+internal const val NIWEN_LEXER_DOCS = "https://tegral.zoroark.guru/docs/modules/core/niwen/lexer"
 
 /**
  * Creates a [Lexer] object using the Niwen Lexer DSL, where [body] receives

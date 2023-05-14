@@ -90,7 +90,7 @@ private fun resolveAccurateIntType(attributes: List<PAttribute>): ScalarTypeWith
         "Integer" -> ScalarType.TInt.accurate()
         "Int" -> ScalarType.TInt.accurate()
         "UnsignedInt" -> ScalarType.TUInt.accurate()
-        "Oid" -> ScalarType.TInt.inaccurate("No accurate 'Oid' representation available, using Int") // TODO
+        "Oid" -> ScalarType.TInt.inaccurate("No accurate 'Oid' representation available, using Int")
         "TinyInt" -> ScalarType.TByte.accurate()
         "UnsignedTinyInt" -> ScalarType.TUByte.accurate()
         "MediumInt" -> ScalarType.TInt.inaccurate(
@@ -101,8 +101,8 @@ private fun resolveAccurateIntType(attributes: List<PAttribute>): ScalarTypeWith
             "There are no exact representations of 3-byte unsigned numbers in Kotlin"
         )
 
-        "Year" -> ScalarType.TInt.inaccurate("No accurate 'Year' representation available, using Int") // TODO
-        "Bit" -> ScalarType.TInt.inaccurate("No accurate 'Bit' representation available, using Int") // TODO
+        "Year" -> ScalarType.TInt.inaccurate("No accurate 'Year' representation available, using Int")
+        "Bit" -> ScalarType.TInt.inaccurate("No accurate 'Bit' representation available, using Int")
         else -> ScalarType.TInt.inaccurate("'@db.$name' is unknown")
     }
 }
@@ -168,7 +168,7 @@ private fun resolveAccurateDecimalType(fieldName: String, attributes: List<PAttr
     val contextInfo = "$fieldName @${attribute.name}"
     return when (name) {
         "Decimal" -> ScalarType.TDecimal(
-            argAsInt(contextInfo, attribute.params[0]) to argAsInt(contextInfo, attribute.params[1]), // TODO
+            argAsInt(contextInfo, attribute.params[0]) to argAsInt(contextInfo, attribute.params[1]),
         ).accurate()
         // TODO money
         else -> ScalarType.TDecimal(null).inaccurate("'@db.$name' is unknown")
