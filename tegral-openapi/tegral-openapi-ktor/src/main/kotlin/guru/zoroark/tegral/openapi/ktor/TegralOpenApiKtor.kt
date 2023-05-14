@@ -83,7 +83,7 @@ class TegralOpenApiKtor {
     }
 
     /**
-     * Register an OpenAPI operation from a path, HTTP method and operation builder.
+     * Register an OpenAPI operation from a path, HTTP method and operation builder block.
      *
      * This function will *not* apply hooks, you should apply hooks yourself by calling [getHooksForRoute] and applying
      * them.
@@ -96,6 +96,14 @@ class TegralOpenApiKtor {
         }
     }
 
+    /**
+     * Register an OpenAPI operation from a path, HTTP method and operation builder.
+     *
+     * This function will *not* apply hooks, you should apply hooks yourself by calling [getHooksForRoute] and applying
+     * them.
+     *
+     * You should use [describe] instead of this function.
+     */
     fun registerOperation(path: String, method: HttpMethod, operationBuilder: OperationBuilder) {
         builder.apply {
             operation(path, method, operationBuilder)

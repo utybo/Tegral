@@ -255,7 +255,6 @@ class PathsBuilderTest {
                 }
                 "around" queryParameter {
                     description = "and"
-
                 }
                 get {
                     // ...

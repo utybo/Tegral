@@ -1,8 +1,9 @@
-public final class guru/zoroark/tegral/openapi/ktor/resources/OpenApiKtorResourcesKt {
-	public static final fun describeResource (Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/openapi/ktor/resources/ResourceDescription;
-}
-
 public abstract interface class guru/zoroark/tegral/openapi/ktor/resources/ResourceDescription {
 	public abstract fun getOpenApi ()Lkotlin/jvm/functions/Function1;
+}
+
+public final class guru/zoroark/tegral/openapi/ktor/resources/ResourceDescriptionKt {
+	public static final fun describeResource (Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/openapi/ktor/resources/ResourceDescription;
+	public static final fun descriptionFromResource (Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function1;)Lkotlin/jvm/functions/Function2;
 }
 

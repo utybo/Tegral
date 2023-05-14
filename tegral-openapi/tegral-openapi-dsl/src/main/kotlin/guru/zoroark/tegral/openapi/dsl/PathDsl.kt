@@ -127,6 +127,7 @@ private const val WRITE_ONLY_ERROR_MSG =
 /**
  * Builder for [PathDsl]
  */
+@Suppress("TooManyFunctions")
 class PathBuilder(
     private val context: OpenApiDslContext
 ) : PathDsl,
