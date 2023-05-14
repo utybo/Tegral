@@ -32,6 +32,11 @@ jobs:
           distribution: "temurin"
           java-version: "11"
 
+      # Required for PrismaKT tests (which call npx prisma)
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
