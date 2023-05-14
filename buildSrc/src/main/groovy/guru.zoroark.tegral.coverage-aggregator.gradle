@@ -92,4 +92,9 @@ tasks.register("aggregatedCodeCoverage", JacocoReport) {
     executionData(configurations.aggregatedProjectsExecData)
     sourceDirectories.from(configurations.aggregatedProjectsSources)
     classDirectories.from(configurations.aggregatedProjectsClasses)
+
+    reports {
+        html.required = true
+        xml.required = true
+    }
 }
