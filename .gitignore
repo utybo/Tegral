@@ -6,3 +6,4 @@ bin
 .idea
 !.idea/icon.png
 .sgp
+dev.db

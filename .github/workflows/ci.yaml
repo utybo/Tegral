@@ -32,6 +32,11 @@ jobs:
           distribution: "temurin"
           java-version: "11"
 
+      # Required for PrismaKT tests (which call npx prisma)
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
@@ -41,7 +46,7 @@ jobs:
       - name: Upload code coverage to CodeCov
         uses: codecov/codecov-action@v3
         with:
-          files: "code-coverage/build/reports/jacoco/testCodeCoverageReport/testCodeCoverageReport.xml"
+          files: "code-coverage/build/reports/jacoco/aggregatedCodeCoverage/aggregatedCodeCoverage.xml"
 
   check-examples:
     name: "Check examples"

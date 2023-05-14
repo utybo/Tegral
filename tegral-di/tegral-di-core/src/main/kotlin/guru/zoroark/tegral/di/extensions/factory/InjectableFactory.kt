@@ -64,6 +64,7 @@ class FactoryResolver<T : Any>(private val makerIdentifier: Identifier<Injectabl
                     "determine the requesting object."
             )
         }
+        @Suppress("UNCHECKED_CAST")
         val maker =
             (components[makerIdentifier]!! as IdentifierResolver<InjectableFactory<T>>).resolve(requester, components)
         return maker.make(requester)

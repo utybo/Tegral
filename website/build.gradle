@@ -26,7 +26,7 @@ task rewriteDokkaLinks(type: Copy) {
 
     from(rootProject.layout.buildDirectory.dir("dokka/htmlMultiModule")) {
         filesMatching(["index.html"]) {
-            filter { line -> 
+            filter { line ->
                 line.replaceAll("href=\"", "href=\"/dokka/")
                     .replaceAll("src=\"", "src=\"/dokka/")
                     .replaceAll("pathToRoot = \"\"", "pathToRoot = \"/dokka\"")

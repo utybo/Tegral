@@ -1,0 +1,11 @@
+public final class guru/zoroark/tegral/utils/logtools/MinimalistLogs : ch/qos/logback/core/LayoutBase {
+	public fun <init> ()V
+	public fun doLayout (Lch/qos/logback/classic/spi/ILoggingEvent;)Ljava/lang/String;
+	public synthetic fun doLayout (Ljava/lang/Object;)Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/utils/logtools/MinimalistLogsKt {
+	public static final fun applyMinimalistLoggingOverrides (Lch/qos/logback/classic/Level;)V
+	public static synthetic fun applyMinimalistLoggingOverrides$default (Lch/qos/logback/classic/Level;ILjava/lang/Object;)V
+}
+

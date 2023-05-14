@@ -1,5 +1,5 @@
 [tegral.web]
-port = 8080
+port = 8081
 
 [tegral.logging.loggers."tegral.web.appdsl.stats"]
 level = "Debug"

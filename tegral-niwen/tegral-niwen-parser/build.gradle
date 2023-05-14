@@ -1,0 +1,16 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-published-library-conventions'
+}
+
+dependencies {
+    api project(":tegral-core")
+    api project(":tegral-niwen:tegral-niwen-lexer")
+    api libs.kotlin.reflect
+
+    implementation libs.jackson.kotlin
+    implementation libs.jackson.dataformats.yaml
+}
+
+ext.humanName = "Tegral Niwen Parser"
+ext.description = "Tegral Niwen Parser is an easy-to-use parser library for Kotlin"
+ext.url = "https://tegral.zoroark.guru/docs/modules/core/niwen/parser"

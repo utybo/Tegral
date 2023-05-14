@@ -14,6 +14,7 @@
 
 package guru.zoroark.tegral.openapi.cli
 
+import ch.qos.logback.classic.Level
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.ProgramResult
 import com.github.ajalt.clikt.parameters.arguments.argument
@@ -26,6 +27,7 @@ import guru.zoroark.tegral.openapi.dsl.OpenApiVersion
 import guru.zoroark.tegral.openapi.dsl.toJson
 import guru.zoroark.tegral.openapi.dsl.toYaml
 import guru.zoroark.tegral.openapi.scripthost.OpenApiScriptHost
+import guru.zoroark.tegral.utils.logtools.applyMinimalistLoggingOverrides
 import io.swagger.v3.oas.models.OpenAPI
 import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
@@ -81,7 +83,7 @@ class TegralOpenApiCli(fileSystem: FileSystem = FileSystems.getDefault()) : Clik
     private val logger = LoggerFactory.getLogger("openapi.dump")
 
     override fun run() {
-        applyMinimalistLoggingOverrides(quiet = quiet)
+        applyMinimalistLoggingOverrides(if (quiet) Level.OFF else Level.INFO)
         val openapi = runBlocking { OpenApiScriptHost.compileScript(file, logger::info) }
         val compileLogger = LoggerFactory.getLogger("compiler")
         openapi.reports.forEach {

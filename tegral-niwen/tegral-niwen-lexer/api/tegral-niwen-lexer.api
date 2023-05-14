@@ -1,0 +1,240 @@
+public final class guru/zoroark/tegral/niwen/lexer/GenericStateLabel : guru/zoroark/tegral/niwen/lexer/StateLabel {
+	public fun <init> ()V
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/GenericTokenType : guru/zoroark/tegral/niwen/lexer/TokenType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getName ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/IgnoringMatcherBuilder : guru/zoroark/tegral/niwen/lexer/TokenMatcherBuilder {
+	public fun <init> (Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;)V
+	public fun build ()Lguru/zoroark/tegral/niwen/lexer/matchers/TokenMatcher;
+	public synthetic fun build ()Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/Lexer {
+	public fun <init> (Ljava/util/Map;Lguru/zoroark/tegral/niwen/lexer/StateLabel;)V
+	public synthetic fun <init> (Ljava/util/Map;Lguru/zoroark/tegral/niwen/lexer/StateLabel;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy (Ljava/util/Map;Lguru/zoroark/tegral/niwen/lexer/StateLabel;)Lguru/zoroark/tegral/niwen/lexer/Lexer;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/niwen/lexer/Lexer;Ljava/util/Map;Lguru/zoroark/tegral/niwen/lexer/StateLabel;ILjava/lang/Object;)Lguru/zoroark/tegral/niwen/lexer/Lexer;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDefaultState ()Lguru/zoroark/tegral/niwen/lexer/LexerState;
+	public final fun getState (Lguru/zoroark/tegral/niwen/lexer/StateLabel;)Lguru/zoroark/tegral/niwen/lexer/LexerState;
+	public final fun getStatesCount ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public final fun tokenize (Ljava/lang/String;)Ljava/util/List;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/LexerBuilder : guru/zoroark/tegral/core/Buildable {
+	public fun <init> ()V
+	public fun build ()Lguru/zoroark/tegral/niwen/lexer/Lexer;
+	public synthetic fun build ()Ljava/lang/Object;
+	public final fun getDefault ()Lguru/zoroark/tegral/niwen/lexer/LexerBuilder$StateInfixCreator;
+	public final fun state (Lguru/zoroark/tegral/niwen/lexer/StateLabel;Lkotlin/jvm/functions/Function1;)V
+	public final fun state (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/LexerBuilder$StateInfixCreator {
+	public final fun state (Lguru/zoroark/tegral/niwen/lexer/StateLabel;)V
+	public final fun state (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/LexerDslKt {
+	public static final fun matcher (Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;Lkotlin/jvm/functions/Function2;)Lguru/zoroark/tegral/niwen/lexer/matchers/TokenMatcher;
+	public static synthetic fun matcher$default (Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lguru/zoroark/tegral/niwen/lexer/matchers/TokenMatcher;
+	public static final fun niwenLexer (Lkotlin/jvm/functions/Function1;)Lguru/zoroark/tegral/niwen/lexer/Lexer;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/LexerState {
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lguru/zoroark/tegral/niwen/lexer/LexerState;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/niwen/lexer/LexerState;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/niwen/lexer/LexerState;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMatchers ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/MatchedMatcherBuilder : guru/zoroark/tegral/niwen/lexer/TokenMatcherBuilder {
+	public fun <init> (Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;Lguru/zoroark/tegral/niwen/lexer/TokenType;)V
+	public fun build ()Lguru/zoroark/tegral/niwen/lexer/matchers/TokenMatcher;
+	public synthetic fun build ()Ljava/lang/Object;
+}
+
+public class guru/zoroark/tegral/niwen/lexer/NiwenLexerException : guru/zoroark/tegral/core/TegralException {
+	public fun <init> (Ljava/lang/String;Ljava/lang/Exception;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Exception;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/NiwenLexerNoMatchException : guru/zoroark/tegral/niwen/lexer/NiwenLexerException {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/StateBuilder : guru/zoroark/tegral/core/Buildable {
+	public fun <init> ()V
+	public fun build ()Lguru/zoroark/tegral/niwen/lexer/LexerState;
+	public synthetic fun build ()Ljava/lang/Object;
+	public final fun getDefault ()Lguru/zoroark/tegral/niwen/lexer/StateBuilder$Default;
+	public final fun getIgnore (Ljava/lang/Object;)Lguru/zoroark/tegral/niwen/lexer/IgnoringMatcherBuilder;
+	public final fun isToken (Ljava/lang/Object;Lguru/zoroark/tegral/niwen/lexer/TokenType;)Lguru/zoroark/tegral/niwen/lexer/MatchedMatcherBuilder;
+	public final fun unaryPlus (Lguru/zoroark/tegral/niwen/lexer/matchers/TokenMatcher;)V
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/StateBuilder$Default {
+	public static final field INSTANCE Lguru/zoroark/tegral/niwen/lexer/StateBuilder$Default;
+}
+
+public abstract interface class guru/zoroark/tegral/niwen/lexer/StateLabel {
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/StateLabelKt {
+	public static final fun stateLabel ()Lguru/zoroark/tegral/niwen/lexer/GenericStateLabel;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/Token {
+	public fun <init> (Ljava/lang/String;IILguru/zoroark/tegral/niwen/lexer/TokenType;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun component4 ()Lguru/zoroark/tegral/niwen/lexer/TokenType;
+	public final fun copy (Ljava/lang/String;IILguru/zoroark/tegral/niwen/lexer/TokenType;)Lguru/zoroark/tegral/niwen/lexer/Token;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/niwen/lexer/Token;Ljava/lang/String;IILguru/zoroark/tegral/niwen/lexer/TokenType;ILjava/lang/Object;)Lguru/zoroark/tegral/niwen/lexer/Token;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEndsAt ()I
+	public final fun getStartsAt ()I
+	public final fun getString ()Ljava/lang/String;
+	public final fun getTokenType ()Lguru/zoroark/tegral/niwen/lexer/TokenType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class guru/zoroark/tegral/niwen/lexer/TokenMatcherBuilder : guru/zoroark/tegral/core/Buildable {
+	public fun <init> (Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;)V
+	public final fun getBaseRecognizer ()Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;
+	protected final fun getNextStateBehavior ()Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;
+	public final fun thenState (Lguru/zoroark/tegral/niwen/lexer/StateBuilder$Default;)V
+	public final fun thenState (Lguru/zoroark/tegral/niwen/lexer/StateLabel;)V
+}
+
+public abstract interface class guru/zoroark/tegral/niwen/lexer/TokenType {
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/TokenTypeKt {
+	public static final fun tokenType (Ljava/lang/String;)Lguru/zoroark/tegral/niwen/lexer/GenericTokenType;
+	public static synthetic fun tokenType$default (Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/niwen/lexer/GenericTokenType;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/CharRangeTokenRecognizer : guru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer {
+	public fun <init> (Lkotlin/ranges/ClosedRange;)V
+	public final fun getDetectedCharRange ()Lkotlin/ranges/ClosedRange;
+	public fun recognize (Ljava/lang/String;I)Lkotlin/Pair;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/GoToDefaultState : guru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior {
+	public static final field INSTANCE Lguru/zoroark/tegral/niwen/lexer/matchers/GoToDefaultState;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/GoToLabeledState : guru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior {
+	public fun <init> (Lguru/zoroark/tegral/niwen/lexer/StateLabel;)V
+	public final fun getStateLabel ()Lguru/zoroark/tegral/niwen/lexer/StateLabel;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/IgnoreMatchResult : guru/zoroark/tegral/niwen/lexer/matchers/MatcherResult {
+	public fun <init> (ILguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;)V
+	public final fun getNextStateBehavior ()Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;
+	public final fun getTokenEndsAt ()I
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/MatchedTokenResult : guru/zoroark/tegral/niwen/lexer/matchers/MatcherResult {
+	public fun <init> (Lguru/zoroark/tegral/niwen/lexer/Token;Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;)V
+	public final fun getNextStateBehavior ()Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;
+	public final fun getToken ()Lguru/zoroark/tegral/niwen/lexer/Token;
+}
+
+public abstract class guru/zoroark/tegral/niwen/lexer/matchers/MatcherResult {
+}
+
+public abstract class guru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior {
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/NoMatchResult : guru/zoroark/tegral/niwen/lexer/matchers/MatcherResult {
+	public static final field INSTANCE Lguru/zoroark/tegral/niwen/lexer/matchers/NoMatchResult;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/NoStateChange : guru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior {
+	public static final field INSTANCE Lguru/zoroark/tegral/niwen/lexer/matchers/NoStateChange;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/RegexPatternRecognizer : guru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer {
+	public fun <init> (Ljava/util/regex/Pattern;)V
+	public fun recognize (Ljava/lang/String;I)Lkotlin/Pair;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/RegexPatternRecognizerKt {
+	public static final fun matches (Lguru/zoroark/tegral/niwen/lexer/StateBuilder;Ljava/lang/String;)Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/RepeatedRecognizer : guru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer {
+	public fun <init> (Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;ILjava/lang/Integer;)V
+	public synthetic fun <init> (Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;ILjava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getBaseRecognizer ()Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;
+	public final fun getMax ()Ljava/lang/Integer;
+	public final fun getMin ()I
+	public fun recognize (Ljava/lang/String;I)Lkotlin/Pair;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/RepeatedRecognizerKt {
+	public static final fun getRepeated (Ljava/lang/Object;)Lguru/zoroark/tegral/niwen/lexer/matchers/RepeatedRecognizer;
+	public static final fun repeated (Ljava/lang/Object;ILjava/lang/Integer;)Lguru/zoroark/tegral/niwen/lexer/matchers/RepeatedRecognizer;
+	public static synthetic fun repeated$default (Ljava/lang/Object;ILjava/lang/Integer;ILjava/lang/Object;)Lguru/zoroark/tegral/niwen/lexer/matchers/RepeatedRecognizer;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/StringRecognizer : guru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getToRecognize ()Ljava/lang/String;
+	public fun recognize (Ljava/lang/String;I)Lkotlin/Pair;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/StringSetTokenRecognizer : guru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer {
+	public fun <init> (Ljava/util/List;)V
+	public fun recognize (Ljava/lang/String;I)Lkotlin/Pair;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/StringSetTokenRecognizerKt {
+	public static final fun anyOf ([Ljava/lang/String;)Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;
+}
+
+public abstract class guru/zoroark/tegral/niwen/lexer/matchers/TokenMatcher {
+	public fun <init> ()V
+	public fun <init> (Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;)V
+	public synthetic fun <init> (Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	protected final fun getNextStateBehavior ()Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;
+	public abstract fun match (Ljava/lang/String;I)Lguru/zoroark/tegral/niwen/lexer/matchers/MatcherResult;
+}
+
+public abstract interface class guru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer {
+	public abstract fun recognize (Ljava/lang/String;I)Lkotlin/Pair;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizerIgnored : guru/zoroark/tegral/niwen/lexer/matchers/TokenMatcher {
+	public fun <init> (Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;)V
+	public final fun getRecognizer ()Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;
+	public fun match (Ljava/lang/String;I)Lguru/zoroark/tegral/niwen/lexer/matchers/MatcherResult;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizerKt {
+	public static final fun toRecognizer (Ljava/lang/Object;)Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;
+}
+
+public final class guru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizerMatched : guru/zoroark/tegral/niwen/lexer/matchers/TokenMatcher {
+	public fun <init> (Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;Lguru/zoroark/tegral/niwen/lexer/TokenType;Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;)V
+	public synthetic fun <init> (Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;Lguru/zoroark/tegral/niwen/lexer/TokenType;Lguru/zoroark/tegral/niwen/lexer/matchers/NextStateBehavior;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getRecognizer ()Lguru/zoroark/tegral/niwen/lexer/matchers/TokenRecognizer;
+	public final fun getTokenType ()Lguru/zoroark/tegral/niwen/lexer/TokenType;
+	public fun match (Ljava/lang/String;I)Lguru/zoroark/tegral/niwen/lexer/matchers/MatcherResult;
+}
+

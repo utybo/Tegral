@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation project(":tegral-openapi:tegral-openapi-scripthost")
+    implementation project(":tegral-utils:tegral-utils-logtools")
     implementation libs.clikt
     implementation libs.kotlin.coroutines
     implementation libs.logback

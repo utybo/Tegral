@@ -8,13 +8,75 @@ authors:
     url: https://github.com/utybo
     image_url: https://github.com/utybo.png
 tags: [release]
-# image: 
+image: steel-scaffolding-g85ea1a499_1280.jpg
 draft: true
 ---
 
-Long time no see! Welcome to the release notes for Tegral 0.0.4!
+Long time no see! Welcome to the release notes for Tegral 0.0.4! This release introduces a Prisma generator, a new parsing and lexing framework and much more!
 
 <!-- truncate -->
+
+![A picture taken from the bottom of a transmission tower](steel-scaffolding-g85ea1a499_1280.jpg)
+
+## Experimental: Tegral PrismaKT
+
+Tegral PrismaKT is a new module that allows you to create [JetBrains Exposed](https://github.com/jetbrains/exposed) tables and entities from your [Prisma](https://prisma.io) schema!
+
+This allows you to use the powerful Prisma toolkit with your Kotlin projects, and is an exciting first step towards integrating data-layer solutions to Tegral Web.
+
+![Screenshot of the console output of PrismaKT](2023-05-14-17-06-18.png)
+
+This is very much a work in progress, but most of the technical base has been implemented. We'll be able to move quite fast and add all kinds of features to this new module. Check [this issue](https://github.com/utybo/Tegral/issues/81) for more information!
+
+## Tegral Niwen
+
+Tegral Niwen is a parsing and lexing framework with a focus on ease of use and ability to quickly prototype stuff.
+
+```kotlin
+// ------ Lexer
+
+enum class Tokens {
+    NUMBER,
+    PLUS
+}
+
+val lexer = niwenLexer {
+    state {
+        matches("[\\d+]") isToken Tokens.NUMBER
+        '+' isToken Tokens.PLUS
+        ' '.ignore
+    }
+}
+
+// ------ Parser
+
+data class PNumber(val value: Int) {
+    companion object : ParserNodeDeclaration<PNumber> by reflective()
+}
+
+data class PSum(val left: PNumber, val right: PNumber) {
+    companion object : ParserNodeDeclaration<PSum> by reflective()
+}
+
+val parser = niwenParser {
+    PSum root {
+        expect(PNumber) storeIn PNumber::left
+        expect(Tokens.PLUS)
+        expect(PNumber) storeIn PNumber::right
+    }
+
+    PNumber {
+        expect(Tokens.NUMBER) transform { it.toInt() } storeIn PNumber::value
+    }
+}
+
+parser.parse(lexer.tokenize("1 + 2"))
+// == PSum(PNumber(1), PNumber(2))
+```
+
+Tegral Niwen is the evolution of [Pangoro](https://github.com/utybo/Pangoro) and [Lixy](https://github.com/utybo/Lixy), two of my previous personal projects. Niwen is signficiantly better in several ways (such as better documentation, better type-safety in the parser, better error handling, etc.) and is also much more flexible.
+
+PrismaKT actually uses it under the hood to re-parse your Prisma schema for more accurate typing!
 
 ## Optional configuration in Tegral Web
 
@@ -22,7 +84,7 @@ When using Tegral Web, you previously had to always specify a configuration file
 
 ## Experimental: Fundefs in Tegral DI
 
-Fundefs allow you to define components as functions. Previously, you could only define components as classes that use properties to inject dependencies. Fundefs allow you to define components as functions. Here's a simple example:
+Fundefs allow you to define components as functions. Previously, you could only define components as classes that use properties to inject dependencies. Fundefs lift this restriction and allow you to use regular function parameters as injected things. Here's a simple example:
 
 ```kotlin
 class Greeter {
@@ -69,7 +131,7 @@ fun main() {
 }
 ```
 
-Not only is this more concise, this is also much closer to Ktor's "module" concept, making it less confusing for those who are familiar with Ktor. This is *not* fully done yet, we're about a third of the way there. You can check out [this issue](https://github.com/utybo/Tegral/issues/65) to follow how it's going.
+Not only is this more concise, this is also much closer to Ktor's "module" concept, making it less confusing for those who are familiar with Ktor. This is _not_ fully done yet, we're about a third of the way there. You can check out [this issue](https://github.com/utybo/Tegral/issues/65) to follow how it's going.
 
 ## Tegral OpenAPI improvement
 
@@ -184,7 +246,7 @@ class Cat {
 
 ## Updated dependencies
 
-We have a few updated dependencies in this release, but most importantly **Ktor was updated to verison 2.2.0**, which introduces some breaking changes. Refer to [their migration guide](https://ktor.io/docs/migrating-2-2.html) if you use:
+We have a few updated dependencies in this release, but most importantly **Ktor was updated to verison 2.3.0** from version 2.1.x, and version 2.2.0 introduced some breaking changes. Refer to [their migration guide](https://ktor.io/docs/migrating-2-2.html) if you use:
 
 - Cookie response configuration
 - `call.request.origin.host` or `port`
@@ -192,16 +254,20 @@ We have a few updated dependencies in this release, but most importantly **Ktor 
 
 Here's the full list of upgrades:
 
-| Dependency   | Version change   |
-| ------------ | ---------------- |
-| Hoplite      | 2.5.2 -> 2.7.1   |
-| MockK        | 1.12.5 -> 1.13.4 |
-| Ktor         | 2.1.0 -> 2.2.3   |
-| Swagger Core | 2.2.2 -> 2.2.8   |
-| Kotlin       | 1.7.10 -> 1.8.10 |
-| JUnit        | 5.9.0 -> 5.9.2   |
-| Swagger UI   | 4.13.2 -> 4.15.5 |
-| Logback      | 1.2.11 -> 1.4.5  |
+| Dependency        | Version change   |
+| ----------------- | ---------------- |
+| Clikt             | 3.5.0 -> 3.5.2   |
+| Hoplite           | 2.5.2 -> 2.7.4   |
+| Jackson           | 2.13.1 -> 2.15.0 |
+| JUnit             | 5.9.0 -> 5.9.2   |
+| Kotlin            | 1.7.10 -> 1.8.21 |
+| Kotlin Coroutines | 1.6.4 -> 1.7.1   |
+| Ktor              | 2.1.0 -> 2.3.0   |
+| Logback           | 1.2.11 -> 1.4.5  |
+| MockK             | 1.12.5 -> 1.13.4 |
+| SLF4J             | 1.7.36 -> 2.0.7  |
+| Swagger Core      | 2.2.2 -> 2.2.9   |
+| Swagger UI        | 4.13.2 -> 4.15.5 |
 
 ## Misc. changes
 

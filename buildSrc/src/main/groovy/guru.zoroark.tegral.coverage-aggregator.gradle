@@ -1,0 +1,100 @@
+plugins {
+    id 'jacoco'
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    aggregatedProjects {
+        canBeResolved false
+        canBeConsumed false
+    }
+
+    aggregatedProjectsExecData {
+        canBeResolved true
+        canBeConsumed false
+        transitive false
+
+        extendsFrom(aggregatedProjects)
+
+        attributes {
+            attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.VERIFICATION))
+            attribute(VerificationType.VERIFICATION_TYPE_ATTRIBUTE, objects.named(VerificationType, VerificationType.JACOCO_RESULTS))
+        }
+    }
+
+    aggregatedProjectsSources {
+        canBeResolved true
+        canBeConsumed false
+        transitive false
+
+        extendsFrom(aggregatedProjects)
+
+        attributes {
+            attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling, Bundling.EXTERNAL))
+            attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.VERIFICATION))
+            attribute(VerificationType.VERIFICATION_TYPE_ATTRIBUTE, objects.named(VerificationType, VerificationType.MAIN_SOURCES))
+        }
+    }
+
+    aggregatedProjectsClasses {
+        canBeResolved true
+        canBeConsumed false
+        transitive false
+
+        extendsFrom(aggregatedProjects)
+
+        attributes {
+            attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements, LibraryElements.CLASSES))
+        }
+    }
+
+    compositeReportExecData {
+        canBeConsumed true
+        canBeResolved false
+        extendsFrom configurations.aggregatedProjectsExecData
+
+        attributes {
+            attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.VERIFICATION))
+            attribute(VerificationType.VERIFICATION_TYPE_ATTRIBUTE, objects.named(VerificationType, VerificationType.JACOCO_RESULTS))
+        }
+    }
+
+    compositeReportSources {
+        canBeConsumed true
+        canBeResolved false
+
+        extendsFrom configurations.aggregatedProjectsSources
+
+        attributes {
+            attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling, Bundling.EXTERNAL))
+            attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.VERIFICATION))
+            attribute(VerificationType.VERIFICATION_TYPE_ATTRIBUTE, objects.named(VerificationType, VerificationType.MAIN_SOURCES))
+        }
+    }
+
+    compositeReportSources {
+        canBeConsumed true
+        canBeResolved false
+
+        extendsFrom configurations.aggregatedProjectsClasses
+
+        attributes {
+            attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements, LibraryElements.CLASSES))
+        }
+    }
+}
+
+
+tasks.register("aggregatedCodeCoverage", JacocoReport) {
+    executionData(configurations.aggregatedProjectsExecData)
+    sourceDirectories.from(configurations.aggregatedProjectsSources)
+    classDirectories.from(configurations.aggregatedProjectsClasses)
+
+    reports {
+        html.required = true
+        xml.required = true
+    }
+}

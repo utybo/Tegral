@@ -1,0 +1,98 @@
+plugins {
+    id 'guru.zoroark.tegral.kotlin-common-conventions'
+
+    id 'com.github.node-gradle.node'
+
+    id 'jacoco'
+
+    id 'project-report'
+}
+
+dependencies {
+    implementation libs.exposed.core
+    implementation libs.exposed.dao
+    implementation libs.exposed.jdbc
+    implementation libs.exposed.javatime
+    implementation libs.sqlite
+
+    testImplementation project(":tegral-prismakt:tegral-prismakt-generator-tests-support")
+}
+
+configurations {
+    generator
+}
+
+sourceSets {
+    main {
+        kotlin {
+            srcDir layout.buildDirectory.dir("prismaGeneratedSrc")
+        }
+    }
+}
+
+tasks.register('prismaGenerate', NpxTask) {
+    command = "prisma"
+    args = ["generate"]
+
+    inputs.file("prisma/schema.prisma")
+    inputs.files(configurations.generator)
+    outputs.dir(project.layout.buildDirectory.dir("prismakt-generator"))
+}
+
+tasks.register('runGeneratorInternal', JavaExec) {
+    mainClass = "guru.zoroark.tegral.prismakt.generator.MainKt"
+    classpath = configurations.generator
+    standardInput = System.in
+
+    outputs.upToDateWhen { false }
+}
+
+jacoco {
+    applyTo runGeneratorInternal
+}
+
+tasks.register('generatorCodeCoverage', JacocoReport) {
+    executionData runGeneratorInternal
+    sourceSets sourceSets.main
+
+    dependsOn(tasks.prismaGenerate)
+}
+
+configurations {
+    generatorCodeCoverageOutput {
+        canBeConsumed = true
+        canBeResolved = false
+
+        extendsFrom configurations.coverageDataElementsForTest
+
+        attributes {
+            attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.VERIFICATION))
+            attribute(VerificationType.VERIFICATION_TYPE_ATTRIBUTE, objects.named(VerificationType, VerificationType.JACOCO_RESULTS))
+        }
+    }
+}
+
+artifacts {
+    generatorCodeCoverageOutput(((JacocoReport)tasks.generatorCodeCoverage).getExecutionData().getFiles()) {
+        builtBy(prismaGenerate)
+    }
+}
+
+tasks.compileKotlin.dependsOn prismaGenerate
+tasks.compileTestKotlin.dependsOn prismaGenerate
+
+license {
+    exclude "prismakt/generated/*.kt"
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}

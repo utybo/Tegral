@@ -5,6 +5,7 @@ plugins {
     id 'io.gitlab.arturbosch.detekt'
 
     id 'java-library'
+    id 'jacoco'
 }
 
 repositories {
@@ -30,12 +31,6 @@ testing {
             // Use JUnit Jupiter test framework
             useJUnitJupiter()
         }
-    }
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
-    kotlinOptions {
-        jvmTarget = "11"
     }
 }
 

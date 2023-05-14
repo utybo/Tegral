@@ -1,0 +1,1498 @@
+public final class guru/zoroark/tegral/prismakt/generator/ExecutionContext {
+	public fun <init> (Z)V
+	public final fun component1 ()Z
+	public final fun copy (Z)Lguru/zoroark/tegral/prismakt/generator/ExecutionContext;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/ExecutionContext;ZILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/ExecutionContext;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEnableParsingDebug ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/MainKt {
+	public static final fun main ()V
+	public static synthetic fun main ([Ljava/lang/String;)V
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ExposedDaoGenerator : guru/zoroark/tegral/prismakt/generator/generators/ModelGenerator {
+	public fun <init> (Lguru/zoroark/tegral/di/environment/InjectionScope;)V
+	public fun generateModels (Lguru/zoroark/tegral/prismakt/generator/generators/GeneratorContext;)V
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ExposedSqlGenerator : guru/zoroark/tegral/prismakt/generator/generators/ModelGenerator {
+	public fun <init> ()V
+	public fun generateModels (Lguru/zoroark/tegral/prismakt/generator/generators/GeneratorContext;)V
+	public final fun generateTypeSpec (Lguru/zoroark/tegral/prismakt/generator/protocol/Model;Lguru/zoroark/tegral/prismakt/generator/generators/GeneratorContext;)Lcom/squareup/kotlinpoet/TypeSpec;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/GeneratorContext {
+	public fun <init> (Ljava/nio/file/Path;Lguru/zoroark/tegral/prismakt/generator/protocol/Datamodel;Lguru/zoroark/tegral/prismakt/generator/parser/PRoot;)V
+	public final fun getDatamodel ()Lguru/zoroark/tegral/prismakt/generator/protocol/Datamodel;
+	public final fun getOutputDir ()Ljava/nio/file/Path;
+	public final fun getRawParsingResult ()Lguru/zoroark/tegral/prismakt/generator/parser/PRoot;
+}
+
+public abstract interface class guru/zoroark/tegral/prismakt/generator/generators/ModelGenerator {
+	public abstract fun generateModels (Lguru/zoroark/tegral/prismakt/generator/generators/GeneratorContext;)V
+}
+
+public abstract class guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TBinary : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public fun <init> (Ljava/lang/Integer;)V
+	public final fun component1 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/Integer;)Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TBinary;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TBinary;Ljava/lang/Integer;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TBinary;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMaxSize ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TBoolean : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TBoolean;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TByte : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TByte;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TChar : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public fun <init> (I)V
+	public final fun component1 ()I
+	public final fun copy (I)Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TChar;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TChar;IILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TChar;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getN ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TDecimal : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TDecimal$Companion;
+	public fun <init> (Lkotlin/Pair;)V
+	public final fun copy (Lkotlin/Pair;)Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TDecimal;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TDecimal;Lkotlin/Pair;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TDecimal;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPrecisionAndScale (Z)Lkotlin/Pair;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TDecimal$Companion {
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TDouble : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TDouble;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TFloat : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TFloat;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TInstant : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TInstant;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TInt : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TInt;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TLocalDate : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TLocalDate;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TLocalDateTime : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TLocalDateTime;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TLocalTime : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TLocalTime;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TLong : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TLong;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TLongText : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TLongText;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TMediumText : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TMediumText;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TShort : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TShort;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TString : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TString;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TText : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TText;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TUByte : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TUByte;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TUInt : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TUInt;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TULong : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TULong;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TUShort : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TUShort;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TUuid : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TUuid;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarType$TVarChar : guru/zoroark/tegral/prismakt/generator/generators/ScalarType {
+	public fun <init> (I)V
+	public final fun component1 ()I
+	public final fun copy (I)Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TVarChar;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TVarChar;IILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType$TVarChar;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getN ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarTypeKt {
+	public static final fun accurate (Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType;)Lguru/zoroark/tegral/prismakt/generator/generators/ScalarTypeWithAccuracy;
+	public static final fun inaccurate (Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType;Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/generators/ScalarTypeWithAccuracy;
+	public static final fun nativeTypeToScalarType (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/generators/ScalarTypeWithAccuracy;
+}
+
+public abstract class guru/zoroark/tegral/prismakt/generator/generators/ScalarTypeWithAccuracy {
+	public abstract fun getType ()Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarTypeWithAccuracy$Accurate : guru/zoroark/tegral/prismakt/generator/generators/ScalarTypeWithAccuracy {
+	public fun <init> (Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType;)V
+	public final fun component1 ()Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType;
+	public final fun copy (Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType;)Lguru/zoroark/tegral/prismakt/generator/generators/ScalarTypeWithAccuracy$Accurate;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/generators/ScalarTypeWithAccuracy$Accurate;Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/generators/ScalarTypeWithAccuracy$Accurate;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getType ()Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/generators/ScalarTypeWithAccuracy$Inaccurate : guru/zoroark/tegral/prismakt/generator/generators/ScalarTypeWithAccuracy {
+	public fun <init> (Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType;Ljava/lang/String;)V
+	public final fun component1 ()Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType;Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/generators/ScalarTypeWithAccuracy$Inaccurate;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/generators/ScalarTypeWithAccuracy$Inaccurate;Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/generators/ScalarTypeWithAccuracy$Inaccurate;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getInaccuracyReason ()Ljava/lang/String;
+	public fun getType ()Lguru/zoroark/tegral/prismakt/generator/generators/ScalarType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/NiwenPrism {
+	public static final field INSTANCE Lguru/zoroark/tegral/prismakt/generator/parser/NiwenPrism;
+	public final fun parse (Ljava/util/List;)Lguru/zoroark/tegral/niwen/parser/NiwenParser$ParserResult;
+	public final fun parseDebug (Ljava/util/List;)Lguru/zoroark/tegral/niwen/parser/NiwenParser$ParserResult;
+	public final fun tokenize (Ljava/lang/String;)Ljava/util/List;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/NiwenPrismParser {
+	public fun <init> ()V
+	public final fun parseOrNull (Ljava/nio/file/Path;Z)Lguru/zoroark/tegral/prismakt/generator/parser/PRoot;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PArgBare : guru/zoroark/tegral/prismakt/generator/parser/PArgument {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PArgBare$Companion;
+	public fun <init> (Lguru/zoroark/tegral/prismakt/generator/parser/PExpression;)V
+	public final fun component1 ()Lguru/zoroark/tegral/prismakt/generator/parser/PExpression;
+	public final fun copy (Lguru/zoroark/tegral/prismakt/generator/parser/PExpression;)Lguru/zoroark/tegral/prismakt/generator/parser/PArgBare;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PArgBare;Lguru/zoroark/tegral/prismakt/generator/parser/PExpression;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PArgBare;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getExpr ()Lguru/zoroark/tegral/prismakt/generator/parser/PExpression;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PArgBare$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PArgBare;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PArgNamed : guru/zoroark/tegral/prismakt/generator/parser/PArgument {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PArgNamed$Companion;
+	public fun <init> (Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/parser/PExpression;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lguru/zoroark/tegral/prismakt/generator/parser/PExpression;
+	public final fun copy (Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/parser/PExpression;)Lguru/zoroark/tegral/prismakt/generator/parser/PArgNamed;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PArgNamed;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/parser/PExpression;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PArgNamed;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getExpr ()Lguru/zoroark/tegral/prismakt/generator/parser/PExpression;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PArgNamed$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PArgNamed;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PArgsList {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PArgsList$Companion;
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/parser/PArgsList;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PArgsList;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PArgsList;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getArgs ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PArgsList$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PArgsList;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public abstract class guru/zoroark/tegral/prismakt/generator/parser/PArgument {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PArgument$Companion;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PArgument$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PArgument;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PAttribute {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PAttribute$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Z)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/util/List;Z)Lguru/zoroark/tegral/prismakt/generator/parser/PAttribute;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PAttribute;Ljava/lang/String;Ljava/util/List;ZILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PAttribute;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Ljava/lang/String;
+	public final fun getParams ()Ljava/util/List;
+	public fun hashCode ()I
+	public final fun isBlockAttribute ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PAttribute$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PAttribute;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PDatasource : guru/zoroark/tegral/prismakt/generator/parser/PRootElement {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PDatasource$Companion;
+	public fun <init> (Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/parser/PPropertySet;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lguru/zoroark/tegral/prismakt/generator/parser/PPropertySet;
+	public final fun copy (Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/parser/PPropertySet;)Lguru/zoroark/tegral/prismakt/generator/parser/PDatasource;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PDatasource;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/parser/PPropertySet;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PDatasource;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Ljava/lang/String;
+	public final fun getProperties ()Lguru/zoroark/tegral/prismakt/generator/parser/PPropertySet;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PDatasource$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PDatasource;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PEnum : guru/zoroark/tegral/prismakt/generator/parser/PRootElement {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PEnum$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/parser/PEnum;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PEnum;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PEnum;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEnumName ()Ljava/lang/String;
+	public final fun getEnumTypes ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PEnum$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PEnum;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PEnv : guru/zoroark/tegral/prismakt/generator/parser/PValueOrEnv {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PEnv$Companion;
+	public fun <init> (Lguru/zoroark/tegral/prismakt/generator/parser/PString;)V
+	public final fun component1 ()Lguru/zoroark/tegral/prismakt/generator/parser/PString;
+	public final fun copy (Lguru/zoroark/tegral/prismakt/generator/parser/PString;)Lguru/zoroark/tegral/prismakt/generator/parser/PEnv;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PEnv;Lguru/zoroark/tegral/prismakt/generator/parser/PString;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PEnv;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEnv ()Lguru/zoroark/tegral/prismakt/generator/parser/PString;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PEnv$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PEnv;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PExpArray : guru/zoroark/tegral/prismakt/generator/parser/PExpression {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PExpArray$Companion;
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpArray;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PExpArray;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpArray;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValues ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PExpArray$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpArray;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PExpFunCall : guru/zoroark/tegral/prismakt/generator/parser/PExpression {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PExpFunCall$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpFunCall;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PExpFunCall;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpFunCall;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getArgsList ()Ljava/util/List;
+	public final fun getFunctionName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PExpFunCall$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpFunCall;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PExpReference : guru/zoroark/tegral/prismakt/generator/parser/PExpression {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PExpReference$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpReference;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PExpReference;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpReference;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getRef ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PExpReference$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpReference;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public abstract class guru/zoroark/tegral/prismakt/generator/parser/PExpValue : guru/zoroark/tegral/prismakt/generator/parser/PExpression {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PExpValue$Companion;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PExpValue$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpValue;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PExpValueInt : guru/zoroark/tegral/prismakt/generator/parser/PExpValue {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PExpValueInt$Companion;
+	public fun <init> (I)V
+	public final fun component1 ()I
+	public final fun copy (I)Lguru/zoroark/tegral/prismakt/generator/parser/PExpValueInt;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PExpValueInt;IILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpValueInt;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PExpValueInt$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpValueInt;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PExpValueString : guru/zoroark/tegral/prismakt/generator/parser/PExpValue {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PExpValueString$Companion;
+	public fun <init> (Lguru/zoroark/tegral/prismakt/generator/parser/PString;)V
+	public final fun component1 ()Lguru/zoroark/tegral/prismakt/generator/parser/PString;
+	public final fun copy (Lguru/zoroark/tegral/prismakt/generator/parser/PString;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpValueString;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PExpValueString;Lguru/zoroark/tegral/prismakt/generator/parser/PString;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpValueString;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lguru/zoroark/tegral/prismakt/generator/parser/PString;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PExpValueString$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpValueString;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public abstract class guru/zoroark/tegral/prismakt/generator/parser/PExpression {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PExpression$Companion;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PExpression$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PExpression;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PField {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PField$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZZLjava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Z
+	public final fun component4 ()Z
+	public final fun component5 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;ZZLjava/util/List;)Lguru/zoroark/tegral/prismakt/generator/parser/PField;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PField;Ljava/lang/String;Ljava/lang/String;ZZLjava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PField;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAttributes ()Ljava/util/List;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getType ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isArray ()Z
+	public final fun isOptional ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PField$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PField;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PGenerator : guru/zoroark/tegral/prismakt/generator/parser/PRootElement {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PGenerator$Companion;
+	public fun <init> (Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/parser/PPropertySet;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lguru/zoroark/tegral/prismakt/generator/parser/PPropertySet;
+	public final fun copy (Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/parser/PPropertySet;)Lguru/zoroark/tegral/prismakt/generator/parser/PGenerator;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PGenerator;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/parser/PPropertySet;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PGenerator;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Ljava/lang/String;
+	public final fun getProperties ()Lguru/zoroark/tegral/prismakt/generator/parser/PPropertySet;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PGenerator$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PGenerator;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PModel : guru/zoroark/tegral/prismakt/generator/parser/PRootElement {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PModel$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/parser/PModel;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PModel;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PModel;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFields ()Ljava/util/List;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PModel$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PModel;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PProperty {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PProperty$Companion;
+	public fun <init> (Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/parser/PValueOrEnv;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lguru/zoroark/tegral/prismakt/generator/parser/PValueOrEnv;
+	public final fun copy (Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/parser/PValueOrEnv;)Lguru/zoroark/tegral/prismakt/generator/parser/PProperty;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PProperty;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/parser/PValueOrEnv;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PProperty;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Ljava/lang/String;
+	public final fun getValue ()Lguru/zoroark/tegral/prismakt/generator/parser/PValueOrEnv;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PProperty$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PProperty;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PPropertySet {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PPropertySet$Companion;
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/parser/PPropertySet;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PPropertySet;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PPropertySet;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getProperties ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PPropertySet$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PPropertySet;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PRoot {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PRoot$Companion;
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/parser/PRoot;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PRoot;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PRoot;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getElements ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PRoot$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PRoot;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public abstract class guru/zoroark/tegral/prismakt/generator/parser/PRootElement {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PRootElement$Companion;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PRootElement$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PRootElement;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PString {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PString$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/parser/PString;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PString;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PString;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getString ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PString$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public final fun getParts ()Lguru/zoroark/tegral/niwen/parser/expectations/NodeParameterKey;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PString;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PValue : guru/zoroark/tegral/prismakt/generator/parser/PValueOrEnv {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PValue$Companion;
+	public fun <init> (Lguru/zoroark/tegral/prismakt/generator/parser/PString;)V
+	public final fun component1 ()Lguru/zoroark/tegral/prismakt/generator/parser/PString;
+	public final fun copy (Lguru/zoroark/tegral/prismakt/generator/parser/PString;)Lguru/zoroark/tegral/prismakt/generator/parser/PValue;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/parser/PValue;Lguru/zoroark/tegral/prismakt/generator/parser/PString;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/parser/PValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lguru/zoroark/tegral/prismakt/generator/parser/PString;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PValue$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PValue;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public abstract class guru/zoroark/tegral/prismakt/generator/parser/PValueOrEnv {
+	public static final field Companion Lguru/zoroark/tegral/prismakt/generator/parser/PValueOrEnv$Companion;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/parser/PValueOrEnv$Companion : guru/zoroark/tegral/niwen/parser/ParserNodeDeclaration {
+	public fun getName ()Ljava/lang/String;
+	public fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Lguru/zoroark/tegral/prismakt/generator/parser/PValueOrEnv;
+	public synthetic fun make (Lguru/zoroark/tegral/niwen/parser/TypeDescription;)Ljava/lang/Object;
+}
+
+public abstract class guru/zoroark/tegral/prismakt/generator/protocol/ArgType {
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/ArgType$ArgInputType : guru/zoroark/tegral/prismakt/generator/protocol/ArgType {
+	public fun <init> (Lguru/zoroark/tegral/prismakt/generator/protocol/InputType;)V
+	public final fun component1 ()Lguru/zoroark/tegral/prismakt/generator/protocol/InputType;
+	public final fun copy (Lguru/zoroark/tegral/prismakt/generator/protocol/InputType;)Lguru/zoroark/tegral/prismakt/generator/protocol/ArgType$ArgInputType;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/ArgType$ArgInputType;Lguru/zoroark/tegral/prismakt/generator/protocol/InputType;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/ArgType$ArgInputType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getInputType ()Lguru/zoroark/tegral/prismakt/generator/protocol/InputType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/ArgType$ArgSchemaEnum : guru/zoroark/tegral/prismakt/generator/protocol/ArgType {
+	public fun <init> (Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaEnum;)V
+	public final fun component1 ()Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaEnum;
+	public final fun copy (Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaEnum;)Lguru/zoroark/tegral/prismakt/generator/protocol/ArgType$ArgSchemaEnum;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/ArgType$ArgSchemaEnum;Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaEnum;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/ArgType$ArgSchemaEnum;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaEnum;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/ArgType$ArgStringValue : guru/zoroark/tegral/prismakt/generator/protocol/ArgType {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/ArgType$ArgStringValue;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/ArgType$ArgStringValue;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/ArgType$ArgStringValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/ArgTypeDeserializer : com/fasterxml/jackson/databind/deser/std/StdDeserializer {
+	public fun <init> ()V
+	public fun deserialize (Lcom/fasterxml/jackson/core/JsonParser;Lcom/fasterxml/jackson/databind/DeserializationContext;)Lguru/zoroark/tegral/prismakt/generator/protocol/ArgType;
+	public synthetic fun deserialize (Lcom/fasterxml/jackson/core/JsonParser;Lcom/fasterxml/jackson/databind/DeserializationContext;)Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/BinaryTargetsEnvValue {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/BinaryTargetsEnvValue;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/BinaryTargetsEnvValue;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/BinaryTargetsEnvValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFromEnvVar ()Ljava/lang/String;
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/DMMFDocument {
+	public fun <init> (Lguru/zoroark/tegral/prismakt/generator/protocol/Datamodel;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema;Lguru/zoroark/tegral/prismakt/generator/protocol/Mappings;)V
+	public final fun component1 ()Lguru/zoroark/tegral/prismakt/generator/protocol/Datamodel;
+	public final fun component2 ()Lguru/zoroark/tegral/prismakt/generator/protocol/Schema;
+	public final fun component3 ()Lguru/zoroark/tegral/prismakt/generator/protocol/Mappings;
+	public final fun copy (Lguru/zoroark/tegral/prismakt/generator/protocol/Datamodel;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema;Lguru/zoroark/tegral/prismakt/generator/protocol/Mappings;)Lguru/zoroark/tegral/prismakt/generator/protocol/DMMFDocument;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/DMMFDocument;Lguru/zoroark/tegral/prismakt/generator/protocol/Datamodel;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema;Lguru/zoroark/tegral/prismakt/generator/protocol/Mappings;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/DMMFDocument;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDatamodel ()Lguru/zoroark/tegral/prismakt/generator/protocol/Datamodel;
+	public final fun getMappings ()Lguru/zoroark/tegral/prismakt/generator/protocol/Mappings;
+	public final fun getSchema ()Lguru/zoroark/tegral/prismakt/generator/protocol/Schema;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/DataSource {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;
+	public final fun component5 ()Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;
+	public final fun component6 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/protocol/DataSource;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/DataSource;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/DataSource;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getActiveProvider ()Ljava/lang/String;
+	public final fun getDirectUrl ()Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getProvider ()Ljava/lang/String;
+	public final fun getSchemas ()Ljava/util/List;
+	public final fun getUrl ()Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/Datamodel {
+	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;Ljava/util/List;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/protocol/Datamodel;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/Datamodel;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/Datamodel;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEnums ()Ljava/util/List;
+	public final fun getModels ()Ljava/util/List;
+	public final fun getTypes ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/DatamodelEnum {
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/DatamodelEnum;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/DatamodelEnum;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/DatamodelEnum;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDbName ()Ljava/lang/String;
+	public final fun getDocumentation ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getValues ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/Deprecation {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/Deprecation;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/Deprecation;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/Deprecation;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPlannedRemovalVersion ()Ljava/lang/String;
+	public final fun getReason ()Ljava/lang/String;
+	public final fun getSinceVersion ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/EnumValue {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/EnumValue;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/EnumValue;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/EnumValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDbName ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/EnvValue {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFromEnvVar ()Ljava/lang/String;
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/Field {
+	public fun <init> (Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;Ljava/lang/String;ZZZZZLjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/String;Ljava/util/List;ZLjava/lang/Object;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;Ljava/lang/String;ZZZZZLjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/String;Ljava/util/List;ZLjava/lang/Object;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;
+	public final fun component10 ()Ljava/lang/String;
+	public final fun component11 ()Ljava/util/List;
+	public final fun component12 ()Z
+	public final fun component13 ()Ljava/lang/Object;
+	public final fun component14 ()Ljava/util/List;
+	public final fun component15 ()Ljava/util/List;
+	public final fun component16 ()Ljava/lang/String;
+	public final fun component17 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Z
+	public final fun component4 ()Z
+	public final fun component5 ()Z
+	public final fun component6 ()Z
+	public final fun component7 ()Z
+	public final fun component8 ()Ljava/lang/Boolean;
+	public final fun component9 ()Ljava/lang/Boolean;
+	public final fun copy (Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;Ljava/lang/String;ZZZZZLjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/String;Ljava/util/List;ZLjava/lang/Object;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/Field;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/Field;Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;Ljava/lang/String;ZZZZZLjava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/String;Ljava/util/List;ZLjava/lang/Object;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/Field;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDbNames ()Ljava/util/List;
+	public final fun getDefault ()Ljava/lang/Object;
+	public final fun getHasDefaultValue ()Z
+	public final fun getKind ()Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getRelationFromFields ()Ljava/util/List;
+	public final fun getRelationName ()Ljava/lang/String;
+	public final fun getRelationOnDelete ()Ljava/lang/String;
+	public final fun getRelationToFields ()Ljava/util/List;
+	public final fun getType ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isGenerated ()Ljava/lang/Boolean;
+	public final fun isId ()Z
+	public final fun isList ()Z
+	public final fun isReadOnly ()Z
+	public final fun isRequired ()Z
+	public final fun isUnique ()Z
+	public final fun isUpdatedAt ()Ljava/lang/Boolean;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/FieldKind : java/lang/Enum {
+	public static final field Enum Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;
+	public static final field Object Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;
+	public static final field Scalar Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;
+	public static final field Unsupported Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;
+	public static fun values ()[Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/FieldLocation : java/lang/Enum {
+	public static final field EnumTypes Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;
+	public static final field FieldRefTypes Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;
+	public static final field InputObjectTypes Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;
+	public static final field OutputObjectTypes Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;
+	public static final field Scalar Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;
+	public static fun values ()[Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace : java/lang/Enum {
+	public static final field Model Lguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;
+	public static final field Prisma Lguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;
+	public final fun getValue ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;
+	public static fun values ()[Lguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/FieldRefType {
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/protocol/FieldRefType;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/FieldRefType;Ljava/lang/String;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/FieldRefType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAllowTypes ()Ljava/util/List;
+	public final fun getFields ()Ljava/util/List;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/GeneratorConfig {
+	public fun <init> (Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;ZLguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;Ljava/util/Map;Ljava/util/List;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;
+	public final fun component3 ()Z
+	public final fun component4 ()Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;
+	public final fun component5 ()Ljava/util/Map;
+	public final fun component6 ()Ljava/util/List;
+	public final fun component7 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;ZLguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;Ljava/util/Map;Ljava/util/List;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorConfig;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorConfig;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;ZLguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;Ljava/util/Map;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBinaryTargets ()Ljava/util/List;
+	public final fun getConfig ()Ljava/util/Map;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getOutput ()Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;
+	public final fun getPreviewFeatures ()Ljava/util/List;
+	public final fun getProvider ()Lguru/zoroark/tegral/prismakt/generator/protocol/EnvValue;
+	public fun hashCode ()I
+	public final fun isCustomOutput ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest$DenyLists;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest$DenyLists;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest$DenyLists;
+	public final fun component4 ()Ljava/util/List;
+	public final fun component5 ()Ljava/util/List;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest$DenyLists;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest;Ljava/lang/String;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest$DenyLists;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDefaultOutput ()Ljava/lang/String;
+	public final fun getDenylists ()Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest$DenyLists;
+	public final fun getPrettyName ()Ljava/lang/String;
+	public final fun getRequiresEngineVersion ()Ljava/lang/String;
+	public final fun getRequiresEngines ()Ljava/util/List;
+	public final fun getRequiresGenerators ()Ljava/util/List;
+	public final fun getVersion ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest$DenyLists {
+	public fun <init> ()V
+	public fun <init> (Ljava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest$DenyLists;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest$DenyLists;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest$DenyLists;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFields ()Ljava/util/List;
+	public final fun getModels ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/GeneratorOptions {
+	public fun <init> (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorConfig;Ljava/util/List;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/DMMFDocument;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Z)V
+	public final fun component1 ()Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorConfig;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Lguru/zoroark/tegral/prismakt/generator/protocol/DMMFDocument;
+	public final fun component5 ()Ljava/util/List;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Z
+	public final fun copy (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorConfig;Ljava/util/List;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/DMMFDocument;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Z)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorOptions;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorOptions;Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorConfig;Ljava/util/List;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/DMMFDocument;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorOptions;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDataProxy ()Z
+	public final fun getDatamodel ()Ljava/lang/String;
+	public final fun getDatasources ()Ljava/util/List;
+	public final fun getDmmf ()Lguru/zoroark/tegral/prismakt/generator/protocol/DMMFDocument;
+	public final fun getGenerator ()Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorConfig;
+	public final fun getOtherGenerators ()Ljava/util/List;
+	public final fun getSchemaPath ()Ljava/lang/String;
+	public final fun getVersion ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/GeneratorProtocolController : guru/zoroark/tegral/prismakt/generator/protocol/GeneratorProtocolHandler {
+	public fun <init> (Lguru/zoroark/tegral/di/environment/InjectionScope;)V
+	public fun generate (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest$GenerateRequest;)V
+	public fun getManifest (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest$GetManifestRequest;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse$GetManifestResponse;
+	public fun handle (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse;
+}
+
+public abstract interface class guru/zoroark/tegral/prismakt/generator/protocol/GeneratorProtocolHandler {
+	public abstract fun generate (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest$GenerateRequest;)V
+	public abstract fun getManifest (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest$GetManifestRequest;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse$GetManifestResponse;
+	public abstract fun handle (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/GeneratorProtocolHandler$DefaultImpls {
+	public static fun handle (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorProtocolHandler;Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse;
+}
+
+public abstract class guru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest {
+	public abstract fun getId ()J
+	public abstract fun getJsonrpc ()Ljava/lang/String;
+	public abstract fun getParams ()Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest$GenerateRequest : guru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest {
+	public fun <init> (Ljava/lang/String;JLguru/zoroark/tegral/prismakt/generator/protocol/GeneratorOptions;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()J
+	public final fun component3 ()Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorOptions;
+	public final fun copy (Ljava/lang/String;JLguru/zoroark/tegral/prismakt/generator/protocol/GeneratorOptions;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest$GenerateRequest;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest$GenerateRequest;Ljava/lang/String;JLguru/zoroark/tegral/prismakt/generator/protocol/GeneratorOptions;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest$GenerateRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getId ()J
+	public fun getJsonrpc ()Ljava/lang/String;
+	public fun getParams ()Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorOptions;
+	public synthetic fun getParams ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest$GetManifestRequest : guru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest {
+	public fun <init> (Ljava/lang/String;JLguru/zoroark/tegral/prismakt/generator/protocol/GeneratorConfig;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()J
+	public final fun component3 ()Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorConfig;
+	public final fun copy (Ljava/lang/String;JLguru/zoroark/tegral/prismakt/generator/protocol/GeneratorConfig;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest$GetManifestRequest;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest$GetManifestRequest;Ljava/lang/String;JLguru/zoroark/tegral/prismakt/generator/protocol/GeneratorConfig;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorRequest$GetManifestRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getId ()J
+	public fun getJsonrpc ()Ljava/lang/String;
+	public fun getParams ()Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorConfig;
+	public synthetic fun getParams ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class guru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse {
+	public abstract fun getId ()J
+	public abstract fun getJsonrpc ()Ljava/lang/String;
+	public abstract fun getResult ()Ljava/lang/Object;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse$GetManifestResponse : guru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse {
+	public fun <init> (Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse$GetManifestResponse$GeneratorManifestContainer;J)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse$GetManifestResponse$GeneratorManifestContainer;
+	public final fun component3 ()J
+	public final fun copy (Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse$GetManifestResponse$GeneratorManifestContainer;J)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse$GetManifestResponse;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse$GetManifestResponse;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse$GetManifestResponse$GeneratorManifestContainer;JILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse$GetManifestResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getId ()J
+	public fun getJsonrpc ()Ljava/lang/String;
+	public fun getResult ()Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse$GetManifestResponse$GeneratorManifestContainer;
+	public synthetic fun getResult ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse$GetManifestResponse$GeneratorManifestContainer {
+	public fun <init> (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest;)V
+	public final fun component1 ()Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest;
+	public final fun copy (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse$GetManifestResponse$GeneratorManifestContainer;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse$GetManifestResponse$GeneratorManifestContainer;Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorResponse$GetManifestResponse$GeneratorManifestContainer;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getManifest ()Lguru/zoroark/tegral/prismakt/generator/protocol/GeneratorManifest;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/InputType {
+	public fun <init> (Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Constraints;Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Meta;Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Constraints;Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Meta;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Constraints;
+	public final fun component3 ()Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Meta;
+	public final fun component4 ()Ljava/util/List;
+	public final fun component5 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Constraints;Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Meta;Ljava/util/List;Ljava/util/Map;)Lguru/zoroark/tegral/prismakt/generator/protocol/InputType;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/InputType;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Constraints;Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Meta;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/InputType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getConstraints ()Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Constraints;
+	public final fun getFieldMap ()Ljava/util/Map;
+	public final fun getFields ()Ljava/util/List;
+	public final fun getMeta ()Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Meta;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/InputType$Constraints {
+	public fun <init> (Ljava/lang/Integer;Ljava/lang/Integer;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/Integer;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun component3 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/Integer;Ljava/lang/Integer;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Constraints;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Constraints;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Constraints;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFields ()Ljava/util/List;
+	public final fun getMaxNumFields ()Ljava/lang/Integer;
+	public final fun getMinNumFields ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/InputType$Meta {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Meta;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Meta;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/InputType$Meta;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSource ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/JsonRpcProtocol {
+	public fun <init> (Lguru/zoroark/tegral/di/environment/InjectionScope;)V
+	public final fun exchange ()V
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/Mappings {
+	public fun <init> (Ljava/util/List;Lguru/zoroark/tegral/prismakt/generator/protocol/OtherOperationMappings;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Lguru/zoroark/tegral/prismakt/generator/protocol/OtherOperationMappings;
+	public final fun copy (Ljava/util/List;Lguru/zoroark/tegral/prismakt/generator/protocol/OtherOperationMappings;)Lguru/zoroark/tegral/prismakt/generator/protocol/Mappings;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/Mappings;Ljava/util/List;Lguru/zoroark/tegral/prismakt/generator/protocol/OtherOperationMappings;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/Mappings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getModelOperations ()Ljava/util/List;
+	public final fun getOtherOperations ()Lguru/zoroark/tegral/prismakt/generator/protocol/OtherOperationMappings;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/Model {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/PrimaryKey;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/PrimaryKey;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/util/List;
+	public final fun component4 ()Ljava/util/List;
+	public final fun component5 ()Ljava/util/List;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Lguru/zoroark/tegral/prismakt/generator/protocol/PrimaryKey;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/PrimaryKey;)Lguru/zoroark/tegral/prismakt/generator/protocol/Model;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/Model;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/PrimaryKey;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/Model;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDbName ()Ljava/lang/String;
+	public final fun getDocumentation ()Ljava/lang/String;
+	public final fun getFields ()Ljava/util/List;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getPrimaryKey ()Lguru/zoroark/tegral/prismakt/generator/protocol/PrimaryKey;
+	public final fun getUniqueFields ()Ljava/util/List;
+	public final fun getUniqueIndexes ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/ModelMapping {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Ljava/lang/String;
+	public final fun component11 ()Ljava/lang/String;
+	public final fun component12 ()Ljava/lang/String;
+	public final fun component13 ()Ljava/lang/String;
+	public final fun component14 ()Ljava/lang/String;
+	public final fun component15 ()Ljava/lang/String;
+	public final fun component16 ()Ljava/lang/String;
+	public final fun component17 ()Ljava/lang/String;
+	public final fun component18 ()Ljava/lang/String;
+	public final fun component19 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component20 ()Ljava/lang/String;
+	public final fun component21 ()Ljava/lang/String;
+	public final fun component22 ()Ljava/lang/String;
+	public final fun component23 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/ModelMapping;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/ModelMapping;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/ModelMapping;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAggregate ()Ljava/lang/String;
+	public final fun getAggregateRaw ()Ljava/lang/String;
+	public final fun getCount ()Ljava/lang/String;
+	public final fun getCreate ()Ljava/lang/String;
+	public final fun getCreateMany ()Ljava/lang/String;
+	public final fun getCreateOne ()Ljava/lang/String;
+	public final fun getDelete ()Ljava/lang/String;
+	public final fun getDeleteMany ()Ljava/lang/String;
+	public final fun getDeleteOne ()Ljava/lang/String;
+	public final fun getFindFirst ()Ljava/lang/String;
+	public final fun getFindFirstOrThrow ()Ljava/lang/String;
+	public final fun getFindMany ()Ljava/lang/String;
+	public final fun getFindRaw ()Ljava/lang/String;
+	public final fun getFindUnique ()Ljava/lang/String;
+	public final fun getFindUniqueOrThrow ()Ljava/lang/String;
+	public final fun getGroupBy ()Ljava/lang/String;
+	public final fun getModel ()Ljava/lang/String;
+	public final fun getPlural ()Ljava/lang/String;
+	public final fun getUpdate ()Ljava/lang/String;
+	public final fun getUpdateMany ()Ljava/lang/String;
+	public final fun getUpdateOne ()Ljava/lang/String;
+	public final fun getUpsert ()Ljava/lang/String;
+	public final fun getUpsertOne ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/ObjectOrString {
+	public fun <init> (Ljava/lang/Object;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getObj ()Ljava/lang/Object;
+	public final fun getString ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/OtherOperationMappings {
+	public fun <init> (Ljava/util/List;Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/protocol/OtherOperationMappings;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/OtherOperationMappings;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/OtherOperationMappings;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getRead ()Ljava/util/List;
+	public final fun getWrite ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/OutputType {
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)Lguru/zoroark/tegral/prismakt/generator/protocol/OutputType;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/OutputType;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/OutputType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFieldMap ()Ljava/util/Map;
+	public final fun getFields ()Ljava/util/List;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/PrimaryKey {
+	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/protocol/PrimaryKey;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/PrimaryKey;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/PrimaryKey;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFields ()Ljava/util/List;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/Query {
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Lguru/zoroark/tegral/prismakt/generator/protocol/QueryOutput;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Lguru/zoroark/tegral/prismakt/generator/protocol/QueryOutput;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;Lguru/zoroark/tegral/prismakt/generator/protocol/QueryOutput;)Lguru/zoroark/tegral/prismakt/generator/protocol/Query;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/Query;Ljava/lang/String;Ljava/util/List;Lguru/zoroark/tegral/prismakt/generator/protocol/QueryOutput;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/Query;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getArgs ()Ljava/util/List;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getOutput ()Lguru/zoroark/tegral/prismakt/generator/protocol/QueryOutput;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/QueryOutput {
+	public fun <init> (Ljava/lang/String;ZZ)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Z
+	public final fun component3 ()Z
+	public final fun copy (Ljava/lang/String;ZZ)Lguru/zoroark/tegral/prismakt/generator/protocol/QueryOutput;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/QueryOutput;Ljava/lang/String;ZZILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/QueryOutput;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isList ()Z
+	public final fun isRequired ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/Schema {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$InputTypes;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$OutputTypes;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$EnumTypes;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$FieldRefTypes;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$InputTypes;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$OutputTypes;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$EnumTypes;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$FieldRefTypes;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$InputTypes;
+	public final fun component4 ()Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$OutputTypes;
+	public final fun component5 ()Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$EnumTypes;
+	public final fun component6 ()Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$FieldRefTypes;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$InputTypes;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$OutputTypes;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$EnumTypes;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$FieldRefTypes;)Lguru/zoroark/tegral/prismakt/generator/protocol/Schema;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/Schema;Ljava/lang/String;Ljava/lang/String;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$InputTypes;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$OutputTypes;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$EnumTypes;Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$FieldRefTypes;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/Schema;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEnumTypes ()Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$EnumTypes;
+	public final fun getFieldRefTypes ()Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$FieldRefTypes;
+	public final fun getInputObjectTypes ()Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$InputTypes;
+	public final fun getOutputObjectTypes ()Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$OutputTypes;
+	public final fun getRootMutationType ()Ljava/lang/String;
+	public final fun getRootQueryType ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/Schema$EnumTypes {
+	public fun <init> (Ljava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$EnumTypes;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$EnumTypes;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$EnumTypes;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getModel ()Ljava/util/List;
+	public final fun getPrisma ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/Schema$FieldRefTypes {
+	public fun <init> ()V
+	public fun <init> (Ljava/util/List;)V
+	public synthetic fun <init> (Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$FieldRefTypes;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$FieldRefTypes;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$FieldRefTypes;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPrisma ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/Schema$InputTypes {
+	public fun <init> (Ljava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$InputTypes;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$InputTypes;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$InputTypes;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getModel ()Ljava/util/List;
+	public final fun getPrisma ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/Schema$OutputTypes {
+	public fun <init> (Ljava/util/List;Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$OutputTypes;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$OutputTypes;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/Schema$OutputTypes;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getModel ()Ljava/util/List;
+	public final fun getPrisma ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/SchemaArg {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZZLjava/util/List;Lguru/zoroark/tegral/prismakt/generator/protocol/Deprecation;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ZZLjava/util/List;Lguru/zoroark/tegral/prismakt/generator/protocol/Deprecation;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Z
+	public final fun component4 ()Z
+	public final fun component5 ()Ljava/util/List;
+	public final fun component6 ()Lguru/zoroark/tegral/prismakt/generator/protocol/Deprecation;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;ZZLjava/util/List;Lguru/zoroark/tegral/prismakt/generator/protocol/Deprecation;)Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaArg;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaArg;Ljava/lang/String;Ljava/lang/String;ZZLjava/util/List;Lguru/zoroark/tegral/prismakt/generator/protocol/Deprecation;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaArg;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getComment ()Ljava/lang/String;
+	public final fun getDeprecation ()Lguru/zoroark/tegral/prismakt/generator/protocol/Deprecation;
+	public final fun getInputTypes ()Ljava/util/List;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isNullable ()Z
+	public final fun isRequired ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/SchemaArgInputType {
+	public fun <init> (ZLguru/zoroark/tegral/prismakt/generator/protocol/ArgType;Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;Lguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;)V
+	public synthetic fun <init> (ZLguru/zoroark/tegral/prismakt/generator/protocol/ArgType;Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;Lguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component2 ()Lguru/zoroark/tegral/prismakt/generator/protocol/ArgType;
+	public final fun component3 ()Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;
+	public final fun component4 ()Lguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;
+	public final fun copy (ZLguru/zoroark/tegral/prismakt/generator/protocol/ArgType;Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;Lguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;)Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaArgInputType;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaArgInputType;ZLguru/zoroark/tegral/prismakt/generator/protocol/ArgType;Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;Lguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaArgInputType;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLocation ()Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;
+	public final fun getNamespace ()Lguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;
+	public final fun getType ()Lguru/zoroark/tegral/prismakt/generator/protocol/ArgType;
+	public fun hashCode ()I
+	public final fun isList ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/SchemaEnum {
+	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaEnum;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaEnum;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaEnum;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Ljava/lang/String;
+	public final fun getValues ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/SchemaField {
+	public fun <init> (Ljava/lang/String;Ljava/lang/Boolean;Lguru/zoroark/tegral/prismakt/generator/protocol/TypeRef;Ljava/util/List;Lguru/zoroark/tegral/prismakt/generator/protocol/Deprecation;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Boolean;Lguru/zoroark/tegral/prismakt/generator/protocol/TypeRef;Ljava/util/List;Lguru/zoroark/tegral/prismakt/generator/protocol/Deprecation;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/Boolean;
+	public final fun component3 ()Lguru/zoroark/tegral/prismakt/generator/protocol/TypeRef;
+	public final fun component4 ()Ljava/util/List;
+	public final fun component5 ()Lguru/zoroark/tegral/prismakt/generator/protocol/Deprecation;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/Boolean;Lguru/zoroark/tegral/prismakt/generator/protocol/TypeRef;Ljava/util/List;Lguru/zoroark/tegral/prismakt/generator/protocol/Deprecation;Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaField;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaField;Ljava/lang/String;Ljava/lang/Boolean;Lguru/zoroark/tegral/prismakt/generator/protocol/TypeRef;Ljava/util/List;Lguru/zoroark/tegral/prismakt/generator/protocol/Deprecation;Ljava/lang/String;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/SchemaField;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getArgs ()Ljava/util/List;
+	public final fun getDeprecation ()Lguru/zoroark/tegral/prismakt/generator/protocol/Deprecation;
+	public final fun getDocumentation ()Ljava/lang/String;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getOutputType ()Lguru/zoroark/tegral/prismakt/generator/protocol/TypeRef;
+	public fun hashCode ()I
+	public final fun isNullable ()Ljava/lang/Boolean;
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class guru/zoroark/tegral/prismakt/generator/protocol/TypeRef {
+	public synthetic fun <init> (ZLguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ZLguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getNamespace ()Lguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;
+	public final fun isList ()Z
+}
+
+public abstract interface class guru/zoroark/tegral/prismakt/generator/protocol/TypeRef$FieldRefAllowType {
+	public abstract fun getSelf ()Lguru/zoroark/tegral/prismakt/generator/protocol/TypeRef;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/TypeRef$TypeRefEnum : guru/zoroark/tegral/prismakt/generator/protocol/TypeRef, guru/zoroark/tegral/prismakt/generator/protocol/TypeRef$FieldRefAllowType {
+	public fun <init> (ZLguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;Lguru/zoroark/tegral/prismakt/generator/protocol/ObjectOrString;)V
+	public fun getSelf ()Lguru/zoroark/tegral/prismakt/generator/protocol/TypeRef$TypeRefEnum;
+	public synthetic fun getSelf ()Lguru/zoroark/tegral/prismakt/generator/protocol/TypeRef;
+	public final fun getType ()Lguru/zoroark/tegral/prismakt/generator/protocol/ObjectOrString;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/TypeRef$TypeRefOutputObject : guru/zoroark/tegral/prismakt/generator/protocol/TypeRef {
+	public fun <init> (ZLguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;Lguru/zoroark/tegral/prismakt/generator/protocol/ObjectOrString;)V
+	public final fun getType ()Lguru/zoroark/tegral/prismakt/generator/protocol/ObjectOrString;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/TypeRef$TypeRefScalar : guru/zoroark/tegral/prismakt/generator/protocol/TypeRef, guru/zoroark/tegral/prismakt/generator/protocol/TypeRef$FieldRefAllowType {
+	public fun <init> (ZLguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;Ljava/lang/String;)V
+	public fun getSelf ()Lguru/zoroark/tegral/prismakt/generator/protocol/TypeRef$TypeRefScalar;
+	public synthetic fun getSelf ()Lguru/zoroark/tegral/prismakt/generator/protocol/TypeRef;
+	public final fun getType ()Ljava/lang/String;
+}
+
+public final class guru/zoroark/tegral/prismakt/generator/protocol/UniqueIndex {
+	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;)Lguru/zoroark/tegral/prismakt/generator/protocol/UniqueIndex;
+	public static synthetic fun copy$default (Lguru/zoroark/tegral/prismakt/generator/protocol/UniqueIndex;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lguru/zoroark/tegral/prismakt/generator/protocol/UniqueIndex;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFields ()Ljava/util/List;
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+

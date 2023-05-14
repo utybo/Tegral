@@ -81,8 +81,15 @@ class TegralSwaggerUiKtor(private val classpathPath: String) {
         return resourceClasspathResource(
             resource,
             path
-        ) { ContentType.defaultForFileExtension(it) }
+        ) { ContentType.defaultForFileExtension(it.path.extension()) }
     }
+}
+
+// Taken from Ktor's StaticContentResolution (which is internal so we can't reuse it)
+private fun String.extension(): String {
+    val indexOfName = lastIndexOf('/').takeIf { it != -1 } ?: lastIndexOf('\\').takeIf { it != -1 } ?: 0
+    val indexOfDot = indexOf('.', indexOfName)
+    return if (indexOfDot >= 0) substring(indexOfDot) else ""
 }
 
 /**

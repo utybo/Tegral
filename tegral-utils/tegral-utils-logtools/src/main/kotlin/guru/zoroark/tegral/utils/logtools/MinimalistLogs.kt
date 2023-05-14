@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package guru.zoroark.tegral.openapi.cli
+package guru.zoroark.tegral.utils.logtools
 
 import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.Logger
@@ -28,6 +28,8 @@ private const val MAX_LOGGER_SIZE = 20
 
 /**
  * A layout for [logback](https://logback.ch) with a pleasant, colorful scheme, specifically intended for CLI tools.
+ *
+ * Use [applyMinimalistLoggingOverrides] to use this.
  */
 class MinimalistLogs : LayoutBase<ILoggingEvent>() {
     private val throwableProxyConverter = ThrowableProxyConverter()
@@ -108,10 +110,10 @@ class MinimalistLogs : LayoutBase<ILoggingEvent>() {
 /**
  * Applies the [MinimalistLogs] layout as well as basic layout settings to Logback.
  */
-fun applyMinimalistLoggingOverrides(quiet: Boolean = false) {
+fun applyMinimalistLoggingOverrides(level: Level = Level.INFO) {
     val ctx = (LoggerFactory.getILoggerFactory() as LoggerContext)
     val rootLogger = ctx.getLogger(Logger.ROOT_LOGGER_NAME)
-    rootLogger.level = if (quiet) Level.ERROR else Level.INFO
+    rootLogger.level = level
 
     val le = LayoutWrappingEncoder<ILoggingEvent>().apply {
         context = ctx

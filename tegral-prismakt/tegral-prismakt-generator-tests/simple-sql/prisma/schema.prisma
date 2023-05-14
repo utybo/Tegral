@@ -1,0 +1,20 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator prismakt {
+  // provider = "node prisma/launch-prismakt-generator.js"
+  provider      = "gradle --console=plain -q runGeneratorInternal"
+  output        = "../build/prismaGeneratedSrc"
+  exposedTarget = "sql"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model SqlUser {
+  identifier Int     @id @default(autoincrement())
+  email      String  @unique
+  name       String?
+}
