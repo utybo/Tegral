@@ -44,6 +44,7 @@ import io.swagger.v3.oas.models.responses.ApiResponses
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class PathDescribeTest {
     private fun generateOpenApiForHelloWorld(method: HttpMethod): OpenAPI {
@@ -230,5 +231,34 @@ class PathDescribeTest {
                 }
             }
         }
+    }
+
+    @Test
+    fun `Test manual operation registration`() {
+        val methods = mapOf<String, PathItem.() -> Operation>(
+            "GET" to { get },
+            "POST" to { post },
+            "PUT" to { put },
+            "PATCH" to { patch },
+            "DELETE" to { delete },
+            "HEAD" to { head },
+            "OPTIONS" to { options }
+        )
+        for ((methodName, methodGetter) in methods) {
+            val plugin = TegralOpenApiKtor()
+            plugin.registerOperation("/test", io.ktor.http.HttpMethod(methodName)) {
+                description = "Hello"
+            }
+            assertEquals("Hello", plugin.buildOpenApiDocument().paths["/test"]?.methodGetter()?.description)
+        }
+    }
+
+    @Test
+    fun `Unknown method is ignored`() {
+        val plugin = TegralOpenApiKtor()
+        plugin.registerOperation("/test", io.ktor.http.HttpMethod("FOOBAR")) {
+            description = "Hello"
+        }
+        assertNull(plugin.buildOpenApiDocument().paths)
     }
 }
