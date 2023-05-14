@@ -299,25 +299,79 @@ public final class guru/zoroark/tegral/openapi/dsl/ParameterKind : java/lang/Enu
 
 public final class guru/zoroark/tegral/openapi/dsl/PathBuilder : guru/zoroark/tegral/core/Buildable, guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/PathDsl {
 	public fun <init> (Lguru/zoroark/tegral/openapi/dsl/OpenApiDslContext;)V
+	public fun body (Lkotlin/jvm/functions/Function1;)V
 	public fun build ()Lio/swagger/v3/oas/models/PathItem;
 	public synthetic fun build ()Ljava/lang/Object;
+	public fun cookieParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public fun delete (Lkotlin/jvm/functions/Function1;)V
 	public fun get (Lkotlin/jvm/functions/Function1;)V
+	public fun getDelete ()Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;
+	public fun getDeprecated ()Ljava/lang/Boolean;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getExternalDocsDescription ()Ljava/lang/String;
+	public fun getExternalDocsUrl ()Ljava/lang/String;
+	public fun getGet ()Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;
+	public fun getHead ()Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;
+	public fun getOperationId ()Ljava/lang/String;
+	public fun getOptions ()Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;
+	public fun getParameters ()Ljava/util/List;
+	public fun getPatch ()Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;
+	public fun getPost ()Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;
+	public fun getPut ()Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;
+	public fun getRequestBody ()Lguru/zoroark/tegral/openapi/dsl/RequestBodyBuilder;
+	public fun getResponses ()Ljava/util/Map;
+	public fun getSecurityRequirements ()Ljava/util/List;
+	public fun getSummary ()Ljava/lang/String;
+	public fun getTags ()Ljava/util/List;
 	public fun head (Lkotlin/jvm/functions/Function1;)V
+	public fun headerParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public fun options (Lkotlin/jvm/functions/Function1;)V
 	public fun patch (Lkotlin/jvm/functions/Function1;)V
+	public fun pathParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public fun post (Lkotlin/jvm/functions/Function1;)V
 	public fun put (Lkotlin/jvm/functions/Function1;)V
+	public fun queryParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun response (ILkotlin/jvm/functions/Function1;)V
+	public fun security (Ljava/lang/String;)V
+	public fun security (Ljava/lang/String;[Ljava/lang/String;)V
+	public fun setDelete (Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
+	public fun setDeprecated (Ljava/lang/Boolean;)V
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setExternalDocsDescription (Ljava/lang/String;)V
+	public fun setExternalDocsUrl (Ljava/lang/String;)V
+	public fun setGet (Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
+	public fun setHead (Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
+	public fun setOperationId (Ljava/lang/String;)V
+	public fun setOptions (Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
+	public fun setPatch (Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
+	public fun setPost (Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
+	public fun setPut (Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
+	public fun setRequestBody (Lguru/zoroark/tegral/openapi/dsl/RequestBodyBuilder;)V
+	public fun setSummary (Ljava/lang/String;)V
 }
 
-public abstract interface class guru/zoroark/tegral/openapi/dsl/PathDsl {
+public abstract interface class guru/zoroark/tegral/openapi/dsl/PathDsl : guru/zoroark/tegral/openapi/dsl/OperationDsl {
 	public abstract fun delete (Lkotlin/jvm/functions/Function1;)V
 	public abstract fun get (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun getDelete ()Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;
+	public abstract fun getGet ()Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;
+	public abstract fun getHead ()Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;
+	public abstract fun getOptions ()Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;
+	public abstract fun getPatch ()Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;
+	public abstract fun getPost ()Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;
+	public abstract fun getPut ()Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;
 	public abstract fun head (Lkotlin/jvm/functions/Function1;)V
 	public abstract fun options (Lkotlin/jvm/functions/Function1;)V
 	public abstract fun patch (Lkotlin/jvm/functions/Function1;)V
 	public abstract fun post (Lkotlin/jvm/functions/Function1;)V
 	public abstract fun put (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun setDelete (Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
+	public abstract fun setGet (Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
+	public abstract fun setHead (Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
+	public abstract fun setOptions (Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
+	public abstract fun setPatch (Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
+	public abstract fun setPost (Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
+	public abstract fun setPut (Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/PathsBuilder : guru/zoroark/tegral/core/Buildable, guru/zoroark/tegral/openapi/dsl/Builder, guru/zoroark/tegral/openapi/dsl/PathsDsl {

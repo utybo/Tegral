@@ -1,6 +1,8 @@
 public final class guru/zoroark/tegral/openapi/ktor/DescribeDslKt {
 	public static final fun describe (Lio/ktor/server/application/Application;Lkotlin/jvm/functions/Function1;)V
 	public static final fun describe (Lio/ktor/server/routing/Route;Lkotlin/jvm/functions/Function1;)Lio/ktor/server/routing/Route;
+	public static final fun describeWith (Lio/ktor/server/routing/Route;Lkotlin/jvm/functions/Function2;)Lio/ktor/server/routing/Route;
+	public static final fun getOpenApiOrNullWithMessage (Lio/ktor/server/application/Application;)Lguru/zoroark/tegral/openapi/ktor/TegralOpenApiKtor;
 }
 
 public final class guru/zoroark/tegral/openapi/ktor/DescribeSubroutesKt {
@@ -15,7 +17,9 @@ public final class guru/zoroark/tegral/openapi/ktor/TegralOpenApiKtor {
 	public static final field Plugin Lguru/zoroark/tegral/openapi/ktor/TegralOpenApiKtor$Plugin;
 	public fun <init> ()V
 	public final fun buildOpenApiDocument ()Lio/swagger/v3/oas/models/OpenAPI;
-	public final fun getHooksForRoute (Lio/ktor/server/routing/Route;)Lkotlin/sequences/Sequence;
+	public final fun getContext ()Lguru/zoroark/tegral/openapi/dsl/SimpleDslContext;
+	public final fun getHooksForRoute (Lio/ktor/server/routing/Route;)Ljava/util/List;
+	public final fun registerOperation (Ljava/lang/String;Lio/ktor/http/HttpMethod;Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
 	public final fun registerOperation (Ljava/lang/String;Lio/ktor/http/HttpMethod;Lkotlin/jvm/functions/Function1;)V
 	public final fun registerSubrouteHook (Lio/ktor/server/routing/Route;Lkotlin/jvm/functions/Function1;)V
 	public final fun withRootBuilder (Lkotlin/jvm/functions/Function1;)V

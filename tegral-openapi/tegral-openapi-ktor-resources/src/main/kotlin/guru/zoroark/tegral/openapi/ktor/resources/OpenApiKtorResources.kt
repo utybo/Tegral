@@ -16,9 +16,7 @@
 
 package guru.zoroark.tegral.openapi.ktor.resources
 
-import guru.zoroark.tegral.core.TegralDsl
-import guru.zoroark.tegral.openapi.dsl.OperationDsl
-import guru.zoroark.tegral.openapi.ktor.describe
+import guru.zoroark.tegral.openapi.ktor.describeWith
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.resources.delete
 import io.ktor.server.resources.get
@@ -29,56 +27,6 @@ import io.ktor.server.resources.post
 import io.ktor.server.resources.put
 import io.ktor.server.routing.Route
 import io.ktor.util.pipeline.PipelineContext
-import kotlin.reflect.full.companionObjectInstance
-
-/**
- * Provides endpoint descriptions for [resource classes](https://ktor.io/docs/type-safe-routing.html#resource_classes).
- *
- * This interface should be implemented on a companion object in a resource class. You can either:
- *
- * - Manually implement this interface and its [property][openApi].
- * - Implement by delegating to the [describeResource] function.
- *
- * In order for the description to be taken into account, you must use the `<operation>D` functions (e.g. [getD])
- * instead of the regular [Resources operation functions](https://ktor.io/docs/type-safe-routing.html#define_route)
- * (e.g. `get`).
- */
-interface ResourceDescription {
-    /**
-     * The description for the endpoint represented by this resource class.
-     */
-    val openApi: OperationDsl.() -> Unit
-}
-
-/**
- * Function that should be used to implement [ResourceDescription] on
- * [resource classes](https://ktor.io/docs/type-safe-routing.html#resource_classes).
- *
- * For example, you can do the following:
- *
- * ```
- * @Serializable
- * @Resource("/foo/{bar}")
- * class MyResourceClass(val bar: String) {
- *     companion object : ResourceDescription by describeResource({
- *         description = "Baz"
- *     })
- * }
- * ```
- */
-@TegralDsl
-fun describeResource(description: OperationDsl.() -> Unit): ResourceDescription {
-    return object : ResourceDescription {
-        override val openApi = description
-    }
-}
-
-/**
- * Retrieves a [resource description][ResourceDescription] from the given class' companion object.
- */
-inline fun <reified T : Any> descriptionFromCompanionObject(): OperationDsl.() -> Unit =
-    (T::class.companionObjectInstance as? ResourceDescription)?.openApi
-        ?: { }
 
 /**
  * Defines a `get` route handler for the given resource, additionally registering its
@@ -86,7 +34,7 @@ inline fun <reified T : Any> descriptionFromCompanionObject(): OperationDsl.() -
  */
 inline fun <reified T : Any> Route.getD(
     noinline body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit
-): Route = get(body) describe descriptionFromCompanionObject<T>()
+): Route = get(body) describeWith descriptionFromResource<T> { get }
 
 /**
  * Defines an `options` route handler for the given resource, additionally registering its
@@ -94,7 +42,7 @@ inline fun <reified T : Any> Route.getD(
  */
 inline fun <reified T : Any> Route.optionsD(
     noinline body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit
-): Route = options(body) describe descriptionFromCompanionObject<T>()
+): Route = options(body) describeWith descriptionFromResource<T> { options }
 
 /**
  * Defines a `head` route handler for the given resource, additionally registering its
@@ -102,7 +50,7 @@ inline fun <reified T : Any> Route.optionsD(
  */
 inline fun <reified T : Any> Route.headD(
     noinline body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit
-): Route = head(body) describe descriptionFromCompanionObject<T>()
+): Route = head(body) describeWith descriptionFromResource<T> { head }
 
 /**
  * Defines a `post` route handler for the given resource, additionally registering its
@@ -110,7 +58,7 @@ inline fun <reified T : Any> Route.headD(
  */
 inline fun <reified T : Any> Route.postD(
     noinline body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit
-): Route = post(body) describe descriptionFromCompanionObject<T>()
+): Route = post(body) describeWith descriptionFromResource<T> { post }
 
 /**
  * Defines a `put` route handler for the given resource, additionally registering its
@@ -118,7 +66,7 @@ inline fun <reified T : Any> Route.postD(
  */
 inline fun <reified T : Any> Route.putD(
     noinline body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit
-): Route = put(body) describe descriptionFromCompanionObject<T>()
+): Route = put(body) describeWith descriptionFromResource<T> { put }
 
 /**
  * Defines a `delete` route handler for the given resource, additionally registering its
@@ -126,7 +74,7 @@ inline fun <reified T : Any> Route.putD(
  */
 inline fun <reified T : Any> Route.deleteD(
     noinline body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit
-): Route = delete(body) describe descriptionFromCompanionObject<T>()
+): Route = delete(body) describeWith descriptionFromResource<T> { delete }
 
 /**
  * Defines a `patch` route handler for the given resource, additionally registering its
@@ -134,4 +82,4 @@ inline fun <reified T : Any> Route.deleteD(
  */
 inline fun <reified T : Any> Route.patchD(
     noinline body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit
-): Route = patch(body) describe descriptionFromCompanionObject<T>()
+): Route = patch(body) describeWith descriptionFromResource<T> { patch }

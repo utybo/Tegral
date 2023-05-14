@@ -134,9 +134,7 @@ routing {
 
 ### Integration with `Resources`
 
-The `tegral-openapi-ktor-resources` package supplements `TegralOpenApiKtor` with support for Ktor's `@Resource` annotation. In this case the description isn't part of the `routing` block, but appears in the `companion object` of the class annotated with `@Resource`. This object must extend `OpenApiDescription`, which can be done in two ways:
-
-- Delegating by the `describeResource` function:
+The `tegral-openapi-ktor-resources` package supplements `TegralOpenApiKtor` with support for Ktor's `@Resource` annotation. In this case the description isn't part of the `routing` block, but appears in the `companion object` of the class annotated with `@Resource`. This object must extend `OpenApiDescription`, which can be done by delegating via the `describeResource` function:
 
 ```kotlin
 @Resource("/hello/{name}")
@@ -148,25 +146,30 @@ class Hello(val name: String) {
 }
 ```
 
-- Manually implement the `openApi` property:
+The block provided to `describeResource` is a [`PathDsl`](dsl.md#pathdsl) in which you can directly declare the details of your operations, or use the `get`, `post`, etc. functions to describe the various operations you may use with the resource:
 
 ```kotlin
 @Resource("/hello/{name}")
 @Serializable
 class Hello(val name: String) {
-    companion object : OpenApiDescription {
-        override val openApi: OperationDsl.() -> Unit = { 
-            description = "Returns a greeting"
+    companion object : OpenApiDescription by describeResource({
+        // This will apply to all operations
+        "name" pathParameter {
+            // ...
         }
-    }
+
+        get {
+            // This will only apply to the GET operation
+            description = "Get a greeting for the provided name"
+        }
+
+        delete {
+            // This will only apply to the DELETE operation
+            description = "Delete a greeting for the provided name"
+        }
+    })
 }
 ```
-
-:::warning
-
-Due to limitations in the type system, `openApi` is defined as a field with a functional type instead of a proper function. The only consequence, in practical terms, is that you need an equals sign after the name of the field.
-
-:::
 
 In your `routing` block, use the variants finished in `D` (from **d**escription) instead of the ones provided by the `Resources` plug-in. These variants use the `openApi` from the route `companion object` as description for the endpoint.
 

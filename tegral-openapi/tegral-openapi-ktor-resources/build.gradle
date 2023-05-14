@@ -10,6 +10,7 @@ dependencies {
     implementation project(":tegral-core")
 
     api libs.ktor.server.resources
+    implementation libs.kotlin.reflect
 
     testImplementation libs.ktor.server.test
 }

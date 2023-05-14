@@ -113,10 +113,14 @@ externalDocsUrl = "https://example.com"
 
 `PathDsl` allows you to define various operations under a path.
 
+You can also use any element from `OperationDsl` inside a `PathDsl` block. Anything defined like this will be applied to all operations declared **afterwards**.
+
 ```kotlin
 get { // or post, put, delete, patch, options, head
     // see OperationDsl
 }
+
+// see OperationDsl
 ```
 
 ### OperationDsl

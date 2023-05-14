@@ -36,7 +36,6 @@ class OpenApiModule : KtorModule() {
 
 private fun RootDsl.useDefaultDescription() {
     title = "Tegral application"
-    description = "*This [Tegral](https://tegral.zoroark.guru) application does not provide a description. Please " +
-        "refer to [this]() page for more information*" // TODO add link
+    description = "*This [Tegral](https://tegral.zoroark.guru) application does not provide a description.*"
     version = "0.0.0"
 }

@@ -9,6 +9,8 @@ dependencies {
     implementation project(":tegral-logging")
     implementation project(":tegral-web:tegral-web-controllers")
     implementation project(":tegral-featureful")
+
+    testImplementation libs.ktor.server.test
 }
 
 ext.humanName = "Tegral OpenAPI Feature"
