@@ -20,6 +20,7 @@ import io.swagger.v3.oas.models.PathItem
 import io.swagger.v3.oas.models.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -294,5 +295,30 @@ class PathsBuilderTest {
         }
         assertNull(path.get.requestBody)
         assertEquals("desert", path.post.requestBody.description)
+    }
+
+    @Test
+    fun `Reading operation properties on paths fails`() {
+        val ops = listOf<OperationDsl.() -> Unit>(
+            { summary },
+            { description },
+            { externalDocsDescription },
+            { externalDocsUrl },
+            { requestBody },
+            { deprecated },
+            { operationId },
+            { parameters },
+            { securityRequirements },
+            { responses }
+        )
+        for (op in ops) {
+            val exc = assertFailsWith<IllegalStateException> {
+                PathBuilder(mockk()).apply(op)
+            }
+            assertEquals(
+                "Operation functions, when used on a path instead of an actual operation, are write-only",
+                exc.message
+            )
+        }
     }
 }
