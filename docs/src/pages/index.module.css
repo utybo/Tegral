@@ -27,6 +27,7 @@
 
 .heroBanner .container h1 {
   display: flex;
+  gap: 0;
   justify-content: center;
   align-items: center;
 }
@@ -77,4 +78,123 @@
   justify-content: center;
   padding: 12px;
   max-width: 50%;
+}
+
+.libs {
+  margin: 64px;
+}
+
+.libs h2 .cardTitle {
+  font-size: 36px;
+}
+
+.libsExplainer {
+  font-size: 20px;
+  color: var(--ifm-font-color-secondary);
+}
+
+.libsCard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.cardContent {
+  flex-grow: 1;
+}
+
+.cardContent h3 {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 24px;
+}
+
+.cardContent h3 :global(.badge) {
+  font-size: 12px;
+}
+
+.cardExample {
+  justify-content: stretch;
+  align-self: stretch;
+}
+
+.cardExample > div {
+  margin-bottom: 0;
+}
+
+.cardExample pre {
+  height: 100%;
+}
+
+.cardLinks {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 24px;
+}
+
+
+@media (min-width: 996px) {
+  .cardExample {
+    max-width: 60%;
+    min-width: 45%;
+  }
+
+  .libsCard {
+    width: 80%;
+  }
+
+  .libsCard:nth-child(even) {
+    align-self: flex-end;
+  }
+
+  .cardContent > div {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 996px) {
+  .cardExample {
+    width: 50%;
+    min-width: 50%;
+  }
+
+  .cardContent > div {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+}
+
+@media (max-width: 800px) {
+  .libsCard {
+    flex-direction: column;
+  }
+
+  .vertContainer {
+    flex-direction: column;
+  }
+
+  .introContainer {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .heroBanner {
+    padding: 0.5rem;
+  }
+
+  .libs {
+    margin: 1.5rem;
+  }
 }
