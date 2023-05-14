@@ -1,4 +1,8 @@
-# Tegral PrismaKT
+---
+title: Tegral PrismaKT
+---
+
+# <img src="/img/tegral_logo_v2_prismakt.png"/> Tegral PrismaKT
 
 :::caution
 

@@ -167,7 +167,6 @@ const tegralNiwenCard = () => (
       <h3>
         <img src="/img/tegral_logo_v2_niwen.svg" height="36" />
         <span className={styles.cardTitle}>Tegral Niwen</span>
-        <span class="badge badge--secondary">Experimental</span>
       </h3>
     </div>
     <div className="card__body">
@@ -176,13 +175,13 @@ const tegralNiwenCard = () => (
         A good fit for prototyping, toy projects or simple languages.
       </p>
       <div className={styles.cardLinks}>
-        <Link className="button button--outline button--secondary" to="/docs/modules/niwen/lexer">
+        <Link className="button button--outline button--secondary" to="/docs/modules/core/niwen/lexer">
           Lexer
         </Link>
-        <Link className="button button--outline button--secondary" to="/docs/modules/niwen/parser">
+        <Link className="button button--outline button--secondary" to="/docs/modules/core/niwen/parser">
           Parser
         </Link>
-        <Link className="button button--outline button--primary" to="/docs/modules/niwen">
+        <Link className="button button--outline button--primary" to="/docs/modules/core/niwen">
           Documentation
         </Link>
       </div>
@@ -210,7 +209,7 @@ const tegralPrismaktCard = () => (
         Use <a href="https://prisma.io">Prisma</a> in your Kotlin applications. Generate JetBrains Exposed bindings for your databases for an awesome Prisma + Kotlin experience.
       </p>
       <div className={styles.cardLinks}>
-        <Link className="button button--outline button--primary" to="/docs/modules/prismakt">
+        <Link className="button button--outline button--primary" to="/docs/modules/core/prismakt">
           Documentation
         </Link>
       </div>
@@ -241,8 +240,8 @@ export default function Home() {
             {tegralDiCard()}
             {tegralOpenApiCard()}
             {tegralWebCard()}
-            {tegralPrismaktCard()}
             {tegralNiwenCard()}
+            {tegralPrismaktCard()}
           </div>
         </div>
         {/*<HomepageFeatures />*/}
