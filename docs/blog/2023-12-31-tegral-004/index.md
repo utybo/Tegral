@@ -1,6 +1,6 @@
 ---
-title: "[DRAFT] Tegral 0.0.4 release"
-description: Features, bug fixes, updates, hooray!
+title: "Tegral 0.0.4 release"
+description: 0.0.4 is now available! New modules for parsers, lexers, a Prisma generator and more!
 slug: tegral-0-0-4-release
 authors:
   - name: utybo
@@ -9,7 +9,6 @@ authors:
     image_url: https://github.com/utybo.png
 tags: [release]
 image: steel-scaffolding-g85ea1a499_1280.jpg
-draft: true
 ---
 
 Long time no see! Welcome to the release notes for Tegral 0.0.4! This release introduces a Prisma generator, a new parsing and lexing framework and much more!
