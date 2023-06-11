@@ -22,3 +22,7 @@ package guru.zoroark.tegral.di.extensions.fundef
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPEALIAS)
 @RequiresOptIn
 annotation class ExperimentalFundef
+
+@Target(AnnotationTarget.FUNCTION)
+@ExperimentalFundef
+annotation class Fundef

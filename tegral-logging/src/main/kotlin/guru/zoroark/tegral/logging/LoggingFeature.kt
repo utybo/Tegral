@@ -26,13 +26,14 @@ import guru.zoroark.tegral.featureful.LifecycleHookedFeature
 import org.slf4j.LoggerFactory
 import ch.qos.logback.classic.Logger as LogbackLogger
 import org.slf4j.Logger as Slf4jLogger
+import guru.zoroark.tegral.featureful.SimpleFeature
 
 /**
  * A feature that adds logging support to the application via the `by scope()` syntax.
  *
  * I.e., adds a `Logger` factory to the application.
  */
-object LoggingFeature : ConfigurableFeature, LifecycleHookedFeature {
+object LoggingFeature : ConfigurableFeature<Unit>, SimpleFeature, LifecycleHookedFeature<Unit> {
     override val id = "tegral-logging"
     override val name = "Tegral Logging"
     override val description = "Provides logging utilities for Tegral applications"

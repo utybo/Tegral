@@ -17,6 +17,7 @@ package guru.zoroark.tegral.web.appdefaults
 import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.featureful.ConfigurableFeature
+import guru.zoroark.tegral.featureful.SimpleFeature
 import guru.zoroark.tegral.logging.LoggingFeature
 import guru.zoroark.tegral.services.feature.ServicesFeature
 import guru.zoroark.tegral.web.config.WebConfiguration
@@ -28,7 +29,7 @@ import guru.zoroark.tegral.web.greeter.GreeterFeature
  *
  * See the Tegral AppDefaults documentation for more information.
  */
-object AppDefaultsFeature : ConfigurableFeature {
+object AppDefaultsFeature : ConfigurableFeature<Unit>, SimpleFeature {
     override val id = "tegral-appdefaults"
     override val name = "Tegral AppDefaults"
     override val description = "Provides sane, overridable defaults and essentials to build a Tegral application."

@@ -20,7 +20,7 @@ import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironment
 /**
  * Features that require special hooking
  */
-interface LifecycleHookedFeature : Feature {
+interface LifecycleHookedFeature<T> : Feature<T> {
     /**
      * Called when the configuration for the application is loaded. This is called before any service is started.
      *

@@ -22,7 +22,7 @@ import guru.zoroark.tegral.services.feature.ServicesFeature
 /**
  * Feature object for Tegral Web Controllers.
  */
-object WebControllersFeature : Feature {
+object WebControllersFeature : Feature<WebControllersConfig> {
     override val id = "tegral.web.controllers"
     override val name = "Tegral Web Controllers"
     override val description =
@@ -30,7 +30,9 @@ object WebControllersFeature : Feature {
             "DI environment."
     override val dependencies = setOf(ServicesFeature)
 
-    override fun ExtensibleContextBuilderDsl.install() {
-        meta { put(::KtorExtension) }
+    override fun createConfigObject() = WebControllersConfig()
+
+    override fun ExtensibleContextBuilderDsl.install(configuration: WebControllersConfig) {
+        meta { put { KtorExtension(scope, configuration.enableFundefs) } }
     }
 }

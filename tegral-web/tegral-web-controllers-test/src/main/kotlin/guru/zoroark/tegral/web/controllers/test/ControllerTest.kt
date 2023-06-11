@@ -20,12 +20,14 @@ import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.dsl.tegralDi
 import guru.zoroark.tegral.di.dsl.tegralDiModule
 import guru.zoroark.tegral.di.environment.InjectableModule
+import guru.zoroark.tegral.di.environment.get
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.test.TegralAbstractSubjectTest
 import guru.zoroark.tegral.di.test.TegralSubjectTest
 import guru.zoroark.tegral.di.test.TestMutableInjectionEnvironment
 import guru.zoroark.tegral.di.test.UnsafeMutableEnvironment
 import guru.zoroark.tegral.web.appdefaults.DefaultAppDefaultsModule
+import guru.zoroark.tegral.web.controllers.KtorExtension
 import guru.zoroark.tegral.web.controllers.KtorModule
 import guru.zoroark.tegral.web.controllers.filterIsKclassSubclassOf
 import io.ktor.client.HttpClient
@@ -93,15 +95,12 @@ abstract class TegralControllerTest<TSubject : Any>(
         val resultRef = mutableListOf<T>()
         // Initialize base test environment
         val env = tegralDi(UnsafeMutableEnvironment, UnsafeMutableEnvironment.Meta) {
+            meta { put { KtorExtension(scope, true) } }
             applyDefaultsModule()
             put(baseModule)
             additionalBuilder()
         }
-        // Initialize application client
-        env.getAllIdentifiers()
-        val modules = env.components.keys.asSequence().filterIsKclassSubclassOf<KtorModule>()
-            .map { env.get(it) }
-            .sortedByDescending { it.moduleInstallationPriority }
+        val modules = env.metaEnvironment.get<KtorExtension>().getAllModules()
         testApplication {
             application { modules.forEach { with(it) { install() } } }
             env.put { this@testApplication }

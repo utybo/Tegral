@@ -72,7 +72,7 @@ class GreetingController(scope: InjectionScope) : KtorController() {
 class OpenApiModule : KtorModule() {
     override fun Application.install() {
         describe {
-            title = "Simpe JSON API"
+            title = "Simple JSON API"
             description = "An example of a simple JSON API using Tegral."
             version = tegralVersion
         }

@@ -32,6 +32,8 @@ import guru.zoroark.tegral.di.extensions.putAlias
 import guru.zoroark.tegral.featureful.ConfigurableFeature
 import guru.zoroark.tegral.featureful.Feature
 import guru.zoroark.tegral.featureful.LifecycleHookedFeature
+import guru.zoroark.tegral.featureful.SimpleFeature
+import guru.zoroark.tegral.logging.LoggingFeature.install
 import guru.zoroark.tegral.web.appdefaults.AppDefaultsFeature
 import guru.zoroark.tegral.web.appdefaults.TegralConfigurationContainer
 import kotlin.reflect.KClass
@@ -50,7 +52,7 @@ class TegralCustomFeature(
     override val name: String,
     override val description: String,
     private val installationCallback: ContextInstallationHook
-) : Feature {
+) : SimpleFeature {
     override fun ExtensibleContextBuilderDsl.install() {
         installationCallback()
     }
@@ -59,7 +61,7 @@ class TegralCustomFeature(
 /**
  * Builder for a [TegralCustomFeature] specifically tailored to contain the logic from the [tegral] block.
  */
-class TegralApplicationFeatureBuilder : ExtensibleContextBuilderDsl, Buildable<Feature> {
+class TegralApplicationFeatureBuilder : ExtensibleContextBuilderDsl, Buildable<FeatureBuilder<Unit>> {
     private val contextBuilderHooks = mutableListOf<ContextInstallationHook>()
     override fun meta(action: ContextBuilderDsl.() -> Unit) {
         contextBuilderHooks += { meta(action) }
@@ -69,15 +71,17 @@ class TegralApplicationFeatureBuilder : ExtensibleContextBuilderDsl, Buildable<F
         contextBuilderHooks += { put(declaration) }
     }
 
-    override fun build(): Feature {
-        return TegralCustomFeature(
-            id = "app-feature",
-            name = "Application Feature",
-            description = "This feature contains classes you place in the 'tegral { }' block.",
-            installationCallback = {
-                this@TegralApplicationFeatureBuilder.contextBuilderHooks.forEach { it() }
-            }
-        )
+    override fun build(): FeatureBuilder<Unit> {
+        return FeatureBuilder(
+            TegralCustomFeature(
+                id = "app-feature",
+                name = "Application Feature",
+                description = "This feature contains classes you place in the 'tegral { }' block.",
+                installationCallback = {
+                    this@TegralApplicationFeatureBuilder.contextBuilderHooks.forEach { it() }
+                }
+            )
+        ) {}
     }
 }
 
@@ -88,7 +92,7 @@ class TegralApplicationFeatureBuilder : ExtensibleContextBuilderDsl, Buildable<F
  */
 class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplication> {
     private val defaultFeatureBuilder: TegralApplicationFeatureBuilder = TegralApplicationFeatureBuilder()
-    private val featuresBuilders: MutableList<Buildable<Feature>> = mutableListOf()
+    private val featuresBuilders: MutableList<FeatureBuilder<*>> = mutableListOf()
 
     private val config: ConfigLoaderBuilder = ConfigLoaderBuilder.default()
     private var configClass: KClass<out RootConfig> = TegralConfigurationContainer::class
@@ -114,29 +118,35 @@ class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplicati
         config.configuration()
     }
 
-    override fun install(featureBuilder: Buildable<Feature>) {
+    override fun <T> install(featureBuilder: FeatureBuilder<T>) {
         featuresBuilders += featureBuilder
     }
 
     override fun build(): TegralApplication {
         // Build all required features
-        val toInstall =
-            (featuresBuilders.toMutableSet() + defaultFeatureBuilder)
-                .map { it.build() }
-                .toMutableSet()
+        val toInstall = featuresBuilders.toMutableSet()
+        toInstall += defaultFeatureBuilder.build()
 
-        tailrec fun ensureAllDependenciesPresent(parents: Collection<Feature>) {
-            val absentDependencies = parents.flatMap { it.dependencies }.minus(toInstall)
+        tailrec fun ensureAllDependenciesPresent(parents: Collection<Feature<*>>) {
+            val absentDependencies = parents
+                .flatMap { it.dependencies }
+                .minus(toInstall.map { it.feature }.toSet())
+                .toSet()
             if (absentDependencies.isNotEmpty()) {
-                absentDependencies.forEach { toInstall += it }
+                absentDependencies.forEach { toInstall += FeatureBuilder(it as Feature<Any>) {} }
                 ensureAllDependenciesPresent(absentDependencies)
             }
         }
 
-        ensureAllDependenciesPresent(toInstall)
+        ensureAllDependenciesPresent(toInstall.map { it.feature })
+
+        val toInstallFeatures = toInstall.map { it.feature }
 
         // Retrieve [tegral.*] configuration sections
-        val sections = toInstall.filterIsInstance<ConfigurableFeature>().flatMap { it.configurationSections }.distinct()
+        val sections = toInstallFeatures
+            .filterIsInstance<ConfigurableFeature<*>>()
+            .flatMap { it.configurationSections }
+            .distinct()
         // Create a decoder adapted to said sections and add it to the config loader
         config.addDecoder(SectionedConfigurationDecoder(TegralConfig::class, ::TegralConfig, sections.toList()))
         // Allow empty sources to support cases where no configuration file is present
@@ -146,7 +156,11 @@ class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplicati
         val appConfig = config.build().loadConfigOrThrow(configClass, configSources)
 
         // Trigger lifecycle-hooked features' onConfigurationLoaded functions
-        toInstall.filterIsInstance<LifecycleHookedFeature>().forEach { it.onConfigurationLoaded(appConfig) }
+        toInstallFeatures
+            .filterIsInstance<LifecycleHookedFeature<*>>()
+            .forEach { it.onConfigurationLoaded(appConfig) }
+
+        val featureContext = FeatureContext(appConfig)
 
         val environment = tegralDi {
             // Register the root config class under both its own class type and under RootConfig.
@@ -156,13 +170,19 @@ class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplicati
 
             put { appConfig.tegral }
 
-            toInstall.forEach {
-                meta { unsafePut(it::class) { it } }
-                with(it) { install() }
+            for (featureBuilder in toInstall) {
+                meta { unsafePut(featureBuilder.feature::class) { featureBuilder.feature } }
+                initAndInstallFeature(featureBuilder, featureContext)
             }
         }
         return TegralApplication(environment)
     }
+}
+
+private fun <T> ExtensibleContextBuilderDsl.initAndInstallFeature(featureBuilder: FeatureBuilder<T>, context: FeatureContext) {
+    val configObj = featureBuilder.feature.createConfigObject()
+    featureBuilder.configBuilder(configObj, context)
+    with(featureBuilder.feature) { install(configObj) }
 }
 
 private fun ContextBuilderDsl.unsafePut(kclass: KClass<*>, provider: ScopedSupplier<*>) {
@@ -186,7 +206,7 @@ private fun ContextBuilderDsl.unsafePut(kclass: KClass<*>, provider: ScopedSuppl
  */
 @TegralDsl
 fun TegralApplicationDsl.applyDefaults() {
-    install(AppDefaultsFeature)
+    install(FeatureBuilder(AppDefaultsFeature) {})
 
     useConfiguration<TegralConfigurationContainer>()
 

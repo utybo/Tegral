@@ -80,7 +80,7 @@ class MultiAppTest {
     fun `Multi app test`() {
         val env = tegralDi {
             useServices()
-            meta { put(::KtorExtension) }
+            meta { put { KtorExtension(scope) } }
 
             put(::AppOne)
             put(::AppTwo)

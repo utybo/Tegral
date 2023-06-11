@@ -18,31 +18,111 @@ import guru.zoroark.tegral.di.environment.Declaration
 import guru.zoroark.tegral.di.environment.Identifier
 import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionScope
+import guru.zoroark.tegral.di.environment.MultiQualifier
+import guru.zoroark.tegral.di.environment.Qualifier
 import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.di.extensions.DeclarationsProcessor
 import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironment
+import guru.zoroark.tegral.di.extensions.fundef.ExperimentalFundef
+import guru.zoroark.tegral.di.extensions.fundef.FunctionQualifier
+import guru.zoroark.tegral.di.extensions.fundef.FundefFunctionWrapper
+import io.ktor.server.application.Application
+import io.ktor.server.routing.Routing
+import kotlin.reflect.KClass
+import kotlin.reflect.full.extensionReceiverParameter
 import kotlin.reflect.full.isSubclassOf
+import kotlin.reflect.typeOf
 
 /**
  * The Ktor extension object that is injected into the meta-environment. Keeps track of implementations of
  * [KtorModule] subclasses (incl. [KtorController] subclasses) within the main environment.
  */
-class KtorExtension(scope: InjectionScope) : DeclarationsProcessor {
+class KtorExtension(scope: InjectionScope, private val enableFundefs: Boolean = false) : DeclarationsProcessor {
     private val environment: ExtensibleInjectionEnvironment by scope()
+
+    private val modulesIdentifiers = mutableListOf<Identifier<out KtorModule>>()
+    private val fundefs = mutableListOf<ResolvableFundef>()
 
     /**
      * Returns modules available in the environment for the given application name.
      */
     fun getModulesForAppName(appName: String?): List<KtorModule> {
-        return environment.getKtorModulesByPriority(modulesIdentifiers, appName)
+        val modules = fundefs.map { it.resolveFrom(environment) }
+        return environment.getKtorModulesByPriority(modulesIdentifiers, AppNameConstraint.App(appName), modules)
     }
 
-    private val modulesIdentifiers = mutableListOf<Identifier<out KtorModule>>()
+    /**
+     * Returns all available modules, including modules for any app.
+     *
+     * Consider using [getModulesForAppName] instead.
+     */
+    fun getAllModules(): List<KtorModule> {
+        val modules = fundefs.map { it.resolveFrom(environment) }
+        return environment.getKtorModulesByPriority(modulesIdentifiers, AppNameConstraint.Any, modules)
+    }
 
+    @OptIn(ExperimentalFundef::class)
     override fun processDeclarations(sequence: Sequence<Declaration<*>>) {
         modulesIdentifiers += sequence.map { it.identifier }.filterIsKclassSubclassOf()
+        sequence
+            .takeIf { enableFundefs }
+            ?.map { it.identifier }
+            ?.filterIsKclassSubclassOf<FundefFunctionWrapper<*>>()
+            ?.mapNotNull {
+                val extParameter =
+                    it.qualifier.findQualifier(FunctionQualifier::class)?.function?.extensionReceiverParameter
+                when (extParameter?.type) {
+                    typeOf<Routing>() -> ResolvableFundef(it, ResolvableFundefType.CONTROLLER)
+                    typeOf<Application>() -> ResolvableFundef(it, ResolvableFundefType.MODULE)
+                    else -> null
+                }
+            }
+            ?.let { fundefs += it }
+    }
+
+    @OptIn(ExperimentalFundef::class)
+    private class ResolvableFundef(
+        val identifier: Identifier<out FundefFunctionWrapper<*>>,
+        private val fundefType: ResolvableFundefType
+    ) {
+        fun resolveFrom(environment: InjectionEnvironment): KtorModule {
+            return toModule(environment.get(identifier))
+        }
+
+        private fun toModule(fundef: FundefFunctionWrapper<*>): KtorModule {
+            return when (fundefType) {
+                ResolvableFundefType.MODULE -> FundefBackedModule(fundef)
+                ResolvableFundefType.CONTROLLER -> FundefBackedController(fundef)
+            }
+        }
+    }
+
+    private enum class ResolvableFundefType {
+        MODULE,
+        CONTROLLER
+    }
+
+    @OptIn(ExperimentalFundef::class)
+    private class FundefBackedModule(private val fundef: FundefFunctionWrapper<*>) : KtorModule() {
+        override fun Application.install() {
+            fundef.invoke(extension = this)
+        }
+    }
+
+    @OptIn(ExperimentalFundef::class)
+    private class FundefBackedController(private val fundef: FundefFunctionWrapper<*>) : KtorController() {
+        override fun Routing.install() {
+            fundef.invoke(extension = this)
+        }
     }
 }
+
+private fun <T : Qualifier> Qualifier.findQualifier(kclass: KClass<T>): T? =
+    when {
+        kclass.isInstance(this) -> this as T
+        this is MultiQualifier -> this.qualifiers.firstNotNullOf { it.findQualifier(kclass) }
+        else -> null
+    }
 
 /**
  * Utility functions that filters declarations to only those that are subclasses of [KtorModule], and returns a properly
@@ -53,6 +133,27 @@ inline fun <reified T : Any> Sequence<Identifier<*>>.filterIsKclassSubclassOf():
         .filterIsInstance<Identifier<out T>>() // Note that this does not actually do anything due to type erasure
         .toList()
 }
+
+sealed class AppNameConstraint {
+    abstract fun acceptsModule(module: KtorModule): Boolean
+
+    class App(val appName: String?) : AppNameConstraint() {
+        override fun acceptsModule(module: KtorModule): Boolean =
+            module.restrictToAppName == appName
+    }
+
+    object Any : AppNameConstraint() {
+        override fun acceptsModule(module: KtorModule) =
+            true
+    }
+}
+
+@Deprecated("Use AppNameConstraint.App instead of a String for the appName parameter")
+fun InjectionEnvironment.getKtorModulesByPriority(
+    allIdentifiers: List<Identifier<out KtorModule>>,
+    appName: String?,
+    additionalModules: List<KtorModule>
+): List<KtorModule> = getKtorModulesByPriority(allIdentifiers, AppNameConstraint.App(appName), additionalModules)
 
 /**
  * Retrieves all implementations of [KtorModule] subclasses in the given environment, sorted by decreasing priority.
@@ -65,10 +166,13 @@ inline fun <reified T : Any> Sequence<Identifier<*>>.filterIsKclassSubclassOf():
  */
 fun InjectionEnvironment.getKtorModulesByPriority(
     allIdentifiers: List<Identifier<out KtorModule>>,
-    appName: String?
+    appNameConstraint: AppNameConstraint,
+    additionalModules: List<KtorModule>
 ): List<KtorModule> {
-    return allIdentifiers
+    return allIdentifiers.asSequence()
         .map { get(it) }
-        .filter { it.restrictToAppName == appName }
+        .plus(additionalModules)
+        .filter { appNameConstraint.acceptsModule(it) }
         .sortedByDescending { it.moduleInstallationPriority }
+        .toList()
 }

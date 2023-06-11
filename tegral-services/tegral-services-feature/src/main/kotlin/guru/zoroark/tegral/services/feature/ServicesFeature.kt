@@ -16,14 +16,14 @@ package guru.zoroark.tegral.services.feature
 
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.services.useServices
-import guru.zoroark.tegral.featureful.Feature
+import guru.zoroark.tegral.featureful.SimpleFeature
 
 /**
  * Feature for using Tegral services in Tegral applications.
  *
  * This feature only installs the Tegral DI Services extension onto this application.
  */
-object ServicesFeature : Feature {
+object ServicesFeature : SimpleFeature {
     override val id = "tegral.services"
     override val name = "Tegral Services"
     override val description = "Service DI helpers for Tegral Services and Tegral DI"

@@ -32,7 +32,7 @@ import guru.zoroark.tegral.web.controllers.KtorExtension
  */
 object KtorTestApplicationFeature : IntegrationTestFeature {
     override fun ExtensibleContextBuilderDsl.install() {
-        meta { put(::KtorExtension) }
+        meta { put { KtorExtension(scope, true) } }
         put(::DefaultKtorTestApplication)
         put(::DefaultKtorApplication) with noService
         put(::DefaultAppDefaultsModule)

@@ -57,14 +57,14 @@ class TegralApplication(
 /**
  * Returns all the features that were installed in this application.
  */
-val TegralApplication.features: Sequence<Feature> get() =
+val TegralApplication.features: Sequence<Feature<*>> get() =
     environment.metaEnvironment.getAllIdentifiers()
         .filter { it.kclass.isSubclassOf(Feature::class) }
-        .map { environment.metaEnvironment.get(it) as Feature }
+        .map { environment.metaEnvironment.get(it) as Feature<*> }
 
 /**
  * Returns all the features that additionally implement [LifecycleHookedFeature] that were installed in this
  * application.
  */
-val TegralApplication.lifecycleFeatures: Sequence<LifecycleHookedFeature> get() =
-    features.filterIsInstance<LifecycleHookedFeature>()
+val TegralApplication.lifecycleFeatures: Sequence<LifecycleHookedFeature<*>> get() =
+    features.filterIsInstance<LifecycleHookedFeature<*>>()
