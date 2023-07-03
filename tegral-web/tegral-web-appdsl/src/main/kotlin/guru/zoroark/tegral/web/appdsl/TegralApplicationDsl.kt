@@ -17,7 +17,6 @@ package guru.zoroark.tegral.web.appdsl
 import com.sksamuel.hoplite.ConfigLoaderBuilder
 import com.sksamuel.hoplite.ConfigSource
 import guru.zoroark.tegral.config.core.RootConfig
-import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.featureful.Feature
@@ -82,6 +81,9 @@ fun <T> TegralApplicationDsl.install(feature: Feature<T>) {
     install(FeatureBuilder(feature) {})
 }
 
+/**
+ * Install the feature onto this application, additionally configuring it with the provided lambda.
+ */
 @TegralDsl
 fun <T> TegralApplicationDsl.install(feature: Feature<T>, configBlock: T.(FeatureContext) -> Unit) {
     install(FeatureBuilder(feature, configBlock))

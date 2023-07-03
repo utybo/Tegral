@@ -21,8 +21,6 @@ import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.featureful.Feature
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
-
-
 class FeatureInstallationTest {
     object TestFeature : Feature<TestFeature.TestFeatureConfigObj> {
         data class TestFeatureConfigObj(

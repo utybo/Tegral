@@ -29,7 +29,6 @@ import guru.zoroark.tegral.di.test.UnsafeMutableEnvironment
 import guru.zoroark.tegral.web.appdefaults.DefaultAppDefaultsModule
 import guru.zoroark.tegral.web.controllers.KtorExtension
 import guru.zoroark.tegral.web.controllers.KtorModule
-import guru.zoroark.tegral.web.controllers.filterIsKclassSubclassOf
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.HttpClientEngineConfig

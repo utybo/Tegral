@@ -42,6 +42,9 @@ import kotlin.reflect.full.isSupertypeOf
 fun <R> ContextBuilderDsl.putFundef(function: KFunction<R>) =
     putFundef(EmptyQualifier, function)
 
+/**
+ * Add a function definition to this environment for the given function and qualifier.
+ */
 @ExperimentalFundef
 @TegralDsl
 fun <R> ContextBuilderDsl.putFundef(qualifier: Qualifier, function: KFunction<R>) =

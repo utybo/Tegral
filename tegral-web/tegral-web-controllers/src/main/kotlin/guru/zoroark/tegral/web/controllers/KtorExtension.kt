@@ -134,20 +134,40 @@ inline fun <reified T : Any> Sequence<Identifier<*>>.filterIsKclassSubclassOf():
         .toList()
 }
 
+/**
+ * A constraint for retrieving modules related to some application in [getKtorModulesByPriority].
+ */
 sealed class AppNameConstraint {
+    /**
+     * Returns true if the provided module corresponds to this constraint.
+     */
     abstract fun acceptsModule(module: KtorModule): Boolean
 
+    /**
+     * Constraint to retrieve modules with applications that have a specific name. Note that 'null' is a valid
+     * application name: it is the default application's name.
+     *
+     * If you want to get *all* modules regardless of their assigned application, use [AppNameConstraint.Any] instead.
+     *
+     * @property appName Name of the app
+     */
     class App(val appName: String?) : AppNameConstraint() {
         override fun acceptsModule(module: KtorModule): Boolean =
             module.restrictToAppName == appName
     }
 
+    /**
+     * Get any module, regardless of their assigned name.
+     */
     object Any : AppNameConstraint() {
         override fun acceptsModule(module: KtorModule) =
             true
     }
 }
 
+/**
+ * Retrieves all implementations of [KtorModule] subclasses in the given environment, sorted by decreasing priority.
+ */
 @Deprecated("Use AppNameConstraint.App instead of a String for the appName parameter")
 fun InjectionEnvironment.getKtorModulesByPriority(
     allIdentifiers: List<Identifier<out KtorModule>>,
@@ -157,12 +177,6 @@ fun InjectionEnvironment.getKtorModulesByPriority(
 
 /**
  * Retrieves all implementations of [KtorModule] subclasses in the given environment, sorted by decreasing priority.
- *
- * You should be able to use the output of this function as is in a for-each, like:
- *
- * ```kotlin
- * getKtorModulesByPriority(...).forEach { install() }
- * ```
  */
 fun InjectionEnvironment.getKtorModulesByPriority(
     allIdentifiers: List<Identifier<out KtorModule>>,

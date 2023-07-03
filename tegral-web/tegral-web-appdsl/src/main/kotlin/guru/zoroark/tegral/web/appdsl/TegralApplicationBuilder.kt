@@ -179,7 +179,10 @@ class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplicati
     }
 }
 
-private fun <T> ExtensibleContextBuilderDsl.initAndInstallFeature(featureBuilder: FeatureBuilder<T>, context: FeatureContext) {
+private fun <T> ExtensibleContextBuilderDsl.initAndInstallFeature(
+    featureBuilder: FeatureBuilder<T>,
+    context: FeatureContext
+) {
     val configObj = featureBuilder.feature.createConfigObject()
     featureBuilder.configBuilder(configObj, context)
     with(featureBuilder.feature) { install(configObj) }
