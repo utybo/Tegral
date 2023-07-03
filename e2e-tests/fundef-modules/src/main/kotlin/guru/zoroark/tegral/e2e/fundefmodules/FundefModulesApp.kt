@@ -1,3 +1,17 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 @file:OptIn(ExperimentalFundef::class)
 
 package guru.zoroark.tegral.e2e.fundefmodules
@@ -65,12 +79,12 @@ fun Routing.controller(service: Service) = route("string") {
         }
     } describe {
         summary = "Get the current string value"
-        200 response {
+        HttpStatusCode.OK.value response {
             description = "Success"
             plainText { schema<String>() }
         }
 
-        404 response {
+        HttpStatusCode.NotFound.value response {
             description = "No value currently available"
         }
     }
@@ -84,11 +98,11 @@ fun Routing.controller(service: Service) = route("string") {
         summary = "Set the string value"
         body { plainText { schema<String>() } }
 
-        200 response {
+        HttpStatusCode.OK.value response {
             description = "Set successfully"
         }
 
-        400 response {
+        HttpStatusCode.BadRequest.value response {
             description = "Invalid value"
         }
     }
@@ -98,7 +112,7 @@ fun Routing.controller(service: Service) = route("string") {
         call.respondText("Deleted", status = HttpStatusCode.OK)
     } describe {
         summary = "Reset the string value"
-        200 response {
+        HttpStatusCode.OK.value response {
             description = "Reset successfully"
         }
     }

@@ -413,6 +413,9 @@ public final class guru/zoroark/tegral/di/extensions/fundef/FunctionQualifierKt 
 	public static final fun ofFunction (Lkotlin/reflect/KFunction;)Lguru/zoroark/tegral/di/environment/Qualifier;
 }
 
+public abstract interface annotation class guru/zoroark/tegral/di/extensions/fundef/Fundef : java/lang/annotation/Annotation {
+}
+
 public final class guru/zoroark/tegral/di/extensions/fundef/FundefConfigureDsl {
 	public fun <init> (Lkotlin/reflect/KFunction;)V
 	public final fun build ()Lkotlin/jvm/functions/Function1;
@@ -440,7 +443,8 @@ public final class guru/zoroark/tegral/di/extensions/fundef/FundefFunctionWrappe
 
 public final class guru/zoroark/tegral/di/extensions/fundef/FundefFunctionWrapperKt {
 	public static final fun getFundefOf (Lguru/zoroark/tegral/di/environment/InjectionEnvironment;Lkotlin/reflect/KFunction;)Lguru/zoroark/tegral/di/extensions/fundef/FundefFunctionWrapper;
+	public static final fun putFundef (Lguru/zoroark/tegral/di/dsl/ContextBuilderDsl;Lguru/zoroark/tegral/di/environment/Qualifier;Lkotlin/reflect/KFunction;)Lguru/zoroark/tegral/di/environment/ScopedSupplierDeclaration;
 	public static final fun putFundef (Lguru/zoroark/tegral/di/dsl/ContextBuilderDsl;Lguru/zoroark/tegral/di/extensions/fundef/FundefConfigureDsl;)V
-	public static final fun putFundef (Lguru/zoroark/tegral/di/dsl/ContextBuilderDsl;Lkotlin/reflect/KFunction;)V
+	public static final fun putFundef (Lguru/zoroark/tegral/di/dsl/ContextBuilderDsl;Lkotlin/reflect/KFunction;)Lguru/zoroark/tegral/di/environment/ScopedSupplierDeclaration;
 }
 

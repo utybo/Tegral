@@ -7,11 +7,12 @@ public final class guru/zoroark/tegral/featureful/ConfigurableFeature$DefaultImp
 }
 
 public abstract interface class guru/zoroark/tegral/featureful/Feature {
+	public abstract fun createConfigObject ()Ljava/lang/Object;
 	public abstract fun getDependencies ()Ljava/util/Set;
 	public abstract fun getDescription ()Ljava/lang/String;
 	public abstract fun getId ()Ljava/lang/String;
 	public abstract fun getName ()Ljava/lang/String;
-	public abstract fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
+	public abstract fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;Ljava/lang/Object;)V
 }
 
 public final class guru/zoroark/tegral/featureful/Feature$DefaultImpls {
@@ -27,5 +28,17 @@ public final class guru/zoroark/tegral/featureful/LifecycleHookedFeature$Default
 	public static fun beforeStart (Lguru/zoroark/tegral/featureful/LifecycleHookedFeature;Lguru/zoroark/tegral/di/extensions/ExtensibleInjectionEnvironment;)V
 	public static fun getDependencies (Lguru/zoroark/tegral/featureful/LifecycleHookedFeature;)Ljava/util/Set;
 	public static fun onConfigurationLoaded (Lguru/zoroark/tegral/featureful/LifecycleHookedFeature;Lguru/zoroark/tegral/config/core/RootConfig;)V
+}
+
+public abstract interface class guru/zoroark/tegral/featureful/SimpleFeature : guru/zoroark/tegral/featureful/Feature {
+	public abstract fun createConfigObject ()V
+	public abstract fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
+	public abstract fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;Lkotlin/Unit;)V
+}
+
+public final class guru/zoroark/tegral/featureful/SimpleFeature$DefaultImpls {
+	public static fun createConfigObject (Lguru/zoroark/tegral/featureful/SimpleFeature;)V
+	public static fun getDependencies (Lguru/zoroark/tegral/featureful/SimpleFeature;)Ljava/util/Set;
+	public static fun install (Lguru/zoroark/tegral/featureful/SimpleFeature;Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;Lkotlin/Unit;)V
 }
 

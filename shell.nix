@@ -10,15 +10,15 @@ let
       EOF
     '';
   });
-  nodePackages16 = unstable.nodePackages.override { nodejs = unstable.nodejs-16_x; };
+  nodePackages18 = unstable.nodePackages.override { nodejs = unstable.nodejs-18_x; };
 in
 unstable.mkShell {
   nativeBuildInputs = [
     patchedGradle
-    unstable.nodejs-16_x
-    nodePackages16.pnpm
+    unstable.nodejs-18_x
+    nodePackages18.pnpm
     unstable.prisma-engines
-    nodePackages16.prisma
+    nodePackages18.prisma
   ];
   shellHook = ''
     export PRISMA_MIGRATION_ENGINE_BINARY="${unstable.prisma-engines}/bin/migration-engine"

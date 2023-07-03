@@ -23,10 +23,10 @@ import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.factory.putFactory
 import guru.zoroark.tegral.featureful.ConfigurableFeature
 import guru.zoroark.tegral.featureful.LifecycleHookedFeature
+import guru.zoroark.tegral.featureful.SimpleFeature
 import org.slf4j.LoggerFactory
 import ch.qos.logback.classic.Logger as LogbackLogger
 import org.slf4j.Logger as Slf4jLogger
-import guru.zoroark.tegral.featureful.SimpleFeature
 
 /**
  * A feature that adds logging support to the application via the `by scope()` syntax.

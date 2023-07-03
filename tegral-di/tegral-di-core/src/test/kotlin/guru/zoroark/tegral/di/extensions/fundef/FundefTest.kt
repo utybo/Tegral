@@ -91,6 +91,8 @@ fun <T> genericDumb(hello: T): String {
 }
 
 class SomeDumbClass(val dumbProp: String) {
+    @OptIn(ExperimentalFundef::class)
+    @Fundef
     fun saySomething() = "Something $dumbProp"
 }
 
@@ -283,7 +285,6 @@ class FundefTest {
         val result = functionWrapper.invoke(mapOf("someText" to "bruh"), extension = ImplementationB())
         assertEquals("The bruh is B", result)
     }
-
 
     @Test
     fun `Check callable fails if extension is not provided`() {
