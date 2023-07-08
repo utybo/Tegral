@@ -30,11 +30,13 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.java.Java
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
+import io.ktor.server.application.Application
 import io.ktor.server.application.call
 import io.ktor.server.netty.Netty
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.get
+import io.ktor.server.routing.routing
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -57,6 +59,22 @@ fun Routing.controllerB(responseService: ResponseService) {
     }
 }
 
+@OptIn(ExperimentalFundef::class)
+@Fundef
+fun Application.controllerAsAModule(responseService: ResponseService) {
+    routing {
+        get("/c") {
+            call.respondText(responseService.createTextFor("C"))
+        }
+    }
+}
+
+@OptIn(ExperimentalFundef::class)
+@Fundef
+fun unrelatedFundef() {
+    error("Not supposed to be called")
+}
+
 class ResponseService {
     fun createTextFor(controllerId: String) = "Controller $controllerId"
 }
@@ -74,10 +92,12 @@ class FundefControllersTest {
             useServices()
             meta { put { KtorExtension(scope, true) } }
 
+            put(::unrelatedFundef)
             put(::ResponseService)
             put(::App)
             put(::ControllerA)
             put(Routing::controllerB)
+            put(Application::controllerAsAModule)
         }
         runBlocking {
             env.services.startAll()
@@ -85,6 +105,7 @@ class FundefControllersTest {
             val client = HttpClient(Java) { expectSuccess = true }
             assertEquals("Controller A", client.get("http://localhost:$TEST_PORT/a").bodyAsText())
             assertEquals("Controller B", client.get("http://localhost:$TEST_PORT/b").bodyAsText())
+            assertEquals("Controller C", client.get("http://localhost:$TEST_PORT/c").bodyAsText())
         }
     }
 }
