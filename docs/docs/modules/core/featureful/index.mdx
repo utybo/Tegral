@@ -1,4 +1,4 @@
-import PackageVersions from '@site/src/components/PackageVersions'
+import PackageVersions from "@site/src/components/PackageVersions";
 
 # Tegral Featureful
 
@@ -6,9 +6,9 @@ Tegral Featureful is a framework for defining lightweight modules (called "featu
 
 Note that Tegral Featureful in itself is not an "application engine". It only allows you to define you own features, but not actually run full applications. This task is delegated to [Tegral Web AppDSL](../../web/appdsl) in the case of web applications.
 
-<PackageVersions libraries={[
-    { name: 'tegral-featureful', catalog: 'featureful' }
-]}/>
+<PackageVersions
+  libraries={[{ name: "tegral-featureful", catalog: "featureful" }]}
+/>
 
 ## What are features?
 
@@ -26,7 +26,7 @@ class Foo {
     fun bar(): String = "Bar!"
 }
 
-object FooFeature : Feature {
+object FooFeature : SimpleFeature {
     override val id = "acme-foo"
     override val name = "ACME Foo"
     override val description = "Provides a Foo instance in the DI environment"
@@ -67,20 +67,81 @@ fun main() {
 }
 ```
 
+## Feature types
+
+The root interface for all features is `Feature<T>`. However, simpler or more specialized interfaces are also available depending on what you need.
+
+Here is a table with which interfaces you should use:
+
+|                           | In-code configuration (of type `T`) | No in-code configuration                        |
+| ------------------------- | ----------------------------------- | ----------------------------------------------- |
+| External configuration    | `ConfigurableFeature<T>`            | `ConfigurableFeature<Unit>` and `SimpleFeature` |
+| No external configuration | `Feature<T>`                        | `SimpleFeature`                                 |
+
 ## Configurable features
 
-Features can consume *configuration* if they need additional information to act upon the environment.
+Features can consume _configuration_ if they need additional information to act upon the environment.
 
-:::caution
+There are two kinds of configurations features can use:
 
-Currently, only configuration via configuration files (e.g. `tegral.toml`) is supported with Tegral Web AppDSL. Later on, proper DSLs for configuring features in-code will be provided (similar to the way [Ktor plugins](https://ktor.io/docs/custom-plugins-base-api.html) work). Rule of thumb will be:
+- **In-code configuration**. This is configuration that is expected to rarely change for a given application, e.g. enabling a special experimental syntax, enabling a special subsystem, etc. This is defined within the code, when installing the feature into an environment.
 
-- If it is something that users are likely to change in production, it should be in the configuration file (if a simple value) or togglable via a configuration field.
-- If it is something that developers are likely to always keep the same, whether in production or in code, it should be in code.
+- **External configuration**. This is configuration that is expected to change often (or per-environment), and each element can be defined either through a file, environment variables, etc. The schema for the configuration file is defined in-code, while the values are provided externally.
 
-:::
+### In-code configuration
 
-Configurable features use [configuration sections](/modules/core/config/sections.md), which are passed to a standard location in Tegral applications. For example, configurable features installed in a Tegral Web application have their sections under the `[tegral.*]` category.
+If you expect some configuration aspects to almost never change within a single application, you can define them in-code. When creating a feature, you can provide a type `T` that will be used as the in-memory configuration type. When installing your feature, users will be able to use a lambda block, which uses said type as a *receiver*, to mutate some properties. Then, the Tegral application builder will call your `install` function with the mutated `T` object.
+
+Defining in-code configuration is done by:
+
+1. Providing a `T` type parameter (see [this section](#feature-types) for choosing the appropriate feature interface) to the `Feature` interface you implement.
+2. Implement `createConfigObject()`: this function should return a new instance of `T` with the default values.
+3. Use the object in your feature's `install` function
+
+For example, here is a feature that prints the configuration values it receives on startup:
+
+```kotlin
+class PrintService(private val foo: String, private val bar: String) : TegralService {
+    override suspend fun start() {
+        println("Foo: $foo, Bar: $bar")
+    }
+}
+
+data class PrintConfig(
+    var foo: String = "Foo!",
+    var bar: String = "Bar!"
+)
+
+object PrintConfigFeature : Feature<PrintConfig> {
+    override val id = "example.print"
+    override val name = "Example Print"
+    override val description = "Prints the configuration values"
+
+    override fun createConfigObject() = PrintConfig()
+
+    override fun ExtensibleContextBuilderDsl.install(configuration: PrintConfig) {
+        put { PrintService(configuration.foo, configuration.bar) }
+    }
+}
+
+fun main() {
+    tegral {
+        install(PrintConfigFeature) {
+            foo = "Hello"
+        }
+    }
+}
+
+// Foo: Hello, Bar: Bar!
+```
+
+Note that, within the `install` block, you have access to additional properties:
+
+- `configuration`: In case you need to access the *external* configuration object to configure *in-code* configuration, you can access it through this property.
+
+### External configuration
+
+Externally configurable features use [configuration sections](/modules/core/config/sections.md), which are passed to a standard location in Tegral applications. For example, configurable features installed in a Tegral Web application have their sections under the `[tegral.*]` category.
 
 Let's extend our previous example. Instead of "Bar!", our Foo feature will use a configurable string, or "Bar!" if no such configuration is present.
 
@@ -146,7 +207,7 @@ When defining features, you only need to define configuration sections. The appl
 
 :::
 
-### Lifecycle features
+## Lifecycle features
 
 Features can `put` [services](../services/index.mdx) into the environment, which will be started like any other service. However, you sometimes need more control over the application's lifecycle, and need to be called back at specific points.
 

@@ -6,26 +6,60 @@ This feature is **experimental**. Its API may be changed or removed at any time 
 
 :::
 
-Fundefs (short for functional component definitions) allow you to define components as a function. The parameters of the function will be automatically injected from the environment. Here's a simple example:
+Fundefs (short for **fun**ctional component **def**initions) allow you to define components as functions. The parameters of the function will be automatically injected from the environment. Here's a simple example:
 
 ```kotlin
 class Greeter {
     fun greet(name: String) = "Hello, $name!"
 }
 
+@Fundef
 fun greetAlice(greeter: Greeter): String {
     return greeter.greet("Alice")
 }
 
 val env = tegralDi {
+
     put(::Greeter)
-    putFundef(::greetAlice)
+    put(::greetAlice)
 }
 
 val fundef = env.getFundefOf(::greetAlice)
 val result = fundef.invoke()
 // result == "Hello, Alice!"
 ```
+
+## `putFundef` vs `put`
+
+As part of the experimentation process, we are slowly transitioning from `putFundef` to the regular `put` function. You need to use the `@Fundef` annotation on your fundefs for them to be properly recognized at the moment. For example, either of these forms will work:
+
+1. Using an annotated function and `put`
+
+    ```kotlin
+    @OptIn(ExperimentalFundef::class)
+    @Fundef
+    fun myFundef(greeter: Greeter): String {
+        // ...
+    }
+
+    val env = tegralDi {
+        // ...
+        put(::myFundef)
+    }
+    ```
+
+2. Using `putFundef`
+
+    ```kotlin
+    fun myFundef(greeter: Greeter): String {
+        // ...
+    }
+
+    val env = tegralDi {
+        // ...
+        putFundef(::myFundef)
+    }
+    ```
 
 ## Overriding fundef parameters
 
@@ -70,7 +104,7 @@ val fundef = env.getFundefOf(::greetAlice)
 val result = fundef.invoke(extension = Greeter())
 ```
 
-Same goes for instance functions.
+The same goes for instance functions.
 
 ```kotlin
 class Greeter {
