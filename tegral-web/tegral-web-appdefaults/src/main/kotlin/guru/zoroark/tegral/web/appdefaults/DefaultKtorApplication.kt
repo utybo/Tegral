@@ -25,7 +25,7 @@ import io.ktor.server.netty.Netty
 /**
  * A basic implementation of [KtorApplication] that uses sane defaults.
  *
- * This implementation sets up the following:
+ * This implementation sets up the following (including via [DefaultAppDefaultsModule]):
  *
  * - Adds the ContentNegotiation feature to the application with Jackson (and sets up the JavaTimeModule on Jackson)
  * - Uses Netty as the server backend
