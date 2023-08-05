@@ -21,7 +21,7 @@ unstable.mkShell {
     nodePackages18.prisma
   ];
   shellHook = ''
-    export PRISMA_MIGRATION_ENGINE_BINARY="${unstable.prisma-engines}/bin/migration-engine"
+    export PRISMA_MIGRATION_ENGINE_BINARY="${unstable.prisma-engines}/bin/schema-engine"
     export PRISMA_QUERY_ENGINE_BINARY="${unstable.prisma-engines}/bin/query-engine"
     export PRISMA_QUERY_ENGINE_LIBRARY="${unstable.prisma-engines}/lib/libquery_engine.node"
     export PRISMA_INTROSPECTION_ENGINE_BINARY="${unstable.prisma-engines}/bin/introspection-engine"
