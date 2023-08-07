@@ -31,6 +31,8 @@ val result = fundef.invoke()
 
 ## `putFundef` vs `put`
 
+There are currently two ways of adding fundefs to an environment: `putFundef` and `put`.
+
 As part of the experimentation process, we are slowly transitioning from `putFundef` to the regular `put` function. You need to use the `@Fundef` annotation on your fundefs for them to be properly recognized at the moment. For example, either of these forms will work:
 
 1. Using an annotated function and `put`
