@@ -37,6 +37,10 @@ jobs:
         with:
           node-version: 16
 
+      - run: npm i -g prisma
+        # HACK Sometimes, CI tests fail with a "TAR_ENTRY_ERROR ENOENT" error. This may be caused by a race condition
+        #      from concurrent installations of Prisma, this attempts to fix it.
+
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
