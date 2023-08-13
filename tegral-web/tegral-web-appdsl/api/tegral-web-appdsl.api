@@ -1,3 +1,14 @@
+public final class guru/zoroark/tegral/web/appdsl/FeatureBuilder {
+	public fun <init> (Lguru/zoroark/tegral/featureful/Feature;Lkotlin/jvm/functions/Function2;)V
+	public final fun getConfigBuilder ()Lkotlin/jvm/functions/Function2;
+	public final fun getFeature ()Lguru/zoroark/tegral/featureful/Feature;
+}
+
+public final class guru/zoroark/tegral/web/appdsl/FeatureContext {
+	public fun <init> (Lguru/zoroark/tegral/config/core/RootConfig;)V
+	public final fun getConfiguration ()Lguru/zoroark/tegral/config/core/RootConfig;
+}
+
 public final class guru/zoroark/tegral/web/appdsl/TegralApplication {
 	public fun <init> (Lguru/zoroark/tegral/di/extensions/ExtensibleInjectionEnvironment;)V
 	public final fun getEnvironment ()Lguru/zoroark/tegral/di/extensions/ExtensibleInjectionEnvironment;
@@ -10,7 +21,7 @@ public final class guru/zoroark/tegral/web/appdsl/TegralApplicationBuilder : gur
 	public fun build ()Lguru/zoroark/tegral/web/appdsl/TegralApplication;
 	public synthetic fun build ()Ljava/lang/Object;
 	public fun getConfigSources ()Ljava/util/List;
-	public fun install (Lguru/zoroark/tegral/core/Buildable;)V
+	public fun install (Lguru/zoroark/tegral/web/appdsl/FeatureBuilder;)V
 	public fun meta (Lkotlin/jvm/functions/Function1;)V
 	public fun put (Lguru/zoroark/tegral/di/environment/Declaration;)V
 	public fun useConfiguration (Lkotlin/jvm/functions/Function1;)V
@@ -23,7 +34,7 @@ public final class guru/zoroark/tegral/web/appdsl/TegralApplicationBuilderKt {
 
 public abstract interface class guru/zoroark/tegral/web/appdsl/TegralApplicationDsl : guru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl {
 	public abstract fun getConfigSources ()Ljava/util/List;
-	public abstract fun install (Lguru/zoroark/tegral/core/Buildable;)V
+	public abstract fun install (Lguru/zoroark/tegral/web/appdsl/FeatureBuilder;)V
 	public abstract fun useConfiguration (Lkotlin/jvm/functions/Function1;)V
 	public abstract fun useConfiguration (Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function1;)V
 }
@@ -34,11 +45,12 @@ public final class guru/zoroark/tegral/web/appdsl/TegralApplicationDsl$DefaultIm
 
 public final class guru/zoroark/tegral/web/appdsl/TegralApplicationDslKt {
 	public static final fun install (Lguru/zoroark/tegral/web/appdsl/TegralApplicationDsl;Lguru/zoroark/tegral/featureful/Feature;)V
+	public static final fun install (Lguru/zoroark/tegral/web/appdsl/TegralApplicationDsl;Lguru/zoroark/tegral/featureful/Feature;Lkotlin/jvm/functions/Function2;)V
 }
 
 public final class guru/zoroark/tegral/web/appdsl/TegralApplicationFeatureBuilder : guru/zoroark/tegral/core/Buildable, guru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl {
 	public fun <init> ()V
-	public fun build ()Lguru/zoroark/tegral/featureful/Feature;
+	public fun build ()Lguru/zoroark/tegral/web/appdsl/FeatureBuilder;
 	public synthetic fun build ()Ljava/lang/Object;
 	public fun meta (Lkotlin/jvm/functions/Function1;)V
 	public fun put (Lguru/zoroark/tegral/di/environment/Declaration;)V
@@ -49,13 +61,17 @@ public final class guru/zoroark/tegral/web/appdsl/TegralApplicationKt {
 	public static final fun getLifecycleFeatures (Lguru/zoroark/tegral/web/appdsl/TegralApplication;)Lkotlin/sequences/Sequence;
 }
 
-public final class guru/zoroark/tegral/web/appdsl/TegralCustomFeature : guru/zoroark/tegral/featureful/Feature {
+public final class guru/zoroark/tegral/web/appdsl/TegralCustomFeature : guru/zoroark/tegral/featureful/SimpleFeature {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public synthetic fun createConfigObject ()Ljava/lang/Object;
+	public fun createConfigObject ()V
 	public fun getDependencies ()Ljava/util/Set;
 	public fun getDescription ()Ljava/lang/String;
 	public fun getId ()Ljava/lang/String;
 	public fun getName ()Ljava/lang/String;
 	public fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
+	public synthetic fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;Ljava/lang/Object;)V
+	public fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;Lkotlin/Unit;)V
 }
 
 public final class guru/zoroark/tegral/web/appdsl/TegralKt {

@@ -1,11 +1,15 @@
-public final class guru/zoroark/tegral/web/appdefaults/AppDefaultsFeature : guru/zoroark/tegral/featureful/ConfigurableFeature {
+public final class guru/zoroark/tegral/web/appdefaults/AppDefaultsFeature : guru/zoroark/tegral/featureful/ConfigurableFeature, guru/zoroark/tegral/featureful/SimpleFeature {
 	public static final field INSTANCE Lguru/zoroark/tegral/web/appdefaults/AppDefaultsFeature;
+	public synthetic fun createConfigObject ()Ljava/lang/Object;
+	public fun createConfigObject ()V
 	public fun getConfigurationSections ()Ljava/util/List;
 	public fun getDependencies ()Ljava/util/Set;
 	public fun getDescription ()Ljava/lang/String;
 	public fun getId ()Ljava/lang/String;
 	public fun getName ()Ljava/lang/String;
 	public fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
+	public synthetic fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;Ljava/lang/Object;)V
+	public fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;Lkotlin/Unit;)V
 }
 
 public final class guru/zoroark/tegral/web/appdefaults/DefaultAppDefaultsModule : guru/zoroark/tegral/web/appdefaults/DefaultsModule {

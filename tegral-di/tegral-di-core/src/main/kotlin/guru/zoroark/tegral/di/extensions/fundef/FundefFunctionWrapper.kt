@@ -23,6 +23,7 @@ import guru.zoroark.tegral.di.environment.InjectionEnvironment
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.Qualifier
 import guru.zoroark.tegral.di.environment.get
+import guru.zoroark.tegral.di.environment.plus
 import kotlin.reflect.KClass
 import kotlin.reflect.KClassifier
 import kotlin.reflect.KFunction
@@ -38,9 +39,16 @@ import kotlin.reflect.full.isSupertypeOf
  */
 @ExperimentalFundef
 @TegralDsl
-fun <R> ContextBuilderDsl.putFundef(function: KFunction<R>) {
-    put(ofFunction(function)) { FundefFunctionWrapper(scope, function, emptyMap()) }
-}
+fun <R> ContextBuilderDsl.putFundef(function: KFunction<R>) =
+    putFundef(EmptyQualifier, function)
+
+/**
+ * Add a function definition to this environment for the given function and qualifier.
+ */
+@ExperimentalFundef
+@TegralDsl
+fun <R> ContextBuilderDsl.putFundef(qualifier: Qualifier, function: KFunction<R>) =
+    put(qualifier + ofFunction(function)) { FundefFunctionWrapper(scope, function, emptyMap()) }
 
 /**
  * Add a function definition to this environment for the given function, with its configuration.

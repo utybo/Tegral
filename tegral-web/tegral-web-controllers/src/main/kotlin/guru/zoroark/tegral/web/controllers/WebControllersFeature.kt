@@ -16,13 +16,14 @@ package guru.zoroark.tegral.web.controllers
 
 import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
+import guru.zoroark.tegral.di.extensions.fundef.ExperimentalFundef
 import guru.zoroark.tegral.featureful.Feature
 import guru.zoroark.tegral.services.feature.ServicesFeature
 
 /**
  * Feature object for Tegral Web Controllers.
  */
-object WebControllersFeature : Feature {
+object WebControllersFeature : Feature<WebControllersConfig> {
     override val id = "tegral.web.controllers"
     override val name = "Tegral Web Controllers"
     override val description =
@@ -30,7 +31,24 @@ object WebControllersFeature : Feature {
             "DI environment."
     override val dependencies = setOf(ServicesFeature)
 
-    override fun ExtensibleContextBuilderDsl.install() {
-        meta { put(::KtorExtension) }
+    override fun createConfigObject() = WebControllersConfig()
+
+    override fun ExtensibleContextBuilderDsl.install(configuration: WebControllersConfig) {
+        meta { put { KtorExtension(scope, @OptIn(ExperimentalFundef::class) configuration.enableFundefs) } }
     }
 }
+
+/**
+ * Configuration object for [WebControllersFeature].
+ */
+data class WebControllersConfig(
+    /**
+     * If true, [fundefs](https://tegral.zoroark.guru/docs/modules/core/di/fundefs) that are extension functions of
+     * Ktor's `Routing` or `Application` classes will be loaded alongside classes that implement
+     * [KtorModule]/[KtorController].
+     *
+     * Note that, along with fundefs, this is experimental.
+     */
+    @property:ExperimentalFundef
+    var enableFundefs: Boolean = false
+)

@@ -6,7 +6,21 @@ The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [Unreleased] (0.0.5)
+
+### Added
+
+- `tegral-featureful`
+
+  - Features can now be configured in-code. You can now configure specific aspects of a feature directly in code, without the need of always using a configuration file. ([#87](https://github.com/utybo/Tegral/pull/87))
+
+- `tegral-web-controllers`
+
+  - **Experimental** Controllers and modules can now be declared using fundefs. ([#87](https://github.com/utybo/Tegral/pull/87))
+
+- `tegral-di-core`
+
+  - **Experimental** Fundefs whose function is annotated with `@Fundef` can now be `put()` like any other component, e.g. `put(::myFundef)` ([#87](https://github.com/utybo/Tegral/pull/87))
 
 ## [0.0.4] - 2023-05-14
 

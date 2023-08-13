@@ -24,9 +24,13 @@ import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.Qualifier
 import guru.zoroark.tegral.di.environment.ScopedSupplier
 import guru.zoroark.tegral.di.environment.ScopedSupplierDeclaration
+import guru.zoroark.tegral.di.extensions.fundef.ExperimentalFundef
+import guru.zoroark.tegral.di.extensions.fundef.Fundef
+import guru.zoroark.tegral.di.extensions.fundef.putFundef
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.createType
+import kotlin.reflect.full.hasAnnotation
 
 /**
  * Context for Tegral DI builders, such as module builders ([tegralDiModule]) or environment builders ([tegralDi]).
@@ -138,6 +142,9 @@ fun <T : Any> ContextBuilderDsl.put(kclass: KClass<T>, supplier: KFunction<T>) =
  * Qualifiers allow for differentiating between components that have the same  type. See [Identifier] for more
  * information.
  *
+ * Note that, if the provided [supplier] is annotated with [Fundef], it will be registered as a fundef using [putFundef]
+ * instead.
+ *
  * @param kclass The class of the type [T]. This is useful for scenarios where it is not known at compile time. If the
  * type is already known at compile time, you can remove the `kclass` parameter.
  * @param qualifier The qualifier for the type.
@@ -145,11 +152,14 @@ fun <T : Any> ContextBuilderDsl.put(kclass: KClass<T>, supplier: KFunction<T>) =
  * @param T The type of the component to add.
  * @returns The created declaration.
  */
+@OptIn(ExperimentalFundef::class)
 @TegralDsl
 fun <T : Any> ContextBuilderDsl.put(kclass: KClass<T>, qualifier: Qualifier, supplier: KFunction<T>) =
     when {
         supplier.returnType.isMarkedNullable ->
             throw InvalidDeclarationException("Cannot 'put' a function that has a nullable return type.")
+        supplier.hasAnnotation<Fundef>() ->
+            putFundef(qualifier, supplier)
         supplier.parameters.isEmpty() ->
             put(kclass, qualifier) { supplier.call() }
         // Requires a scope
@@ -157,7 +167,8 @@ fun <T : Any> ContextBuilderDsl.put(kclass: KClass<T>, qualifier: Qualifier, sup
             put(kclass, qualifier) { supplier.call(scope) }
         else -> throw InvalidDeclarationException(
             "Cannot 'put' the given function ($supplier). It must take either no parameters or a single argument " +
-                "that is of type 'InjectionScope'. Consider manually instantiating this component instead."
+                "that is of type 'InjectionScope'. Consider manually instantiating this component instead.\n" +
+                "TRYING TO ADD A FUNDEF? Add a @Fundef annotation to your function"
         )
     }
 

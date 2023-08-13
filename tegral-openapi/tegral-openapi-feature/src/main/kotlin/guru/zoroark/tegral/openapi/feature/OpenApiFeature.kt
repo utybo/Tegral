@@ -16,7 +16,7 @@ package guru.zoroark.tegral.openapi.feature
 
 import guru.zoroark.tegral.di.dsl.put
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
-import guru.zoroark.tegral.featureful.Feature
+import guru.zoroark.tegral.featureful.SimpleFeature
 
 /**
  * A feature for Tegral OpenAPI + Ktor integration in Tegral Web applications.
@@ -26,7 +26,7 @@ import guru.zoroark.tegral.featureful.Feature
  * - `/_t/openapi`
  * - `/_t/swagger`
  */
-object OpenApiFeature : Feature {
+object OpenApiFeature : SimpleFeature {
     override val id = "tegral-openapi"
     override val name = "Tegral OpenAPI"
     override val description = "Provides OpenAPI and Swagger support for Tegral Web applications"

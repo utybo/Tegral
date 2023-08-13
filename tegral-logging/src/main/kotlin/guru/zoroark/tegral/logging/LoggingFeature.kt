@@ -23,6 +23,7 @@ import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.factory.putFactory
 import guru.zoroark.tegral.featureful.ConfigurableFeature
 import guru.zoroark.tegral.featureful.LifecycleHookedFeature
+import guru.zoroark.tegral.featureful.SimpleFeature
 import org.slf4j.LoggerFactory
 import ch.qos.logback.classic.Logger as LogbackLogger
 import org.slf4j.Logger as Slf4jLogger
@@ -32,7 +33,7 @@ import org.slf4j.Logger as Slf4jLogger
  *
  * I.e., adds a `Logger` factory to the application.
  */
-object LoggingFeature : ConfigurableFeature, LifecycleHookedFeature {
+object LoggingFeature : ConfigurableFeature<Unit>, SimpleFeature, LifecycleHookedFeature<Unit> {
     override val id = "tegral-logging"
     override val name = "Tegral Logging"
     override val description = "Provides logging utilities for Tegral applications"

@@ -73,7 +73,7 @@ class FullTest {
     fun `Full application test`() {
         val env = tegralDi {
             useServices()
-            meta { put(::KtorExtension) }
+            meta { put { KtorExtension(scope) } }
 
             put(::App)
             put(::ContentModule)

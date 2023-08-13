@@ -17,7 +17,7 @@ package guru.zoroark.tegral.web.appdsl
 import com.sksamuel.hoplite.ConfigLoaderBuilder
 import com.sksamuel.hoplite.ConfigSource
 import guru.zoroark.tegral.config.core.RootConfig
-import guru.zoroark.tegral.core.Buildable
+import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.featureful.Feature
 import guru.zoroark.tegral.web.appdefaults.TegralConfigurationContainer
@@ -49,7 +49,7 @@ interface TegralApplicationDsl : ExtensibleContextBuilderDsl {
     /**
      * Adds a feature that will be installed in the application upon build.
      */
-    fun install(featureBuilder: Buildable<Feature>)
+    fun <T> install(featureBuilder: FeatureBuilder<T>)
 
     /**
      * List of all the Hoplite configuration sources that will be used to load this application.
@@ -64,6 +64,7 @@ interface TegralApplicationDsl : ExtensibleContextBuilderDsl {
  *
  * For example, `useConfiguration<MyConfig>()` is strictly equivalent to calling `useConfiguration(MyConfig::class)`.
  */
+@TegralDsl
 inline fun <reified T : RootConfig> TegralApplicationDsl.useConfiguration(
     noinline configuration: ConfigLoaderBuilder.() -> Unit = {}
 ) {
@@ -75,6 +76,15 @@ inline fun <reified T : RootConfig> TegralApplicationDsl.useConfiguration(
  *
  * @see TegralApplicationDsl.install
  */
-fun TegralApplicationDsl.install(feature: Feature) {
-    install(Buildable.of(feature))
+@TegralDsl
+fun <T> TegralApplicationDsl.install(feature: Feature<T>) {
+    install(FeatureBuilder(feature) {})
+}
+
+/**
+ * Install the feature onto this application, additionally configuring it with the provided lambda.
+ */
+@TegralDsl
+fun <T> TegralApplicationDsl.install(feature: Feature<T>, configBlock: T.(FeatureContext) -> Unit) {
+    install(FeatureBuilder(feature, configBlock))
 }

@@ -1,11 +1,15 @@
-public final class guru/zoroark/tegral/web/greeter/GreeterFeature : guru/zoroark/tegral/featureful/LifecycleHookedFeature {
+public final class guru/zoroark/tegral/web/greeter/GreeterFeature : guru/zoroark/tegral/featureful/LifecycleHookedFeature, guru/zoroark/tegral/featureful/SimpleFeature {
 	public static final field INSTANCE Lguru/zoroark/tegral/web/greeter/GreeterFeature;
 	public fun beforeStart (Lguru/zoroark/tegral/di/extensions/ExtensibleInjectionEnvironment;)V
+	public synthetic fun createConfigObject ()Ljava/lang/Object;
+	public fun createConfigObject ()V
 	public fun getDependencies ()Ljava/util/Set;
 	public fun getDescription ()Ljava/lang/String;
 	public fun getId ()Ljava/lang/String;
 	public fun getName ()Ljava/lang/String;
 	public fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
+	public synthetic fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;Ljava/lang/Object;)V
+	public fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;Lkotlin/Unit;)V
 	public fun onConfigurationLoaded (Lguru/zoroark/tegral/config/core/RootConfig;)V
 }
 

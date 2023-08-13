@@ -3,25 +3,25 @@
 let
   unstable = import (fetchTarball https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz) { };
   toolchains = [ (unstable.jdk11 + "/lib/openjdk") (unstable.jdk17 + "/lib/openjdk") ];
-  patchedGradle = unstable.gradle_7.overrideAttrs (curr: old: {
+  patchedGradle = unstable.gradle_8.overrideAttrs (curr: old: {
     fixupPhase = old.fixupPhase + ''
       cat > $out/lib/gradle/gradle.properties <<EOF
       org.gradle.java.installations.paths=${unstable.lib.concatStringsSep "," toolchains}
       EOF
     '';
   });
-  nodePackages16 = unstable.nodePackages.override { nodejs = unstable.nodejs-16_x; };
+  nodePackages18 = unstable.nodePackages.override { nodejs = unstable.nodejs-18_x; };
 in
 unstable.mkShell {
   nativeBuildInputs = [
     patchedGradle
-    unstable.nodejs-16_x
-    nodePackages16.pnpm
+    unstable.nodejs-18_x
+    nodePackages18.pnpm
     unstable.prisma-engines
-    nodePackages16.prisma
+    nodePackages18.prisma
   ];
   shellHook = ''
-    export PRISMA_MIGRATION_ENGINE_BINARY="${unstable.prisma-engines}/bin/migration-engine"
+    export PRISMA_MIGRATION_ENGINE_BINARY="${unstable.prisma-engines}/bin/schema-engine"
     export PRISMA_QUERY_ENGINE_BINARY="${unstable.prisma-engines}/bin/query-engine"
     export PRISMA_QUERY_ENGINE_LIBRARY="${unstable.prisma-engines}/lib/libquery_engine.node"
     export PRISMA_INTROSPECTION_ENGINE_BINARY="${unstable.prisma-engines}/bin/introspection-engine"

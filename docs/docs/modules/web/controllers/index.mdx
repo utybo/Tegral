@@ -94,6 +94,64 @@ class MyController(scope: InjectionScope) : KtorController() {
 }
 ```
 
+### Fundefs
+
+:::caution Experimental
+
+Fundefs and fundefs support in Tegral Web are both experimental and subject to change.
+
+Fundef support must be enabled in Tegral Web using the following in your `tegral` block:
+
+```kotlin
+tegral {
+    install(WebControllersFeature) {
+        enableFundefs = true
+    }
+}
+```
+
+:::
+
+Ktor modules and controllers can also be defined using [fundefs](../../core/di/fundefs.md). This is a shorter syntax that is more convenient for controllers and modules that do not require complex logic.
+
+Fundefs that have Ktor's `Application` or `Routing` class as a receiver are installed as Ktor modules and Ktor controllers respectively. For example, this:
+
+```kotlin
+class GreetingController(scope: InjectionScope) : KtorController() {
+    private val greetingService: GreetingService by scope()
+
+    override fun Routing.install() {
+        get {
+            call.respondText(greetingService.generateGreeting())
+        }
+    }
+}
+
+tegral {
+    put(::GreetingController)
+}
+```
+
+Can be written as:
+
+```kotlin
+@Fundef
+fun Routing.greetingController(greetingService: GreetingService) {
+    get {
+        call.respondText(greetingService.generateGreeting())
+    }
+}
+
+tegral {
+    install(WebControllersFeature) {
+        enableFundefs = true
+    }
+    put(Routing::greetingController)
+}
+```
+
+It is not currently possible to change the application name or priority order for controllers or modules defined this way.
+
 ## Installation order
 
 In case you need to control the order in which your components are installed, you can pass a priority integer to `KtorController` and `KtorModule` constructors.

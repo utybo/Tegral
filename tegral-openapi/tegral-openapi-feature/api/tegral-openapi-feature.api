@@ -3,13 +3,17 @@ public final class guru/zoroark/tegral/openapi/feature/OpenApiEndpoints : guru/z
 	public fun install (Lio/ktor/server/routing/Routing;)V
 }
 
-public final class guru/zoroark/tegral/openapi/feature/OpenApiFeature : guru/zoroark/tegral/featureful/Feature {
+public final class guru/zoroark/tegral/openapi/feature/OpenApiFeature : guru/zoroark/tegral/featureful/SimpleFeature {
 	public static final field INSTANCE Lguru/zoroark/tegral/openapi/feature/OpenApiFeature;
+	public synthetic fun createConfigObject ()Ljava/lang/Object;
+	public fun createConfigObject ()V
 	public fun getDependencies ()Ljava/util/Set;
 	public fun getDescription ()Ljava/lang/String;
 	public fun getId ()Ljava/lang/String;
 	public fun getName ()Ljava/lang/String;
 	public fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;)V
+	public synthetic fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;Ljava/lang/Object;)V
+	public fun install (Lguru/zoroark/tegral/di/extensions/ExtensibleContextBuilderDsl;Lkotlin/Unit;)V
 }
 
 public final class guru/zoroark/tegral/openapi/feature/OpenApiModule : guru/zoroark/tegral/web/controllers/KtorModule {

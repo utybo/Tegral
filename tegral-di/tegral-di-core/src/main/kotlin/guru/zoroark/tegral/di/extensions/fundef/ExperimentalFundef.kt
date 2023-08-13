@@ -19,6 +19,43 @@ package guru.zoroark.tegral.di.extensions.fundef
  *
  * You can follow the development of fundefs here: https://github.com/utybo/Tegral/issues/73
  */
-@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPEALIAS)
+@Target(
+    AnnotationTarget.CLASS,
+    AnnotationTarget.FUNCTION,
+    AnnotationTarget.TYPEALIAS,
+    AnnotationTarget.PROPERTY
+)
 @RequiresOptIn
 annotation class ExperimentalFundef
+
+/**
+ * When used on a function, allows to use `put` on the function instead of [putFundef].
+ *
+ * For example, allows you to go from this:
+ *
+ * ```kotlin
+ * fun myFundef() {
+ *     // ...
+ * }
+ *
+ * val env = tegralDi {
+ *     putFundef(::myFundef)
+ * }
+ * ```
+ *
+ * ... to this...
+ *
+ * ```kotlin
+ * @Fundef
+ * fun myFundef() {
+ *     // ...
+ * }
+ *
+ * val env = tegralDi {
+ *     put(::myFundef)
+ * }
+ * ```
+ */
+@Target(AnnotationTarget.FUNCTION)
+@ExperimentalFundef
+annotation class Fundef

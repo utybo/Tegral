@@ -24,6 +24,7 @@ import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.di.extensions.ExtensibleContextBuilderDsl
 import guru.zoroark.tegral.di.extensions.ExtensibleInjectionEnvironment
 import guru.zoroark.tegral.featureful.LifecycleHookedFeature
+import guru.zoroark.tegral.featureful.SimpleFeature
 import guru.zoroark.tegral.logging.LoggerName
 import guru.zoroark.tegral.logging.LoggingFeature
 import org.slf4j.Logger
@@ -55,7 +56,7 @@ internal class Greeter(scope: InjectionScope) {
 /**
  * A feature that automatically prints a "welcome message" before starting an application.
  */
-object GreeterFeature : LifecycleHookedFeature {
+object GreeterFeature : LifecycleHookedFeature<Unit>, SimpleFeature {
     override val id = "tegral-web-greeter"
     override val name = "Tegral Web Greeter"
     override val description = "Simple feature that displays a message on startup"

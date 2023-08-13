@@ -75,7 +75,7 @@ class InitOrderTest {
     fun `Test installation order`() {
         val env = tegralDi {
             useServices()
-            meta { put(::KtorExtension) }
+            meta { put { KtorExtension(scope) } }
 
             put(::KtorApp)
             put(::ModuleA)
