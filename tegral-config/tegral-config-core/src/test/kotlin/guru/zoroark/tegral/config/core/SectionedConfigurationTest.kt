@@ -41,6 +41,11 @@ class SectionedConfigurationTest {
         val scTwo: SectionedConfigurationTwo
     )
 
+    data class ConfigurationContainerWithOtherFields(
+        val scOne: SectionedConfigurationOne,
+        val someProperty: String
+    )
+
     data class SimpleSection(val key: String) {
         companion object :
             ConfigurationSection<SimpleSection>("simple-section", SectionOptionality.Required, SimpleSection::class)
@@ -199,5 +204,28 @@ class SectionedConfigurationTest {
         }
         assertNotNull(exc.message)
         assertTrue { exc.message!!.contains("Missing required section(s): simple-section") }
+    }
+
+    @Test
+    fun `Can create a default config embedded in another class if all sections are optional`() {
+        val toml = """
+            someProperty = "SomeValue"
+        """.trimIndent()
+        val fs = setupFs("/test.toml", toml)
+        val config = ConfigLoaderBuilder.default()
+            .strict()
+            .addDecoder(
+                SectionedConfigurationDecoder(
+                    SectionedConfigurationOne::class,
+                    ::SectionedConfigurationOne,
+                    listOf(OptionalSection)
+                )
+            )
+            .addPathSource(fs.getPath("/test.toml"))
+            .build()
+            .loadConfigOrThrow<ConfigurationContainerWithOtherFields>()
+
+        assertEquals(OptionalSection(), config.scOne[OptionalSection])
+        assertEquals("SomeValue", config.someProperty)
     }
 }
