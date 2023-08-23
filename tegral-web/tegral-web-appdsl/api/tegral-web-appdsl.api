@@ -25,7 +25,7 @@ public final class guru/zoroark/tegral/web/appdsl/TegralApplicationBuilder : gur
 	public fun meta (Lkotlin/jvm/functions/Function1;)V
 	public fun put (Lguru/zoroark/tegral/di/environment/Declaration;)V
 	public fun useConfiguration (Lkotlin/jvm/functions/Function1;)V
-	public fun useConfiguration (Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function1;)V
+	public fun useConfigurationClass (Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class guru/zoroark/tegral/web/appdsl/TegralApplicationBuilderKt {
@@ -36,11 +36,11 @@ public abstract interface class guru/zoroark/tegral/web/appdsl/TegralApplication
 	public abstract fun getConfigSources ()Ljava/util/List;
 	public abstract fun install (Lguru/zoroark/tegral/web/appdsl/FeatureBuilder;)V
 	public abstract fun useConfiguration (Lkotlin/jvm/functions/Function1;)V
-	public abstract fun useConfiguration (Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function1;)V
+	public abstract fun useConfigurationClass (Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class guru/zoroark/tegral/web/appdsl/TegralApplicationDsl$DefaultImpls {
-	public static synthetic fun useConfiguration$default (Lguru/zoroark/tegral/web/appdsl/TegralApplicationDsl;Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun useConfigurationClass$default (Lguru/zoroark/tegral/web/appdsl/TegralApplicationDsl;Lkotlin/reflect/KClass;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 }
 
 public final class guru/zoroark/tegral/web/appdsl/TegralApplicationDslKt {
