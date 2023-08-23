@@ -33,7 +33,6 @@ import guru.zoroark.tegral.featureful.ConfigurableFeature
 import guru.zoroark.tegral.featureful.Feature
 import guru.zoroark.tegral.featureful.LifecycleHookedFeature
 import guru.zoroark.tegral.featureful.SimpleFeature
-import guru.zoroark.tegral.logging.LoggingFeature.install
 import guru.zoroark.tegral.web.appdefaults.AppDefaultsFeature
 import guru.zoroark.tegral.web.appdefaults.TegralConfigurationContainer
 import kotlin.reflect.KClass
@@ -106,7 +105,7 @@ class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplicati
         defaultFeatureBuilder.put(declaration)
     }
 
-    override fun <T : RootConfig> useConfiguration(
+    override fun <T : RootConfig> useConfigurationClass(
         configClass: KClass<T>,
         configuration: ConfigLoaderBuilder.() -> Unit
     ) {
@@ -211,7 +210,7 @@ private fun ContextBuilderDsl.unsafePut(kclass: KClass<*>, provider: ScopedSuppl
 fun TegralApplicationDsl.applyDefaults() {
     install(FeatureBuilder(AppDefaultsFeature) {})
 
-    useConfiguration<TegralConfigurationContainer>()
+    useConfigurationType<TegralConfigurationContainer>()
 
     configSources += listOf("/tegral.toml", "/tegral.yaml", "/tegral.json")
         .flatMap {

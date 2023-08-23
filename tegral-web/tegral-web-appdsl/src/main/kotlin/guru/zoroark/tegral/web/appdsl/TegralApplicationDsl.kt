@@ -36,7 +36,7 @@ interface TegralApplicationDsl : ExtensibleContextBuilderDsl {
      * By default, [applyDefaults] will set this to be [TegralConfigurationContainer], which only contains a single
      * `tegral: TegralConfig` property.
      */
-    fun <T : RootConfig> useConfiguration(
+    fun <T : RootConfig> useConfigurationClass(
         configClass: KClass<T>,
         configuration: ConfigLoaderBuilder.() -> Unit = {}
     )
@@ -54,21 +54,21 @@ interface TegralApplicationDsl : ExtensibleContextBuilderDsl {
     /**
      * List of all the Hoplite configuration sources that will be used to load this application.
      *
-     * @see useConfiguration
+     * @see useConfigurationClass
      */
     val configSources: MutableList<ConfigSource>
 }
 
 /**
- * Equivalent to [TegralApplicationDsl.useConfiguration], but uses a reified type instead.
+ * Equivalent to [TegralApplicationDsl.useConfigurationClass], but uses a reified type instead.
  *
- * For example, `useConfiguration<MyConfig>()` is strictly equivalent to calling `useConfiguration(MyConfig::class)`.
+ * For example, `useConfigurationClass<MyConfig>()` is strictly equivalent to calling `useConfigurationClass(MyConfig::class)`.
  */
 @TegralDsl
-inline fun <reified T : RootConfig> TegralApplicationDsl.useConfiguration(
+inline fun <reified T : RootConfig> TegralApplicationDsl.useConfigurationType(
     noinline configuration: ConfigLoaderBuilder.() -> Unit = {}
 ) {
-    useConfiguration(T::class, configuration)
+    useConfigurationClass(T::class, configuration)
 }
 
 /**

@@ -53,7 +53,7 @@ class Issue39Repro {
         val app = tegral(enableDefaults = false) {
             install(ServicesFeature)
 
-            useConfiguration<MyConfig> {
+            useConfigurationType<MyConfig> {
                 addSource(
                     TomlPropertySource(
                         """
