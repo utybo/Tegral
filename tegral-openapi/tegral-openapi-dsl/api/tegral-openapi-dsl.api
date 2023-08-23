@@ -170,6 +170,7 @@ public final class guru/zoroark/tegral/openapi/dsl/OpenApiKt {
 public final class guru/zoroark/tegral/openapi/dsl/OpenApiVersion : java/lang/Enum {
 	public static final field V3_0 Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;
 	public static final field V3_1 Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getVersion ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;
 	public static fun values ()[Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;
@@ -289,6 +290,7 @@ public final class guru/zoroark/tegral/openapi/dsl/ParameterKind : java/lang/Enu
 	public static final field Header Lguru/zoroark/tegral/openapi/dsl/ParameterKind;
 	public static final field Path Lguru/zoroark/tegral/openapi/dsl/ParameterKind;
 	public static final field Query Lguru/zoroark/tegral/openapi/dsl/ParameterKind;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/openapi/dsl/ParameterKind;
 	public static fun values ()[Lguru/zoroark/tegral/openapi/dsl/ParameterKind;
 }

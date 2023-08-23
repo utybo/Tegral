@@ -864,6 +864,7 @@ public final class guru/zoroark/tegral/prismakt/generator/protocol/FieldKind : j
 	public static final field Object Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;
 	public static final field Scalar Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;
 	public static final field Unsupported Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;
 	public static fun values ()[Lguru/zoroark/tegral/prismakt/generator/protocol/FieldKind;
@@ -875,6 +876,7 @@ public final class guru/zoroark/tegral/prismakt/generator/protocol/FieldLocation
 	public static final field InputObjectTypes Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;
 	public static final field OutputObjectTypes Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;
 	public static final field Scalar Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;
 	public static fun values ()[Lguru/zoroark/tegral/prismakt/generator/protocol/FieldLocation;
@@ -883,6 +885,7 @@ public final class guru/zoroark/tegral/prismakt/generator/protocol/FieldLocation
 public final class guru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace : java/lang/Enum {
 	public static final field Model Lguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;
 	public static final field Prisma Lguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;
 	public static fun values ()[Lguru/zoroark/tegral/prismakt/generator/protocol/FieldNamespace;

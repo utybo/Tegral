@@ -76,6 +76,7 @@ public final class guru/zoroark/tegral/di/test/check/DependencyKind : java/lang/
 	public static final field Injection Lguru/zoroark/tegral/di/test/check/DependencyKind;
 	public static final field Resolution Lguru/zoroark/tegral/di/test/check/DependencyKind;
 	public final fun getArrow ()Ljava/lang/String;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/di/test/check/DependencyKind;
 	public static fun values ()[Lguru/zoroark/tegral/di/test/check/DependencyKind;
 }

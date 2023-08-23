@@ -6,6 +6,7 @@ public final class guru/zoroark/tegral/logging/LogLevel : java/lang/Enum {
 	public static final field Off Lguru/zoroark/tegral/logging/LogLevel;
 	public static final field Trace Lguru/zoroark/tegral/logging/LogLevel;
 	public static final field Warn Lguru/zoroark/tegral/logging/LogLevel;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/logging/LogLevel;
 	public static fun values ()[Lguru/zoroark/tegral/logging/LogLevel;
 }

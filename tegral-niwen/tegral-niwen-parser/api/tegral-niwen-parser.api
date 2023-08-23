@@ -35,6 +35,7 @@ public final class guru/zoroark/tegral/niwen/parser/BranchSeeker$Node {
 public final class guru/zoroark/tegral/niwen/parser/BranchSeeker$Status : java/lang/Enum {
 	public static final field DID_NOT_MATCH Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;
 	public static final field SUCCESS Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;
 	public static fun values ()[Lguru/zoroark/tegral/niwen/parser/BranchSeeker$Status;
 }
