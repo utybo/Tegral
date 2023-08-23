@@ -163,11 +163,7 @@ interface OperationDsl {
  */
 @TegralDsl
 @Suppress("TooManyFunctions")
-class OperationBuilder(private val context: OpenApiDslContext) :
-    OperationDsl,
-    @Suppress("DEPRECATION")
-    Builder<Operation>,
-    Buildable<Operation> {
+class OperationBuilder(private val context: OpenApiDslContext) : OperationDsl, Buildable<Operation> {
     override var summary: String? = null
     override val responses = mutableMapOf<Int, Buildable<ApiResponse>>()
     override var description: String? = null

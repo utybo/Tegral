@@ -138,11 +138,7 @@ class ParameterBuilder(
      * The kind of parameter. See [ParameterKind] for more information.
      */
     private val kind: ParameterKind
-) :
-    @Suppress("DEPRECATION")
-    Builder<Parameter>,
-    Buildable<Parameter>,
-    ParameterDsl {
+) : Buildable<Parameter>, ParameterDsl {
     override var description: String? = null
     override var required: Boolean? = null
     override var deprecated: Boolean? = null

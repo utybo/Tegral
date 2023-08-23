@@ -83,11 +83,7 @@ fun <T> MediaTypeDsl.schema(ktype: KType, example: T) {
 /**
  * A builder for [MediaTypeDsl].
  */
-class MediaTypeBuilder(private val context: OpenApiDslContext) :
-    MediaTypeDsl,
-    @Suppress("DEPRECATION")
-    Builder<MediaType>,
-    Buildable<MediaType> {
+class MediaTypeBuilder(private val context: OpenApiDslContext) : MediaTypeDsl, Buildable<MediaType> {
     override var schema: Schema<*>? = null
     private var _example: Any? = null
     private var _exampleWasSet: Boolean = false

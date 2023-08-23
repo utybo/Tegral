@@ -128,12 +128,7 @@ private const val WRITE_ONLY_ERROR_MSG =
  * Builder for [PathDsl]
  */
 @Suppress("TooManyFunctions")
-class PathBuilder(
-    private val context: OpenApiDslContext
-) : PathDsl,
-    @Suppress("DEPRECATION")
-    Builder<PathItem>,
-    Buildable<PathItem> {
+class PathBuilder(private val context: OpenApiDslContext) : PathDsl, Buildable<PathItem> {
 
     override var get: OperationBuilder? = null
     override var post: OperationBuilder? = null

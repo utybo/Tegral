@@ -49,11 +49,7 @@ interface HeaderDsl : MediaTypeDsl {
 /**
  * Builder for [ResponseDsl]
  */
-class HeaderBuilder(private val context: OpenApiDslContext) :
-    HeaderDsl,
-    @Suppress("DEPRECATION")
-    Builder<Header>,
-    Buildable<Header> {
+class HeaderBuilder(private val context: OpenApiDslContext) : HeaderDsl, Buildable<Header> {
     override var description: String? = null
     override var deprecated: Boolean? = null
     override var explode: Boolean? = null

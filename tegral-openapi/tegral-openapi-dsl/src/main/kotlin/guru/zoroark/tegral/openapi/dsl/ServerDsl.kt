@@ -27,11 +27,7 @@ interface ServerDsl
 /**
  * Builder for [ServerDsl].
  */
-class ServerBuilder(private val url: String) :
-    ServerDsl,
-    @Suppress("DEPRECATION")
-    Builder<Server>,
-    Buildable<Server> {
+class ServerBuilder(private val url: String) : ServerDsl, Buildable<Server> {
     // TODO missing properties here
     override fun build() = Server().apply {
         url(this@ServerBuilder.url)
