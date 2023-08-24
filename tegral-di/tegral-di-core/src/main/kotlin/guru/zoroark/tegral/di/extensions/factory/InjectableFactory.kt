@@ -18,11 +18,14 @@ import guru.zoroark.tegral.core.TegralDsl
 import guru.zoroark.tegral.di.InvalidDeclarationException
 import guru.zoroark.tegral.di.dsl.ContextBuilderDsl
 import guru.zoroark.tegral.di.dsl.put
+import guru.zoroark.tegral.di.environment.EmptyQualifier
 import guru.zoroark.tegral.di.environment.EnvironmentComponents
 import guru.zoroark.tegral.di.environment.Identifier
 import guru.zoroark.tegral.di.environment.InjectionScope
+import guru.zoroark.tegral.di.environment.Qualifier
 import guru.zoroark.tegral.di.environment.ResolvableDeclaration
 import guru.zoroark.tegral.di.environment.invoke
+import guru.zoroark.tegral.di.environment.plus
 import guru.zoroark.tegral.di.environment.resolvers.IdentifierResolver
 import guru.zoroark.tegral.di.environment.typed
 import kotlin.properties.ReadOnlyProperty
@@ -90,13 +93,13 @@ class FactoryDeclaration<T : Any>(
  * services (also known as a singleton), factories
  */
 @TegralDsl
-inline fun <reified T : Any> ContextBuilderDsl.putFactory(noinline block: (Any) -> T) {
-    put<InjectableFactory<T>>(typed<T>()) { InjectableFactoryImpl(block) }
+inline fun <reified T : Any> ContextBuilderDsl.putFactory(qualifier: Qualifier = EmptyQualifier, noinline block: (Any) -> T) {
+    put<InjectableFactory<T>>(typed<T>() + qualifier) { InjectableFactoryImpl(block) }
     @Suppress("UNCHECKED_CAST")
     put(
         FactoryDeclaration(
-            Identifier(T::class),
-            Identifier(InjectableFactory::class as KClass<InjectableFactory<T>>, typed<T>())
+            Identifier(T::class, qualifier),
+            Identifier(InjectableFactory::class as KClass<InjectableFactory<T>>, typed<T>() + qualifier)
         )
     )
 }

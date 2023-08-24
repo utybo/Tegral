@@ -24,6 +24,7 @@ import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.MixedImmutableEnvironment
 import guru.zoroark.tegral.di.environment.get
 import guru.zoroark.tegral.di.environment.invoke
+import guru.zoroark.tegral.di.environment.named
 import guru.zoroark.tegral.di.extensions.factory.factory
 import guru.zoroark.tegral.di.extensions.factory.putFactory
 import io.mockk.mockk
@@ -215,5 +216,23 @@ class FactoryExtensionTest {
             put(::DeprecatedUser)
         }
         assertEquals("I am AAA's A", env.get<DeprecatedUser>().a.identity)
+    }
+
+    class ABUser(scope: InjectionScope) {
+        val factoryA: A by scope()
+        val factoryB: A by scope(named("BBB"))
+    }
+
+    @Test
+    fun `Putting a factory with a qualifier`() {
+        val env = tegralDi {
+            putFactory { A("AAA") }
+            putFactory(named("BBB")) { A("BBB") }
+            put(::ABUser)
+        }
+        val abUser = env.get<ABUser>()
+        assertEquals("I am AAA's A", abUser.factoryA.identity)
+        assertEquals("I am BBB's A", abUser.factoryB.identity)
+
     }
 }
