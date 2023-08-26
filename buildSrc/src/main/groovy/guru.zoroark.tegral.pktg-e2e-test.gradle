@@ -30,6 +30,12 @@ sourceSets {
     }
 }
 
+tasks.register('readyGenerator', JavaExec) {
+    mainClass = "guru.zoroark.tegral.prismakt.generator.MainKt"
+    classpath = configurations.generator
+    args "--help"
+}
+
 tasks.register('prismaGenerate', NpxTask) {
     command = "prisma"
     args = ["generate"]
@@ -37,6 +43,8 @@ tasks.register('prismaGenerate', NpxTask) {
     inputs.file("prisma/schema.prisma")
     inputs.files(configurations.generator)
     outputs.dir(project.layout.buildDirectory.dir("prismakt-generator"))
+
+    dependsOn tasks.readyGenerator
 }
 
 tasks.register('runGeneratorInternal', JavaExec) {

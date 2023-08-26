@@ -26,12 +26,12 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - `tegral-web-appdsl`
 
-  - Variations of `useConfiguration` renamed to avoid shadowing:
+  - Variations of `useConfiguration` renamed to avoid shadowing: ([#90](https://github.com/utybo/Tegral/pull/90))
     - **BREAKING CHANGE**
     - `useConfiguration<T>` -> `useConfigurationType<T>`
     - `useConfiguration(T::class)` -> `useConfigurationClass(T::class)`
 
-- Dependency updates
+- Dependency updates ([#90](https://github.com/utybo/Tegral/pull/90))
 
 | Dependency | Old version | New version |
 | --: | -- | -- |
@@ -40,7 +40,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 | Jackson | 2.15.0 | 2.15.2 |
 | Jimfs | 1.2 | 1.3.0 |
 | JUnit | 5.9.2 | 5.10.0 |
-| Kotlin | 1.8.21 | 1.9.0 |
+| Kotlin | 1.8.21 | 1.9.10 |
 | Kotlin Coroutines | 1.7.1 | 1.7.3 |
 | Ktor | 2.3.0 | 2.3.3 |
 | Lang3 | 3.12.0 | 3.13.0 |
