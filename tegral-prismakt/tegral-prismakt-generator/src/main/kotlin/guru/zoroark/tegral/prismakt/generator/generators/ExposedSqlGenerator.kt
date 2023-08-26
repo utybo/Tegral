@@ -72,7 +72,8 @@ private fun initializeColumnWith(
         ScalarType.TByte -> builtInColumn("byte", Byte::class)
         is ScalarType.TChar -> builtInColumn("char", String::class, type.n)
 
-        is ScalarType.TDecimal -> type.getPrecisionAndScale(false /* TODO */).let { (precision, scale) ->
+        // TODO proper value in getPrecisionAndScale
+        is ScalarType.TDecimal -> type.getPrecisionAndScale(false).let { (precision, scale) ->
             initializer.add("decimal(name = %S, precision = %L, scale = %L)", fieldName, precision, scale)
             Column::class.parameterizedBy(BigDecimal::class)
         }

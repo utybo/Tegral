@@ -64,6 +64,7 @@ class TestLaunch {
             runBlocking { tegral.stop() }
         }
     }
+
     @Test
     fun `Test launch config without tegral block`() {
         val tegral = tegral {

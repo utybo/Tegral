@@ -62,7 +62,8 @@ interface TegralApplicationDsl : ExtensibleContextBuilderDsl {
 /**
  * Equivalent to [TegralApplicationDsl.useConfigurationClass], but uses a reified type instead.
  *
- * For example, `useConfigurationClass<MyConfig>()` is strictly equivalent to calling `useConfigurationClass(MyConfig::class)`.
+ * For example, `useConfigurationClass<MyConfig>()` is strictly equivalent to calling
+ * `useConfigurationClass(MyConfig::class)`.
  */
 @TegralDsl
 inline fun <reified T : RootConfig> TegralApplicationDsl.useConfigurationType(
