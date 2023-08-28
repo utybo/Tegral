@@ -26,6 +26,7 @@ testcontainers = "1.18.3"
 postgresql = "42.6.0"
 mysql = "8.1.0"
 lang3 = "3.13.0"
+shadow = "8.1.1"
 
 [libraries]
 # Dependencies
@@ -112,3 +113,4 @@ gradleTestLogger = { id = "com.adarshr.test-logger", version.ref = "gradleTestLo
 kotlinBcv = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinBcv" }
 nodeGradle = { id = "com.github.node-gradle.node", version.ref = "nodeGradle" }
 licenser = { id = "org.cadixdev.licenser", version.ref = "licenserPlugin" }
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }

@@ -6,8 +6,8 @@ plugins {
     id 'guru.zoroark.tegral.publish-conventions'
 }
 
-List<String> computeLibrariesToInclude() {
-    def result = new ArrayList<String>()
+def computeLibrariesToInclude() {
+    def result = new ArrayList<Tuple<String>>()
     def bundles = new HashMap<String, ArrayList<String>>()
 
     def projects = rootProject.getSubprojects()
@@ -33,7 +33,7 @@ List<String> computeLibrariesToInclude() {
 }
 
 
-def setupTask = task "setupVersionCatalog" {
+tasks.register("setupVersionCatalog") {
     doLast {
         catalog {
             versionCatalog {
@@ -55,7 +55,7 @@ def setupTask = task "setupVersionCatalog" {
     }
 }
 
-tasks["generateCatalogAsToml"].dependsOn setupTask
+tasks.generateCatalogAsToml.dependsOn(tasks.setupVersionCatalog)
 
 publishing {
     publications {
