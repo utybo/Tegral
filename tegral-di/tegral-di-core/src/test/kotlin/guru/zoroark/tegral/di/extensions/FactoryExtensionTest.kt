@@ -233,6 +233,5 @@ class FactoryExtensionTest {
         val abUser = env.get<ABUser>()
         assertEquals("I am AAA's A", abUser.factoryA.identity)
         assertEquals("I am BBB's A", abUser.factoryB.identity)
-
     }
 }

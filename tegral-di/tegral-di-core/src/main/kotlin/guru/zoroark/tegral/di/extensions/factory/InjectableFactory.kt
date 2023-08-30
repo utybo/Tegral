@@ -93,7 +93,10 @@ class FactoryDeclaration<T : Any>(
  * services (also known as a singleton), factories
  */
 @TegralDsl
-inline fun <reified T : Any> ContextBuilderDsl.putFactory(qualifier: Qualifier = EmptyQualifier, noinline block: (Any) -> T) {
+inline fun <reified T : Any> ContextBuilderDsl.putFactory(
+    qualifier: Qualifier = EmptyQualifier,
+    noinline block: (Any) -> T
+) {
     put<InjectableFactory<T>>(typed<T>() + qualifier) { InjectableFactoryImpl(block) }
     @Suppress("UNCHECKED_CAST")
     put(
