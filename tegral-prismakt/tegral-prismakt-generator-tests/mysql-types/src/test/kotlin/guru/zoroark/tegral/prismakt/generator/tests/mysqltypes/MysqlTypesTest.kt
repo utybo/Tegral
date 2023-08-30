@@ -52,7 +52,6 @@ class MysqlTypesTest {
             driver = "com.mysql.cj.jdbc.Driver",
             user = "root",
             password = "root"
-
         )
     }
 

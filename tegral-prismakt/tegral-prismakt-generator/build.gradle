@@ -1,6 +1,7 @@
 plugins {
     id 'guru.zoroark.tegral.kotlin-published-library-conventions'
     id 'application'
+    id 'com.github.johnrengelman.shadow'
 }
 
 dependencies {

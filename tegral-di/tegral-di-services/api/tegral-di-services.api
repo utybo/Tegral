@@ -2,6 +2,7 @@ public final class guru/zoroark/tegral/di/services/IgnorePolicy : java/lang/Enum
 	public static final field IgnoreAll Lguru/zoroark/tegral/di/services/IgnorePolicy;
 	public static final field IgnoreStart Lguru/zoroark/tegral/di/services/IgnorePolicy;
 	public static final field IgnoreStop Lguru/zoroark/tegral/di/services/IgnorePolicy;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/di/services/IgnorePolicy;
 	public static fun values ()[Lguru/zoroark/tegral/di/services/IgnorePolicy;
 }

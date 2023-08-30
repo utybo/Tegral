@@ -142,7 +142,12 @@ fun <T : Any> descriptionFromResource(
         val obj = resourceClass.findResourceDescription()
         val parentHooks: List<PathDescriptionHook> = resourceClass
             .findParentDescriptions()
-            .map { desc -> { desc.openApi.invoke(this); this.clearOperations() } }
+            .map { desc ->
+                {
+                    desc.openApi.invoke(this)
+                    this.clearOperations()
+                }
+            }
         val builder = PathBuilder(ctx).apply {
             hooks.forEach { it() }
             parentHooks.asReversed().forEach { it() }

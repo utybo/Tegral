@@ -104,11 +104,7 @@ interface InfoDsl {
  * Builder object for the [info object](https://spec.openapis.org/oas/v3.1.0#info-object).
  */
 @TegralDsl
-class InfoBuilder :
-    @Suppress("DEPRECATION")
-    Builder<Info>,
-    Buildable<Info>,
-    InfoDsl {
+class InfoBuilder : Buildable<Info>, InfoDsl {
     override var title: String? = null
     override var summary: String? = null
     override var description: String? = null

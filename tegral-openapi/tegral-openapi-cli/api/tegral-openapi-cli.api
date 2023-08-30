@@ -1,6 +1,7 @@
 public final class guru/zoroark/tegral/openapi/cli/Format : java/lang/Enum {
 	public static final field JSON Lguru/zoroark/tegral/openapi/cli/Format;
 	public static final field YAML Lguru/zoroark/tegral/openapi/cli/Format;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun invoke (Lio/swagger/v3/oas/models/OpenAPI;Lguru/zoroark/tegral/openapi/dsl/OpenApiVersion;)Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lguru/zoroark/tegral/openapi/cli/Format;
 	public static fun values ()[Lguru/zoroark/tegral/openapi/cli/Format;

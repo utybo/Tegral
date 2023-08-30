@@ -75,13 +75,13 @@ This part will focus on creating a two-way integration between Gradle and Prisma
 sequenceDiagram
 Something ->>+ Gradle: Compile Kotlin files
 Gradle ->>+ Prisma: Call prisma generate
-Prisma ->>+ Gradle: Call runGeneratorInternal
-Gradle ->>- Prisma: Done
+Prisma ->>+ PrismaKT: Run
+PrismaKT ->>- Prisma: Done
 Prisma ->>- Gradle: Done
 Gradle ->>- Something: Done
 ```
 
-In a nutshell, we'll set Prisma to use Gradle to generate the code, and Gradle to call Prisma when we need to compile Kotlin code.
+In a nutshell, we'll use Gradle to manage PrismaKT, and give Prisma a command to call said PrismaKT.
 
 ### Gradle setup
 
@@ -106,7 +106,16 @@ plugins {
 }
 
 configurations {
-    generator
+    // A configuration that we'll use to depend on
+    generator {
+        // This is a configuration intended to be resolved (i.e. retrieve dependencies) and not consumed by others.
+        canBeConsumed false
+        canBeResolved true
+        // We want to get the full JAR, so we need to configure the attributes for this configuration to do so
+        attributes {
+            attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling, Bundling.SHADOWED))
+        }
+    }
 }
 
 dependencies {
@@ -114,17 +123,6 @@ dependencies {
     generator tegralLibs.prismakt.generator
     // or without Tegral Catalog (replace VERSION with the version you want)
     generator "guru.zoroark.tegral:tegral-prismakt-generator:VERSION"
-}
-
-// Set up for running the generator
-
-tasks.register('runGeneratorInternal', JavaExec) {
-    mainClass = "guru.zoroark.tegral.prismakt.generator.MainKt"
-    classpath = configurations.generator
-    standardInput = System.in
-
-    // This forces Gradle to always rerun the generator no matter what when Prisma launches it
-    outputs.upToDateWhen { false }
 }
 
 // Set up for letting Gradle call 'prisma generate' and take its results into account
@@ -136,6 +134,7 @@ sourceSets {
     }
 }
 
+// Ensure `prisma generate` is called before compiling any Kotlin code that may rely on the generated code
 tasks.compileKotlin.dependsOn prismaGenerate
 tasks.compileTestKotlin.dependsOn prismaGenerate
 
@@ -144,8 +143,16 @@ tasks.register('prismaGenerate', NpxTask) {
     args = ["generate"]
 
     inputs.file("prisma/schema.prisma")
-    inputs.files(configurations.generator)
     outputs.dir(project.layout.buildDirectory.dir("prismakt-generator"))
+
+    dependsOn configurations.generator
+
+    // Created via providers.provider for lazy evaluation, otherwise this would
+    // retrieve information from configurations before their resolution
+    environment = providers.provider {
+        def command = "java -jar " + configurations.generator.find { it.name.endsWith(".jar") }
+        return ["PRISMAKT_CMD": command]
+    }
 }
 ```
 
@@ -155,7 +162,7 @@ In your `prisma/schema.prisma` file, add (or replace the current generator with)
 
 ```prisma
 generator prismakt {
-  provider      = "gradle --console=plain -q runGeneratorInternal"
+  provider      = env("PRISMAKT_CMD")
   output        = "../build/prismaGeneratedSrc"
   exposedTarget = "sql"
 }
@@ -163,7 +170,7 @@ generator prismakt {
 
 If you want Tegral to generate DAO bindings, use `exposedTarget = "dao"`, otherwise use `exposedTarget = "sql"`
 
-### Testing things out
+## Testing things out
 
 You should now be able to run PrismaKT, either by running `prisma generate` (when using JBang) or `gradle prismaGenerate` (when using Gradle).
 

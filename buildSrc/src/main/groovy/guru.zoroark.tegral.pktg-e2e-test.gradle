@@ -8,6 +8,16 @@ plugins {
     id 'project-report'
 }
 
+configurations {
+    generator {
+        canBeResolved true
+        canBeConsumed false
+        attributes {
+            attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling, Bundling.SHADOWED))
+        }
+    }
+}
+
 dependencies {
     implementation libs.exposed.core
     implementation libs.exposed.dao
@@ -16,10 +26,8 @@ dependencies {
     implementation libs.sqlite
 
     testImplementation project(":tegral-prismakt:tegral-prismakt-generator-tests-support")
-}
 
-configurations {
-    generator
+    generator project(path: ":tegral-prismakt:tegral-prismakt-generator")
 }
 
 sourceSets {
@@ -35,24 +43,25 @@ tasks.register('prismaGenerate', NpxTask) {
     args = ["generate"]
 
     inputs.file("prisma/schema.prisma")
-    inputs.files(configurations.generator)
     outputs.dir(project.layout.buildDirectory.dir("prismakt-generator"))
-}
+    outputs.file(layout.buildDirectory.file("jacoco/generator.exec"))
 
-tasks.register('runGeneratorInternal', JavaExec) {
-    mainClass = "guru.zoroark.tegral.prismakt.generator.MainKt"
-    classpath = configurations.generator
-    standardInput = System.in
+    dependsOn configurations.jacocoAgent
+    dependsOn configurations.generator
 
-    outputs.upToDateWhen { false }
-}
-
-jacoco {
-    applyTo runGeneratorInternal
+    environment = providers.provider {
+        // Agent file retrieval based on JacocoAgentJar.getJar from the Gradle JaCoCo plugin
+        def jacocoAgentFile = zipTree(configurations.jacocoAgent.singleFile).find { it.name.equals("jacocoagent.jar") }
+        def command = "java " +
+                "-javaagent:" + jacocoAgentFile + "=destfile=" + layout.buildDirectory.file("jacoco/generator.exec").get().asFile.absolutePath +
+                " -jar " + configurations.generator.find { it.name.endsWith(".jar") }
+        println("Generated KT command: " + command)
+        return ["PRISMAKT_CMD": command]
+    }
 }
 
 tasks.register('generatorCodeCoverage', JacocoReport) {
-    executionData runGeneratorInternal
+    executionData layout.buildDirectory.file("jacoco/generator.exec")
     sourceSets sourceSets.main
 
     dependsOn(tasks.prismaGenerate)

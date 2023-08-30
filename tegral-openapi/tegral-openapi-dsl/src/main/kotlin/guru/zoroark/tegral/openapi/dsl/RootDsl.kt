@@ -73,12 +73,7 @@ class RootBuilder(
     private val infoBuilder: InfoBuilder = InfoBuilder(),
     private val paths: PathsBuilder = PathsBuilder(context),
     private val securitySchemes: MutableMap<String, SecuritySchemeBuilder> = mutableMapOf()
-) : RootDsl,
-    InfoDsl by infoBuilder,
-    PathsDsl by paths,
-    @Suppress("DEPRECATION")
-    Builder<OpenAPI>,
-    Buildable<OpenAPI> {
+) : RootDsl, InfoDsl by infoBuilder, PathsDsl by paths, Buildable<OpenAPI> {
     private val tags = mutableListOf<TagBuilder>()
     private val servers = mutableListOf<Buildable<Server>>()
 

@@ -75,11 +75,7 @@ interface PathsDsl {
 /**
  * Builder for [PathsDsl].
  */
-class PathsBuilder(private val context: OpenApiDslContext) :
-    PathsDsl,
-    @Suppress("DEPRECATION")
-    Builder<Paths>,
-    Buildable<Paths> {
+class PathsBuilder(private val context: OpenApiDslContext) : PathsDsl, Buildable<Paths> {
     private val pathBuilders = mutableMapOf<String, PathBuilder>()
 
     override fun String.invoke(path: PathDsl.() -> Unit) {

@@ -55,7 +55,7 @@ publishing {
                 afterEvaluate {
                     for (requiredExtProp in ['humanName', 'description', 'url']) {
                         if (!project.extensions.extraProperties.properties.containsKey(requiredExtProp)) {
-                            throw new Exception("Missing projet.ext." + requiredExtProp)
+                            throw new Exception("Missing project.ext." + requiredExtProp)
                         }
                     }
                     name = project.ext.humanName

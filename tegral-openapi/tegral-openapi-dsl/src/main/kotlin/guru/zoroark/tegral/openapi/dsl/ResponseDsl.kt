@@ -45,12 +45,7 @@ interface ResponseDsl : BodyDsl {
 /**
  * Builder for Response objects, implementing the [ResponseDsl].
  */
-class ResponseBuilder(context: OpenApiDslContext) :
-    BodyBuilder(context),
-    ResponseDsl,
-    @Suppress("DEPRECATION")
-    Builder<ApiResponse>,
-    Buildable<ApiResponse> {
+class ResponseBuilder(context: OpenApiDslContext) : BodyBuilder(context), ResponseDsl, Buildable<ApiResponse> {
     override var description: String? = null
     override val headers: MutableList<Pair<String, Buildable<Header>>> = mutableListOf()
 

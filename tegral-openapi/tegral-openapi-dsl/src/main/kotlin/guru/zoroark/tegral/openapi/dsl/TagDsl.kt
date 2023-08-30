@@ -55,8 +55,6 @@ interface TagDsl {
  */
 class TagBuilder(private val name: String) :
     TagDsl,
-    @Suppress("DEPRECATION")
-    Builder<Tag>,
     Buildable<Tag> {
     override var description: String? = null
     override var externalDocsDescription: String? = null

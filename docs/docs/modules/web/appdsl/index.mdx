@@ -53,7 +53,7 @@ Applications ran with AppDSL can be configured using a number of ways (in a desc
 Your application's configuration is parsed into a data class that implements `RootConfig`. By default, said data class only contains a `tegral` field (as this field is used by all Tegral features for configuration), but you can also define your own class by:
 
 - Having it implement `RootConfig` (this is once again to ensure that there is a `tegral` field present)
-- Using `useConfiguration<...>()` within the `tegral { }` block to specify the class.
+- Using `useConfigurationType<...>()` or `useConfigurationClass(...)` within the `tegral { }` block to specify the class.
 
 ```kotlin
 data class MyConfig(
@@ -76,7 +76,7 @@ class FoobarService(scope: InjectionScope) {
 
 fun main() {
     val app = tegral {
-        useConfiguration<MyConfig>()
+        useConfigurationType<MyConfig>()
 
         put(::FoobarService)
     }
@@ -85,13 +85,13 @@ fun main() {
 
 ### Configuring Hoplite
 
-You can also further configure Hoplite by passing a lambda to `useConfiguration()`:
+You can also further configure Hoplite by passing a lambda to `useConfiguration()`, `useConfigurationClass(...)` or `useConfigurationType<...>()`:
 
 ```kotlin
 fun main() {
     tegral {
         // highlight-start
-        useConfiguration<MyConfig> { // this: ConfigLoaderBuilder
+        useConfigurationType<MyConfig> { // this: ConfigLoaderBuilder
             // You can use any ConfigLoaderBuilder function here
         }
         // highlight-end

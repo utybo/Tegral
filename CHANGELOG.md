@@ -22,6 +22,41 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
   - **Experimental** Fundefs whose function is annotated with `@Fundef` can now be `put()` like any other component, e.g. `put(::myFundef)` ([#87](https://github.com/utybo/Tegral/pull/87))
 
+- `tegral-prismakt-generator`
+
+  - A "shadow" JAR is now published in addition to the regular JAR. Recommendations for integrating PrismaKT Generator into Gradle projects have been updated to use this shadow JAR. ([#90](https://github.com/utybo/Tegral/pull/90))
+
+### Changed
+
+- `tegral-web-appdsl`
+
+  - Variations of `useConfiguration` renamed to avoid shadowing: ([#90](https://github.com/utybo/Tegral/pull/90))
+    - **BREAKING CHANGE**
+    - `useConfiguration<T>` -> `useConfigurationType<T>`
+    - `useConfiguration(T::class)` -> `useConfigurationClass(T::class)`
+
+- Dependency updates ([#90](https://github.com/utybo/Tegral/pull/90))
+
+| Dependency | Old version | New version |
+| --: | -- | -- |
+| Exposed | 0.41.1 | 0.42.0 |
+| Hoplite | 2.7.4 | 2.7.5 |
+| Jackson | 2.15.0 | 2.15.2 |
+| Jimfs | 1.2 | 1.3.0 |
+| JUnit | 5.9.2 | 5.10.0 |
+| Kotlin | 1.8.21 | 1.9.10 |
+| Kotlin Coroutines | 1.7.1 | 1.7.3 |
+| Ktor | 2.3.0 | 2.3.3 |
+| Lang3 | 3.12.0 | 3.13.0 |
+| Swagger Core | 2.2.9 | 2.2.15 |
+| Swagger UI | 4.15.5 | 5.3.1 |
+
+### Removed
+
+- `tegral-openapi-dsl`
+
+  - `Builder<T>` has been removed. Replace all remaining uses with Tegral Core's `Buildable<T>`.
+
 ## [0.0.4] - 2023-05-14
 
 ### Added

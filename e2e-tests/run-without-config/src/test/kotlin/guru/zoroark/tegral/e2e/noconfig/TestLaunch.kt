@@ -14,8 +14,13 @@
 
 package guru.zoroark.tegral.e2e.noconfig
 
+import com.sksamuel.hoplite.addResourceSource
+import guru.zoroark.tegral.config.core.RootConfig
+import guru.zoroark.tegral.config.core.TegralConfig
 import guru.zoroark.tegral.di.dsl.put
+import guru.zoroark.tegral.di.environment.get
 import guru.zoroark.tegral.web.appdsl.tegral
+import guru.zoroark.tegral.web.appdsl.useConfigurationType
 import guru.zoroark.tegral.web.controllers.KtorController
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.java.Java
@@ -37,12 +42,38 @@ class Controller : KtorController() {
     }
 }
 
+data class NoTegralSectionConfig(
+    override val tegral: TegralConfig,
+    val someProperty: String
+) : RootConfig
+
 class TestLaunch {
     @Test
     fun `Test launch without config`() {
         val tegral = tegral {
             put(::Controller)
         }
+        try {
+            HttpClient(Java).use {
+                val res = runBlocking {
+                    it.get("http://localhost:8080/").bodyAsText()
+                }
+                assertEquals("Hello!", res)
+            }
+        } finally {
+            runBlocking { tegral.stop() }
+        }
+    }
+
+    @Test
+    fun `Test launch config without tegral block`() {
+        val tegral = tegral {
+            useConfigurationType<NoTegralSectionConfig> {
+                addResourceSource("/no-tegral-section.toml")
+            }
+            put(::Controller)
+        }
+        assertEquals("SomeValue", tegral.environment.get<NoTegralSectionConfig>().someProperty)
         try {
             HttpClient(Java).use {
                 val res = runBlocking {

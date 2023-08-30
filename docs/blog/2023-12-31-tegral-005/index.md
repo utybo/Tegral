@@ -142,3 +142,24 @@ tegral {
 ```
 
 For more information on this, refer to the [Tegral Featureful document](/docs/modules/core/featureful#feature-types)
+
+## Misc. breaking changes
+
+The various variations of the `useConfiguration` functions available in the `tegral {}` block have been renamed. As a reminder, these functions allow you to further configure [Hoplite](https://github.com/sksamuel/hoplite) by changing the configuration class, adding property sources (i.e. adding config files), etc.
+
+```kotlin
+tegral {
+    // Previously: useConfiguration<MyConfigClass> { ... }
+    useConfigurationType<MyConfigClass> { ... }
+
+    // Previously: useConfiguration(MyConfigClass::class) { ... }
+    useConfigurationClass(MyConfigClass::class) { ... }
+
+    // This syntax, without a type nor a class, does not change
+    useConfiguration { ... }
+}
+```
+
+## Dependency updates
+
+Several dependencies have been updated, including an update from Kotlin 1.8.20 to Kotlin 1.9.

@@ -74,7 +74,7 @@ class TestApplicationWithCustomLoggers {
 
             [tegral.logging.loggers."logged.two"]
             level = "Info"
-            
+
             [tegral.logging.loggers."logged.three"]
             level = "Warn"
         """.trimIndent()
@@ -84,7 +84,7 @@ class TestApplicationWithCustomLoggers {
                 install(LoggingFeature)
                 install(ServicesFeature)
 
-                useConfiguration(TestConfiguration::class) {
+                useConfigurationClass(TestConfiguration::class) {
                     addPropertySource(TomlPropertySource(config))
                 }
 
@@ -158,7 +158,7 @@ class TestApplicationWithCustomLoggers {
                     install(LoggingFeature)
                     install(ServicesFeature)
 
-                    useConfiguration(TestConfiguration::class) {
+                    useConfigurationClass(TestConfiguration::class) {
                         addPropertySource(TomlPropertySource(config))
                     }
 

@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator prismakt {
-  provider      = "gradle --console=plain -q runGeneratorInternal"
+  provider      = env("PRISMAKT_CMD")
   output        = "../build/prismaGeneratedSrc"
   exposedTarget = "dao"
 }
