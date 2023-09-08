@@ -22,6 +22,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
   - **Experimental** Fundefs whose function is annotated with `@Fundef` can now be `put()` like any other component, e.g. `put(::myFundef)` ([#87](https://github.com/utybo/Tegral/pull/87))
 
+  - Factories now support qualifiers. Add the qualifier to the `putFactory` call and use it when requesting a factory like with a regular component. ([#91](https://github.com/utybo/Tegral/pull/91))
+
 - `tegral-prismakt-generator`
 
   - A "shadow" JAR is now published in addition to the regular JAR. Recommendations for integrating PrismaKT Generator into Gradle projects have been updated to use this shadow JAR. ([#90](https://github.com/utybo/Tegral/pull/90))
