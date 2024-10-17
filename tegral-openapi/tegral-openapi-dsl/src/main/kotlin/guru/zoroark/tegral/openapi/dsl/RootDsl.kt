@@ -20,6 +20,7 @@ import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.ExternalDocumentation
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
+import io.swagger.v3.oas.models.security.SecurityRequirement
 import io.swagger.v3.oas.models.servers.Server
 
 /**
@@ -52,6 +53,21 @@ interface RootDsl : InfoDsl, TagsDsl, PathsDsl {
     @TegralDsl
     infix fun String.server(server: ServerDsl.() -> Unit)
 
+    @TegralDsl
+    var securityRequirements: MutableList<SecurityRequirement>
+
+    /**
+     * Adds a security requirement object to this operation with the given key.
+     */
+    @TegralDsl
+    fun security(key: String)
+
+    /**
+     * Adds a security requirement object to this operation with the given key and scopes.
+     */
+    @TegralDsl
+    fun security(key: String, vararg scopes: String)
+
     /**
      * Description for additional external documentation for this API.
      */
@@ -76,7 +92,7 @@ class RootBuilder(
 ) : RootDsl, InfoDsl by infoBuilder, PathsDsl by paths, Buildable<OpenAPI> {
     private val tags = mutableListOf<TagBuilder>()
     private val servers = mutableListOf<Buildable<Server>>()
-
+    override var securityRequirements = mutableListOf<SecurityRequirement>()
     override var externalDocsDescription: String? = null
     override var externalDocsUrl: String? = null
 
@@ -91,6 +107,14 @@ class RootBuilder(
     override infix fun String.server(server: ServerDsl.() -> Unit) {
         val serverBuilder = ServerBuilder(this).apply(server)
         servers.add(serverBuilder)
+    }
+
+    override fun security(key: String) {
+        securityRequirements.add(SecurityRequirement().addList(key))
+    }
+
+    override fun security(key: String, vararg scopes: String) {
+        securityRequirements.add(SecurityRequirement().addList(key, scopes.toList()))
     }
 
     override fun build(): OpenAPI = OpenAPI().apply {
@@ -114,7 +138,7 @@ class RootBuilder(
                 description = externalDocsDescription
             }
         }
-
+        security = this@RootBuilder.securityRequirements.ifEmpty { null }
         servers = this@RootBuilder.servers.map { it.build() }.ifEmpty { null }
     }
 }
