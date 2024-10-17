@@ -232,6 +232,10 @@ class PathBuilder(private val context: OpenApiDslContext) : PathDsl, Buildable<P
         addOperationDefault { security(key, *scopes) }
     }
 
+    override fun security(builder: SecurityRequirementsBuilder.() -> Unit) {
+        addOperationDefault { security(builder) }
+    }
+
     override fun Int.response(builder: ResponseDsl.() -> Unit) {
         addOperationDefault { this@response.response(builder) }
     }

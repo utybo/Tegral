@@ -103,6 +103,10 @@ class RootBuilder(
         securityRequirements.add(SecurityRequirement().addList(key, scopes.toList()))
     }
 
+    override fun security(builder: SecurityRequirementsBuilder.() -> Unit) {
+        securityRequirements.add(SecurityRequirementsBuilder().apply(builder).build())
+    }
+
     override fun build(): OpenAPI = OpenAPI().apply {
         tags = this@RootBuilder.tags.map { it.build() }.ifEmpty { null }
         // In case the info part is completely empty, output 'null' to avoid getting an empty, useless object.

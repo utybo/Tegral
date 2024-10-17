@@ -26,4 +26,21 @@ interface SecurityDsl {
      */
     @TegralDsl
     fun security(key: String, vararg scopes: String)
+
+    @TegralDsl
+    fun security(builder: SecurityRequirementsBuilder.() -> Unit)
+}
+
+class SecurityRequirementsBuilder {
+    private val securityRequirement = SecurityRequirement()
+
+    fun requirement(key: String) {
+        securityRequirement.addList(key)
+    }
+
+    fun requirement(key: String, vararg scopes: String) {
+        securityRequirement.addList(key, scopes.asList())
+    }
+
+    fun build(): SecurityRequirement = securityRequirement
 }

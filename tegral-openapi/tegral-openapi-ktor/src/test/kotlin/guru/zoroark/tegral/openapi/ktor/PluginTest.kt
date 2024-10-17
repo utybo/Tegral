@@ -76,8 +76,11 @@ class PluginTest {
             environment { developmentMode = false } // HACK see KTOR-4729
             install(TegralOpenApiKtor) {
                 security("scheme1")
-                security("scheme2")
-                security("scheme3", "scope1", "scope2")
+                security("scheme2", "scope1", "scope2")
+                security {
+                    requirement("scheme3")
+                    requirement("scheme4", "scope3")
+                }
             }
 
             application {
@@ -85,8 +88,8 @@ class PluginTest {
                 val expected = OpenAPI().apply {
                     security = listOf(
                         SecurityRequirement().addList("scheme1"),
-                        SecurityRequirement().addList("scheme2"),
-                        SecurityRequirement().addList("scheme3", listOf("scope1", "scope2")),
+                        SecurityRequirement().addList("scheme2", listOf("scope1", "scope2")),
+                        SecurityRequirement().addList("scheme3").addList("scheme4", listOf("scope3")),
                     )
                 }
                 assertEquals(expected, document)

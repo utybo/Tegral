@@ -168,6 +168,10 @@ class OperationBuilder(private val context: OpenApiDslContext) : OperationDsl, B
         securityRequirements.add(SecurityRequirement().addList(key, scopes.toList()))
     }
 
+    override fun security(builder: SecurityRequirementsBuilder.() -> Unit) {
+        securityRequirements.add(SecurityRequirementsBuilder().apply(builder).build())
+    }
+
     override infix fun Int.response(builder: ResponseDsl.() -> Unit) {
         responses[this] = ResponseBuilder(context).apply(builder)
     }
