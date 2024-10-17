@@ -33,12 +33,13 @@ import io.swagger.v3.oas.models.servers.Server
  * - [Info][InfoDsl] (embedded)
  * - [Tags][TagsDsl] (embedded)
  * - [Paths][PathsDsl] (embedded)
+ * - [Security][SecurityDsl] (embedded)
  * - External documentation ([description][externalDocsDescription] and [url][externalDocsUrl])
  *
  * (Items marked as embedded are separate DSL interfaces that are available in [RootDsl] and can be used directly).
  */
 @TegralDsl
-interface RootDsl : InfoDsl, TagsDsl, PathsDsl {
+interface RootDsl : InfoDsl, TagsDsl, PathsDsl, SecurityDsl {
     /**
      * Adds a security scheme to this OpenAPI document with the given string as the name, using the lambda to configure
      * further options.
@@ -52,21 +53,6 @@ interface RootDsl : InfoDsl, TagsDsl, PathsDsl {
      */
     @TegralDsl
     infix fun String.server(server: ServerDsl.() -> Unit)
-
-    @TegralDsl
-    var securityRequirements: MutableList<SecurityRequirement>
-
-    /**
-     * Adds a security requirement object to this operation with the given key.
-     */
-    @TegralDsl
-    fun security(key: String)
-
-    /**
-     * Adds a security requirement object to this operation with the given key and scopes.
-     */
-    @TegralDsl
-    fun security(key: String, vararg scopes: String)
 
     /**
      * Description for additional external documentation for this API.
