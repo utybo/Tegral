@@ -17,7 +17,7 @@ package guru.zoroark.tegral.web.controllers
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.services.api.TegralService
-import io.ktor.server.engine.ApplicationEngine
+import io.ktor.server.engine.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -44,16 +44,15 @@ abstract class KtorApplication(
      */
     abstract val settings: KtorApplicationSettings<*, *>
 
-    private var application: ApplicationEngine? = null
+    private var application: EmbeddedServer<*, *>? = null
 
     override suspend fun start() {
-        val app = settings.embeddedServerFromSettings {
+        val server = settings.embeddedServerFromSettings {
             ktorExtension.getModulesForAppName(appName).forEach {
                 with(it) { install() }
             }
         }
-        application = app
-        app.start()
+        application = server.also { it.start() }
     }
 
     override suspend fun stop(): Unit = withContext(Dispatchers.IO) {

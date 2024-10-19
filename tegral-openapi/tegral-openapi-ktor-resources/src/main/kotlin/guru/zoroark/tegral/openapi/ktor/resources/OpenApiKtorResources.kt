@@ -25,7 +25,7 @@ import io.ktor.server.resources.options
 import io.ktor.server.resources.patch
 import io.ktor.server.resources.post
 import io.ktor.server.resources.put
-import io.ktor.server.routing.Route
+import io.ktor.server.routing.*
 import io.ktor.util.pipeline.PipelineContext
 
 /**
@@ -33,7 +33,7 @@ import io.ktor.util.pipeline.PipelineContext
  * [description][ResourceDescription].
  */
 inline fun <reified T : Any> Route.getD(
-    noinline body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit
+    noinline body: suspend RoutingContext.(T) -> Unit
 ): Route = get(body) describeWith descriptionFromResource<T> { get }
 
 /**
@@ -41,7 +41,7 @@ inline fun <reified T : Any> Route.getD(
  * [description][ResourceDescription].
  */
 inline fun <reified T : Any> Route.optionsD(
-    noinline body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit
+    noinline body: suspend RoutingContext.(T) -> Unit
 ): Route = options(body) describeWith descriptionFromResource<T> { options }
 
 /**
@@ -49,7 +49,7 @@ inline fun <reified T : Any> Route.optionsD(
  * [description][ResourceDescription].
  */
 inline fun <reified T : Any> Route.headD(
-    noinline body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit
+    noinline body: suspend RoutingContext.(T) -> Unit
 ): Route = head(body) describeWith descriptionFromResource<T> { head }
 
 /**
@@ -57,7 +57,7 @@ inline fun <reified T : Any> Route.headD(
  * [description][ResourceDescription].
  */
 inline fun <reified T : Any> Route.postD(
-    noinline body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit
+    noinline body: suspend RoutingContext.(T) -> Unit
 ): Route = post(body) describeWith descriptionFromResource<T> { post }
 
 /**
@@ -65,7 +65,7 @@ inline fun <reified T : Any> Route.postD(
  * [description][ResourceDescription].
  */
 inline fun <reified T : Any> Route.putD(
-    noinline body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit
+    noinline body: suspend RoutingContext.(T) -> Unit
 ): Route = put(body) describeWith descriptionFromResource<T> { put }
 
 /**
@@ -73,7 +73,7 @@ inline fun <reified T : Any> Route.putD(
  * [description][ResourceDescription].
  */
 inline fun <reified T : Any> Route.deleteD(
-    noinline body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit
+    noinline body: suspend RoutingContext.(T) -> Unit
 ): Route = delete(body) describeWith descriptionFromResource<T> { delete }
 
 /**
@@ -81,5 +81,5 @@ inline fun <reified T : Any> Route.deleteD(
  * [description][ResourceDescription].
  */
 inline fun <reified T : Any> Route.patchD(
-    noinline body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit
+    noinline body: suspend RoutingContext.(T) -> Unit
 ): Route = patch(body) describeWith descriptionFromResource<T> { patch }

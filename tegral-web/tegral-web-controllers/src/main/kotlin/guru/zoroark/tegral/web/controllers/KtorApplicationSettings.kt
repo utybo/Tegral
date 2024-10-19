@@ -14,10 +14,8 @@
 
 package guru.zoroark.tegral.web.controllers
 
-import io.ktor.server.application.Application
-import io.ktor.server.engine.ApplicationEngine
-import io.ktor.server.engine.ApplicationEngineFactory
-import io.ktor.server.engine.embeddedServer
+import io.ktor.server.application.*
+import io.ktor.server.engine.*
 import java.io.File
 
 /**
@@ -51,5 +49,17 @@ class KtorApplicationSettings<TEngine : ApplicationEngine, TConfiguration : Appl
      * Equivalent to `embeddedServer` but uses this object's information as the parameters.
      */
     fun embeddedServerFromSettings(block: Application.() -> Unit) =
-        embeddedServer(engine, port, host, watchPaths, configure, block)
+        embeddedServer(
+            engine,
+            serverConfig {
+                watchPaths = this@KtorApplicationSettings.watchPaths
+                module(block)
+            },
+        ) {
+            connector {
+                this.port = this@KtorApplicationSettings.port
+                this.host = this@KtorApplicationSettings.host
+            }
+            configure()
+        }
 }

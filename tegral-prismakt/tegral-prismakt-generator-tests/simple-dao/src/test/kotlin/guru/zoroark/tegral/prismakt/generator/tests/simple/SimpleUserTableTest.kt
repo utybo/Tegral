@@ -21,6 +21,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteAll
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.junit.jupiter.api.BeforeEach
 import prismakt.generated.DaoUserEntity
@@ -56,7 +57,7 @@ class SimpleUserTableTest {
         }
 
         val result = newSuspendedTransaction {
-            DaoUserTable.select(DaoUserTable.id eq id).single()
+            DaoUserTable.selectAll().where(DaoUserTable.id eq id).single()
         }
 
         assertEquals("user@example.com", result[DaoUserTable.email])

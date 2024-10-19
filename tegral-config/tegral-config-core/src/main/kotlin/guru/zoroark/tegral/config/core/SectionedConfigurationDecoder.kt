@@ -26,6 +26,7 @@ import com.sksamuel.hoplite.fp.Validated
 import com.sksamuel.hoplite.fp.flatMap
 import com.sksamuel.hoplite.fp.invalid
 import com.sksamuel.hoplite.fp.valid
+import com.sksamuel.hoplite.transformer.PathNormalizer
 import kotlin.reflect.KClass
 import kotlin.reflect.KType
 import kotlin.reflect.full.isSubtypeOf
@@ -70,7 +71,7 @@ class SectionedConfigurationDecoder<T : SectionedConfiguration>(
 
         val sectionValues = mutableMapOf<ConfigurationSection<*>, Any>()
         for ((key, value) in node.map) {
-            val section = sections.find { it.name == key }
+            val section = sections.find { PathNormalizer.normalizePathElement(it.name) == key }
             val sectionType = section!!.kclass.starProjectedType
 
             val decodedSection = context.decoder(sectionType)

@@ -1,0 +1,1633 @@
+Starting a Gradle Daemon (subsequent builds will be faster)
+> Task :buildSrc:extractPluginRequests
+> Task :buildSrc:generatePluginAdapters
+> Task :buildSrc:compileJava
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:compileGroovyPlugins
+> Task :buildSrc:pluginDescriptors
+> Task :buildSrc:processResources
+> Task :buildSrc:classes
+> Task :buildSrc:jar
+
+> Task :tegral-catalog:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-catalog Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+No dependencies found.
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-catalog\build\dependencyUpdates\report.txt
+
+> Task :e2e-tests:run-with-java-17:dependencyUpdates
+
+------------------------------------------------------------
+:e2e-tests:run-with-java-17 Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\e2e-tests\run-with-java-17\build\dependencyUpdates\report.txt
+
+> Task :tegral-core:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-core Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-core\build\dependencyUpdates\report.txt
+
+> Task :tegral-di:tegral-di-services:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-di:tegral-di-services Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-reflect:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://github.com/Kotlin/kotlinx.coroutines
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-di\tegral-di-services\build\dependencyUpdates\report.txt
+
+> Task :tegral-niwen:tegral-niwen-lexer:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-niwen:tegral-niwen-lexer Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-niwen\tegral-niwen-lexer\build\dependencyUpdates\report.txt
+
+> Task :e2e-tests:run-with-java-11:dependencyUpdates
+
+------------------------------------------------------------
+:e2e-tests:run-with-java-11 Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\e2e-tests\run-with-java-11\build\dependencyUpdates\report.txt
+
+> Task :tegral-di:tegral-di-test:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-di:tegral-di-test Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-reflect:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://github.com/Kotlin/kotlinx.coroutines
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-di\tegral-di-test\build\dependencyUpdates\report.txt
+
+> Task :e2e-tests:run-without-config:dependencyUpdates
+
+------------------------------------------------------------
+:e2e-tests:run-without-config Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://github.com/ktorio/ktor
+
+     https://mockk.io
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\e2e-tests\run-without-config\build\dependencyUpdates\report.txt
+
+> Task :tegral-logging:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-logging Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - com.google.jimfs:jimfs:1.3.0
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-reflect:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+     http://www.slf4j.org
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-logging\build\dependencyUpdates\report.txt
+
+> Task :tegral-openapi:tegral-openapi-cli:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-openapi:tegral-openapi-cli Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - com.google.jimfs:jimfs:1.3.0
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://github.com/ajalt/clikt/
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://github.com/Kotlin/kotlinx.coroutines
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-openapi\tegral-openapi-cli\build\dependencyUpdates\report.txt
+
+> Task :tegral-di:tegral-di-core:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-di:tegral-di-core Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-reflect:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-di\tegral-di-core\build\dependencyUpdates\report.txt
+
+> Task :tegral-di:tegral-di-test-mockk:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-di:tegral-di-test-mockk Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-di\tegral-di-test-mockk\build\dependencyUpdates\report.txt
+
+> Task :e2e-tests:fundef-modules:dependencyUpdates
+
+------------------------------------------------------------
+:e2e-tests:fundef-modules Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\e2e-tests\fundef-modules\build\dependencyUpdates\report.txt
+
+> Task :examples:simple-json-api:dependencyUpdates
+
+------------------------------------------------------------
+:examples:simple-json-api Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\examples\simple-json-api\build\dependencyUpdates\report.txt
+
+> Task :tegral-prismakt:tegral-prismakt-generator-tests-support:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-prismakt:tegral-prismakt-generator-tests-support Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://commons.apache.org/proper/commons-lang/
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-prismakt\tegral-prismakt-generator-tests-support\build\dependencyUpdates\report.txt
+
+> Task :tegral-services:tegral-services-api:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-services:tegral-services-api Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-services\tegral-services-api\build\dependencyUpdates\report.txt
+
+> Task :tegral-config:tegral-config-core:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-config:tegral-config-core Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - com.google.jimfs:jimfs:1.3.0
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://github.com/FasterXML/jackson-dataformats-text
+
+     http://www.github.com/sksamuel/hoplite
+
+     http://www.github.com/sksamuel/hoplite
+
+     http://www.github.com/sksamuel/hoplite
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-config\tegral-config-core\build\dependencyUpdates\report.txt
+
+> Task :tegral-services:tegral-services-feature:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-services:tegral-services-feature Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-services\tegral-services-feature\build\dependencyUpdates\report.txt
+
+> Task :tegral-utils:tegral-utils-logtools:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-utils:tegral-utils-logtools Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+     http://www.slf4j.org
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-utils\tegral-utils-logtools\build\dependencyUpdates\report.txt
+
+> Task :tegral-niwen:tegral-niwen-parser:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-niwen:tegral-niwen-parser Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-reflect:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://github.com/FasterXML/jackson-dataformats-text
+
+     https://github.com/FasterXML/jackson-module-kotlin
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-niwen\tegral-niwen-parser\build\dependencyUpdates\report.txt
+
+> Task :tegral-openapi:tegral-openapi-dsl:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-openapi:tegral-openapi-dsl Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/swagger-api/swagger-core
+
+     https://github.com/swagger-api/swagger-core
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-openapi\tegral-openapi-dsl\build\dependencyUpdates\report.txt
+
+> Task :tegral-web:tegral-web-apptest:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-web:tegral-web-apptest Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-web\tegral-web-apptest\build\dependencyUpdates\report.txt
+
+> Task :tegral-web:tegral-web-config:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-web:tegral-web-config Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-web\tegral-web-config\build\dependencyUpdates\report.txt
+
+> Task :tegral-openapi:tegral-openapi-ktorui:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-openapi:tegral-openapi-ktorui Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://github.com/ktorio/ktor
+
+     https://github.com/ktorio/ktor
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+     https://www.webjars.org
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-openapi\tegral-openapi-ktorui\build\dependencyUpdates\report.txt
+
+> Task :tegral-featureful:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-featureful Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-featureful\build\dependencyUpdates\report.txt
+
+> Task :tegral-web:tegral-web-greeter:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-web:tegral-web-greeter Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-web\tegral-web-greeter\build\dependencyUpdates\report.txt
+
+> Task :tegral-openapi:tegral-openapi-scriptdef:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-openapi:tegral-openapi-scriptdef Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-scripting-common:1.9.10
+ - org.jetbrains.kotlin:kotlin-scripting-jvm:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-openapi\tegral-openapi-scriptdef\build\dependencyUpdates\report.txt
+
+> Task :tegral-openapi:tegral-openapi-ktor:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-openapi:tegral-openapi-ktor Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://github.com/ktorio/ktor
+
+     https://github.com/ktorio/ktor
+
+     https://github.com/ktorio/ktor
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-openapi\tegral-openapi-ktor\build\dependencyUpdates\report.txt
+
+> Task :tegral-prismakt:tegral-prismakt-generator-tests:simple-dao:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-prismakt:tegral-prismakt-generator-tests:simple-dao Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://commons.apache.org/proper/commons-lang/
+
+     https://github.com/JetBrains/Exposed
+
+     https://github.com/JetBrains/Exposed
+
+     https://github.com/JetBrains/Exposed
+
+     https://github.com/JetBrains/Exposed
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+     https://github.com/xerial/sqlite-jdbc
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-prismakt\tegral-prismakt-generator-tests\simple-dao\build\dependencyUpdates\report.txt
+
+> Task :tegral-prismakt:tegral-prismakt-generator-tests:simple-sql:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-prismakt:tegral-prismakt-generator-tests:simple-sql Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://commons.apache.org/proper/commons-lang/
+
+     https://github.com/JetBrains/Exposed
+
+     https://github.com/JetBrains/Exposed
+
+     https://github.com/JetBrains/Exposed
+
+     https://github.com/JetBrains/Exposed
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+     https://github.com/xerial/sqlite-jdbc
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-prismakt\tegral-prismakt-generator-tests\simple-sql\build\dependencyUpdates\report.txt
+
+> Task :tegral-prismakt:tegral-prismakt-generator-tests:pgsql-types:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-prismakt:tegral-prismakt-generator-tests:pgsql-types Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/JetBrains/Exposed
+
+     https://github.com/JetBrains/Exposed
+
+     https://github.com/JetBrains/Exposed
+
+     https://github.com/JetBrains/Exposed
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+     https://jdbc.postgresql.org
+
+     https://java.testcontainers.org
+
+     https://java.testcontainers.org
+
+     https://github.com/xerial/sqlite-jdbc
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-prismakt\tegral-prismakt-generator-tests\pgsql-types\build\dependencyUpdates\report.txt
+
+> Task :tegral-web:tegral-web-controllers-test:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-web:tegral-web-controllers-test Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://github.com/ktorio/ktor
+
+     https://github.com/ktorio/ktor
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-web\tegral-web-controllers-test\build\dependencyUpdates\report.txt
+
+> Task :tegral-web:tegral-web-appdsl:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-web:tegral-web-appdsl Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-reflect:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://github.com/ktorio/ktor
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-web\tegral-web-appdsl\build\dependencyUpdates\report.txt
+
+> Task :tegral-web:tegral-web-appdefaults:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-web:tegral-web-appdefaults Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://github.com/FasterXML/jackson-modules-java8
+
+     https://detekt.dev
+
+     https://github.com/ktorio/ktor
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-web\tegral-web-appdefaults\build\dependencyUpdates\report.txt
+
+> Task :tegral-prismakt:tegral-prismakt-generator-tests:mysql-types:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-prismakt:tegral-prismakt-generator-tests:mysql-types Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     http://dev.mysql.com/doc/connector-j/en/
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/JetBrains/Exposed
+
+     https://github.com/JetBrains/Exposed
+
+     https://github.com/JetBrains/Exposed
+
+     https://github.com/JetBrains/Exposed
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+     https://java.testcontainers.org
+
+     https://java.testcontainers.org
+
+     https://github.com/xerial/sqlite-jdbc
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-prismakt\tegral-prismakt-generator-tests\mysql-types\build\dependencyUpdates\report.txt
+
+> Task :tegral-openapi:tegral-openapi-scripthost:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-openapi:tegral-openapi-scripthost Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - com.google.jimfs:jimfs:1.3.0
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-scripting-common:1.9.10
+ - org.jetbrains.kotlin:kotlin-scripting-jvm:1.9.10
+ - org.jetbrains.kotlin:kotlin-scripting-jvm-host:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://github.com/Kotlin/kotlinx.coroutines
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-openapi\tegral-openapi-scripthost\build\dependencyUpdates\report.txt
+
+> Task :tegral-prismakt:tegral-prismakt-generator:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-prismakt:tegral-prismakt-generator Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - com.google.jimfs:jimfs:1.3.0
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://github.com/FasterXML/jackson-module-kotlin
+
+     https://github.com/square/kotlinpoet
+
+     https://detekt.dev
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://github.com/JetBrains/Exposed
+
+     https://github.com/JetBrains/Exposed
+
+     https://github.com/JetBrains/Exposed
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-prismakt\tegral-prismakt-generator\build\dependencyUpdates\report.txt
+
+> Task :tegral-web:tegral-web-controllers:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-web:tegral-web-controllers Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://github.com/ktorio/ktor
+
+     https://github.com/ktorio/ktor
+
+     https://github.com/ktorio/ktor
+
+     https://github.com/ktorio/ktor
+
+     https://github.com/ktorio/ktor
+
+     https://github.com/ktorio/ktor
+
+     https://github.com/ktorio/ktor
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-web\tegral-web-controllers\build\dependencyUpdates\report.txt
+
+> Task :tegral-openapi:tegral-openapi-feature:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-openapi:tegral-openapi-feature Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://github.com/ktorio/ktor
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-openapi\tegral-openapi-feature\build\dependencyUpdates\report.txt
+
+> Task :tegral-openapi:tegral-openapi-ktor-resources:dependencyUpdates
+
+------------------------------------------------------------
+:tegral-openapi:tegral-openapi-ktor-resources Project Dependency Updates (report to plain text file)
+------------------------------------------------------------
+
+The following dependencies are using the latest milestone version:
+ - io.gitlab.arturbosch.detekt:detekt-cli:1.23.1
+ - org.jacoco:org.jacoco.agent:0.8.12
+ - org.jacoco:org.jacoco.ant:0.8.12
+ - org.jetbrains.dokka:dokka-analysis:1.8.20
+ - org.jetbrains.dokka:dokka-core:1.8.20
+ - org.jetbrains.kotlin:kotlin-build-tools-impl:1.9.10
+ - org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:1.9.10
+ - org.jetbrains.kotlin:kotlin-reflect:1.9.10
+ - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10
+ - org.jetbrains.kotlin:kotlin-test:1.9.10
+ - org.jetbrains.kotlin:kotlin-test-junit5:1.9.10
+
+The following dependencies have later milestone versions:
+
+     http://logback.qos.ch
+
+     https://detekt.dev
+
+     https://github.com/ktorio/ktor
+
+     https://github.com/ktorio/ktor
+
+     https://mockk.io
+
+     https://github.com/Kotlin/dokka
+
+     https://junit.org/junit5/
+
+     https://junit.org/junit5/
+
+Gradle release-candidate updates:
+
+
+Generated report file C:\Users\Matthieu\projects\Tegral\tegral-openapi\tegral-openapi-ktor-resources\build\dependencyUpdates\report.txt
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.10.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1m 24s
+47 actionable tasks: 47 executed

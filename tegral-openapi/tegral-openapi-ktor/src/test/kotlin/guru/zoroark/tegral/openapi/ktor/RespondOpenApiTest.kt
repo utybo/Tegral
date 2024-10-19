@@ -41,7 +41,7 @@ class RespondOpenApiTest {
     """.trimIndent()
     private val expectedJsonOutput31 = """
         {"openapi":"3.1.0","info":{"title":"My Document","description":"This is my document","version":"0.0.0"},~
-        "jsonSchemaDialect":"https://json-schema.org/draft/2020-12/schema"}
+        "jsonSchemaDialect":"https://spec.openapis.org/oas/3.1/dialect/base"}
     """.trimIndent().replace("~\n", "")
 
     private val expectedYamlOutput = """
@@ -57,7 +57,7 @@ class RespondOpenApiTest {
           title: My Document
           description: This is my document
           version: 0.0.0
-        jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
+        jsonSchemaDialect: https://spec.openapis.org/oas/3.1/dialect/base
     """.trimIndent() + "\n"
 
     @Test
@@ -66,7 +66,7 @@ class RespondOpenApiTest {
         val response = client.get("/openapi")
         val result = response.bodyAsText()
         assertEquals(expectedJsonOutput, result)
-        assertEquals(ContentType.Application.Json.withParameter("charset", "UTF-8"), response.contentType())
+        assertEquals(ContentType.Application.Json, response.contentType())
     }
 
     @Test
@@ -75,7 +75,7 @@ class RespondOpenApiTest {
         val response = client.get("/openapi?version=3.0")
         val result = response.bodyAsText()
         assertEquals(expectedJsonOutput, result)
-        assertEquals(ContentType.Application.Json.withParameter("charset", "UTF-8"), response.contentType())
+        assertEquals(ContentType.Application.Json, response.contentType())
     }
 
     @Test
@@ -84,7 +84,7 @@ class RespondOpenApiTest {
         val response = client.get("/openapi?version=3.1")
         val result = response.bodyAsText()
         assertEquals(expectedJsonOutput31, result)
-        assertEquals(ContentType.Application.Json.withParameter("charset", "UTF-8"), response.contentType())
+        assertEquals(ContentType.Application.Json, response.contentType())
     }
 
     @Test
@@ -101,7 +101,7 @@ class RespondOpenApiTest {
         val response = client.get("/openapi?format=json")
         val result = response.bodyAsText()
         assertEquals(expectedJsonOutput, result)
-        assertEquals(ContentType.Application.Json.withParameter("charset", "UTF-8"), response.contentType())
+        assertEquals(ContentType.Application.Json, response.contentType())
     }
 
     @Test

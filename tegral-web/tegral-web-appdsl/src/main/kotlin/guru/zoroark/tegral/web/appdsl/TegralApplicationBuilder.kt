@@ -149,7 +149,7 @@ class TegralApplicationBuilder : TegralApplicationDsl, Buildable<TegralApplicati
         // Create a decoder adapted to said sections and add it to the config loader
         config.addDecoder(SectionedConfigurationDecoder(TegralConfig::class, ::TegralConfig, sections.toList()))
         // Allow empty sources to support cases where no configuration file is present
-        config.allowEmptySources()
+        config.allowEmptyConfigFiles()
 
         // Build and load configuration
         val appConfig = config.build().loadConfigOrThrow(configClass, configSources)
