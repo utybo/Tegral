@@ -107,7 +107,7 @@ jobs:
           publish-dir: "website/build/output"
           github-token: ${{ secrets.GITHUB_TOKEN }}
           enable-pull-request-comment: true
-          enable-commit-comment: true
+          enable-commit-comment: false
           overwrites-pull-request-comment: true
           netlify-config-path: ./netlify.toml
         env:
@@ -159,5 +159,4 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralReleasePassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}
-        # No build cache here to be 100% sure that cache weirdness cannot affect the final, definitive jars
         run: ./gradlew -PpublishRelease -Psign publish
