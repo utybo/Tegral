@@ -12,7 +12,7 @@ configurations {
 
 def docsInputFiles = [
     'babel.config.js',
-    'docusaurus.config.js',
+    'docusaurus.config.ts',
     'sidebars.js'
 ]
 
