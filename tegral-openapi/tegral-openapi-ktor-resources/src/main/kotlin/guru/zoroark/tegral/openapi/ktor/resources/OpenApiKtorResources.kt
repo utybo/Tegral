@@ -17,7 +17,6 @@
 package guru.zoroark.tegral.openapi.ktor.resources
 
 import guru.zoroark.tegral.openapi.ktor.describeWith
-import io.ktor.server.application.ApplicationCall
 import io.ktor.server.resources.delete
 import io.ktor.server.resources.get
 import io.ktor.server.resources.head
@@ -25,8 +24,8 @@ import io.ktor.server.resources.options
 import io.ktor.server.resources.patch
 import io.ktor.server.resources.post
 import io.ktor.server.resources.put
-import io.ktor.server.routing.*
-import io.ktor.util.pipeline.PipelineContext
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.RoutingContext
 
 /**
  * Defines a `get` route handler for the given resource, additionally registering its

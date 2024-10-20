@@ -22,8 +22,13 @@ import guru.zoroark.tegral.openapi.dsl.RootDsl
 import io.ktor.http.HttpMethod
 import io.ktor.server.application.Application
 import io.ktor.server.application.pluginOrNull
-import io.ktor.server.routing.*
-import io.ktor.utils.io.*
+import io.ktor.server.routing.HttpMethodRouteSelector
+import io.ktor.server.routing.PathSegmentConstantRouteSelector
+import io.ktor.server.routing.PathSegmentParameterRouteSelector
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.RoutingNode
+import io.ktor.server.routing.application
+import io.ktor.utils.io.KtorDsl
 import org.slf4j.LoggerFactory
 import java.util.LinkedList
 import java.util.concurrent.atomic.AtomicBoolean
@@ -35,11 +40,11 @@ private fun printNotInstalledWarning(application: Application) {
     if (messageWasPrinted.compareAndSet(false, true)) {
         logger.warn(
             "The TegralOpenApiKtor plugin is not installed in application $application. The 'describe' functions " +
-                    "will have no effect. This message will only be printed once.\n" +
-                    "-> Building a Tegral Web application? Use `install(OpenApiFeature)` in your `tegral { }` block.\n" +
-                    "-> Building a Ktor application? Use `install(TegralOpenApiKtor)` before creating your routes.\n" +
-                    "-> If you are just running unit tests, you probably do not care about having OpenAPI descriptions " +
-                    "available, in which case you can ignore this message."
+                "will have no effect. This message will only be printed once.\n" +
+                "-> Building a Tegral Web application? Use `install(OpenApiFeature)` in your `tegral { }` block.\n" +
+                "-> Building a Ktor application? Use `install(TegralOpenApiKtor)` before creating your routes.\n" +
+                "-> If you are just running unit tests, you probably do not care about having OpenAPI descriptions " +
+                "available, in which case you can ignore this message."
         )
     }
 }

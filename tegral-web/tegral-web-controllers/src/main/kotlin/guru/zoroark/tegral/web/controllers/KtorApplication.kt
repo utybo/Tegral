@@ -17,7 +17,7 @@ package guru.zoroark.tegral.web.controllers
 import guru.zoroark.tegral.di.environment.InjectionScope
 import guru.zoroark.tegral.di.environment.invoke
 import guru.zoroark.tegral.services.api.TegralService
-import io.ktor.server.engine.*
+import io.ktor.server.engine.EmbeddedServer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
