@@ -20,7 +20,7 @@ import guru.zoroark.tegral.di.environment.Identifier
 import guru.zoroark.tegral.di.environment.ensureInstance
 
 /**
- * A resolver that is aliased to another identifier. Not canonical.
+ * A resolver that is aliased to another resolver. Not canonical.
  */
 class AliasIdentifierResolver<T : Any>(private val actualIdentifier: Identifier<out T>) : IdentifierResolver<T> {
     override val requirements: List<Identifier<*>> = listOf(actualIdentifier)
