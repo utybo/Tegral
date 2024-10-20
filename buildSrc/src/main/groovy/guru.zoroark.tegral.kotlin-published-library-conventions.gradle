@@ -16,8 +16,6 @@ detekt {
 
 afterEvaluate {
     dokkatoo {
-        //moduleName = project.ext.humanName
-
         dokkatooSourceSets.configureEach {
             includes.from("MODULE.md")
         }
