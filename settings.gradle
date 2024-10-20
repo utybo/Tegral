@@ -35,7 +35,7 @@ def publicProjects = [
         ':tegral-web:tegral-web-greeter',
 ]
 
-def testProjects = publicProjects + [
+def testProjects = publicProjects - ":tegral-catalog" + [
         ':tegral-prismakt:tegral-prismakt-generator-tests:mysql-types',
         ':tegral-prismakt:tegral-prismakt-generator-tests:pgsql-types',
         ':tegral-prismakt:tegral-prismakt-generator-tests:simple-dao',
