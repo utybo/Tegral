@@ -20,6 +20,7 @@ import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.ExternalDocumentation
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
+import io.swagger.v3.oas.models.security.SecurityRequirement
 import io.swagger.v3.oas.models.servers.Server
 
 /**
@@ -32,12 +33,13 @@ import io.swagger.v3.oas.models.servers.Server
  * - [Info][InfoDsl] (embedded)
  * - [Tags][TagsDsl] (embedded)
  * - [Paths][PathsDsl] (embedded)
+ * - [Security][SecurityDsl] (embedded)
  * - External documentation ([description][externalDocsDescription] and [url][externalDocsUrl])
  *
  * (Items marked as embedded are separate DSL interfaces that are available in [RootDsl] and can be used directly).
  */
 @TegralDsl
-interface RootDsl : InfoDsl, TagsDsl, PathsDsl {
+interface RootDsl : InfoDsl, TagsDsl, PathsDsl, SecurityDsl {
     /**
      * Adds a security scheme to this OpenAPI document with the given string as the name, using the lambda to configure
      * further options.
@@ -76,7 +78,7 @@ class RootBuilder(
 ) : RootDsl, InfoDsl by infoBuilder, PathsDsl by paths, Buildable<OpenAPI> {
     private val tags = mutableListOf<TagBuilder>()
     private val servers = mutableListOf<Buildable<Server>>()
-
+    override var securityRequirements = mutableListOf<SecurityRequirement>()
     override var externalDocsDescription: String? = null
     override var externalDocsUrl: String? = null
 
@@ -91,6 +93,18 @@ class RootBuilder(
     override infix fun String.server(server: ServerDsl.() -> Unit) {
         val serverBuilder = ServerBuilder(this).apply(server)
         servers.add(serverBuilder)
+    }
+
+    override fun security(key: String) {
+        securityRequirements.add(SecurityRequirement().addList(key))
+    }
+
+    override fun security(key: String, vararg scopes: String) {
+        securityRequirements.add(SecurityRequirement().addList(key, scopes.toList()))
+    }
+
+    override fun security(builder: SecurityRequirementsBuilder.() -> Unit) {
+        securityRequirements.add(SecurityRequirementsBuilder().apply(builder).build())
     }
 
     override fun build(): OpenAPI = OpenAPI().apply {
@@ -114,7 +128,7 @@ class RootBuilder(
                 description = externalDocsDescription
             }
         }
-
+        security = this@RootBuilder.securityRequirements.ifEmpty { null }
         servers = this@RootBuilder.servers.map { it.build() }.ifEmpty { null }
     }
 }
