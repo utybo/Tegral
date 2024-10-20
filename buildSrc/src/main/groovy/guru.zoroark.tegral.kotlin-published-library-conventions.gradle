@@ -1,7 +1,7 @@
 plugins {
     id 'guru.zoroark.tegral.kotlin-common-conventions'
     id 'guru.zoroark.tegral.publish-conventions'
-    id 'org.jetbrains.dokka'
+    id 'dev.adamko.dokkatoo'
     id 'org.jetbrains.kotlinx.binary-compatibility-validator'
     id 'maven-publish'
     id 'signing'
@@ -14,13 +14,23 @@ detekt {
     buildUponDefaultConfig = true
 }
 
-tasks.dokkaHtmlPartial {
-    dokkaSourceSets {
-        configureEach {
+afterEvaluate {
+    dokkatoo {
+        //moduleName = project.ext.humanName
+
+        dokkatooSourceSets.configureEach {
             includes.from("MODULE.md")
         }
     }
 }
+
+//tasks.dokkaHtmlPartial {
+//    dokkaSourceSets {
+//        configureEach {
+//            includes.from("MODULE.md")
+//        }
+//    }
+//}
 
 java {
     withSourcesJar()

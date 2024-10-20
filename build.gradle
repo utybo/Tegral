@@ -1,10 +1,2 @@
-plugins {
-    id 'org.jetbrains.dokka'
-}
-
-repositories {
-    mavenCentral()
-}
-
 group = "guru.zoroark.tegral"
 version = rootProject.file('version.txt').text.trim()
