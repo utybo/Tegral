@@ -64,13 +64,13 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Publish catalog to local Maven repo
-        run: "./gradlew :tegral-catalog:publishToMavenLocal --build-cache -I ci/build-cache.init.gradle"
+        run: "./gradlew :tegral-catalog:publishToMavenLocal"
 
       - name: Run check on example
         run: |
           examples="step-1 step-2"
           for example in $examples; do
-            ./gradlew -p "examples/tutorial/${example}" check --include-build ../../.. --build-cache -I ../../../ci/build-cache.init.gradle
+            ./gradlew -p "examples/tutorial/${example}" check --include-build ../../..
           done
 
   build-dokka:
@@ -89,7 +89,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Generate Dokka documentation
-        run: ./gradlew :website:rewriteDokkaLinks --build-cache -I ci/build-cache.init.gradle
+        run: ./gradlew :website:rewriteDokkaLinks
 
   build-docs:
     name: "Build Docusaurus"
@@ -112,7 +112,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build documentation website
-        run: ./gradlew :docs:docusaurusBuild --build-cache -I ci/build-cache.init.gradle
+        run: ./gradlew :docs:docusaurusBuild
 
   build-deploy-website:
     name: Assemble and deploy website
@@ -133,7 +133,7 @@ jobs:
       - uses: actions/setup-node@v4
 
       - name: Assemble website files
-        run: ./gradlew :website:assembleFiles --build-cache -I ci/build-cache.init.gradle
+        run: ./gradlew :website:assembleFiles
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v3
@@ -171,7 +171,7 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralSnapshotsPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_PASSPHRASE }}
-        run: ./gradlew -PpublishSnapshot -Psign publish --build-cache -I ci/build-cache.init.gradle
+        run: ./gradlew -PpublishSnapshot -Psign publish
 
   publish-release:
     name: Publish release
