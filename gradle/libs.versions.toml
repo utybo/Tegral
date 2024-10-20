@@ -1,7 +1,7 @@
 [versions]
 coroutines = "1.9.0"
-detekt = "1.23.6"  # waiting for a release with a fix for https://github.com/detekt/detekt/issues/7634
-dokka = "1.9.20"
+detekt = "1.23.6"          # waiting for a release with a fix for https://github.com/detekt/detekt/issues/7634
+dokkatoo = "2.3.1"
 gradleTestLogger = "4.0.0"
 hoplite = "2.8.2"
 jackson = "2.18.0"
@@ -41,7 +41,6 @@ kotlin-scripting-jvmHost = { module = "org.jetbrains.kotlin:kotlin-scripting-jvm
 ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
 ktor-server-host = { module = "io.ktor:ktor-server-host-common", version.ref = "ktor" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
-ktor-server-locations = { module = "io.ktor:ktor-server-locations", version.ref = "ktor" }
 ktor-server-contentNegotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
 ktor-server-test = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
 ktor-server-resources = { module = "io.ktor:ktor-server-resources", version.ref = "ktor" }
@@ -106,7 +105,7 @@ commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "la
 
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+dokkatoo = { id = "dev.adamko.dokkatoo", version.ref = "dokkatoo" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 versions = { id = "com.github.ben-manes.versions", version.ref = "versions" }
 gradleTestLogger = { id = "com.adarshr.test-logger", version.ref = "gradleTestLogger" }

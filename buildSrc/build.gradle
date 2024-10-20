@@ -10,7 +10,7 @@ dependencies {
     def pluginsDef = [
         libs.plugins.kotlin,
         libs.plugins.kotlinSerialization,
-        libs.plugins.dokka,
+        libs.plugins.dokkatoo,
         libs.plugins.detekt,
         libs.plugins.versions,
         libs.plugins.gradleTestLogger,
