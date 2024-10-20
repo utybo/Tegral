@@ -73,30 +73,16 @@ jobs:
             ./gradlew -p "examples/tutorial/${example}" check --include-build ../../..
           done
 
-  build-dokka:
-    name: "Generate Dokka files"
-    runs-on: ubuntu-latest
+  build-deploy-website:
+    name: Assemble and deploy website
     needs: [validate-wrapper]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-java@v4
         with:
           distribution: "temurin"
           java-version: "11"
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Generate Dokka documentation
-        run: ./gradlew :website:rewriteDokkaLinks
-
-  build-docs:
-    name: "Build Docusaurus"
-    needs: [validate-wrapper]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
           version: 7
@@ -110,27 +96,6 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-
-      - name: Build documentation website
-        run: ./gradlew :docs:docusaurusBuild
-
-  build-deploy-website:
-    name: Assemble and deploy website
-    needs: [validate-wrapper, build-docs, build-dokka, check, check-examples]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: "temurin"
-          java-version: "11"
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      # TODO maybe unnecessary
-      - uses: actions/setup-node@v4
 
       - name: Assemble website files
         run: ./gradlew :website:assembleFiles
