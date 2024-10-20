@@ -2,11 +2,7 @@
 title: "Tegral 0.0.5 release"
 description: 0.0.5 is now available!
 slug: tegral-0-0-5-release
-authors:
-  - name: Matthieu
-    title: Maintainer
-    url: https://github.com/utybo
-    image_url: https://github.com/utybo.png
+authors: utybo
 tags: [release]
 draft: true
 image: steel-scaffolding-g85ea1a499_1280.jpg
@@ -16,6 +12,8 @@ Welcome to the release notes for Tegral 0.0.5!
 
 <!-- TODO -->
 
+<!-- truncate -->
+
 ## Fundefs, phase 2
 
 :::note Experimental
@@ -24,7 +22,7 @@ Everything discussed in this section is experimental and requires the `@OptIn(Ex
 
 :::
 
-In the [0.0.4 release](../2023-05-14-tegral-004/index.md#experimental-fundefs-in-tegral-di), I announced the availability of *fundefs* in Tegral DI. As a reminder, fundefs are a relatively low-level part of Tegral DI which allow you to create *functional component definitions*, like this one:
+In the [0.0.4 release](../2023-05-14-tegral-004/index.md#experimental-fundefs-in-tegral-di), I announced the availability of _fundefs_ in Tegral DI. As a reminder, fundefs are a relatively low-level part of Tegral DI which allow you to create _functional component definitions_, like this one:
 
 ```kotlin title="Tegral 0.0.4"
 class Greeter {
@@ -69,7 +67,7 @@ val result = fundef.invoke()
 // result == "Hello, Alice!"
 ```
 
-The `@Fundef` *should* be a temporary measure, and may be removed in the future if all goes according to plan.
+The `@Fundef` _should_ be a temporary measure, and may be removed in the future if all goes according to plan.
 
 ### Tegral Web Controllers support
 
@@ -127,11 +125,11 @@ fun Application.myModule() {
 
 ## Configurable features
 
-Tegral Featureful features, which are the basic building block of Tegral applications, can now be configured *in-code*.
+Tegral Featureful features, which are the basic building block of Tegral applications, can now be configured _in-code_.
 
-Previously, if you wanted to add configuration to your feature, you had to use *external configuration*, as in relying on a configuration file from a user. This can get quite cumbersome and limited quite quickly, and I believed we needed an alternative to simply declare some internal configuration that pretty much never changes based on some external configuration.
+Previously, if you wanted to add configuration to your feature, you had to use _external configuration_, as in relying on a configuration file from a user. This can get quite cumbersome and limited quite quickly, and I believed we needed an alternative to simply declare some internal configuration that pretty much never changes based on some external configuration.
 
-This is possible thanks to a significant redesign of the core `Feature` interfaces. In a nutshell, you can now configure compatible features (as in, features that *can* be configured this way) like so:
+This is possible thanks to a significant redesign of the core `Feature` interfaces. In a nutshell, you can now configure compatible features (as in, features that _can_ be configured this way) like so:
 
 ```kotlin
 tegral {

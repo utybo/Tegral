@@ -2,11 +2,7 @@
 title: Welcome to Tegral 0.0.1!
 description: The first release of Tegral is now available!
 slug: welcome-to-tegral-v0-0-1
-authors:
-  - name: utybo
-    title: Maintainer
-    url: https://github.com/utybo
-    image_url: https://github.com/utybo.png
+authors: utybo
 tags: [release]
 image: damien-cornu-VzsixizA4c8-unsplash.jpg
 hide_table_of_contents: false
@@ -14,7 +10,7 @@ hide_table_of_contents: false
 
 Welcome to the first release of Tegral! Let's discuss what Tegral aims to be, give you a little context, and talk about what's already available. 👀
 
-<!--truncate-->
+<!-- truncate -->
 
 ![Mountain](damien-cornu-VzsixizA4c8-unsplash.jpg)
 
@@ -30,11 +26,11 @@ So here it is! Tegral has a few fundamental ideas behind it:
 
 ### Integrable-first
 
-I.e., build everything expecting that people will want to use your libraries *without* necessarily using the entire framework.
+I.e., build everything expecting that people will want to use your libraries _without_ necessarily using the entire framework.
 
 This is something that drove me crazy with [Quarkus'](https://quarkus.io) OIDC implementation. It had everything I needed, but was basically impossible to use without using a) the entire framework and b) in the ultra integrated way. That's a fine strategy, but I also find it extremely counter-productive, as it means you would have to reimplement logic you could just use cleanly from somewhere else.
 
-This is one of the big design decisions behind Tegral: it's a collection of libraries *before* being a framework. It just so happens that, when you combine everything, it gives you a really nice platform to build apps.
+This is one of the big design decisions behind Tegral: it's a collection of libraries _before_ being a framework. It just so happens that, when you combine everything, it gives you a really nice platform to build apps.
 
 ### No code generation
 

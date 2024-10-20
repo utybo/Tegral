@@ -2,11 +2,7 @@
 title: Introducing Tegral 0.0.2
 description: OpenAPI support, integration testing and much more!
 slug: introducing-tegral-0-0-2
-authors:
-  - name: utybo
-    title: Maintainer
-    url: https://github.com/utybo
-    image_url: https://github.com/utybo.png
+authors: utybo
 tags: [release]
 image: john-towner-p-rN-n6Miag-unsplash.jpg
 hide_table_of_contents: false
@@ -14,7 +10,7 @@ hide_table_of_contents: false
 
 Tegral 0.0.2 is a massive update, with over 40 bullet points in our [changelog](https://github.com/utybo/Tegral/tree/main/CHANGELOG.md)! Let's go through the biggest changes, including new OpenAPI support, integration testing support, and more robust dependency injection internals!
 
-<!--truncate-->
+<!-- truncate -->
 
 ![Splash art for version 0.0.2](john-towner-p-rN-n6Miag-unsplash.jpg)
 
@@ -306,7 +302,7 @@ Not anymore!
 
 ### The solution
 
-The components contained in an environment were overhauled to now map identifiers to *resolvers*.
+The components contained in an environment were overhauled to now map identifiers to _resolvers_.
 
 ```mermaid
 graph LR
@@ -385,7 +381,7 @@ You can now configure logging levels for the various loggers directly in your `t
 ```toml
 [tegral.logging]
 # Default root logging level
-level = "Debug" 
+level = "Debug"
 
 [tegral.logging.loggers."my.logger"]
 # Logging level for the "my.logger" logger
@@ -398,7 +394,7 @@ Logs will look a bit nicer by default in your Tegral Web applications (with colo
 
 ## Miscellaneous highlights
 
-*For a full list of changes, please refer to our [changelog](https://github.com/utybo/Tegral/tree/main/CHANGELOG.md).*
+_For a full list of changes, please refer to our [changelog](https://github.com/utybo/Tegral/tree/main/CHANGELOG.md)._
 
 - Tegral DI: `UnsafeMutableEnvironment`, which is the environment you use when testing Tegral DI-powered components, is now extensible. This allows you to install Tegral DI extensions in tests.
 
