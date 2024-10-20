@@ -17,11 +17,10 @@ package guru.zoroark.tegral.openapi.ktor.resources
 import guru.zoroark.tegral.openapi.ktor.TegralOpenApiKtor
 import guru.zoroark.tegral.openapi.ktor.openApi
 import io.ktor.resources.Resource
-import io.ktor.server.application.ApplicationCall
 import io.ktor.server.resources.Resources
 import io.ktor.server.routing.Route
+import io.ktor.server.routing.RoutingContext
 import io.ktor.server.testing.testApplication
-import io.ktor.util.pipeline.PipelineContext
 import io.swagger.v3.oas.models.Operation
 import io.swagger.v3.oas.models.PathItem
 import kotlinx.serialization.Serializable
@@ -37,7 +36,7 @@ class Hello(val name: String) {
     })
 }
 
-typealias RouteBuilder = Route.(suspend PipelineContext<Unit, ApplicationCall>.(Hello) -> Unit) -> Route
+typealias RouteBuilder = Route.(suspend RoutingContext.(Hello) -> Unit) -> Route
 
 class OperationDRouteHandlersTest {
     private fun testResourceOperation(

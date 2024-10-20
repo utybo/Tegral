@@ -25,7 +25,7 @@ public abstract class guru/zoroark/tegral/web/controllers/KtorApplication : guru
 public final class guru/zoroark/tegral/web/controllers/KtorApplicationSettings {
 	public fun <init> (Lio/ktor/server/engine/ApplicationEngineFactory;ILjava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;)V
 	public synthetic fun <init> (Lio/ktor/server/engine/ApplicationEngineFactory;ILjava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun embeddedServerFromSettings (Lkotlin/jvm/functions/Function1;)Lio/ktor/server/engine/ApplicationEngine;
+	public final fun embeddedServerFromSettings (Lkotlin/jvm/functions/Function1;)Lio/ktor/server/engine/EmbeddedServer;
 	public final fun getEngine ()Lio/ktor/server/engine/ApplicationEngineFactory;
 	public final fun getHost ()Ljava/lang/String;
 	public final fun getPort ()I

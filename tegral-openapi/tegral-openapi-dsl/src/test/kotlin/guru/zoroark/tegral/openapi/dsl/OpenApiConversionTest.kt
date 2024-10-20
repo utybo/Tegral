@@ -38,7 +38,7 @@ class OpenApiConversionTest {
         assertEquals(
             """
             {"openapi":"3.1.0","info":{"title":"My API","version":"0.0.0"},
-            "jsonSchemaDialect":"https://json-schema.org/draft/2020-12/schema"}
+            "jsonSchemaDialect":"https://spec.openapis.org/oas/3.1/dialect/base"}
             """.trimIndent().replace("\n", ""),
             json
         )
@@ -75,7 +75,7 @@ class OpenApiConversionTest {
             info:
               title: My API
               version: 0.0.0
-            jsonSchemaDialect: https://json-schema.org/draft/2020-12/schema
+            jsonSchemaDialect: https://spec.openapis.org/oas/3.1/dialect/base
             """.trimIndent() + "\n",
             yaml
         )

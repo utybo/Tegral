@@ -89,7 +89,7 @@ class SectionedConfigurationTest {
         val fs = setupFs("/test.toml", content)
 
         return configLoader(sections.toList())
-            .allowEmptySources()
+            .allowEmptyConfigFiles()
             .build()
             .loadConfigOrThrow(
                 SectionedConfigurationContainer::class,

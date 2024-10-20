@@ -2,11 +2,7 @@
 title: "Tegral 0.0.4 release"
 description: 0.0.4 is now available! New modules for parsers, lexers, a Prisma generator and more!
 slug: tegral-0-0-4-release
-authors:
-  - name: utybo
-    title: Maintainer
-    url: https://github.com/utybo
-    image_url: https://github.com/utybo.png
+authors: utybo
 tags: [release]
 image: steel-scaffolding-g85ea1a499_1280.jpg
 ---
@@ -142,7 +138,7 @@ OpenAPI documents are made of paths (e.g. `/foo/bar`), which themselves contain 
 
 Previously, you could only define operation attributes (descriptions, responses, headers, etc.) on the operation. That ended up being somewhat cumbersome as all operations in a single path tend to have some similar details (e.g. two operations under `/cat/{id}` will both have information on the `id` parameter).
 
-Moreover, as a @Ribesg pointed out [in a GitHub issue](https://github.com/utybo/Tegral/issues/59), that ended up making things like properly defining multiple operations on a single Ktor resource impossible. More specifically, Ktor resources provide an *operation* description while they actually really only represent *paths*. That meant that you could not define multiple descriptions for the same resource.
+Moreover, as a @Ribesg pointed out [in a GitHub issue](https://github.com/utybo/Tegral/issues/59), that ended up making things like properly defining multiple operations on a single Ktor resource impossible. More specifically, Ktor resources provide an _operation_ description while they actually really only represent _paths_. That meant that you could not define multiple descriptions for the same resource.
 
 You can now define properties that should be present on all operations of a path directly in the path. For example:
 
@@ -211,7 +207,7 @@ class Cat(val id: Long) {
 
 ### Cascading OpenAPI descriptions for Ktor resources
 
-Ktor resources' descriptions will now *cascade*. Anything defined at the path level of an outer resource will be replicated in the inner resource, e.g.:
+Ktor resources' descriptions will now _cascade_. Anything defined at the path level of an outer resource will be replicated in the inner resource, e.g.:
 
 ```kotlin
 @Resource("/cat") @Serializable

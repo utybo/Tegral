@@ -25,7 +25,6 @@ import kotlin.test.assertEquals
 class ApplicationDescribeTest {
     @Test
     fun `Describe on application works and overrides defaults`() = testApplication {
-        environment { developmentMode = false } // HACK see KTOR-4729
         install(TegralOpenApiKtor) {
             title = "This is wrong"
         }

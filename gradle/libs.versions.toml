@@ -1,32 +1,32 @@
 [versions]
-coroutines = "1.7.3"
-detekt = "1.23.1"
-dokka = "1.8.20"
-gradleTestLogger = "3.2.0"
-hoplite = "2.7.5"
-jackson = "2.15.2"
+coroutines = "1.9.0"
+detekt = "1.23.6"  # waiting for a release with a fix for https://github.com/detekt/detekt/issues/7634
+dokka = "1.9.20"
+gradleTestLogger = "4.0.0"
+hoplite = "2.8.2"
+jackson = "2.18.0"
 jimfs = "1.3.0"
-junit = "5.10.0"
-kotlin = "1.9.10"
-kotlinBcv = "0.13.2"
-ktor = "2.3.3"
-logback = "1.4.7"
-mockk = "1.13.5"
-nodeGradle = "5.0.0"
-slf4j = "2.0.7"
-versions = "0.47.0"
+junit = "5.11.2"
+kotlin = "2.0.21"
+kotlinBcv = "0.16.3"
+ktor = "3.0.0"
+logback = "1.5.10"
+mockk = "1.13.13"
+nodeGradle = "7.1.0"
+slf4j = "2.0.16"
+versions = "0.51.0"
 licenserPlugin = "0.6.1"
-swaggerCore = "2.2.15"
-swaggerUi = "5.3.1"
-clikt = "4.2.0"
-exposed = "0.42.0"
-kotlinPoet = "1.14.2"
-sqlite = "3.42.0.0"
-testcontainers = "1.18.3"
-postgresql = "42.6.0"
-mysql = "8.1.0"
-lang3 = "3.13.0"
-shadow = "8.1.1"
+swaggerCore = "2.2.25"
+swaggerUi = "5.17.14"
+clikt = "5.0.1"
+exposed = "0.55.0"
+kotlinPoet = "1.18.1"
+sqlite = "3.46.1.3"
+testcontainers = "1.20.2"
+postgresql = "42.7.4"
+mysql = "9.0.0"
+lang3 = "3.17.0"
+shadow = "8.3.3"
 
 [libraries]
 # Dependencies
@@ -79,7 +79,7 @@ exposed-javatime = { module = "org.jetbrains.exposed:exposed-java-time", version
 
 kotlinPoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinPoet" }
 
-sqlite = { module = "org.xerial:sqlite-jdbc", version.ref  = "sqlite" }
+sqlite = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite" }
 
 # Test dependencies
 
@@ -113,4 +113,4 @@ gradleTestLogger = { id = "com.adarshr.test-logger", version.ref = "gradleTestLo
 kotlinBcv = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinBcv" }
 nodeGradle = { id = "com.github.node-gradle.node", version.ref = "nodeGradle" }
 licenser = { id = "org.cadixdev.licenser", version.ref = "licenserPlugin" }
-shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }

@@ -122,7 +122,7 @@ fun applyMinimalistLoggingOverrides(level: Level = Level.INFO) {
     le.start()
 
     for (appender in rootLogger.iteratorForAppenders()) {
-        if (appender is ConsoleAppender<*>) {
+        if (appender is ConsoleAppender<ILoggingEvent>) {
             appender.encoder = le
         }
     }

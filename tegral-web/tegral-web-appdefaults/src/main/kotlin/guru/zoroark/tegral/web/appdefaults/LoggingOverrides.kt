@@ -18,6 +18,7 @@ import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder
+import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.ConsoleAppender
 import org.slf4j.LoggerFactory
 
@@ -38,7 +39,7 @@ fun applyLoggingOverrides() {
     ple.start()
 
     for (appender in rootLogger.iteratorForAppenders()) {
-        if (appender is ConsoleAppender<*>) {
+        if (appender is ConsoleAppender<ILoggingEvent>) {
             appender.encoder = ple
         }
     }

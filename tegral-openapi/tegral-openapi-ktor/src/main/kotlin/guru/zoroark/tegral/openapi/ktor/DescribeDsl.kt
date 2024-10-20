@@ -26,8 +26,9 @@ import io.ktor.server.routing.HttpMethodRouteSelector
 import io.ktor.server.routing.PathSegmentConstantRouteSelector
 import io.ktor.server.routing.PathSegmentParameterRouteSelector
 import io.ktor.server.routing.Route
+import io.ktor.server.routing.RoutingNode
 import io.ktor.server.routing.application
-import io.ktor.util.KtorDsl
+import io.ktor.utils.io.KtorDsl
 import org.slf4j.LoggerFactory
 import java.util.LinkedList
 import java.util.concurrent.atomic.AtomicBoolean
@@ -111,14 +112,7 @@ typealias OperationBuilderWithHooks = (OpenApiDslContext, List<EndpointDescripti
 infix fun Route.describeWith(builder: OperationBuilderWithHooks): Route {
     val openApi = application.getOpenApiOrNullWithMessage() ?: return this
 
-    var metadata = parseMetadataFromRoute(this)
-
-    // Workaround for https://github.com/utybo/Koa/issues/5 | KTOR-4239
-    if (metadata.httpMethod == null && this.children.lastOrNull()?.selector is HttpMethodRouteSelector) {
-        metadata = metadata.copy(
-            httpMethod = (this.children.last().selector as HttpMethodRouteSelector).method
-        )
-    }
+    val metadata = parseMetadataFromRoute(this)
 
     val hooks = openApi.getHooksForRoute(this)
     val opBuilder = builder(openApi.context, hooks)
@@ -142,7 +136,7 @@ internal data class MutableEndpointMetadata(
     fun freeze() = EndpointMetadata(httpMethod, httpPath.toList())
 }
 
-internal tailrec fun parseMutableMetadataFromSelector(route: Route?, metadata: MutableEndpointMetadata) {
+internal tailrec fun parseMutableMetadataFromSelector(route: RoutingNode?, metadata: MutableEndpointMetadata) {
     if (route == null) return
 
     when (val selector = route.selector) {
@@ -159,5 +153,8 @@ internal tailrec fun parseMutableMetadataFromSelector(route: Route?, metadata: M
 }
 
 internal fun parseMetadataFromRoute(route: Route): EndpointMetadata {
+    if (route !is RoutingNode) {
+        error("Route $route cannot be used with Tegral OpenAPI as it does not inherit from Ktor's RoutingNode")
+    }
     return MutableEndpointMetadata(null, LinkedList()).apply { parseMutableMetadataFromSelector(route, this) }.freeze()
 }

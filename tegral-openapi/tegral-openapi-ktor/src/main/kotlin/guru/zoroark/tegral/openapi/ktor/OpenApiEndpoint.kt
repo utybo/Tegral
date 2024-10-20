@@ -19,10 +19,9 @@ import guru.zoroark.tegral.openapi.dsl.toJson
 import guru.zoroark.tegral.openapi.dsl.toYaml
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.server.application.application
-import io.ktor.server.application.call
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
+import io.ktor.server.routing.application
 import io.ktor.server.routing.get
 import io.swagger.v3.oas.models.OpenAPI
 
@@ -30,7 +29,7 @@ private fun parseVersion(version: String?): OpenApiVersion? =
     if (version == null) {
         OpenApiVersion.V3_0
     } else {
-        OpenApiVersion.values().firstOrNull { it.version == version }
+        OpenApiVersion.entries.firstOrNull { it.version == version }
     }
 
 private enum class Format(
@@ -46,7 +45,7 @@ private fun parseFormat(format: String?): Format? =
     if (format == null) {
         Format.JSON
     } else {
-        Format.values().firstOrNull { it.value == format }
+        Format.entries.firstOrNull { it.value == format }
     }
 
 /**

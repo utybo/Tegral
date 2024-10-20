@@ -1,13 +1,13 @@
-// @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
+/* eslint-env node */
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+import { themes } from "prism-react-renderer";
+import type { Config } from "@docusaurus/types";
+import path from "path";
 
-/** @type {import('@docusaurus/types').Config} */
-const config = {
+export default {
   title: "Tegral",
-  tagline: "A collection of reusable Kotlin libraries and frameworks, and a web framework that ties them together.",
+  tagline:
+    "A collection of reusable Kotlin libraries and frameworks, and a web framework that ties them together.",
   url: "https://tegral.zoroark.guru",
   baseUrl: "/",
   onBrokenLinks: "throw",
@@ -30,10 +30,10 @@ const config = {
   presets: [
     [
       "classic",
-      /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      {
+        /** @type {import('@docusaurus/preset-classic').Options} */
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
+          sidebarPath: path.resolve(__dirname, "./sidebars.js"),
           editUrl: "https://github.com/utybo/Tegral/tree/main/docs/",
         },
         blog: {
@@ -44,15 +44,15 @@ const config = {
           //  'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/'
         },
         theme: {
-          customCss: require.resolve("./src/css/custom.css"),
+          customCss: path.resolve(__dirname, "./src/css/custom.css"),
         },
-      }),
+      },
     ],
   ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
+    {
       navbar: {
         title: "Tegral",
         logo: {
@@ -161,8 +161,8 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Tegral maintainers & contributors. Built with Docusaurus.`,
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        theme: themes.github,
+        darkTheme: themes.dracula,
         additionalLanguages: ["kotlin", "groovy", "toml", "yaml"],
       },
       algolia: {
@@ -170,12 +170,10 @@ const config = {
         apiKey: "6f8c788df7af2f39272bb5497cc19a8b",
         indexName: "tegral-zoroark",
       },
-    }),
-  clientModules: [require.resolve("./src/routeobserver.js")],
+    },
+  clientModules: [path.resolve(__dirname, "./src/routeobserver.js")],
   markdown: {
     mermaid: true,
   },
   themes: ["@docusaurus/theme-mermaid"],
-};
-
-module.exports = config;
+} satisfies Config;

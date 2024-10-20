@@ -31,7 +31,6 @@ class DescribeSubroutesTest {
     @Test
     @Suppress("LongMethod")
     fun `Describe subroutes adds hook on relevant subroutes`() = testApplication {
-        environment { developmentMode = false } // HACK see KTOR-4729
         install(TegralOpenApiKtor)
         routing {
             route("/foo") {
@@ -119,7 +118,6 @@ class DescribeSubroutesTest {
 
     @Test
     fun `Multiple subroute descriptions on same route`() = testApplication {
-        environment { developmentMode = false } // HACK see KTOR-4729
         install(TegralOpenApiKtor)
         routing {
             route("/foo") {
@@ -171,7 +169,6 @@ class DescribeSubroutesTest {
 
     @Test
     fun `Nested subroute descriptions`() = testApplication {
-        environment { developmentMode = false } // HACK see KTOR-4729
         install(TegralOpenApiKtor)
         routing {
             route("/foo") {

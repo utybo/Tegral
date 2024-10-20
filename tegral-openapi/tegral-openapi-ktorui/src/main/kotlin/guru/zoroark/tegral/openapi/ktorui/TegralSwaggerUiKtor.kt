@@ -20,17 +20,16 @@ import io.ktor.http.content.OutgoingContent
 import io.ktor.http.defaultForFileExtension
 import io.ktor.server.application.ApplicationCallPipeline
 import io.ktor.server.application.BaseApplicationPlugin
-import io.ktor.server.application.application
-import io.ktor.server.application.call
 import io.ktor.server.application.plugin
 import io.ktor.server.http.content.resourceClasspathResource
 import io.ktor.server.response.respond
 import io.ktor.server.response.respondRedirect
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.Route
+import io.ktor.server.routing.application
 import io.ktor.server.routing.get
 import io.ktor.util.AttributeKey
-import io.ktor.util.InternalAPI
+import io.ktor.utils.io.InternalAPI
 import java.util.Properties
 
 private const val SWAGGER_UI_POM_LOCATION: String = "META-INF/maven/org.webjars/swagger-ui/pom.properties"

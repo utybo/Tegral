@@ -15,6 +15,7 @@
 package guru.zoroark.tegral.openapi.cli
 
 import com.github.ajalt.clikt.core.ProgramResult
+import com.github.ajalt.clikt.core.parse
 import com.google.common.jimfs.Configuration
 import com.google.common.jimfs.Jimfs
 import org.junit.jupiter.api.Test

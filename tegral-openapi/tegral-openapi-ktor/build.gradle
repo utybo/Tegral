@@ -9,7 +9,6 @@ dependencies {
     api libs.ktor.server.core
 
     testImplementation libs.ktor.server.test
-    testImplementation libs.ktor.server.locations
 }
 
 ext.humanName = "Tegral OpenAPI Ktor"

@@ -79,27 +79,29 @@ class PgsqlTypesTest {
             }
         }
 
-        val entity = transaction(db) { PgsqlTypesEntity.get(uuid) }
-        assertEquals("text", entity.text)
-        assertEquals("char                ", entity.char)
-        assertEquals("varchar", entity.varchar)
-        assertEquals(uuid, entity.uuid)
-        assertEquals(true, entity.boolean)
-        assertEquals(12345678, entity.int)
-        assertEquals(12345, entity.smallInt)
-        assertNotEquals(0, entity.smallSerial)
-        assertNotEquals(0, entity.serial)
-        assertEquals(123, entity.oid)
-        assertEquals(12345678910, entity.bigint)
-        assertNotEquals(0, entity.bigSerial)
-        assertEquals(1.5, entity.double)
-        assertEquals(1.5F, entity.real)
-        assertEquals(0, BigDecimal("1.5").compareTo(entity.decimal))
-        assertEquals(Instant.ofEpochSecond(0), entity.timestamp)
-        assertEquals(Instant.ofEpochSecond(10_000_000), entity.timestamptz)
-        assertEquals(LocalDate.of(2000, 1, 1), entity.date)
-        assertEquals(LocalTime.of(10, 10), entity.time)
-        assertEquals(LocalTime.of(10, 10), entity.timetz)
-        assertContentEquals(byteArrayOf(11, 22, 33), entity.bytea)
+        transaction(db) {
+            val entity = PgsqlTypesEntity[uuid]
+            assertEquals("text", entity.text)
+            assertEquals("char                ", entity.char)
+            assertEquals("varchar", entity.varchar)
+            assertEquals(uuid, entity.uuid)
+            assertEquals(true, entity.boolean)
+            assertEquals(12345678, entity.int)
+            assertEquals(12345, entity.smallInt)
+            assertNotEquals(0, entity.smallSerial)
+            assertNotEquals(0, entity.serial)
+            assertEquals(123, entity.oid)
+            assertEquals(12345678910, entity.bigint)
+            assertNotEquals(0, entity.bigSerial)
+            assertEquals(1.5, entity.double)
+            assertEquals(1.5F, entity.real)
+            assertEquals(0, BigDecimal("1.5").compareTo(entity.decimal))
+            assertEquals(Instant.ofEpochSecond(0), entity.timestamp)
+            assertEquals(Instant.ofEpochSecond(10_000_000), entity.timestamptz)
+            assertEquals(LocalDate.of(2000, 1, 1), entity.date)
+            assertEquals(LocalTime.of(10, 10), entity.time)
+            assertEquals(LocalTime.of(10, 10), entity.timetz)
+            assertContentEquals(byteArrayOf(11, 22, 33), entity.bytea)
+        }
     }
 }

@@ -2,18 +2,14 @@
 title: Tegral 0.0.3 release
 description: Just a big ol' bunch of bug fixes and improvements
 slug: tegral-0-0-3-release
-authors:
-  - name: utybo
-    title: Maintainer
-    url: https://github.com/utybo
-    image_url: https://github.com/utybo.png
+authors: utybo
 tags: [release]
 image: zhao-chen-ag-RTLJgy54-unsplash.jpg
 ---
 
 Tegral 0.0.3 fixes a few things from the 0.0.2 updates. It also adds a new integration for Ktor resources.
 
-<!--truncate-->
+<!-- truncate -->
 
 ![An image of a foggy mountain scenery](zhao-chen-ag-RTLJgy54-unsplash.jpg)
 
