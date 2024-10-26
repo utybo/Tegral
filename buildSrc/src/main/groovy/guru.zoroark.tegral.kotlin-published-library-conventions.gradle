@@ -22,14 +22,6 @@ afterEvaluate {
     }
 }
 
-//tasks.dokkaHtmlPartial {
-//    dokkaSourceSets {
-//        configureEach {
-//            includes.from("MODULE.md")
-//        }
-//    }
-//}
-
 java {
     withSourcesJar()
     withJavadocJar()
