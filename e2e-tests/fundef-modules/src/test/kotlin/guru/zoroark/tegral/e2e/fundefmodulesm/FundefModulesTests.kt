@@ -28,7 +28,6 @@ import guru.zoroark.tegral.openapi.dsl.openApi
 import guru.zoroark.tegral.openapi.dsl.toJson
 import guru.zoroark.tegral.openapi.ktor.openApi
 import guru.zoroark.tegral.web.appdefaults.DefaultKtorApplication
-import guru.zoroark.tegral.web.controllers.KtorApplication
 import guru.zoroark.tegral.web.controllers.test.TegralControllerTest
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
@@ -188,9 +187,11 @@ class FundefOpenapiTest {
     fun `OpenAPI document`(): Unit = runBlocking {
         val tegralApp = app()
         try {
-            val openApiDocument = tegralApp.environment.get<DefaultKtorApplication>().application.openApi.buildOpenApiDocument()
+            val openApiDocument =
+                tegralApp.environment.get<DefaultKtorApplication>().application.openApi.buildOpenApiDocument()
             val result = jacksonObjectMapper().readValue<Map<*, *>>(openApiDocument.toJson())
-            val expected = jacksonObjectMapper().readValue<Map<*, *>>("""
+            val expected = jacksonObjectMapper().readValue<Map<*, *>>(
+                """
                 {
                   "openapi": "3.0.1",
                   "info": {
@@ -227,7 +228,8 @@ class FundefOpenapiTest {
                     }
                   }
                 }
-            """.trimIndent())
+                """.trimIndent()
+            )
             assertEquals(expected, result)
         } finally {
             tegralApp.stop()
