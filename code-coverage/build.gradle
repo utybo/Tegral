@@ -11,10 +11,6 @@ dependencies {
     for (projectPath in gradle.ext.testProjects) {
         aggregatedProjects project(projectPath)
     }
-
-    for (prismaktTestProject in project(':tegral-prismakt:tegral-prismakt-generator-tests').subprojects) {
-        aggregatedProjects prismaktTestProject
-    }
 }
 
 tasks.named('check') {

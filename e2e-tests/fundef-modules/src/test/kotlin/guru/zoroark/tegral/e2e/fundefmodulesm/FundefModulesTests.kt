@@ -14,11 +14,21 @@
 
 package guru.zoroark.tegral.e2e.fundefmodulesm
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import guru.zoroark.tegral.di.environment.get
 import guru.zoroark.tegral.di.test.TegralSubjectTest
 import guru.zoroark.tegral.di.test.mockk.putMock
 import guru.zoroark.tegral.e2e.fundefmodules.Repository
 import guru.zoroark.tegral.e2e.fundefmodules.Service
+import guru.zoroark.tegral.e2e.fundefmodules.app
 import guru.zoroark.tegral.e2e.fundefmodules.controller
+import guru.zoroark.tegral.e2e.fundefmodules.openApi
+import guru.zoroark.tegral.openapi.dsl.openApi
+import guru.zoroark.tegral.openapi.dsl.toJson
+import guru.zoroark.tegral.openapi.ktor.openApi
+import guru.zoroark.tegral.web.appdefaults.DefaultKtorApplication
+import guru.zoroark.tegral.web.controllers.KtorApplication
 import guru.zoroark.tegral.web.controllers.test.TegralControllerTest
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
@@ -31,6 +41,7 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.runs
 import io.mockk.verifyAll
+import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
@@ -169,5 +180,57 @@ class FundefControllerTest : TegralControllerTest<Any>(Routing::controller) {
         }
 
         verifyAll { service.resetString() }
+    }
+}
+
+class FundefOpenapiTest {
+    @Test
+    fun `OpenAPI document`(): Unit = runBlocking {
+        val tegralApp = app()
+        try {
+            val openApiDocument = tegralApp.environment.get<DefaultKtorApplication>().application.openApi.buildOpenApiDocument()
+            val result = jacksonObjectMapper().readValue<Map<*, *>>(openApiDocument.toJson())
+            val expected = jacksonObjectMapper().readValue<Map<*, *>>("""
+                {
+                  "openapi": "3.0.1",
+                  "info": {
+                    "title": "Fundef example",
+                    "description": "An example of a Tegral application that uses fundefs to define modules, etc.",
+                    "version": "0.0.0"
+                  },
+                  "paths": {
+                    "/string": {
+                      "get": {
+                        "summary": "Get the current string value",
+                        "responses": {
+                          "200": {
+                            "description": "Success",
+                            "content": { "text/plain": { "schema": { "type": "string" } } }
+                          },
+                          "404": { "description": "No value currently available" }
+                        }
+                      },
+                      "put": {
+                        "summary": "Set the string value",
+                        "requestBody": {
+                          "content": { "text/plain": { "schema": { "type": "string" } } }
+                        },
+                        "responses": {
+                          "200": { "description": "Set successfully" },
+                          "400": { "description": "Invalid value" }
+                        }
+                      },
+                      "delete": {
+                        "summary": "Reset the string value",
+                        "responses": { "200": { "description": "Reset successfully" } }
+                      }
+                    }
+                  }
+                }
+            """.trimIndent())
+            assertEquals(expected, result)
+        } finally {
+            tegralApp.stop()
+        }
     }
 }

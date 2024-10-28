@@ -44,7 +44,16 @@ abstract class KtorApplication(
      */
     abstract val settings: KtorApplicationSettings<*, *>
 
-    private var application: EmbeddedServer<*, *>? = null
+    private var engine: EmbeddedServer<*, *>? = null
+
+    /**
+     * Instance of the underlying Ktor application.
+     *
+     * For example, you can use this to access Ktor plugins from the outside.
+     *
+     * Use with care! This application's start and stop lifecycle is managed by the [KtorApplication] instance.
+     */
+    val application get() = engine?.application ?: error("KtorApplication has not started yet")
 
     override suspend fun start() {
         val server = settings.embeddedServerFromSettings {
@@ -52,10 +61,10 @@ abstract class KtorApplication(
                 with(it) { install() }
             }
         }
-        application = server.also { it.start() }
+        engine = server.also { it.start() }
     }
 
     override suspend fun stop(): Unit = withContext(Dispatchers.IO) {
-        application?.stop(STOP_GRACE_PERIOD_MS, STOP_TIMEOUT_MS)
+        engine?.stop(STOP_GRACE_PERIOD_MS, STOP_TIMEOUT_MS)
     }
 }

@@ -126,6 +126,7 @@ fun Application.openApi() {
     }
 }
 
+@OptIn(ExperimentalFundef::class)
 fun app() = tegral {
     install(WebControllersFeature) {
         enableFundefs = true
