@@ -13,7 +13,7 @@ interface SecurityDsl {
      * to be fulfilled.
      */
     @TegralDsl
-    var securityRequirements: MutableList<SecurityRequirement>
+    val securityRequirements: MutableList<SecurityRequirement>
 
     /**
      * Adds a security requirement object to this operation with the given key.

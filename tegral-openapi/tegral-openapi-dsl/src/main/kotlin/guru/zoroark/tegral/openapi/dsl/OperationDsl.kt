@@ -86,7 +86,6 @@ interface OperationDsl : SecurityDsl {
     @TegralDsl
     val parameters: MutableList<Buildable<Parameter>>
 
-
     /**
      * The list of possible responses as they are returned from executing this operation.
      */
@@ -157,8 +156,6 @@ class OperationBuilder(private val context: OpenApiDslContext) : OperationDsl, B
 
     override val tags = mutableListOf<String>()
     override val parameters = mutableListOf<Buildable<Parameter>>()
-
-    // TODO properly support AND scenarios between security requirements (right now it's OR only)
 
     override fun security(key: String) {
         securityRequirements.add(SecurityRequirement().addList(key))

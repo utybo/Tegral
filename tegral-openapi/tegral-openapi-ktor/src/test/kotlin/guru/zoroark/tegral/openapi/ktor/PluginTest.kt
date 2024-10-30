@@ -73,7 +73,6 @@ class PluginTest {
     @Test
     fun `Add security requirements on root`() {
         testApplication {
-            environment { developmentMode = false } // HACK see KTOR-4729
             install(TegralOpenApiKtor) {
                 security("scheme1")
                 security("scheme2", "scope1", "scope2")
