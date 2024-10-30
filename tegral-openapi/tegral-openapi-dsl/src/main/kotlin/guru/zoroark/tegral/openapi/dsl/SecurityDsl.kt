@@ -14,9 +14,15 @@
 
 package guru.zoroark.tegral.openapi.dsl
 
+import guru.zoroark.tegral.core.Buildable
 import guru.zoroark.tegral.core.TegralDsl
 import io.swagger.v3.oas.models.security.SecurityRequirement
 
+/**
+ * DSL for the [security item object](https://spec.openapis.org/oas/v3.1.0#security-requirement-object).
+ *
+ * Can be defined at root level (see [RootDsl]) and operation level (see [OperationDsl]).
+ */
 @TegralDsl
 interface SecurityDsl {
     /**
@@ -41,20 +47,33 @@ interface SecurityDsl {
     @TegralDsl
     fun security(key: String, vararg scopes: String)
 
+    /**
+     * Adds a security requirement object using the provided builder.
+     * Allows to define multiple requirements (which behave like an "AND", and all of them need to be fulfilled).
+     */
     @TegralDsl
     fun security(builder: SecurityRequirementsBuilder.() -> Unit)
 }
 
-class SecurityRequirementsBuilder {
+/**
+ * Builder for [SecurityRequirement]
+ */
+class SecurityRequirementsBuilder : Buildable<SecurityRequirement> {
     private val securityRequirement = SecurityRequirement()
 
+    /**
+     * Adds a security requirement object with the given key.
+     */
     fun requirement(key: String) {
         securityRequirement.addList(key)
     }
 
+    /**
+     * Adds a security requirement object with the given key and scopes.
+     */
     fun requirement(key: String, vararg scopes: String) {
         securityRequirement.addList(key, scopes.asList())
     }
 
-    fun build(): SecurityRequirement = securityRequirement
+    override fun build(): SecurityRequirement = securityRequirement
 }

@@ -199,16 +199,18 @@ public final class guru/zoroark/tegral/openapi/dsl/OperationBuilder : guru/zoroa
 	public fun response (ILkotlin/jvm/functions/Function1;)V
 	public fun security (Ljava/lang/String;)V
 	public fun security (Ljava/lang/String;[Ljava/lang/String;)V
+	public fun security (Lkotlin/jvm/functions/Function1;)V
 	public fun setDeprecated (Ljava/lang/Boolean;)V
 	public fun setDescription (Ljava/lang/String;)V
 	public fun setExternalDocsDescription (Ljava/lang/String;)V
 	public fun setExternalDocsUrl (Ljava/lang/String;)V
 	public fun setOperationId (Ljava/lang/String;)V
 	public fun setRequestBody (Lguru/zoroark/tegral/openapi/dsl/RequestBodyBuilder;)V
+	public fun setSecurityRequirements (Ljava/util/List;)V
 	public fun setSummary (Ljava/lang/String;)V
 }
 
-public abstract interface class guru/zoroark/tegral/openapi/dsl/OperationDsl {
+public abstract interface class guru/zoroark/tegral/openapi/dsl/OperationDsl : guru/zoroark/tegral/openapi/dsl/SecurityDsl {
 	public abstract fun body (Lkotlin/jvm/functions/Function1;)V
 	public abstract fun cookieParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun getDeprecated ()Ljava/lang/Boolean;
@@ -219,15 +221,12 @@ public abstract interface class guru/zoroark/tegral/openapi/dsl/OperationDsl {
 	public abstract fun getParameters ()Ljava/util/List;
 	public abstract fun getRequestBody ()Lguru/zoroark/tegral/openapi/dsl/RequestBodyBuilder;
 	public abstract fun getResponses ()Ljava/util/Map;
-	public abstract fun getSecurityRequirements ()Ljava/util/List;
 	public abstract fun getSummary ()Ljava/lang/String;
 	public abstract fun getTags ()Ljava/util/List;
 	public abstract fun headerParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun pathParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun queryParameter (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun response (ILkotlin/jvm/functions/Function1;)V
-	public abstract fun security (Ljava/lang/String;)V
-	public abstract fun security (Ljava/lang/String;[Ljava/lang/String;)V
 	public abstract fun setDeprecated (Ljava/lang/Boolean;)V
 	public abstract fun setDescription (Ljava/lang/String;)V
 	public abstract fun setExternalDocsDescription (Ljava/lang/String;)V
@@ -332,6 +331,7 @@ public final class guru/zoroark/tegral/openapi/dsl/PathBuilder : guru/zoroark/te
 	public fun response (ILkotlin/jvm/functions/Function1;)V
 	public fun security (Ljava/lang/String;)V
 	public fun security (Ljava/lang/String;[Ljava/lang/String;)V
+	public fun security (Lkotlin/jvm/functions/Function1;)V
 	public fun setDelete (Lguru/zoroark/tegral/openapi/dsl/OperationBuilder;)V
 	public fun setDeprecated (Ljava/lang/Boolean;)V
 	public fun setDescription (Ljava/lang/String;)V
@@ -479,6 +479,7 @@ public final class guru/zoroark/tegral/openapi/dsl/RootBuilder : guru/zoroark/te
 	public fun getLicenseIdentifier ()Ljava/lang/String;
 	public fun getLicenseName ()Ljava/lang/String;
 	public fun getLicenseUrl ()Ljava/lang/String;
+	public fun getSecurityRequirements ()Ljava/util/List;
 	public fun getSummary ()Ljava/lang/String;
 	public fun getTermsOfService ()Ljava/lang/String;
 	public fun getTitle ()Ljava/lang/String;
@@ -489,6 +490,9 @@ public final class guru/zoroark/tegral/openapi/dsl/RootBuilder : guru/zoroark/te
 	public fun patch (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public fun post (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public fun put (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun security (Ljava/lang/String;)V
+	public fun security (Ljava/lang/String;[Ljava/lang/String;)V
+	public fun security (Lkotlin/jvm/functions/Function1;)V
 	public fun securityScheme (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public fun server (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public fun setContactEmail (Ljava/lang/String;)V
@@ -500,6 +504,7 @@ public final class guru/zoroark/tegral/openapi/dsl/RootBuilder : guru/zoroark/te
 	public fun setLicenseIdentifier (Ljava/lang/String;)V
 	public fun setLicenseName (Ljava/lang/String;)V
 	public fun setLicenseUrl (Ljava/lang/String;)V
+	public fun setSecurityRequirements (Ljava/util/List;)V
 	public fun setSummary (Ljava/lang/String;)V
 	public fun setTermsOfService (Ljava/lang/String;)V
 	public fun setTitle (Ljava/lang/String;)V
@@ -507,13 +512,28 @@ public final class guru/zoroark/tegral/openapi/dsl/RootBuilder : guru/zoroark/te
 	public fun tag (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 }
 
-public abstract interface class guru/zoroark/tegral/openapi/dsl/RootDsl : guru/zoroark/tegral/openapi/dsl/InfoDsl, guru/zoroark/tegral/openapi/dsl/PathsDsl, guru/zoroark/tegral/openapi/dsl/TagsDsl {
+public abstract interface class guru/zoroark/tegral/openapi/dsl/RootDsl : guru/zoroark/tegral/openapi/dsl/InfoDsl, guru/zoroark/tegral/openapi/dsl/PathsDsl, guru/zoroark/tegral/openapi/dsl/SecurityDsl, guru/zoroark/tegral/openapi/dsl/TagsDsl {
 	public abstract fun getExternalDocsDescription ()Ljava/lang/String;
 	public abstract fun getExternalDocsUrl ()Ljava/lang/String;
 	public abstract fun securityScheme (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun server (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public abstract fun setExternalDocsDescription (Ljava/lang/String;)V
 	public abstract fun setExternalDocsUrl (Ljava/lang/String;)V
+}
+
+public abstract interface class guru/zoroark/tegral/openapi/dsl/SecurityDsl {
+	public abstract fun getSecurityRequirements ()Ljava/util/List;
+	public abstract fun security (Ljava/lang/String;)V
+	public abstract fun security (Ljava/lang/String;[Ljava/lang/String;)V
+	public abstract fun security (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class guru/zoroark/tegral/openapi/dsl/SecurityRequirementsBuilder : guru/zoroark/tegral/core/Buildable {
+	public fun <init> ()V
+	public fun build ()Lio/swagger/v3/oas/models/security/SecurityRequirement;
+	public synthetic fun build ()Ljava/lang/Object;
+	public final fun requirement (Ljava/lang/String;)V
+	public final fun requirement (Ljava/lang/String;[Ljava/lang/String;)V
 }
 
 public final class guru/zoroark/tegral/openapi/dsl/SecuritySchemeBuilder : guru/zoroark/tegral/core/Buildable, guru/zoroark/tegral/openapi/dsl/SecuritySchemeDsl {
