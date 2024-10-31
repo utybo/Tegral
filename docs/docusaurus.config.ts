@@ -85,7 +85,7 @@ export default {
             label: "About",
           },
           {
-            href: "pathname:///dokka",
+            href: "pathname:///dokka/index.html",
             label: "API",
             position: "right",
           },
@@ -118,7 +118,7 @@ export default {
               },
               {
                 label: "API documentation (Dokka)",
-                to: "pathname:///dokka",
+                to: "pathname:///dokka/index.html",
               },
             ],
           },

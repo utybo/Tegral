@@ -20,5 +20,5 @@ sourceSets {
 
 compileKotlin.dependsOn generateKotlin
 checkLicenseMain.dependsOn generateKotlin
-dokkaHtmlPartial.dependsOn generateKotlin
+dokkatooGenerateModuleHtml.dependsOn generateKotlin
 sourcesJar.dependsOn generateKotlin

@@ -50,7 +50,7 @@ Currently, Tegral has quite a few elements:
 
 - Documentation!
   - This very website
-  - The [API](pathname:///dokka) documentation, made available using Dokka.
+  - The [API](pathname:///dokka/index.html) documentation, made available using Dokka.
 - Libraries!
   - And quite a lot of them! Just dig into the documentation to find out what the different components can all do for you.
   - Most notably, Tegral includes a [powerful DI framework called Tegral DI](pathname:///docs/modules/core/di) that is the successor to [Shedinja](https://shedinja.zoroark.guru).

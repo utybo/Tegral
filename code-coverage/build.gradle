@@ -7,48 +7,9 @@ repositories {
     mavenCentral()
 }
 
-def projects = [
-    ':tegral-config:tegral-config-core',
-    ':tegral-core',
-    ':tegral-di:tegral-di-core',
-    ':tegral-di:tegral-di-services',
-    ':tegral-di:tegral-di-test',
-    ':tegral-di:tegral-di-test-mockk',
-    ':tegral-featureful',
-    ':tegral-logging',
-    ':tegral-niwen:tegral-niwen-lexer',
-    ':tegral-niwen:tegral-niwen-parser',
-    ':tegral-openapi:tegral-openapi-cli',
-    ':tegral-openapi:tegral-openapi-dsl',
-    ':tegral-openapi:tegral-openapi-feature',
-    ':tegral-openapi:tegral-openapi-ktor',
-    ':tegral-openapi:tegral-openapi-ktor-resources',
-    ':tegral-openapi:tegral-openapi-ktorui',
-    ':tegral-openapi:tegral-openapi-scriptdef',
-    ':tegral-openapi:tegral-openapi-scripthost',
-    ':tegral-prismakt:tegral-prismakt-generator',
-    ':tegral-services:tegral-services-api',
-    ':tegral-services:tegral-services-feature',
-    ':tegral-utils:tegral-utils-logtools',
-    ':tegral-web:tegral-web-appdefaults',
-    ':tegral-web:tegral-web-appdsl',
-    ':tegral-web:tegral-web-apptest',
-    ':tegral-web:tegral-web-config',
-    ':tegral-web:tegral-web-controllers',
-    ':tegral-web:tegral-web-controllers-test',
-    ':tegral-web:tegral-web-greeter',
-    ':e2e-tests:run-with-java-11',
-    ':e2e-tests:run-with-java-17',
-    ':e2e-tests:run-without-config'
-]
-
 dependencies {
-    for (projectPath in projects) {
+    for (projectPath in gradle.ext.testProjects) {
         aggregatedProjects project(projectPath)
-    }
-
-    for (prismaktTestProject in project(':tegral-prismakt:tegral-prismakt-generator-tests').subprojects) {
-        aggregatedProjects prismaktTestProject
     }
 }
 
