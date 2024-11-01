@@ -231,6 +231,7 @@ class PathsBuilderTest {
         assertEquals(expected, paths)
     }
 
+    @Suppress("LongMethod")
     @Test
     fun `Add everything via definition at path level`() {
         val paths = PathsBuilder(mockk()).apply {
