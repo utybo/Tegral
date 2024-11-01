@@ -1,7 +1,0 @@
-plugins {
-    id 'guru.zoroark.tegral.kotlin-common-conventions'
-}
-
-dependencies {
-    implementation libs.commons.lang3
-}
