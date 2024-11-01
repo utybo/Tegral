@@ -11,7 +11,7 @@ val generateKotlin = tasks.register<Copy>("generateKotlin") {
     val templateContext = mapOf("version" to project.version)
     inputs.properties(templateContext)
     from("src/template/kotlin")
-    into("${layout.buildDirectory}/generated/kotlin")
+    into(layout.buildDirectory.dir("generated/kotlin"))
     expand(templateContext)
 }
 

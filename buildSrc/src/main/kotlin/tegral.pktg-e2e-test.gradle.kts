@@ -59,7 +59,7 @@ val prismaGenerate = tasks.register<NpxTask>("prismaGenerate") {
             "-javaagent:" + jacocoAgentFile + "=destfile=" + layout.buildDirectory.file("jacoco/generator.exec")
             .get().asFile.absolutePath +
             " -jar " + generator.find { it.name.endsWith(".jar") }
-        println("Generated KT command: " + command)
+        logger.info("Generated KT command: $command")
         mapOf("PRISMAKT_CMD" to command)
     })
 }
