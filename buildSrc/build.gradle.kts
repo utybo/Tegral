@@ -23,9 +23,9 @@ dependencies {
     for (pluginDef in pluginsDef) {
         val actualLib = pluginDef.get()
         implementation(
-            group = actualLib.getPluginId(),
-            name = actualLib.getPluginId() + ".gradle.plugin",
-            version = actualLib.getVersion().toString()
+            group = actualLib.pluginId,
+            name = actualLib.pluginId + ".gradle.plugin",
+            version = actualLib.version.toString()
         )
     }
 

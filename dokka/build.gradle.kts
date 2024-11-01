@@ -1,4 +1,3 @@
-import dev.adamko.dokkatoo.tasks.DokkatooGenerateModuleTask
 import dev.adamko.dokkatoo.tasks.DokkatooGeneratePublicationTask
 
 plugins {

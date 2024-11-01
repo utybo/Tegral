@@ -13,13 +13,13 @@ group = rootProject.group
 
 fun isNonStable(version: String): Boolean {
     val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.uppercase().contains(it) }
-    val regex = Regex("/^[0-9,.v-]+(-r)?$/")
+    val regex = Regex("^[0-9,.v-]+(-r)?$")
     return !stableKeyword && !(version.matches(regex)) || version.contains("-M")
 }
 
 
 tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
-    // Reject all non stable versions
+    // Reject all non-stable versions
     rejectVersionIf {
         isNonStable(candidate.version)
     }

@@ -1,13 +1,10 @@
 plugins {
-
 }
 
 repositories {
     mavenCentral()
     maven { url = uri("https://gitlab.com/api/v4/projects/29365238/packages/maven") }
 }
-
-// FIXME Those configurations should have something
 
 val servine by configurations.creating {
     isCanBeResolved = true

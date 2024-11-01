@@ -29,6 +29,6 @@ extra["url"] = "https://tegral.zoroark.guru/docs/modules/core/prismakt"
 
 tasks.named<Jar>("jar") {
     manifest {
-        attributes.put("Main-Class", "guru.zoroark.tegral.prismakt.generator.MainKt")
+        attributes["Main-Class"] = "guru.zoroark.tegral.prismakt.generator.MainKt"
     }
 }

@@ -6,53 +6,48 @@ plugins {
     id("tegral.publish-conventions")
 }
 
-// FIXME better typing
-fun computeLibrariesToInclude(): Pair<List<Pair<String, String>>, Map<String, List<String>>> {
-    val result = mutableListOf<Pair<String, String>>()
-    val bundles = mutableMapOf<String, MutableList<String>>()
+data class LibEntry(val name: String, val artifact: String)
+data class ComputedEntries(val libs: MutableList<LibEntry>, val bundles: MutableMap<String, MutableList<String>>)
 
-    val projects = rootProject.getSubprojects()
-    for (project in projects) {
-        val includeInCatalog = project.extensions.extraProperties.properties["includeInCatalog"] as? Boolean ?: false
+fun computeLibrariesToInclude(): ComputedEntries {
+    val computedEntries = ComputedEntries(mutableListOf(), mutableMapOf())
+
+    for (project in rootProject.subprojects) {
+        val includeInCatalog = project.extra.properties["includeInCatalog"] as? Boolean ?: false
         if (includeInCatalog) {
-            val name = project.getName().let { if (it.startsWith("tegral-")) it.substring(7) else it }
+            val name = project.name.let { if (it.startsWith("tegral-")) it.substring(7) else it }
 
-            result.add(name to project.group.toString() + ':' + project.name.toString() + ':' + project.version.toString())
+            computedEntries.libs.add(
+                LibEntry(
+                    name,
+                    project.group.toString() + ':' + project.name + ':' + project.version.toString()
+                )
+            )
 
-            val relevantBundles = project.extensions.extraProperties.properties["includeInBundles"] as? List<*> ?: listOf<Any>()
+            val relevantBundles =
+                project.extra.properties["includeInBundles"] as? List<*> ?: listOf<Any>()
             for (bundle in relevantBundles) {
-                if (!bundles.containsKey(bundle)) {
-                    bundles[bundle.toString()] = mutableListOf()
-                }
-                bundles.get(bundle)!!.add(name)
+                computedEntries.bundles.computeIfAbsent(bundle.toString()) { mutableListOf() }.add(name)
             }
         }
     }
-    return result to bundles
+    return computedEntries
 }
 
-// FIXME: This doesn't look right
-val setupVersionCatalog = tasks.register("setupVersionCatalog") {
-    doLast {
-        catalog {
-            versionCatalog {
-                val (exportedLibraries, exportedBundles) = computeLibrariesToInclude()
-                for (exportedLibrary in exportedLibraries) {
-                    val (name, dependency) = exportedLibrary
-                    library(name, dependency)
-                }
+gradle.projectsEvaluated {
+    catalog {
+        versionCatalog {
+            val (exportedLibraries, exportedBundles) = computeLibrariesToInclude()
+            for ((name, dependency) in exportedLibraries) {
+                library(name, dependency)
+            }
 
-                print(exportedBundles)
-
-                for ((bundleName, bundleLibraries) in exportedBundles.entries) {
-                    bundle(bundleName, bundleLibraries)
-                }
+            for ((bundleName, bundleLibraries) in exportedBundles.entries) {
+                bundle(bundleName, bundleLibraries)
             }
         }
     }
 }
-
-tasks.named("generateCatalogAsToml") { dependsOn(setupVersionCatalog) }
 
 publishing {
     publications {

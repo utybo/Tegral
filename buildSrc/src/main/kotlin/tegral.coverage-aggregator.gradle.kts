@@ -11,6 +11,7 @@ val aggregatedProjects: Configuration by configurations.creating {
     isCanBeConsumed = false
 }
 
+@Suppress("UnstableApiUsage") // VerificationType is incubating
 val aggregatedProjectsExecData: Configuration by configurations.creating {
     isCanBeResolved = true
     isCanBeConsumed = false
@@ -27,6 +28,7 @@ val aggregatedProjectsExecData: Configuration by configurations.creating {
     }
 }
 
+@Suppress("UnstableApiUsage") // VerificationType is incubating
 val aggregatedProjectsSources: Configuration by configurations.creating {
     isCanBeResolved = true
     isCanBeConsumed = false
@@ -52,10 +54,14 @@ val aggregatedProjectsClasses: Configuration by configurations.creating {
     extendsFrom(aggregatedProjects)
 
     attributes {
-        attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements::class.java, LibraryElements.CLASSES))
+        attribute(
+            LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE,
+            objects.named(LibraryElements::class.java, LibraryElements.CLASSES)
+        )
     }
 }
 
+@Suppress("UnstableApiUsage")  // VerificationType is incubating
 val compositeReportExecData: Configuration by configurations.creating {
     isCanBeConsumed = true
     isCanBeResolved = false

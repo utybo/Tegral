@@ -2,7 +2,7 @@ plugins {
     id("tegral.kotlin-published-library-conventions")
 }
 
-ext["includeInBundles"] = listOf("web-test")
+extra["includeInBundles"] = listOf("web-test")
 
 dependencies {
     api(project(":tegral-di:tegral-di-core"))
@@ -13,6 +13,6 @@ dependencies {
     testImplementation(libs.mockk)
 }
 
-ext["humanName"] = "Tegral DI Test"
-ext["description"] = "Test utilities for Tegrarl DI-powered applications."
-ext["url"] = "https://tegral.zoroark.guru/docs/modules/core/di/testing/"
+extra["humanName"] = "Tegral DI Test"
+extra["description"] = "Test utilities for Tegrarl DI-powered applications."
+extra["url"] = "https://tegral.zoroark.guru/docs/modules/core/di/testing/"

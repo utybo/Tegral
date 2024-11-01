@@ -7,7 +7,7 @@ plugins {
     id("signing")
 }
 
-project.extra["includeInCatalog"] = true
+extra["includeInCatalog"] = true
 
 detekt {
     config.from(rootProject.layout.projectDirectory.file("detekt-config.published.yaml"))

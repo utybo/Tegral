@@ -71,6 +71,7 @@ val generatorCodeCoverage = tasks.register<JacocoReport>("generatorCodeCoverage"
     dependsOn(prismaGenerate)
 }
 
+@Suppress("UnstableApiUsage")
 val generatorCodeCoverageOutput by configurations.creating {
     isCanBeConsumed = true
     isCanBeResolved = false

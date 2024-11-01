@@ -2,7 +2,6 @@ plugins {
     id("tegral.kotlin-published-library-conventions")
 }
 
-extra["includeInCatalog"] = true
 extra["includeInBundles"] = listOf("web")
 
 dependencies {
