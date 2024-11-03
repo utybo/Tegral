@@ -2,6 +2,8 @@ plugins {
     id("com.gradle.enterprise") version "3.12.2"
 }
 
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
+
 val publicProjects = listOf(
         ":tegral-catalog",
         ":tegral-config:tegral-config-core",
