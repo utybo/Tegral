@@ -215,10 +215,13 @@ class PathBuilder(private val context: OpenApiDslContext) : PathDsl, Buildable<P
         }
     override val parameters: MutableList<Buildable<Parameter>>
         get() = error(WRITE_ONLY_ERROR_MSG)
+
     override val securityRequirements: MutableList<SecurityRequirement>
         get() = error(WRITE_ONLY_ERROR_MSG)
+
     override val responses: MutableMap<Int, Buildable<ApiResponse>>
         get() = error(WRITE_ONLY_ERROR_MSG)
+
     override val tags: MutableList<String> = mutableListOf()
 
     override fun security(key: String) {
@@ -227,6 +230,10 @@ class PathBuilder(private val context: OpenApiDslContext) : PathDsl, Buildable<P
 
     override fun security(key: String, vararg scopes: String) {
         addOperationDefault { security(key, *scopes) }
+    }
+
+    override fun security(builder: SecurityRequirementsBuilder.() -> Unit) {
+        addOperationDefault { security(builder) }
     }
 
     override fun Int.response(builder: ResponseDsl.() -> Unit) {

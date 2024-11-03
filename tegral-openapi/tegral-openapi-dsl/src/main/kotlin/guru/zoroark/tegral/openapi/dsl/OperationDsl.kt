@@ -29,7 +29,7 @@ import io.swagger.v3.oas.models.security.SecurityRequirement
  * Note that the `externalDocs` object is embedded in this DSL.
  */
 @TegralDsl
-interface OperationDsl {
+interface OperationDsl : SecurityDsl {
     /**
      * A short summary of what the operation does.
      */
@@ -87,16 +87,6 @@ interface OperationDsl {
     val parameters: MutableList<Buildable<Parameter>>
 
     /**
-     * A declaration of which security mechanisms can be used for this operation.
-     *
-     * - This list behaves like an "OR", only one needs to be fulfilled for the operation.
-     * - Requirements defined in the individual `SecurityRequirement` objects behave like an "AND", and all of them need
-     * to be fulfilled.
-     */
-    @TegralDsl
-    val securityRequirements: MutableList<SecurityRequirement>
-
-    /**
      * The list of possible responses as they are returned from executing this operation.
      */
     @TegralDsl
@@ -108,18 +98,6 @@ interface OperationDsl {
      */
     @TegralDsl
     val tags: MutableList<String>
-
-    /**
-     * Adds a security requirement object to this operation with the given key.
-     */
-    @TegralDsl
-    fun security(key: String)
-
-    /**
-     * Adds a security requirement object to this operation with the given key and scopes.
-     */
-    @TegralDsl
-    fun security(key: String, vararg scopes: String)
 
     /**
      * Creates a response for the given response code (passed as an integer value).
@@ -172,14 +150,12 @@ class OperationBuilder(private val context: OpenApiDslContext) : OperationDsl, B
     override var requestBody: RequestBodyBuilder? = null
     override var deprecated: Boolean? = null
     override var operationId: String? = null
+    override var securityRequirements = mutableListOf<SecurityRequirement>()
 
     // TODO callbacks, servers
 
     override val tags = mutableListOf<String>()
     override val parameters = mutableListOf<Buildable<Parameter>>()
-    override val securityRequirements = mutableListOf<SecurityRequirement>()
-
-    // TODO properly support AND scenarios between security requirements (right now it's OR only)
 
     override fun security(key: String) {
         securityRequirements.add(SecurityRequirement().addList(key))
@@ -187,6 +163,10 @@ class OperationBuilder(private val context: OpenApiDslContext) : OperationDsl, B
 
     override fun security(key: String, vararg scopes: String) {
         securityRequirements.add(SecurityRequirement().addList(key, scopes.toList()))
+    }
+
+    override fun security(builder: SecurityRequirementsBuilder.() -> Unit) {
+        securityRequirements.add(SecurityRequirementsBuilder().apply(builder).build())
     }
 
     override infix fun Int.response(builder: ResponseDsl.() -> Unit) {

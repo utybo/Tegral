@@ -231,6 +231,7 @@ class PathsBuilderTest {
         assertEquals(expected, paths)
     }
 
+    @Suppress("LongMethod")
     @Test
     fun `Add everything via definition at path level`() {
         val paths = PathsBuilder(mockk()).apply {
@@ -242,6 +243,8 @@ class PathsBuilderTest {
                 operationId = "up"
                 deprecated = true
                 security("never")
+                security("gonna", "let")
+                security { requirement("you", "down") }
                 200 response {
                     description = "gonna"
                 }
@@ -276,7 +279,7 @@ class PathsBuilderTest {
             assertNotNull(path.post)
         )
         for (op in operations) {
-            assertEquals(1, op.security.size)
+            assertEquals(3, op.security.size)
 
             assertEquals("Never", op.summary)
             assertEquals("gonna", op.description)
@@ -284,6 +287,8 @@ class PathsBuilderTest {
             assertEquals("you", op.externalDocs.url)
             assertEquals("up", op.operationId)
             assertEquals(emptyList(), op.security[0]["never"])
+            assertEquals(listOf("let"), op.security[1]["gonna"])
+            assertEquals(listOf("down"), op.security[2]["you"])
             assertTrue(op.deprecated)
             assertEquals("gonna", op.responses["200"]?.description)
             assertEquals(4, op.parameters.size)

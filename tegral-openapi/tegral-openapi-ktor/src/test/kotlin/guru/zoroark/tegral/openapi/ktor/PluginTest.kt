@@ -18,6 +18,7 @@ import io.ktor.server.application.MissingApplicationPluginException
 import io.ktor.server.testing.testApplication
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
+import io.swagger.v3.oas.models.security.SecurityRequirement
 import org.junit.jupiter.api.assertDoesNotThrow
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -63,6 +64,32 @@ class PluginTest {
                         version = "0.0.0"
                         summary = "This is my API"
                     }
+                }
+                assertEquals(expected, document)
+            }
+        }
+    }
+
+    @Test
+    fun `Add security requirements on root`() {
+        testApplication {
+            install(TegralOpenApiKtor) {
+                security("scheme1")
+                security("scheme2", "scope1", "scope2")
+                security {
+                    requirement("scheme3")
+                    requirement("scheme4", "scope3")
+                }
+            }
+
+            application {
+                val document = openApi.buildOpenApiDocument()
+                val expected = OpenAPI().apply {
+                    security = listOf(
+                        SecurityRequirement().addList("scheme1"),
+                        SecurityRequirement().addList("scheme2", listOf("scope1", "scope2")),
+                        SecurityRequirement().addList("scheme3").addList("scheme4", listOf("scope3")),
+                    )
                 }
                 assertEquals(expected, document)
             }

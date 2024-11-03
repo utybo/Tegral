@@ -40,6 +40,10 @@ class OperationBuilderTest {
             operationId = "myOperation"
             security("sec-one")
             security("sec-two", "scope-a", "scope-b")
+            security {
+                requirement("sec-three", "scope-c")
+                requirement("sec-four", "scope-d")
+            }
             tags += "tag-alpha"
             "pathParam" pathParameter {}
             "headerParam" headerParameter {}
@@ -64,6 +68,10 @@ class OperationBuilderTest {
                 },
                 SecurityRequirement().apply {
                     addList("sec-two", listOf("scope-a", "scope-b"))
+                },
+                SecurityRequirement().apply {
+                    addList("sec-three", listOf("scope-c"))
+                    addList("sec-four", listOf("scope-d"))
                 }
             )
             tags = listOf("tag-alpha")

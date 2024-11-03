@@ -38,6 +38,7 @@ public final class guru/zoroark/tegral/openapi/ktor/TegralOpenApiKtor$Configurat
 	public fun getLicenseIdentifier ()Ljava/lang/String;
 	public fun getLicenseName ()Ljava/lang/String;
 	public fun getLicenseUrl ()Ljava/lang/String;
+	public fun getSecurityRequirements ()Ljava/util/List;
 	public fun getSummary ()Ljava/lang/String;
 	public fun getTermsOfService ()Ljava/lang/String;
 	public fun getTitle ()Ljava/lang/String;
@@ -48,6 +49,9 @@ public final class guru/zoroark/tegral/openapi/ktor/TegralOpenApiKtor$Configurat
 	public fun patch (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public fun post (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public fun put (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public fun security (Ljava/lang/String;)V
+	public fun security (Ljava/lang/String;[Ljava/lang/String;)V
+	public fun security (Lkotlin/jvm/functions/Function1;)V
 	public fun securityScheme (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public fun server (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public fun setContactEmail (Ljava/lang/String;)V
