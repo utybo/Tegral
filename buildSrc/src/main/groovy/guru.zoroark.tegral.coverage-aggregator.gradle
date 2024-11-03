@@ -4,6 +4,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven { url = "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
 configurations {
@@ -97,4 +98,8 @@ tasks.register("aggregatedCodeCoverage", JacocoReport) {
         html.required = true
         xml.required = true
     }
+}
+
+jacoco {
+    toolVersion = "0.8.13-SNAPSHOT"
 }

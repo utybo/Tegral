@@ -10,6 +10,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven { url = "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
 dependencies {
@@ -39,4 +40,8 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(11)
     }
+}
+
+jacoco {
+    toolVersion = "0.8.13-SNAPSHOT"
 }
