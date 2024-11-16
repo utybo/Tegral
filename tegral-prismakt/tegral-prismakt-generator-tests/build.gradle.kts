@@ -1,5 +1,5 @@
 plugins {
-    id("guru.zoroark.tegral.coverage-aggregator")
+    id("tegral.coverage-aggregator")
 }
 
 dependencies {
