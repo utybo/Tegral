@@ -15,7 +15,7 @@ mockk = "1.13.13"
 nodeGradle = "7.1.0"
 slf4j = "2.0.16"
 versions = "0.51.0"
-licenserPlugin = "0.6.1"
+licenserPlugin = "2.0.0"
 swaggerCore = "2.2.25"
 swaggerUi = "5.17.14"
 clikt = "5.0.1"
@@ -111,5 +111,5 @@ versions = { id = "com.github.ben-manes.versions", version.ref = "versions" }
 gradleTestLogger = { id = "com.adarshr.test-logger", version.ref = "gradleTestLogger" }
 kotlinBcv = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinBcv" }
 nodeGradle = { id = "com.github.node-gradle.node", version.ref = "nodeGradle" }
-licenser = { id = "org.cadixdev.licenser", version.ref = "licenserPlugin" }
+licenser = { id = "dev.yumi.gradle.licenser", version.ref = "licenserPlugin" }
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }

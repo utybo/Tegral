@@ -2,7 +2,7 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
     id("com.github.ben-manes.versions")
-    id("org.cadixdev.licenser")
+    id("dev.yumi.gradle.licenser")
 }
 
 version = rootProject.version
@@ -26,5 +26,5 @@ tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
 }
 
 license {
-    setHeader(rootProject.file("LICENSE_HEADER"))
+    rule(rootProject.file("LICENSE_HEADER"))
 }
