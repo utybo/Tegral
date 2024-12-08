@@ -18,9 +18,15 @@ import guru.zoroark.tegral.di.environment.EnvironmentComponents
 import guru.zoroark.tegral.di.environment.Identifier
 
 /**
- * A resolver is an object that helps resolve an identifier into an actual component.
+ * A resolver is an object that resolves an identifier into an actual component.
  *
- * The implementation dictates how such a component is retrieved, created, etc.
+ * The implementation dictates how such a component is retrieved, created, etc. Resolvers have access to all components
+ * available in the environment, and can use any component they require to resolve the identifier. Resolvers are an
+ * intermediary step between the user (or some component) asking for a component, and the retrieval of that component in
+ * the environment.
+ *
+ * The most commonly used implementation of this is [SimpleIdentifierResolver], that simply retrieves the corresponding
+ * component in the environment. For an examples of a more advanced resolver, see [AliasIdentifierResolver]
  */
 interface IdentifierResolver<T : Any> {
     /**

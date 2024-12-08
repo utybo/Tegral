@@ -33,6 +33,18 @@ class INeedBar(scope: InjectionScope) {
 }
 ```
 
+You can also add qualifiers to factories, similarly to regular components:
+
+```kotlin
+val myEnvironment = tegralDi {
+    putFactory(named("BAR!")) { Bar() }
+}
+
+class INeedBar(scope: InjectionScope) {
+    val bar: Bar by scope(named("BAR!"))
+}
+```
+
 Here is a full example using loggers:
 
 ```kotlin
