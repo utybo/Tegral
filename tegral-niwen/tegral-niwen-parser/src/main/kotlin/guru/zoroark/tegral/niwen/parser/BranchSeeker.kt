@@ -35,7 +35,17 @@ class BranchSeeker {
     /**
      * Status for a node in the [BranchSeeker] tree.
      */
-    enum class Status { SUCCESS, DID_NOT_MATCH }
+    enum class Status {
+        /**
+         * Node was parsed successfully (a match occurred)
+         */
+        SUCCESS,
+
+        /**
+         * A match did not occur.
+         */
+        DID_NOT_MATCH
+    }
 
     /**
      * A node within the execution tree. Each node represents an expectation that was executed.

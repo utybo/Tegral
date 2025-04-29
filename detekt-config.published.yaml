@@ -1,10 +1,11 @@
 comments:
   UndocumentedPublicClass:
     active: true
-    excludes: ['**/src/test/**']
+    excludes: ["**/src/test/**"]
+    ignoreDefaultCompanionObject: true
   UndocumentedPublicFunction:
     active: true
-    excludes: ['**/src/test/**']
+    excludes: ["**/src/test/**"]
   UndocumentedPublicProperty:
     active: true
-    excludes: ['**/src/test/**']
+    excludes: ["**/src/test/**"]

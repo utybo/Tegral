@@ -22,10 +22,6 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
   - **Experimental** Fundefs whose function is annotated with `@Fundef` can now be `put()` like any other component, e.g. `put(::myFundef)` ([#87](https://github.com/utybo/Tegral/pull/87))
 
-- `tegral-prismakt-generator`
-
-  - A "shadow" JAR is now published in addition to the regular JAR. Recommendations for integrating PrismaKT Generator into Gradle projects have been updated to use this shadow JAR. ([#90](https://github.com/utybo/Tegral/pull/90))
-
 ### Changed
 
 - `tegral-web-appdsl`
@@ -37,25 +33,33 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Dependency updates ([#90](https://github.com/utybo/Tegral/pull/90))
 
-| Dependency | Old version | New version |
-| --: | -- | -- |
-| Exposed | 0.41.1 | 0.42.0 |
-| Hoplite | 2.7.4 | 2.7.5 |
-| Jackson | 2.15.0 | 2.15.2 |
-| Jimfs | 1.2 | 1.3.0 |
-| JUnit | 5.9.2 | 5.10.0 |
-| Kotlin | 1.8.21 | 1.9.10 |
-| Kotlin Coroutines | 1.7.1 | 1.7.3 |
-| Ktor | 2.3.0 | 2.3.3 |
-| Lang3 | 3.12.0 | 3.13.0 |
-| Swagger Core | 2.2.9 | 2.2.15 |
-| Swagger UI | 4.15.5 | 5.3.1 |
+|        Dependency | Old version | New version |
+| ----------------: | ----------- | ----------- |
+|           Exposed | 0.41.1      | 0.42.0      |
+|           Hoplite | 2.7.4       | 2.7.5       |
+|           Jackson | 2.15.0      | 2.15.2      |
+|             Jimfs | 1.2         | 1.3.0       |
+|             JUnit | 5.9.2       | 5.10.0      |
+|            Kotlin | 1.8.21      | 1.9.10      |
+| Kotlin Coroutines | 1.7.1       | 1.7.3       |
+|              Ktor | 2.3.0       | 2.3.3       |
+|             Lang3 | 3.12.0      | 3.13.0      |
+|      Swagger Core | 2.2.9       | 2.2.15      |
+|        Swagger UI | 4.15.5      | 5.3.1       |
 
 ### Removed
 
 - `tegral-openapi-dsl`
 
   - `Builder<T>` has been removed. Replace all remaining uses with Tegral Core's `Buildable<T>`.
+
+- `tegral-prismakt`
+
+  - Tegral PrismaKT has been removed - while a fun experiment, it has been too difficult to maintain. We will be looking at alternative solutions for DB Management.
+
+- Internal
+
+  - Removed `shell.nix`, it is no longer actively used.
 
 ## [0.0.4] - 2023-05-14
 
@@ -75,7 +79,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - `tegral-openapi-dsl`
 
-  - You can now define operation things (such as parameters, responses, etc.) at the *path* level. This allows you to define common properties between all of the operations within the same path.
+  - You can now define operation things (such as parameters, responses, etc.) at the _path_ level. This allows you to define common properties between all of the operations within the same path.
 
   - Added the ability to add headers to API responses.
 
@@ -87,7 +91,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
   - Resources descriptions now have proper support for:
 
-    - *Parent* resources. Descriptions of parent resources will now cascade down to their children. This is comparable to an automatic `describeSubroutes`.
+    - _Parent_ resources. Descriptions of parent resources will now cascade down to their children. This is comparable to an automatic `describeSubroutes`.
 
     - Multiple operations on the same resource. You can now use `get`, `post`, etc. in the description of a resource. Anything set outside of these blocks will be applied to all following operations, while anything set inside will be applied to that specific operation.
 
@@ -113,28 +117,28 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Dependency updates (transient libraries)
 
-| Dependency | Old version | New version | Changelog(s) |
-| ---------- | ----------- | ----------- | ---------- |
-| Clikt | 3.5.0 | 3.5.2 | [Changelog](https://github.com/ajalt/clikt/blob/master/CHANGELOG.md) |
-| Hoplite | 2.5.2 | 2.7.4 | [All](https://github.com/sksamuel/hoplite/blob/master/changelog.md) |
-| Jackson | 2.13.1 | 2.15.0 | [Releases](https://github.com/FasterXML/jackson/wiki/Jackson-Releases) |
-| JUnit | 5.9.0 | 5.9.2 | [All](https://junit.org/junit5/docs/5.9.2/release-notes/) |
-| Kotlin | 1.7.10 | 1.8.21 | [1.8 highlights](https://kotlinlang.org/docs/whatsnew18.html) [All](https://github.com/JetBrains/kotlin/releases) |
-| Kotlin Coroutines | 1.6.4 | 1.7.1 | [All](https://github.com/Kotlin/kotlinx.coroutines/releases) |
-| Ktor | 2.1.0 | 2.3.0 | [2.1.x](https://ktor.io/changelog/2.1/) [2.2.x](https://ktor.io/changelog/2.2) [2.3.x](https://ktor.io/changelog/2.3/) |
-| Logback | 1.2.11 | 1.4.5 | [News](https://logback.qos.ch/news.html) |
-| MockK | 1.12.5 | 1.13.4 | [All](https://github.com/mockk/mockk/releases) |
-| SLF4J | 1.7.36 | 2.0.7 | [News](https://www.slf4j.org/news.html) |
-| Swagger Core | 2.2.2 | 2.2.9 | [All](https://github.com/swagger-api/swagger-core/releases) |
-| Swagger UI | 4.13.2 | 4.15.5 | [All](https://github.com/swagger-api/swagger-ui/releases) |
+| Dependency        | Old version | New version | Changelog(s)                                                                                                           |
+| ----------------- | ----------- | ----------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Clikt             | 3.5.0       | 3.5.2       | [Changelog](https://github.com/ajalt/clikt/blob/master/CHANGELOG.md)                                                   |
+| Hoplite           | 2.5.2       | 2.7.4       | [All](https://github.com/sksamuel/hoplite/blob/master/changelog.md)                                                    |
+| Jackson           | 2.13.1      | 2.15.0      | [Releases](https://github.com/FasterXML/jackson/wiki/Jackson-Releases)                                                 |
+| JUnit             | 5.9.0       | 5.9.2       | [All](https://junit.org/junit5/docs/5.9.2/release-notes/)                                                              |
+| Kotlin            | 1.7.10      | 1.8.21      | [1.8 highlights](https://kotlinlang.org/docs/whatsnew18.html) [All](https://github.com/JetBrains/kotlin/releases)      |
+| Kotlin Coroutines | 1.6.4       | 1.7.1       | [All](https://github.com/Kotlin/kotlinx.coroutines/releases)                                                           |
+| Ktor              | 2.1.0       | 2.3.0       | [2.1.x](https://ktor.io/changelog/2.1/) [2.2.x](https://ktor.io/changelog/2.2) [2.3.x](https://ktor.io/changelog/2.3/) |
+| Logback           | 1.2.11      | 1.4.5       | [News](https://logback.qos.ch/news.html)                                                                               |
+| MockK             | 1.12.5      | 1.13.4      | [All](https://github.com/mockk/mockk/releases)                                                                         |
+| SLF4J             | 1.7.36      | 2.0.7       | [News](https://www.slf4j.org/news.html)                                                                                |
+| Swagger Core      | 2.2.2       | 2.2.9       | [All](https://github.com/swagger-api/swagger-core/releases)                                                            |
+| Swagger UI        | 4.13.2      | 4.15.5      | [All](https://github.com/swagger-api/swagger-ui/releases)                                                              |
 
 - Dependency updates (tooling)
 
-| Dependency | Old version | New version | Changelog(s) |
-| ---------- | ----------- | ----------- | ---------- |
-| Gradle | 7.5 | 8.1.1 | [All](https://docs.gradle.org/current/release-notes.html) |
-| Detekt | 1.21.0 | 1.22.0 | [1.22.0](https://github.com/detekt/detekt/releases/tag/v1.22.0) |
-| Dokka | 1.7.10 | 1.8.10 | [All](https://github.com/Kotlin/dokka/releases)|
+| Dependency | Old version | New version | Changelog(s)                                                    |
+| ---------- | ----------- | ----------- | --------------------------------------------------------------- |
+| Gradle     | 7.5         | 8.1.1       | [All](https://docs.gradle.org/current/release-notes.html)       |
+| Detekt     | 1.21.0      | 1.22.0      | [1.22.0](https://github.com/detekt/detekt/releases/tag/v1.22.0) |
+| Dokka      | 1.7.10      | 1.8.10      | [All](https://github.com/Kotlin/dokka/releases)                 |
 
 ## [0.0.3] - 2022-10-01
 
@@ -398,6 +402,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
   - Adapted checks for the new resolution mechanism.
     ([#23](https://github.com/utybo/Tegral/pull/23))
+
     - As a rule of thumb, in all "graph-like" representations on check failures,
       `-->` arrows represent a regular injection dependency, while `R->`
       represents resolution-time dependencies.

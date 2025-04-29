@@ -71,7 +71,7 @@ class SectionedConfigurationDecoder<T : SectionedConfiguration>(
 
         val sectionValues = mutableMapOf<ConfigurationSection<*>, Any>()
         for ((key, value) in node.map) {
-            val section = sections.find { PathNormalizer.normalizePathElement(it.name) == key }
+            val section = sections.find { PathNormalizer.transformPathElement(it.name) == key }
             val sectionType = section!!.kclass.starProjectedType
 
             val decodedSection = context.decoder(sectionType)

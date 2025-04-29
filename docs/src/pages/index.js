@@ -10,7 +10,6 @@ import tegralDiExample from "!!raw-loader!./tegral-di-example.kt";
 import tegralOpenApiExample from "!!raw-loader!./tegral-openapi-example.kt";
 import tegralWebExample from "!!raw-loader!./tegral-web-example.kt";
 import tegralNiwenExample from "!!raw-loader!./tegral-niwen-example.kt";
-import tegralPrismaKtExample from "!!raw-loader!./tegral-prismakt-example.kt";
 
 // TODO liens fonctionnels
 // TODO svg minifiés
@@ -80,10 +79,16 @@ const tegralDiCard = () => (
           all kinds of apps.
         </p>
         <div className={styles.cardLinks}>
-          <Link className="button button--outline button--secondary" to="/docs/modules/core/di/introduction-to-di">
+          <Link
+            className="button button--outline button--secondary"
+            to="/docs/modules/core/di/introduction-to-di"
+          >
             Introduction
           </Link>
-          <Link className="button button--outline button--primary" to="docs/modules/core/di">
+          <Link
+            className="button button--outline button--primary"
+            to="docs/modules/core/di"
+          >
             Documentation
           </Link>
         </div>
@@ -94,7 +99,6 @@ const tegralDiCard = () => (
     </div>
   </div>
 );
-
 
 const tegralOpenApiCard = () => (
   <div className={clsx(styles.libsCard, "card")}>
@@ -107,19 +111,32 @@ const tegralOpenApiCard = () => (
       </div>
       <div className="card__body">
         <p>
-          Create OpenAPI specs in Kotlin and serve Swagger UI. Can be used stand-alone, with Ktor or with Tegral Web.
+          Create OpenAPI specs in Kotlin and serve Swagger UI. Can be used
+          stand-alone, with Ktor or with Tegral Web.
         </p>
         <div className={styles.cardLinks}>
-          <Link className="button button--outline button--secondary" to="/docs/modules/core/openapi/scripting">
+          <Link
+            className="button button--outline button--secondary"
+            to="/docs/modules/core/openapi/scripting"
+          >
             Scripts
           </Link>
-          <Link className="button button--outline button--secondary" to="/docs/modules/core/openapi/ktor">
+          <Link
+            className="button button--outline button--secondary"
+            to="/docs/modules/core/openapi/ktor"
+          >
             For Ktor
           </Link>
-          <Link className="button button--outline button--secondary" to="/docs/modules/core/openapi/tegral-web">
+          <Link
+            className="button button--outline button--secondary"
+            to="/docs/modules/core/openapi/tegral-web"
+          >
             For Tegral Web
           </Link>
-          <Link className="button button--outline button--primary" to="/docs/modules/core/openapi">
+          <Link
+            className="button button--outline button--primary"
+            to="/docs/modules/core/openapi"
+          >
             Documentation
           </Link>
         </div>
@@ -142,13 +159,20 @@ const tegralWebCard = () => (
       </div>
       <div className="card__body">
         <p>
-          The Kotlin-est way to build back-end applications. Make use of the entire Tegral stack in a simple, cohesive experience.
+          The Kotlin-est way to build back-end applications. Make use of the
+          entire Tegral stack in a simple, cohesive experience.
         </p>
         <div className={styles.cardLinks}>
-          <Link className="button button--outline button--secondary" to="/docs/get-started/">
+          <Link
+            className="button button--outline button--secondary"
+            to="/docs/get-started/"
+          >
             Tutorial series
           </Link>
-          <Link className="button button--outline button--primary" to="/docs/modules/web">
+          <Link
+            className="button button--outline button--primary"
+            to="/docs/modules/web"
+          >
             Documentation
           </Link>
         </div>
@@ -162,64 +186,45 @@ const tegralWebCard = () => (
 
 const tegralNiwenCard = () => (
   <div className={clsx(styles.libsCard, "card")}>
-  <div className={clsx(styles.cardContent)}>
-    <div className="card__header">
-      <h3>
-        <img src="/img/tegral_logo_v2_niwen.svg" height="36" />
-        <span className={styles.cardTitle}>Tegral Niwen</span>
-      </h3>
-    </div>
-    <div className="card__body">
-      <p>
-        Create simple lexers and parsers with Tegral Niwen's handy DSL.
-        A good fit for prototyping, toy projects or simple languages.
-      </p>
-      <div className={styles.cardLinks}>
-        <Link className="button button--outline button--secondary" to="/docs/modules/core/niwen/lexer">
-          Lexer
-        </Link>
-        <Link className="button button--outline button--secondary" to="/docs/modules/core/niwen/parser">
-          Parser
-        </Link>
-        <Link className="button button--outline button--primary" to="/docs/modules/core/niwen">
-          Documentation
-        </Link>
+    <div className={clsx(styles.cardContent)}>
+      <div className="card__header">
+        <h3>
+          <img src="/img/tegral_logo_v2_niwen.svg" height="36" />
+          <span className={styles.cardTitle}>Tegral Niwen</span>
+        </h3>
+      </div>
+      <div className="card__body">
+        <p>
+          Create simple lexers and parsers with Tegral Niwen's handy DSL. A good
+          fit for prototyping, toy projects or simple languages.
+        </p>
+        <div className={styles.cardLinks}>
+          <Link
+            className="button button--outline button--secondary"
+            to="/docs/modules/core/niwen/lexer"
+          >
+            Lexer
+          </Link>
+          <Link
+            className="button button--outline button--secondary"
+            to="/docs/modules/core/niwen/parser"
+          >
+            Parser
+          </Link>
+          <Link
+            className="button button--outline button--primary"
+            to="/docs/modules/core/niwen"
+          >
+            Documentation
+          </Link>
+        </div>
       </div>
     </div>
-  </div>
-  <div className={clsx(styles.cardExample)}>
-    <CodeBlock language="kotlin">{tegralNiwenExample}</CodeBlock>
-  </div>
-</div>
-)
-
-
-const tegralPrismaktCard = () => (
-  <div className={clsx(styles.libsCard, "card")}>
-  <div className={clsx(styles.cardContent)}>
-    <div className="card__header">
-      <h3>
-        <img src="/img/tegral_logo_v2_prismakt.png" height="36" />
-        <span className={styles.cardTitle}>Tegral PrismaKT</span>
-        <span class="badge badge--secondary">Experimental</span>
-      </h3>
-    </div>
-    <div className="card__body">
-      <p>
-        Use <a href="https://prisma.io">Prisma</a> in your Kotlin applications. Generate JetBrains Exposed bindings for your databases for an awesome Prisma + Kotlin experience.
-      </p>
-      <div className={styles.cardLinks}>
-        <Link className="button button--outline button--primary" to="/docs/modules/core/prismakt">
-          Documentation
-        </Link>
-      </div>
+    <div className={clsx(styles.cardExample)}>
+      <CodeBlock language="kotlin">{tegralNiwenExample}</CodeBlock>
     </div>
   </div>
-  <div className={clsx(styles.cardExample)}>
-    <CodeBlock language="kotlin">{tegralPrismaKtExample}</CodeBlock>
-  </div>
-</div>
-)
+);
 
 export default function Home() {
   const { siteConfig } = useDocusaurusContext();
@@ -241,7 +246,6 @@ export default function Home() {
             {tegralOpenApiCard()}
             {tegralWebCard()}
             {tegralNiwenCard()}
-            {tegralPrismaktCard()}
           </div>
         </div>
         {/*<HomepageFeatures />*/}

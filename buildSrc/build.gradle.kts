@@ -13,7 +13,6 @@ dependencies {
         libs.plugins.dokkatoo,
         libs.plugins.detekt,
         libs.plugins.versions,
-        libs.plugins.gradleTestLogger,
         libs.plugins.kotlinBcv,
         libs.plugins.nodeGradle,
         libs.plugins.licenser,

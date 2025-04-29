@@ -25,7 +25,6 @@ val publicProjects = listOf(
     ":tegral-openapi:tegral-openapi-ktorui",
     ":tegral-openapi:tegral-openapi-scriptdef",
     ":tegral-openapi:tegral-openapi-scripthost",
-    ":tegral-prismakt:tegral-prismakt-generator",
     ":tegral-services:tegral-services-api",
     ":tegral-services:tegral-services-feature",
     ":tegral-utils:tegral-utils-logtools",
@@ -39,11 +38,6 @@ val publicProjects = listOf(
 )
 
 val testProjects = publicProjects - ":tegral-catalog" + listOf(
-    ":tegral-prismakt:tegral-prismakt-generator-tests:mysql-types",
-    ":tegral-prismakt:tegral-prismakt-generator-tests:pgsql-types",
-    ":tegral-prismakt:tegral-prismakt-generator-tests:simple-dao",
-    ":tegral-prismakt:tegral-prismakt-generator-tests:simple-sql",
-    ":tegral-prismakt:tegral-prismakt-generator-tests-support",
     ":e2e-tests:fundef-modules",
     ":e2e-tests:run-with-java-11",
     ":e2e-tests:run-with-java-17",
